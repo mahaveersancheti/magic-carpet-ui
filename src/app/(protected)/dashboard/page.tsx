@@ -38,7 +38,7 @@ export default function DashboardPage() {
           {/* Header */}
           <header className="flex items-center justify-between">
             <h1 className="text-4xl font-extrabold text-white tracking-tight">
-              Visitor Search Dashboard
+              Dashboard
             </h1>
 
             <div className="flex items-center gap-5">

@@ -9,15 +9,15 @@ export default function Sidebar() {
         setSelectedMenu(label); // highlight selected item
 
         if(label == "Dashboard"){
-            router.push("dashboard");
+            router.push("/dashboard");
         }
 
         if(label == "Profile"){
-            router.push("profile");
+            router.push("/profile");
         }
 
         if (label === "LinkedIn Action") {
-            router.push("linkedin-action");
+            router.push("/linkedin-action");
         }
     };
 
@@ -39,7 +39,7 @@ export default function Sidebar() {
                                 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuD8GfqTO1JesMaHQ9vmnYnPY_KR16CBayMpwMoOTdBJackbKjHcSMUz_A4_fAxYmdY-dZMMzMnn4BN1a-Tn5lDAW9OTXxJTYQ05M4b6nAOnRSrwBkeW5kaB2qOg9TOHvzA0oj75ei0VWjFB6ybDP-whRqADCG7D7xenLVUbcdoXsY6lOmO4QAlDKUNveNSXqDbj5W0lDFUH86Ar9I7dAvpwQMXtK_GCkQE2n_7slNoZqPn6ouhQp0pfd617JoFV_4oaFWvMmDkGoFK7")',
                         }}
                     />
-                    <h1 className="text-xl font-semibold text-white">SearchApp</h1>
+                    <h1 className="text-xl font-semibold text-white">Magic Carpet</h1>
                 </div>
 
                 {/* Navigation */}
