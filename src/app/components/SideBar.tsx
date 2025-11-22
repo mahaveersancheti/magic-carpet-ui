@@ -1,8 +1,16 @@
+import { useRouter } from "next/navigation";
+
 export default function Sidebar() {
+    const router = useRouter();
+    const handleNavigation = (label:string) => {
+        if(label == "LinkedIn Action"){
+            router.push('linkedin-action');
+        }
+    }
     return (
         <>
             {/* Sidebar */}
-            <aside className="w-64 p-4">
+            <aside className="w-80 p-3">
                 <div className="flex flex-col h-full rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex p-5 bg-[#25282c] dark:bg-[#111315]">
                     {/* Logo */}
                     <div className="flex items-center gap-3 p-2 mb-10">
@@ -24,10 +32,11 @@ export default function Sidebar() {
                         </a>
 
                         {[
-                            ["settings", "Settings"],
+                            ["settings", "LinkedIn Action"],
                             ["person", "Profile"],
                         ].map(([icon, label]) => (
                             <a
+                                onClick={() => handleNavigation(label)}
                                 key={label}
                                 className="flex items-center gap-3 px-5 py-3 rounded-xl hover:shadow-neo-light-concave dark:hover:shadow-neo-dark-concave transition"
                             >

@@ -1,7 +1,35 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function DashboardPage() {
+
+  const router = useRouter();
+
+
+  const viewDetails = (action:string) => {
+    console.log("Action",action);
+    if(action == 'visibility') router.push('/request/10');
+  }
+
+  function ActionButtons() {
+    return (
+      <div className="flex items-center gap-2">
+        {["link", "apartment", "play_arrow", "visibility"].map((i) => (
+          <button
+            onClick={() => viewDetails(i)}
+            key={i}
+            className="w-8 h-8 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave transition"
+          >
+            <span className="material-symbols-outlined text-gray-300 text-sm">
+              {i}
+            </span>
+          </button>
+        ))}
+      </div>
+    );
+  }
+  
   return (
     <div className="flex min-h-screen w-full bg-[#2f343a] dark:bg-[#1c1f22]">
       {/* Main Content */}
@@ -129,23 +157,6 @@ function StatusPill({ status }: any) {
     >
       {status}
     </span>
-  );
-}
-
-function ActionButtons() {
-  return (
-    <div className="flex items-center gap-2">
-      {["link", "apartment", "play_arrow", "visibility"].map((i) => (
-        <button
-          key={i}
-          className="w-8 h-8 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave transition"
-        >
-          <span className="material-symbols-outlined text-gray-300 text-sm">
-            {i}
-          </span>
-        </button>
-      ))}
-    </div>
   );
 }
 

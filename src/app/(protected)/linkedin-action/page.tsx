@@ -1,7 +1,10 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const LinkedInAction = () => {
+  const router = useRouter();
+  
   return (
     <div className="relative flex min-h-screen w-full">
 
@@ -10,7 +13,7 @@ const LinkedInAction = () => {
         <div className="w-full max-w-4xl mx-auto flex flex-col gap-6">
           {/* Back button */}
           <div>
-            <button className="flex items-center gap-2 h-10 px-4 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-500/10 dark:hover:bg-white/10 text-sm font-bold">
+          <button onClick={() => {router.push('/dashboard')}} className="flex items-center gap-2 rounded-full p-2 shadow-neo-light-outset hover:shadow-neo-light-inset transition-all active:scale-95">
               <span className="material-symbols-outlined text-xl">
                 arrow_back
               </span>
@@ -56,7 +59,7 @@ const LinkedInAction = () => {
                   />
                 </label>
 
-                <button className="rounded-full h-12 px-6 shadow-[8px_8px_16px_#0c1015,-8px_-8px_16px_#16222d] text-gray-500 cursor-not-allowed">
+                <button className="h-12 px-8 bg-[#1B7FE6] text-white rounded-full font-semibold shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition">
                   Execute Action
                 </button>
               </div>
