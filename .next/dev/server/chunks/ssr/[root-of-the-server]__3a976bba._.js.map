@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 22, "column": 0}, "map": {"version":3,"sources":["file:///Users/apple/Desktop/Self%20Learing/Magic%20Carpet/magic-carpet-ui/src/app/%28protected%29/profile/page.tsx"],"sourcesContent":["import React from 'react'\n\nfunction Profile() {\n  return (\n    <div className='p-4'>Comming Soon..</div>\n  )\n}\n\nexport default Profile"],"names":[],"mappings":";;;;;;AAEA,SAAS;IACP,qBACE,8OAAC;QAAI,WAAU;kBAAM;;;;;;AAEzB;uCAEe"}}]
+}

@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../src/app/%28protected%29/profile/page.tsx"],"sourcesContent":["import React from 'react'\n\nfunction Profile() {\n  return (\n    <div className='p-4'>Comming Soon..</div>\n  )\n}\n\nexport default Profile"],"names":[],"mappings":"8XAEA,SAAS,EACP,MACE,CAAA,EAAA,EAAA,GAAA,EAAC,MAAA,CAAI,UAAU,eAAM,kBAEzB"}
