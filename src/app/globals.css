@@ -5,6 +5,11 @@
   --foreground: #171717;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+
 .dark {
   --background: #2c2f33;
   --foreground: #ededed;
