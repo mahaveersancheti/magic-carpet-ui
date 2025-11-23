@@ -11,6 +11,7 @@ const config: Config = {
         "background-dark": "#2C2F33",
         "accent-light": "#6D83F2",
         "accent-dark": "#7B92FF",
+        foreground: "var(--foreground)",
       },
       fontFamily: {
         display: ["Manrope", "Poppins", "sans-serif"],

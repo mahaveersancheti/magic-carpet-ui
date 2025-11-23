@@ -1,7 +1,7 @@
 export default function LandingHeader() {
   return (
     <header className="sticky top-0 z-50 w-full max-w-6xl px-4 md:px-10 py-4 font-display">
-      <div style={{backgroundColor:"#000000"}} className="flex items-center justify-between whitespace-nowrap rounded-full bg-background-light dark:bg-background-dark neo-card-light neo-card-dark px-6 py-3 transition-shadow duration-300">
+      <div className="flex items-center justify-between whitespace-nowrap rounded-full bg-background-light dark:bg-background-dark neo-card-light neo-card-dark px-6 py-3 transition-shadow duration-300">
         <div className="flex items-center gap-4">
           <div className="size-6 text-primary">
             <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -9,15 +9,15 @@ export default function LandingHeader() {
               <defs><clipPath id="clip0"><rect fill="white" height="48" width="48"></rect></clipPath></defs>
             </svg>
           </div>
-          <h2 className="text-lg font-bold">Magic Carpet</h2>
+          <h2 className="text-lg font-bold text-foreground dark:text-white">Magic Carpet</h2>
         </div>
         <nav className="hidden md:flex flex-1 justify-center items-center gap-2">
-          <a href="#about-company" className="rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light neo-button-dark">About Company</a>
-          <a href="#about-product" className="rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light neo-button-dark">About Product</a>
-          <a href="#contact" className="rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light neo-button-dark">Contact Details</a>
+          <a href="#about-company" className="rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light neo-button-dark text-foreground dark:text-white">About Company</a>
+          <a href="#about-product" className="rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light neo-button-dark text-foreground dark:text-white">About Product</a>
+          <a href="#contact" className="rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light neo-button-dark text-foreground dark:text-white">Contact Details</a>
         </nav>
         <div className="flex gap-2">
-          <a href="/signin" className="flex min-w-[84px] items-center justify-center rounded-full h-10 px-4 bg-background-light dark:bg-background-dark text-sm font-bold transition-all duration-300 neo-button-light neo-button-dark">Sign In</a>
+          <a href="/signin" className="flex min-w-[84px] items-center justify-center rounded-full h-10 px-4 bg-background-light dark:bg-background-dark text-sm font-bold transition-all duration-300 neo-button-light neo-button-dark text-foreground dark:text-white">Sign In</a>
           <a href="/signup" className="flex min-w-[84px] items-center justify-center rounded-full h-10 px-4 bg-primary text-white text-sm font-bold transition-all duration-300 neo-button-light neo-button-dark">Sign Up</a>
         </div>
         <div className="md:hidden">

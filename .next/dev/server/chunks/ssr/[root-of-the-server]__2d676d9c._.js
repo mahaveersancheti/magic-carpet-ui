@@ -26,9 +26,6 @@ function LandingHeader() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
         className: "sticky top-0 z-50 w-full max-w-6xl px-4 md:px-10 py-4 font-display",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            style: {
-                backgroundColor: "#000000"
-            },
             className: "flex items-center justify-between whitespace-nowrap rounded-full bg-background-light dark:bg-background-dark neo-card-light neo-card-dark px-6 py-3 transition-shadow duration-300",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -102,7 +99,7 @@ function LandingHeader() {
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                            className: "text-lg font-bold",
+                            className: "text-lg font-bold text-foreground dark:text-white",
                             children: "Magic Carpet"
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/LandingHeader.tsx",
@@ -120,7 +117,7 @@ function LandingHeader() {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                             href: "#about-company",
-                            className: "rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light neo-button-dark",
+                            className: "rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light neo-button-dark text-foreground dark:text-white",
                             children: "About Company"
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/LandingHeader.tsx",
@@ -129,7 +126,7 @@ function LandingHeader() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                             href: "#about-product",
-                            className: "rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light neo-button-dark",
+                            className: "rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light neo-button-dark text-foreground dark:text-white",
                             children: "About Product"
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/LandingHeader.tsx",
@@ -138,7 +135,7 @@ function LandingHeader() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                             href: "#contact",
-                            className: "rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light neo-button-dark",
+                            className: "rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light neo-button-dark text-foreground dark:text-white",
                             children: "Contact Details"
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/LandingHeader.tsx",
@@ -156,7 +153,7 @@ function LandingHeader() {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                             href: "/signin",
-                            className: "flex min-w-[84px] items-center justify-center rounded-full h-10 px-4 bg-background-light dark:bg-background-dark text-sm font-bold transition-all duration-300 neo-button-light neo-button-dark",
+                            className: "flex min-w-[84px] items-center justify-center rounded-full h-10 px-4 bg-background-light dark:bg-background-dark text-sm font-bold transition-all duration-300 neo-button-light neo-button-dark text-foreground dark:text-white",
                             children: "Sign In"
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/LandingHeader.tsx",
@@ -226,10 +223,10 @@ function LandingFooter() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
         className: "w-full max-w-6xl px-4 md:px-10 py-8 mt-16",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "border-t border-text-light/20 dark:border-text-dark/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-6",
+            className: "border-t border-gray-300 dark:border-gray-700/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-6",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                    className: "text-sm",
+                    className: "text-sm text-foreground dark:text-gray-300",
                     children: "© 2024 Visitor Search Management. All rights reserved."
                 }, void 0, false, {
                     fileName: "[project]/src/app/components/LandingFooter.tsx",
@@ -241,7 +238,7 @@ function LandingFooter() {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                             href: "#",
-                            className: "text-sm hover:text-primary transition-colors",
+                            className: "text-sm hover:text-primary transition-colors text-foreground dark:text-gray-300",
                             children: "Privacy Policy"
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/LandingFooter.tsx",
@@ -250,7 +247,7 @@ function LandingFooter() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                             href: "#",
-                            className: "text-sm hover:text-primary transition-colors",
+                            className: "text-sm hover:text-primary transition-colors text-foreground dark:text-gray-300",
                             children: "Terms of Service"
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/LandingFooter.tsx",
@@ -330,7 +327,7 @@ const contactItems = [
 ];
 function Home() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "relative min-h-screen w-full flex flex-col items-center bg-black text-white transition-colors duration-300",
+        className: "relative min-h-screen w-full flex flex-col items-center bg-background-light dark:bg-black text-foreground dark:text-white transition-colors duration-300",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$LandingHeader$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/app/page.tsx",
@@ -352,7 +349,7 @@ function Home() {
                                             className: "flex flex-col gap-4",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                                    className: "text-4xl md:text-6xl font-black tracking-tight",
+                                                    className: "text-4xl md:text-6xl font-black tracking-tight text-foreground dark:text-white",
                                                     children: "Simplify Your Visitor Search Management"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/page.tsx",
@@ -360,7 +357,7 @@ function Home() {
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "text-base md:text-lg",
+                                                    className: "text-base md:text-lg text-foreground dark:text-gray-300",
                                                     children: "Our platform provides real-time search analytics, secure data handling, and an intuitive dashboard to streamline your operations."
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/page.tsx",
@@ -431,7 +428,7 @@ function Home() {
                             className: "flex flex-col gap-12",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                    className: "text-3xl md:text-4xl font-bold text-center",
+                                    className: "text-3xl md:text-4xl font-bold text-center text-foreground dark:text-white",
                                     children: "Who We Are"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/page.tsx",
@@ -453,7 +450,7 @@ function Home() {
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "text-2xl font-bold",
+                                                    className: "text-2xl font-bold text-foreground dark:text-white",
                                                     children: "Our Mission"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/page.tsx",
@@ -461,7 +458,7 @@ function Home() {
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "text-base md:text-lg",
+                                                    className: "text-base md:text-lg text-foreground dark:text-gray-300",
                                                     children: "Our vision is to provide the most intuitive and powerful visitor management tools, helping you focus on what truly matters. We are dedicated to innovation, security, and exceptional user experience."
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/page.tsx",
@@ -502,7 +499,7 @@ function Home() {
                         }, void 0, true, {
                             fileName: "[project]/src/app/page.tsx",
                             lineNumber: 65,
-                            columnNumber: 11
+                            columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/page.tsx",
@@ -519,7 +516,7 @@ function Home() {
                                     className: "flex flex-col gap-4 text-center max-w-3xl mx-auto",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                            className: "text-3xl md:text-4xl font-bold",
+                                            className: "text-3xl md:text-4xl font-bold text-foreground dark:text-white",
                                             children: "Features You'll Love"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/page.tsx",
@@ -527,7 +524,7 @@ function Home() {
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-base md:text-lg",
+                                            className: "text-base md:text-lg text-foreground dark:text-gray-300",
                                             children: "Discover the tools designed to enhance your visitor management process from start to finish."
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/page.tsx",
@@ -566,7 +563,7 @@ function Home() {
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            className: "text-lg font-bold",
+                                                            className: "text-lg font-bold text-foreground dark:text-white",
                                                             children: feature.title
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/page.tsx",
@@ -574,7 +571,7 @@ function Home() {
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            className: "text-sm",
+                                                            className: "text-sm text-foreground dark:text-gray-300",
                                                             children: feature.description
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/page.tsx",
@@ -602,7 +599,7 @@ function Home() {
                         }, void 0, true, {
                             fileName: "[project]/src/app/page.tsx",
                             lineNumber: 83,
-                            columnNumber: 11
+                            columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/page.tsx",
@@ -621,7 +618,7 @@ function Home() {
                                         className: "flex flex-col gap-4 text-center max-w-3xl mx-auto",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                                className: "text-3xl md:text-4xl font-bold",
+                                                className: "text-3xl md:text-4xl font-bold text-foreground dark:text-white",
                                                 children: "Get In Touch"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/page.tsx",
@@ -629,7 +626,7 @@ function Home() {
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-base md:text-lg",
+                                                className: "text-base md:text-lg text-foreground dark:text-gray-300",
                                                 children: "Have questions? We'd love to hear from you. Reach out and we'll get back to you shortly."
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/page.tsx",
@@ -663,7 +660,7 @@ function Home() {
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                        className: "font-bold",
+                                                        className: "font-bold text-foreground dark:text-white",
                                                         children: item.label
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/page.tsx",
@@ -671,7 +668,7 @@ function Home() {
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-sm",
+                                                        className: "text-sm text-foreground dark:text-gray-300",
                                                         children: item.value
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/page.tsx",

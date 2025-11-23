@@ -39,15 +39,15 @@ const contactItems = [
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen w-full flex flex-col items-center bg-black text-white transition-colors duration-300">
+    <div className="relative min-h-screen w-full flex flex-col items-center bg-background-light dark:bg-black text-foreground dark:text-white transition-colors duration-300">
       <LandingHeader />
       <main className="w-full max-w-6xl px-4 md:px-10 py-5">
         <section className="w-full py-16 md:py-24">
           <div className="flex flex-col-reverse lg:flex-row gap-12 items-center">
             <div className="flex flex-col gap-8 text-center lg:text-left flex-1">
               <div className="flex flex-col gap-4">
-                <h1 className="text-4xl md:text-6xl font-black tracking-tight">Simplify Your Visitor Search Management</h1>
-                <p className="text-base md:text-lg">Our platform provides real-time search analytics, secure data handling, and an intuitive dashboard to streamline your operations.</p>
+                <h1 className="text-4xl md:text-6xl font-black tracking-tight text-foreground dark:text-white">Simplify Your Visitor Search Management</h1>
+                <p className="text-base md:text-lg text-foreground dark:text-gray-300">Our platform provides real-time search analytics, secure data handling, and an intuitive dashboard to streamline your operations.</p>
               </div>
               <a href="/signup" className="self-center lg:self-start flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-primary text-white text-base font-bold tracking-wide transition-all duration-300 neo-button-light neo-button-dark">
                 Get Started for Free
@@ -62,13 +62,13 @@ export default function Home() {
         </section>
 
         <section className="w-full py-16 md:py-24" id="about-company">
-          <div className="flex flex-col gap-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-center">Who We Are</h2>
+            <div className="flex flex-col gap-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground dark:text-white">Who We Are</h2>
             <div className="flex flex-col lg:flex-row items-center justify-between gap-12 rounded-xl bg-background-light dark:bg-background-dark neo-card-light neo-card-dark p-8 md:p-12 transition-shadow duration-300">
               <div className="flex flex-col gap-4 flex-[2_2_0px] text-center lg:text-left">
                 <p className="text-primary text-sm font-semibold tracking-wider uppercase">About The Company</p>
-                <p className="text-2xl font-bold">Our Mission</p>
-                <p className="text-base md:text-lg">
+                <p className="text-2xl font-bold text-foreground dark:text-white">Our Mission</p>
+                <p className="text-base md:text-lg text-foreground dark:text-gray-300">
                   Our vision is to provide the most intuitive and powerful visitor management tools, helping you focus on what truly matters. We are dedicated to innovation, security, and exceptional user experience.
                 </p>
               </div>
@@ -80,10 +80,10 @@ export default function Home() {
         </section>
 
         <section className="w-full py-16 md:py-24" id="about-product">
-          <div className="flex flex-col gap-12">
+            <div className="flex flex-col gap-12">
             <div className="flex flex-col gap-4 text-center max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold">Features You'll Love</h2>
-              <p className="text-base md:text-lg">Discover the tools designed to enhance your visitor management process from start to finish.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground dark:text-white">Features You'll Love</h2>
+              <p className="text-base md:text-lg text-foreground dark:text-gray-300">Discover the tools designed to enhance your visitor management process from start to finish.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {featureCards.map((feature) => (
@@ -92,8 +92,8 @@ export default function Home() {
                     <div className="w-full h-full bg-center bg-no-repeat bg-cover rounded" data-alt={feature.alt} style={{ backgroundImage: `url("${feature.image}")` }}></div>
                   </div>
                   <div>
-                    <p className="text-lg font-bold">{feature.title}</p>
-                    <p className="text-sm">{feature.description}</p>
+                    <p className="text-lg font-bold text-foreground dark:text-white">{feature.title}</p>
+                    <p className="text-sm text-foreground dark:text-gray-300">{feature.description}</p>
                   </div>
                 </div>
               ))}
@@ -105,8 +105,8 @@ export default function Home() {
           <div className="rounded-xl bg-background-light dark:bg-background-dark neo-card-light neo-card-dark p-8 md:p-12 transition-shadow duration-300">
             <div className="flex flex-col gap-10">
               <div className="flex flex-col gap-4 text-center max-w-3xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-bold">Get In Touch</h2>
-                <p className="text-base md:text-lg">Have questions? We'd love to hear from you. Reach out and we'll get back to you shortly.</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground dark:text-white">Get In Touch</h2>
+                <p className="text-base md:text-lg text-foreground dark:text-gray-300">Have questions? We'd love to hear from you. Reach out and we'll get back to you shortly.</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 {contactItems.map((item) => (
@@ -114,8 +114,8 @@ export default function Home() {
                     <div className="rounded-full p-4 neo-button-light neo-button-dark transition-shadow duration-300">
                       <span className="material-symbols-outlined text-3xl text-primary">{item.icon}</span>
                     </div>
-                    <h3 className="font-bold">{item.label}</h3>
-                    <p className="text-sm">{item.value}</p>
+                    <h3 className="font-bold text-foreground dark:text-white">{item.label}</h3>
+                    <p className="text-sm text-foreground dark:text-gray-300">{item.value}</p>
                   </div>
                 ))}
               </div>

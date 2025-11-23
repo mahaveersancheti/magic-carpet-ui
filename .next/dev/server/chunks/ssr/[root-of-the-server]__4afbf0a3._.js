@@ -24,17 +24,17 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 ;
 function SignUp() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#0f141b] p-4 font-display dark:bg-[#0f141b]",
+        className: "relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-background-light dark:bg-[#0f141b] p-4 font-display",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute top-[-20%] left-[-15%] h-[400px] w-[400px] rounded-full bg-blue-700/20 blur-[150px]"
+                className: "absolute top-[-20%] left-[-15%] h-[400px] w-[400px] rounded-full bg-blue-700/20 blur-[150px] dark:bg-blue-700/20"
             }, void 0, false, {
                 fileName: "[project]/src/app/(auth)/signup/page.tsx",
                 lineNumber: 6,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "absolute bottom-[-20%] right-[-15%] h-[400px] w-[400px] rounded-full bg-purple-700/20 blur-[150px]"
+                className: "absolute bottom-[-20%] right-[-15%] h-[400px] w-[400px] rounded-full bg-purple-700/20 blur-[150px] dark:bg-purple-700/20"
             }, void 0, false, {
                 fileName: "[project]/src/app/(auth)/signup/page.tsx",
                 lineNumber: 7,
@@ -43,13 +43,13 @@ function SignUp() {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
                 className: "z-10 flex w-full max-w-md flex-col items-center",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "w-full rounded-3xl bg-black/30 p-8 shadow-[0_0_40px_rgba(0,0,0,0.6)] backdrop-blur-2xl border border-white/10",
+                    className: "w-full rounded-3xl bg-white/80 dark:bg-black/30 p-8 shadow-neo-light-convex dark:shadow-[0_0_40px_rgba(0,0,0,0.6)] backdrop-blur-2xl border border-gray-200 dark:border-white/10",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "mb-6 text-center",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-2xl font-black tracking-tight text-white",
+                                    className: "text-2xl font-black tracking-tight text-foreground dark:text-white",
                                     children: "Create an Account"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(auth)/signup/page.tsx",
@@ -57,7 +57,7 @@ function SignUp() {
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "mt-2 text-sm text-gray-400",
+                                    className: "mt-2 text-sm text-gray-600 dark:text-gray-400",
                                     children: "Join us to manage visitor requests seamlessly."
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/(auth)/signup/page.tsx",
@@ -78,7 +78,7 @@ function SignUp() {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             htmlFor: "full-name",
-                                            className: "mb-2 text-sm font-medium text-gray-300",
+                                            className: "mb-2 text-sm font-medium text-gray-700 dark:text-gray-300",
                                             children: "Full Name"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(auth)/signup/page.tsx",
@@ -100,7 +100,7 @@ function SignUp() {
                                                     id: "full-name",
                                                     type: "text",
                                                     placeholder: "Enter your full name",
-                                                    className: "form-input w-full rounded-lg border-none bg-transparent py-3 pl-12 pr-4 text-white placeholder:text-gray-500 shadow-neomorph-light-pressed transition-shadow duration-300 focus:ring-2 focus:ring-blue-500 dark:shadow-neomorph-dark-pressed",
+                                                    className: "form-input w-full rounded-lg border-none bg-white/50 dark:bg-transparent py-3 pl-12 pr-4 text-foreground dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-500 shadow-neomorph-light-pressed transition-shadow duration-300 focus:ring-2 focus:ring-blue-500 dark:shadow-neomorph-dark-pressed",
                                                     autoComplete: "name"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(auth)/signup/page.tsx",
@@ -124,7 +124,7 @@ function SignUp() {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             htmlFor: "email",
-                                            className: "mb-2 text-sm font-medium text-gray-300",
+                                            className: "mb-2 text-sm font-medium text-gray-700 dark:text-gray-300",
                                             children: "Email Address"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(auth)/signup/page.tsx",
@@ -146,7 +146,7 @@ function SignUp() {
                                                     id: "email",
                                                     type: "email",
                                                     placeholder: "Enter your email address",
-                                                    className: "form-input w-full rounded-lg border-none bg-transparent py-3 pl-12 pr-4 text-white placeholder:text-gray-500 shadow-neomorph-light-pressed transition-shadow duration-300 focus:ring-2 focus:ring-blue-500 dark:shadow-neomorph-dark-pressed",
+                                                    className: "form-input w-full rounded-lg border-none bg-white/50 dark:bg-transparent py-3 pl-12 pr-4 text-foreground dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-500 shadow-neomorph-light-pressed transition-shadow duration-300 focus:ring-2 focus:ring-blue-500 dark:shadow-neomorph-dark-pressed",
                                                     autoComplete: "email"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(auth)/signup/page.tsx",
@@ -170,7 +170,7 @@ function SignUp() {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             htmlFor: "password",
-                                            className: "mb-2 text-sm font-medium text-gray-300",
+                                            className: "mb-2 text-sm font-medium text-gray-700 dark:text-gray-300",
                                             children: "Password"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(auth)/signup/page.tsx",
@@ -192,7 +192,7 @@ function SignUp() {
                                                     id: "password",
                                                     type: "password",
                                                     placeholder: "Enter your password",
-                                                    className: "form-input w-full rounded-lg border-none bg-transparent py-3 pl-12 pr-10 text-white placeholder:text-gray-500 shadow-neomorph-light-pressed transition-shadow duration-300 focus:ring-2 focus:ring-blue-500 dark:shadow-neomorph-dark-pressed",
+                                                    className: "form-input w-full rounded-lg border-none bg-white/50 dark:bg-transparent py-3 pl-12 pr-10 text-foreground dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-500 shadow-neomorph-light-pressed transition-shadow duration-300 focus:ring-2 focus:ring-blue-500 dark:shadow-neomorph-dark-pressed",
                                                     autoComplete: "new-password"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(auth)/signup/page.tsx",
@@ -232,7 +232,7 @@ function SignUp() {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             htmlFor: "confirm-password",
-                                            className: "mb-2 text-sm font-medium text-gray-300",
+                                            className: "mb-2 text-sm font-medium text-gray-700 dark:text-gray-300",
                                             children: "Confirm Password"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(auth)/signup/page.tsx",
@@ -254,7 +254,7 @@ function SignUp() {
                                                     id: "confirm-password",
                                                     type: "password",
                                                     placeholder: "Confirm your password",
-                                                    className: "form-input w-full rounded-lg border-none bg-transparent py-3 pl-12 pr-4 text-white placeholder:text-gray-500 shadow-neomorph-light-pressed transition-shadow duration-300 focus:ring-2 focus:ring-blue-500 dark:shadow-neomorph-dark-pressed",
+                                                    className: "form-input w-full rounded-lg border-none bg-white/50 dark:bg-transparent py-3 pl-12 pr-4 text-foreground dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-500 shadow-neomorph-light-pressed transition-shadow duration-300 focus:ring-2 focus:ring-blue-500 dark:shadow-neomorph-dark-pressed",
                                                     autoComplete: "new-password"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/(auth)/signup/page.tsx",
@@ -286,14 +286,14 @@ function SignUp() {
                                     className: "relative my-4 flex items-center",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "flex-grow border-t border-gray-600"
+                                            className: "flex-grow border-t border-gray-300 dark:border-gray-600"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(auth)/signup/page.tsx",
                                             lineNumber: 116,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "mx-4 text-xs text-gray-400",
+                                            className: "mx-4 text-xs text-gray-600 dark:text-gray-400",
                                             children: "OR"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(auth)/signup/page.tsx",
@@ -301,7 +301,7 @@ function SignUp() {
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "flex-grow border-t border-gray-600"
+                                            className: "flex-grow border-t border-gray-300 dark:border-gray-600"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/(auth)/signup/page.tsx",
                                             lineNumber: 118,
@@ -315,7 +315,7 @@ function SignUp() {
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     type: "button",
-                                    className: "flex w-full items-center justify-center gap-3 rounded-xl bg-black/20 py-3 text-white border border-white/10 hover:bg-black/30 transition-all backdrop-blur-xl",
+                                    className: "flex w-full items-center justify-center gap-3 rounded-xl bg-white/50 dark:bg-black/20 py-3 text-foreground dark:text-white border border-gray-300 dark:border-white/10 hover:bg-white/70 dark:hover:bg-black/30 transition-all backdrop-blur-xl",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
                                             className: "h-5 w-5",
@@ -375,13 +375,13 @@ function SignUp() {
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "mt-8 text-center",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-sm text-gray-400",
+                                className: "text-sm text-gray-600 dark:text-gray-400",
                                 children: [
                                     "Already have an account?",
                                     " ",
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                         href: "/signin",
-                                        className: "font-bold text-blue-400 hover:underline",
+                                        className: "font-bold text-blue-600 dark:text-blue-400 hover:underline",
                                         children: "Sign In"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/(auth)/signup/page.tsx",

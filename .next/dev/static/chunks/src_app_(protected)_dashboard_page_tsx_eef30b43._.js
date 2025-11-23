@@ -7,8 +7,8 @@ __turbopack_context__.s([
     ()=>DashboardPage
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/compiler-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
@@ -16,569 +16,527 @@ var _s = __turbopack_context__.k.signature();
 ;
 function DashboardPage() {
     _s();
-    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(15);
-    if ($[0] !== "798ec6f5dd4a817ede16cc6375dfbf256c289924e74f4e0f77a93674800fc146") {
-        for(let $i = 0; $i < 15; $i += 1){
-            $[$i] = Symbol.for("react.memo_cache_sentinel");
-        }
-        $[0] = "798ec6f5dd4a817ede16cc6375dfbf256c289924e74f4e0f77a93674800fc146";
-    }
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
-    let t0;
-    if ($[1] !== router) {
-        const viewDetails = {
-            "DashboardPage[viewDetails]": (action)=>{
-                console.log("Action", action);
-                if (action == "visibility") {
-                    router.push("/request/10");
+    const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [theme, setTheme] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("light");
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "DashboardPage.useEffect": ()=>{
+            if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+            ;
+            setMounted(true);
+            // Get initial theme from DOM
+            const checkTheme = {
+                "DashboardPage.useEffect.checkTheme": ()=>{
+                    if (typeof document !== 'undefined' && document.documentElement) {
+                        const isDark = document.documentElement.classList.contains("dark");
+                        setTheme(isDark ? "dark" : "light");
+                    }
                 }
+            }["DashboardPage.useEffect.checkTheme"];
+            checkTheme();
+            // Watch for changes to the dark class on html element
+            let observer = null;
+            if (typeof document !== 'undefined' && document.documentElement) {
+                observer = new MutationObserver(checkTheme);
+                observer.observe(document.documentElement, {
+                    attributes: true,
+                    attributeFilter: [
+                        "class"
+                    ]
+                });
             }
-        }["DashboardPage[viewDetails]"];
-        t0 = function ActionButtons() {
-            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex items-center gap-2",
-                children: [
-                    "link",
-                    "apartment",
-                    "play_arrow",
-                    "visibility"
-                ].map({
-                    "DashboardPage[ActionButtons > (anonymous)()]": (i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            onClick: {
-                                "DashboardPage[ActionButtons > (anonymous)() > <button>.onClick]": ()=>viewDetails(i)
-                            }["DashboardPage[ActionButtons > (anonymous)() > <button>.onClick]"],
-                            className: "w-8 h-8 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave transition",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "material-symbols-outlined text-gray-300 text-sm",
-                                children: i
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                                lineNumber: 29,
-                                columnNumber: 249
-                            }, this)
-                        }, i, false, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 27,
-                            columnNumber: 64
-                        }, this)
-                }["DashboardPage[ActionButtons > (anonymous)()]"])
-            }, void 0, false, {
-                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                lineNumber: 26,
-                columnNumber: 14
-            }, this);
-        };
-        $[1] = router;
-        $[2] = t0;
-    } else {
-        t0 = $[2];
-    }
-    const ActionButtons = t0;
-    let t1;
-    if ($[3] === Symbol.for("react.memo_cache_sentinel")) {
-        t1 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-            className: "text-4xl font-extrabold text-white tracking-tight",
-            children: "Dashboard"
-        }, void 0, false, {
-            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-            lineNumber: 40,
-            columnNumber: 10
-        }, this);
-        $[3] = t1;
-    } else {
-        t1 = $[3];
-    }
-    let t2;
-    if ($[4] === Symbol.for("react.memo_cache_sentinel")) {
-        t2 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
-            className: "flex items-center justify-between",
-            children: [
-                t1,
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex items-center gap-5",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                            className: "flex items-center gap-3 w-80 h-12 px-4 rounded-full shadow-neo-light-concave dark:shadow-neo-dark-concave bg-[#2a2d31]",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "material-symbols-outlined text-gray-400",
-                                    children: "search"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                                    lineNumber: 47,
-                                    columnNumber: 247
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                    placeholder: "Search requests...",
-                                    className: "flex-1 bg-transparent outline-none text-white placeholder-gray-500"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                                    lineNumber: 47,
-                                    columnNumber: 318
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 47,
-                            columnNumber: 109
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(HeaderIcon, {
-                            icon: "notifications"
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 47,
-                            columnNumber: 447
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(HeaderIcon, {
-                            icon: "dark_mode"
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 47,
-                            columnNumber: 482
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                    lineNumber: 47,
-                    columnNumber: 68
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-            lineNumber: 47,
-            columnNumber: 10
-        }, this);
-        $[4] = t2;
-    } else {
-        t2 = $[4];
-    }
-    let t3;
-    if ($[5] === Symbol.for("react.memo_cache_sentinel")) {
-        t3 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-            className: "text-2xl font-bold text-white mb-4",
-            children: "Active Search Requests"
-        }, void 0, false, {
-            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-            lineNumber: 54,
-            columnNumber: 10
-        }, this);
-        $[5] = t3;
-    } else {
-        t3 = $[5];
-    }
-    let t4;
-    if ($[6] === Symbol.for("react.memo_cache_sentinel")) {
-        t4 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
-            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                className: "text-gray-300 text-sm",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                        className: "pb-3",
-                        children: "S.No"
-                    }, void 0, false, {
-                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                        lineNumber: 61,
-                        columnNumber: 55
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                        className: "pb-3",
-                        children: "Person's Name"
-                    }, void 0, false, {
-                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                        lineNumber: 61,
-                        columnNumber: 85
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                        className: "pb-3",
-                        children: "Company"
-                    }, void 0, false, {
-                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                        lineNumber: 61,
-                        columnNumber: 124
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                        className: "pb-3",
-                        children: "Status"
-                    }, void 0, false, {
-                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                        lineNumber: 61,
-                        columnNumber: 157
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                        className: "pb-3",
-                        children: "Date"
-                    }, void 0, false, {
-                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                        lineNumber: 61,
-                        columnNumber: 189
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                        className: "pb-3",
-                        children: "Actions"
-                    }, void 0, false, {
-                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                        lineNumber: 61,
-                        columnNumber: 219
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                lineNumber: 61,
-                columnNumber: 17
-            }, this)
-        }, void 0, false, {
-            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-            lineNumber: 61,
-            columnNumber: 10
-        }, this);
-        $[6] = t4;
-    } else {
-        t4 = $[6];
-    }
-    let t5;
-    if ($[7] !== ActionButtons) {
-        t5 = TABLE_ROWS.map({
-            "DashboardPage[TABLE_ROWS.map()]": (row)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                    className: "h-[76px] border-t border-[#3a3f45]",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                            children: row.id
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 69,
-                            columnNumber: 113
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                            className: "font-semibold text-white",
-                            children: row.name
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 69,
-                            columnNumber: 130
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                            children: row.company
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 69,
-                            columnNumber: 186
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(StatusPill, {
-                                status: row.status
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                                lineNumber: 69,
-                                columnNumber: 212
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 69,
-                            columnNumber: 208
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                            children: row.date
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 69,
-                            columnNumber: 251
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ActionButtons, {}, void 0, false, {
-                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                                lineNumber: 69,
-                                columnNumber: 274
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 69,
-                            columnNumber: 270
-                        }, this)
-                    ]
-                }, row.id, true, {
-                    fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                    lineNumber: 69,
-                    columnNumber: 49
-                }, this)
-        }["DashboardPage[TABLE_ROWS.map()]"]);
-        $[7] = ActionButtons;
-        $[8] = t5;
-    } else {
-        t5 = $[8];
-    }
-    let t6;
-    if ($[9] !== t5) {
-        t6 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
-            className: "p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex bg-[#25282c]",
-            children: [
-                t3,
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
-                    className: "w-full text-left",
-                    children: [
-                        t4,
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
-                            className: "text-gray-200",
-                            children: t5
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 78,
-                            columnNumber: 156
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                    lineNumber: 78,
-                    columnNumber: 116
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-            lineNumber: 78,
-            columnNumber: 10
-        }, this);
-        $[9] = t5;
-        $[10] = t6;
-    } else {
-        t6 = $[10];
-    }
-    let t7;
-    if ($[11] === Symbol.for("react.memo_cache_sentinel")) {
-        t7 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-            className: "text-2xl font-bold text-white mb-4",
-            children: "Add New Search Request"
-        }, void 0, false, {
-            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-            lineNumber: 86,
-            columnNumber: 10
-        }, this);
-        $[11] = t7;
-    } else {
-        t7 = $[11];
-    }
-    let t8;
-    if ($[12] === Symbol.for("react.memo_cache_sentinel")) {
-        t8 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
-            className: "p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex bg-[#25282c]",
-            children: [
-                t7,
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
-                    className: "grid grid-cols-1 md:grid-cols-3 gap-6 items-end",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FormInput, {
-                            label: "Name of Person",
-                            placeholder: "e.g., John Doe"
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 93,
-                            columnNumber: 182
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FormInput, {
-                            label: "Company Name",
-                            placeholder: "e.g., Innovate Inc."
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 93,
-                            columnNumber: 247
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                            className: "h-12 px-8 bg-[#1B7FE6] text-white rounded-full font-semibold shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition",
-                            children: "Submit Request"
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                            lineNumber: 93,
-                            columnNumber: 315
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                    lineNumber: 93,
-                    columnNumber: 116
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-            lineNumber: 93,
-            columnNumber: 10
-        }, this);
-        $[12] = t8;
-    } else {
-        t8 = $[12];
-    }
-    let t9;
-    if ($[13] !== t6) {
-        t9 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "flex min-h-screen w-full bg-[#2f343a] dark:bg-[#1c1f22]",
+            return ({
+                "DashboardPage.useEffect": ()=>{
+                    if (observer) {
+                        observer.disconnect();
+                    }
+                }
+            })["DashboardPage.useEffect"];
+        }
+    }["DashboardPage.useEffect"], []);
+    const toggleTheme = ()=>{
+        if (typeof document !== 'undefined' && document.documentElement) {
+            const isDark = document.documentElement.classList.contains("dark");
+            if (isDark) {
+                document.documentElement.classList.remove("dark");
+                localStorage.setItem("theme", "light");
+                setTheme("light");
+            } else {
+                document.documentElement.classList.add("dark");
+                localStorage.setItem("theme", "dark");
+                setTheme("dark");
+            }
+        }
+    };
+    const viewDetails = (action)=>{
+        console.log("Action", action);
+        if (action == 'visibility') router.push('/request/10');
+    };
+    if (!mounted) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "flex min-h-screen w-full bg-background-light dark:bg-[#1c1f22]",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
                 className: "flex-1 p-8",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "flex flex-col gap-8",
-                    children: [
-                        t2,
-                        t6,
-                        t8
-                    ]
-                }, void 0, true, {
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
+                        className: "flex items-center justify-between",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                            className: "text-4xl font-extrabold text-foreground dark:text-white tracking-tight",
+                            children: "Dashboard"
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                            lineNumber: 69,
+                            columnNumber: 15
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                        lineNumber: 68,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
                     fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                    lineNumber: 100,
-                    columnNumber: 112
+                    lineNumber: 67,
+                    columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                lineNumber: 100,
-                columnNumber: 83
+                lineNumber: 66,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+            lineNumber: 65,
+            columnNumber: 7
+        }, this);
+    }
+    function ActionButtons() {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "flex items-center gap-1 sm:gap-2",
+            children: [
+                "link",
+                "apartment",
+                "play_arrow",
+                "visibility"
+            ].map((i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                    onClick: ()=>viewDetails(i),
+                    className: "w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave transition bg-white dark:bg-[#2a2d31]",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        className: "material-symbols-outlined text-gray-700 dark:text-gray-300 text-xs sm:text-sm",
+                        children: i
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                        lineNumber: 88,
+                        columnNumber: 13
+                    }, this)
+                }, i, false, {
+                    fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                    lineNumber: 83,
+                    columnNumber: 11
+                }, this))
+        }, void 0, false, {
+            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+            lineNumber: 81,
+            columnNumber: 7
+        }, this);
+    }
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "flex w-full bg-background-light dark:bg-[#1c1f22] min-h-screen",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
+            className: "flex-1 p-4 md:p-8 w-full pt-16 lg:pt-4",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex flex-col gap-8",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
+                        className: "flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                                className: "text-3xl sm:text-4xl font-extrabold text-foreground dark:text-white tracking-tight",
+                                children: "Dashboard"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                lineNumber: 104,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex items-center gap-3 sm:gap-5 w-full sm:w-auto",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                        className: "flex items-center gap-3 flex-1 sm:flex-initial sm:w-80 h-12 px-4 rounded-full shadow-neo-light-concave dark:shadow-neo-dark-concave bg-white dark:bg-[#2a2d31]",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "material-symbols-outlined text-gray-500 dark:text-gray-400",
+                                                children: "search"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                lineNumber: 111,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                placeholder: "Search requests...",
+                                                className: "flex-1 bg-transparent outline-none text-foreground dark:text-white placeholder-gray-500 dark:placeholder-gray-500"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                lineNumber: 114,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                        lineNumber: 110,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(HeaderIcon, {
+                                        icon: "notifications"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                        lineNumber: 121,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        onClick: toggleTheme,
+                                        className: "w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave dark:hover:shadow-neo-dark-concave transition bg-white dark:bg-[#2a2d31] shrink-0",
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "material-symbols-outlined text-gray-700 dark:text-gray-300 text-lg sm:text-xl",
+                                            children: theme === "light" ? "dark_mode" : "light_mode"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                            lineNumber: 128,
+                                            columnNumber: 17
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                        lineNumber: 124,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                lineNumber: 108,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                        lineNumber: 103,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
+                        className: "p-4 sm:p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex",
+                        style: {
+                            backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff'
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                className: "text-xl sm:text-2xl font-bold text-foreground dark:text-white mb-4",
+                                children: "Active Search Requests"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                lineNumber: 140,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "overflow-x-auto -mx-4 sm:mx-0",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "inline-block min-w-full align-middle",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
+                                        className: "w-full text-left min-w-[600px]",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                    className: "text-foreground dark:text-white text-xs sm:text-sm",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                            className: "pb-3 px-2 sm:px-4",
+                                                            children: "S.No"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                            lineNumber: 149,
+                                                            columnNumber: 23
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                            className: "pb-3 px-2 sm:px-4",
+                                                            children: "Person's Name"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                            lineNumber: 150,
+                                                            columnNumber: 23
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                            className: "pb-3 px-2 sm:px-4 hidden sm:table-cell",
+                                                            children: "Company"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                            lineNumber: 151,
+                                                            columnNumber: 23
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                            className: "pb-3 px-2 sm:px-4",
+                                                            children: "Status"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                            lineNumber: 152,
+                                                            columnNumber: 23
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                            className: "pb-3 px-2 sm:px-4 hidden md:table-cell",
+                                                            children: "Date"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                            lineNumber: 153,
+                                                            columnNumber: 23
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                                            className: "pb-3 px-2 sm:px-4",
+                                                            children: "Actions"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                            lineNumber: 154,
+                                                            columnNumber: 23
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                    lineNumber: 148,
+                                                    columnNumber: 21
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                lineNumber: 147,
+                                                columnNumber: 19
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
+                                                className: "text-foreground dark:text-white",
+                                                children: TABLE_ROWS.map((row)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                        className: "h-auto sm:h-[76px] border-t border-gray-200 dark:border-[#3a3f45] text-foreground dark:text-white",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                className: " px-2 sm:px-4 py-3 text-xs sm:text-sm",
+                                                                children: row.id
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                                lineNumber: 164,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                className: "font-semibold text-foreground dark:text-white px-2 sm:px-4 py-3 text-xs sm:text-sm",
+                                                                children: row.name
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                                lineNumber: 165,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                className: " px-2 sm:px-4 py-3 text-xs sm:text-sm hidden sm:table-cell",
+                                                                children: row.company
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                                lineNumber: 166,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                className: "px-2 sm:px-4 py-3",
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(StatusPill, {
+                                                                    status: row.status
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                                    lineNumber: 168,
+                                                                    columnNumber: 27
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                                lineNumber: 167,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                className: "px-2 sm:px-4 py-3 text-xs sm:text-sm hidden md:table-cell",
+                                                                children: row.date
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                                lineNumber: 170,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                                className: "px-2 sm:px-4 py-3",
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ActionButtons, {}, void 0, false, {
+                                                                    fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                                    lineNumber: 172,
+                                                                    columnNumber: 27
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                                lineNumber: 171,
+                                                                columnNumber: 25
+                                                            }, this)
+                                                        ]
+                                                    }, row.id, true, {
+                                                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                        lineNumber: 160,
+                                                        columnNumber: 23
+                                                    }, this))
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                                lineNumber: 158,
+                                                columnNumber: 19
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                        lineNumber: 146,
+                                        columnNumber: 17
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                    lineNumber: 145,
+                                    columnNumber: 15
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                lineNumber: 144,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                        lineNumber: 136,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
+                        className: "p-4 sm:p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex",
+                        style: {
+                            backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff'
+                        },
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                className: "text-xl sm:text-2xl font-bold text-foreground dark:text-white mb-4",
+                                children: "Add New Search Request"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                lineNumber: 187,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
+                                className: "grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-end",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FormInput, {
+                                        label: "Name of Person",
+                                        placeholder: "e.g., John Doe"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                        lineNumber: 192,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FormInput, {
+                                        label: "Company Name",
+                                        placeholder: "e.g., Innovate Inc."
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                        lineNumber: 193,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                        className: "h-12 px-6 sm:px-8 bg-[#1B7FE6] text-white rounded-full font-semibold text-sm sm:text-base shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition",
+                                        children: "Submit Request"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                        lineNumber: 195,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                                lineNumber: 191,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                        lineNumber: 183,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                lineNumber: 101,
+                columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
             lineNumber: 100,
-            columnNumber: 10
-        }, this);
-        $[13] = t6;
-        $[14] = t9;
-    } else {
-        t9 = $[14];
-    }
-    return t9;
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+        lineNumber: 98,
+        columnNumber: 5
+    }, this);
 }
-_s(DashboardPage, "fN7XvhJ+p5oE6+Xlo0NJmXpxjC8=", false, function() {
+_s(DashboardPage, "HiWhzgfJzlOHKyDl75/A0mzhG9o=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];
 });
 _c = DashboardPage;
-/* ——————————— SMALL COMPONENTS ——————————— */ function HeaderIcon(t0) {
-    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(3);
-    if ($[0] !== "798ec6f5dd4a817ede16cc6375dfbf256c289924e74f4e0f77a93674800fc146") {
-        for(let $i = 0; $i < 3; $i += 1){
-            $[$i] = Symbol.for("react.memo_cache_sentinel");
-        }
-        $[0] = "798ec6f5dd4a817ede16cc6375dfbf256c289924e74f4e0f77a93674800fc146";
-    }
-    const { icon } = t0;
-    let t1;
-    if ($[1] !== icon) {
-        t1 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-            className: "w-12 h-12 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave dark:hover:shadow-neo-dark-concave transition",
-            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                className: "material-symbols-outlined text-gray-300",
-                children: icon
-            }, void 0, false, {
-                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-                lineNumber: 124,
-                columnNumber: 215
-            }, this)
+/* ——————————— SMALL COMPONENTS ——————————— */ function HeaderIcon({ icon }) {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+        className: "w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave dark:hover:shadow-neo-dark-concave transition bg-white dark:bg-[#2a2d31]",
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+            className: "material-symbols-outlined text-gray-700 dark:text-gray-300 text-lg sm:text-xl",
+            children: icon
         }, void 0, false, {
             fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-            lineNumber: 124,
-            columnNumber: 10
-        }, this);
-        $[1] = icon;
-        $[2] = t1;
-    } else {
-        t1 = $[2];
-    }
-    return t1;
+            lineNumber: 211,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+        lineNumber: 210,
+        columnNumber: 5
+    }, this);
 }
 _c1 = HeaderIcon;
-function FormInput(t0) {
-    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(8);
-    if ($[0] !== "798ec6f5dd4a817ede16cc6375dfbf256c289924e74f4e0f77a93674800fc146") {
-        for(let $i = 0; $i < 8; $i += 1){
-            $[$i] = Symbol.for("react.memo_cache_sentinel");
-        }
-        $[0] = "798ec6f5dd4a817ede16cc6375dfbf256c289924e74f4e0f77a93674800fc146";
-    }
-    const { label, placeholder } = t0;
-    let t1;
-    if ($[1] !== label) {
-        t1 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-            className: "text-white text-sm",
-            children: label
-        }, void 0, false, {
-            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-            lineNumber: 146,
-            columnNumber: 10
-        }, this);
-        $[1] = label;
-        $[2] = t1;
-    } else {
-        t1 = $[2];
-    }
-    let t2;
-    if ($[3] !== placeholder) {
-        t2 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-            placeholder: placeholder,
-            className: "h-12 px-5 rounded-full bg-[#2a2d31] shadow-neo-light-concave dark:shadow-neo-dark-concave text-white outline-none placeholder-gray-500"
-        }, void 0, false, {
-            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-            lineNumber: 154,
-            columnNumber: 10
-        }, this);
-        $[3] = placeholder;
-        $[4] = t2;
-    } else {
-        t2 = $[4];
-    }
-    let t3;
-    if ($[5] !== t1 || $[6] !== t2) {
-        t3 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "flex flex-col gap-2",
-            children: [
-                t1,
-                t2
-            ]
-        }, void 0, true, {
-            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-            lineNumber: 162,
-            columnNumber: 10
-        }, this);
-        $[5] = t1;
-        $[6] = t2;
-        $[7] = t3;
-    } else {
-        t3 = $[7];
-    }
-    return t3;
+function FormInput({ label, placeholder }) {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+        className: "flex flex-col gap-2",
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                className: "text-foreground dark:text-white text-sm",
+                children: label
+            }, void 0, false, {
+                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                lineNumber: 219,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                placeholder: placeholder,
+                className: "h-12 px-5 rounded-full bg-white dark:bg-[#2a2d31] shadow-neo-light-concave dark:shadow-neo-dark-concave text-foreground dark:text-white outline-none placeholder-gray-500 dark:placeholder-gray-500"
+            }, void 0, false, {
+                fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+                lineNumber: 220,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+        lineNumber: 218,
+        columnNumber: 5
+    }, this);
 }
 _c2 = FormInput;
-function StatusPill(t0) {
-    const $ = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$compiler$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["c"])(5);
-    if ($[0] !== "798ec6f5dd4a817ede16cc6375dfbf256c289924e74f4e0f77a93674800fc146") {
-        for(let $i = 0; $i < 5; $i += 1){
-            $[$i] = Symbol.for("react.memo_cache_sentinel");
-        }
-        $[0] = "798ec6f5dd4a817ede16cc6375dfbf256c289924e74f4e0f77a93674800fc146";
-    }
-    const { status } = t0;
-    let t1;
-    if ($[1] === Symbol.for("react.memo_cache_sentinel")) {
-        t1 = {
-            Complete: "bg-green-700/30 text-green-300",
-            Pending: "bg-yellow-700/30 text-yellow-300",
-            Failed: "bg-red-700/30 text-red-300"
-        };
-        $[1] = t1;
-    } else {
-        t1 = $[1];
-    }
-    const map = t1;
-    const t2 = `inline-flex px-4 h-8 rounded-full items-center justify-center text-xs font-medium shadow-inner ${map[status]}`;
-    let t3;
-    if ($[2] !== status || $[3] !== t2) {
-        t3 = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-            className: t2,
-            children: status
-        }, void 0, false, {
-            fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
-            lineNumber: 197,
-            columnNumber: 10
-        }, this);
-        $[2] = status;
-        $[3] = t2;
-        $[4] = t3;
-    } else {
-        t3 = $[4];
-    }
-    return t3;
+function StatusPill({ status }) {
+    const map = {
+        Complete: "bg-green-100 dark:bg-green-700/30 text-green-700 dark:text-green-300",
+        Pending: "bg-yellow-100 dark:bg-yellow-700/30 text-yellow-700 dark:text-yellow-300",
+        Failed: "bg-red-100 dark:bg-red-700/30 text-red-700 dark:text-red-300"
+    };
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+        className: `inline-flex px-2 sm:px-4 h-6 sm:h-8 rounded-full items-center justify-center text-xs font-medium shadow-inner ${map[status]}`,
+        children: status
+    }, void 0, false, {
+        fileName: "[project]/src/app/(protected)/dashboard/page.tsx",
+        lineNumber: 236,
+        columnNumber: 5
+    }, this);
 }
 _c3 = StatusPill;
 /* Table Data */ const TABLE_ROWS = [
