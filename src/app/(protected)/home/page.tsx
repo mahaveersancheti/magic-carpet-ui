@@ -1,4 +1,5 @@
 "use client";
+import { UploadModal } from "@/app/components/UploadModal";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
@@ -6,6 +7,8 @@ export default function DashboardPage() {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -56,8 +59,11 @@ export default function DashboardPage() {
 
 
   const viewDetails = (action: string) => {
-    console.log("Action", action);
-    if (action == 'visibility') router.push('/request/10');
+    if (action === "visibility") {
+      router.push("/request/10");
+    } else if (action === "upload") {
+      setIsUploadModalOpen(true);
+    }
   }
 
   if (!mounted) {
@@ -77,16 +83,27 @@ export default function DashboardPage() {
   }
 
   function ActionButtons() {
+    const actions = [
+      { icon: "visibility", label: "View Details" },
+      { icon: "upload", label: "Upload Document" },
+      { icon: "download", label: "Download" },
+    ];
+
     return (
       <div className="flex items-center gap-1 sm:gap-2">
-        {["visibility", "upload", "download"].map((i) => (
+        {actions.map((action) => (
           <button
-            onClick={() => viewDetails(i)}
-            key={i}
-            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave transition bg-white dark:bg-[#2a2d31]"
+            key={action.icon}
+            onClick={() => viewDetails(action.icon)}
+            title={action.label}
+            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave transition bg-white dark:bg-[#2a2d31] group relative"
           >
             <span className="material-symbols-outlined text-gray-700 dark:text-gray-300 text-xs sm:text-sm">
-              {i}
+              {action.icon}
+            </span>
+            {/* Optional Tooltip */}
+            <span className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">
+              {action.label}
             </span>
           </button>
         ))}
@@ -201,7 +218,24 @@ export default function DashboardPage() {
 
           </section>
         </div>
+
+
       </main>
+
+      {/* Upload Modal */}
+      <UploadModal
+        isOpen={isUploadModalOpen}
+        onClose={() => {
+          setIsUploadModalOpen(false);
+          setSelectedFile(null);
+        }}
+        onUpload={(file) => {
+          console.log("Uploading file:", file);
+          // Here you can call your API to upload the file
+          alert(`Uploaded: ${file.name}`);
+        }}
+      />
+
     </div>
   );
 }
