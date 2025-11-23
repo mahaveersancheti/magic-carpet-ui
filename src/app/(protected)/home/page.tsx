@@ -9,9 +9,9 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    
+
     setMounted(true);
-    
+
     // Get initial theme from DOM
     const checkTheme = () => {
       if (typeof document !== 'undefined' && document.documentElement) {
@@ -19,9 +19,9 @@ export default function DashboardPage() {
         setTheme(isDark ? "dark" : "light");
       }
     };
-    
+
     checkTheme();
-    
+
     // Watch for changes to the dark class on html element
     let observer: MutationObserver | null = null;
     if (typeof document !== 'undefined' && document.documentElement) {
@@ -55,9 +55,9 @@ export default function DashboardPage() {
   };
 
 
-  const viewDetails = (action:string) => {
-    console.log("Action",action);
-    if(action == 'visibility') router.push('/request/10');
+  const viewDetails = (action: string) => {
+    console.log("Action", action);
+    if (action == 'visibility') router.push('/request/10');
   }
 
   if (!mounted) {
@@ -79,7 +79,7 @@ export default function DashboardPage() {
   function ActionButtons() {
     return (
       <div className="flex items-center gap-1 sm:gap-2">
-        {["link", "apartment", "play_arrow", "visibility"].map((i) => (
+        {["visibility", "upload", "download"].map((i) => (
           <button
             onClick={() => viewDetails(i)}
             key={i}
@@ -93,7 +93,7 @@ export default function DashboardPage() {
       </div>
     );
   }
-  
+
   return (
     <div className="flex w-full bg-background-light dark:bg-[#1c1f22] min-h-screen">
       {/* Main Content */}
@@ -102,7 +102,7 @@ export default function DashboardPage() {
           {/* Header */}
           <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground dark:text-white tracking-tight">
-            Home
+              Home
             </h1>
 
             <div className="flex items-center gap-3 sm:gap-5 w-full sm:w-auto">
@@ -121,7 +121,7 @@ export default function DashboardPage() {
               <HeaderIcon icon="notifications" />
 
               {/* Theme Toggle */}
-              <button 
+              <button
                 onClick={toggleTheme}
                 className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave dark:hover:shadow-neo-dark-concave transition bg-white dark:bg-[#2a2d31] shrink-0"
               >
@@ -133,9 +133,9 @@ export default function DashboardPage() {
           </header>
 
           {/* Table Section */}
-          <section 
-          className="p-4 sm:p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex"
-          style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
+          <section
+            className="p-4 sm:p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex"
+            style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
           >
             <h2 className="text-xl sm:text-2xl font-bold text-foreground dark:text-white mb-4">
               Active Search Requests
@@ -180,22 +180,25 @@ export default function DashboardPage() {
           </section>
 
           {/* Add Request */}
-          <section 
-          className="p-4 sm:p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex"
-          style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
+          <section
+            className="p-4 sm:p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex"
+            style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
           >
             <h2 className="text-xl sm:text-2xl font-bold text-foreground dark:text-white mb-4">
               Add New Search Request
             </h2>
 
-            <form className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-end">
+            <form className="grid grid-cols-1 md:grid-cols-3 gap-1 sm:gap-6 items-end">
               <FormInput label="Name of Person" placeholder="e.g., John Doe" />
               <FormInput label="Company Name" placeholder="e.g., Innovate Inc." />
+              <FormInput label="Industry Name" placeholder="e.g., Industry." />
+              <FormInput label="City" placeholder="e.g., City." />
 
-              <button className="h-12 px-6 sm:px-8 bg-[#1B7FE6] text-white rounded-full font-semibold text-sm sm:text-base shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition">
-                Submit Request
+              <button className="h-12 px-6 sm:px-8 bg-[#1B7FE6] text-white rounded-full font-semibold text-sm sm:text-base shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition w-full">
+                Submit
               </button>
             </form>
+
           </section>
         </div>
       </main>
@@ -213,20 +216,20 @@ function HeaderIcon({ icon }: { icon: string }) {
   );
 }
 
-function FormInput({ label, placeholder }:any) {
+function FormInput({ label, placeholder }: any) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 text-start">
       <label className="text-foreground dark:text-white text-sm">{label}</label>
       <input
         placeholder={placeholder}
-        className="h-12 px-5 rounded-full bg-white dark:bg-[#2a2d31] shadow-neo-light-concave dark:shadow-neo-dark-concave text-foreground dark:text-white outline-none placeholder-gray-500 dark:placeholder-gray-500"
+        className="border border-gray-200 dark:border-gray-700 h-12 px-5 rounded-full bg-white dark:bg-[#2a2d31] shadow-neo-light-concave dark:shadow-neo-dark-concave text-foreground dark:text-white outline-none placeholder-gray-500 dark:placeholder-gray-500"
       />
     </div>
   );
 }
 
 function StatusPill({ status }: any) {
-  const map:any = {
+  const map: any = {
     Complete: "bg-green-100 dark:bg-green-700/30 text-green-700 dark:text-green-300",
     Pending: "bg-yellow-100 dark:bg-yellow-700/30 text-yellow-700 dark:text-yellow-300",
     Failed: "bg-red-100 dark:bg-red-700/30 text-red-700 dark:text-red-300",
