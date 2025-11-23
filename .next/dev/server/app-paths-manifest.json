@@ -1,7 +1,0 @@
-{
-  "/(auth)/signin/page": "app/(auth)/signin/page.js",
-  "/(protected)/dashboard/page": "app/(protected)/dashboard/page.js",
-  "/(protected)/profile/page": "app/(protected)/profile/page.js",
-  "/(protected)/request/[id]/page": "app/(protected)/request/[id]/page.js",
-  "/page": "app/page.js"
-}

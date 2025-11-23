@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///Users/apple/Desktop/Self%20Learing/Magic%20Carpet/magic-carpet-ui/src/app/%28protected%29/profile/page.tsx"],"sourcesContent":["\"use client\";\nimport React from 'react'\n\nfunction Profile() {\n  return (\n    <div className='p-4 sm:p-6 md:p-8 min-h-screen bg-background-light dark:bg-[#1c1f22]'>\n      <div className=\"max-w-4xl mx-auto\">\n        <h1 className=\"text-2xl sm:text-3xl md:text-4xl font-extrabold text-foreground dark:text-white tracking-tight mb-6 sm:mb-8\">\n          Profile\n        </h1>\n        <div className=\"p-4 sm:p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex bg-white dark:bg-[#25282c]\">\n          <p className=\"text-sm sm:text-base text-foreground dark:text-gray-300\">Coming Soon..</p>\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport default Profile"],"names":[],"mappings":";;;;;AAAA;;AAGA,SAAS;IACP,qBACE,6LAAC;QAAI,WAAU;kBACb,cAAA,6LAAC;YAAI,WAAU;;8BACb,6LAAC;oBAAG,WAAU;8BAA8G;;;;;;8BAG5H,6LAAC;oBAAI,WAAU;8BACb,cAAA,6LAAC;wBAAE,WAAU;kCAA0D;;;;;;;;;;;;;;;;;;;;;;AAKjF;KAbS;uCAeM"}}]
-}
