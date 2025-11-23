@@ -9,7 +9,7 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     const router = useRouter();
-    const [selectedMenu, setSelectedMenu] = useState("Dashboard");
+    const [selectedMenu, setSelectedMenu] = useState("Home");
     const [mounted, setMounted] = useState(false);
     const [isDark, setIsDark] = useState(false);
 
@@ -50,12 +50,12 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     const handleNavigation = (label: string) => {
         setSelectedMenu(label); // highlight selected item
 
-        if(label == "Dashboard"){
-            router.push("/dashboard");
+        if(label == "Home"){
+            router.push("/home");
         }
 
         if(label == "User Profile"){
-            router.push("/profile");
+            router.push("/userprofile");
         }
 
         if (label === "LinkedIn Action") {
@@ -130,16 +130,16 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
 
                         {/* Dashboard */}
                         <a
-                            onClick={() => handleNavigation("Dashboard")}
+                            onClick={() => handleNavigation("Home")}
                             className={`flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl cursor-pointer text-sm sm:text-base
-                                ${selectedMenu === "Dashboard"
+                                ${selectedMenu === "Home"
                                     ? "bg-[#1B7FE6] text-white shadow-[0_4px_10px_rgba(27,127,230,0.35)]"
                                     : "text-foreground dark:text-white"
                                 }
                             `}
                         >
-                            <span className="material-symbols-outlined text-xl sm:text-2xl">dashboard</span>
-                            <p>Dashboard</p>
+                            <span className="material-symbols-outlined text-xl sm:text-2xl">Home</span>
+                            <p>Home</p>
                         </a>
 
                         {/* Dynamic Menu Items */}
@@ -164,7 +164,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
 
                     {/* Upgrade Card */}
                     <div 
-                    className={`mt-auto p-4 sm:p-5 rounded-2xl ${isDark ? 'shadow-neo-light-concave' : 'shadow-neo-dark-concave'} bg-gray-100 dark:bg-[#2b2f34]`}
+                    className={`border border-gray-200 dark:border-gray-700 mt-auto p-4 sm:p-5 rounded-2xl ${isDark ? 'shadow-neo-light-concave' : 'shadow-neo-dark-concave'} bg-gray-100 dark:bg-[#2b2f34]`}
                     style={{ backgroundColor: isDark ? '#111315' : '#ffffff' }}
                     >
                         <p className="text-xs sm:text-sm font-semibold text-foreground dark:text-white text-center">

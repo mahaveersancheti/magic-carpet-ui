@@ -67,7 +67,7 @@ export default function DashboardPage() {
           <div className="flex flex-col gap-8">
             <header className="flex items-center justify-between">
               <h1 className="text-4xl font-extrabold text-foreground dark:text-white tracking-tight">
-                Dashboard
+                Home
               </h1>
             </header>
           </div>
@@ -102,7 +102,7 @@ export default function DashboardPage() {
           {/* Header */}
           <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground dark:text-white tracking-tight">
-              Dashboard
+            Home
             </h1>
 
             <div className="flex items-center gap-3 sm:gap-5 w-full sm:w-auto">
