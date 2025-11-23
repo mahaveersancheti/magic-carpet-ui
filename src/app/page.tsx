@@ -49,7 +49,7 @@ export default function Home() {
                 <h1 className="text-4xl md:text-6xl font-black tracking-tight text-foreground dark:text-white">Simplify Your Visitor Search Management</h1>
                 <p className="text-base md:text-lg text-foreground dark:text-gray-300">Our platform provides real-time search analytics, secure data handling, and an intuitive dashboard to streamline your operations.</p>
               </div>
-              <a href="/signup" className="self-center lg:self-start flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-primary text-white text-base font-bold tracking-wide transition-all duration-300 neo-button-light neo-button-dark">
+              <a href="/signup" className="text-foreground dark:text-white self-center lg:self-start flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-primary font-bold tracking-wide transition-all duration-300 neo-button-light neo-button-dark">
                 Get Started for Free
               </a>
             </div>

@@ -1,7 +1,18 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 export default function LandingHeader() {
+  const [theme , setTheme] = useState("");
+  useEffect(() => {
+    setTheme(localStorage.getItem('theme') as string);
+  })
   return (
     <header className="sticky top-0 z-50 w-full max-w-6xl px-4 md:px-10 py-4 font-display">
-      <div className="flex items-center justify-between whitespace-nowrap rounded-full bg-background-light dark:bg-background-dark neo-card-light neo-card-dark px-6 py-3 transition-shadow duration-300">
+      <div 
+      className="flex items-center justify-between whitespace-nowrap rounded-full px-6 py-3 shadow-md"
+      style={{background: theme == 'light' ? '#E0E5EB' : '#2C2F33'}}
+      >
         <div className="flex items-center gap-4">
           <div className="size-6 text-primary">
             <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -18,7 +29,7 @@ export default function LandingHeader() {
         </nav>
         <div className="flex gap-2">
           <a href="/signin" className="flex min-w-[84px] items-center justify-center rounded-full h-10 px-4 bg-background-light dark:bg-background-dark text-sm font-bold transition-all duration-300 neo-button-light neo-button-dark text-foreground dark:text-white">Sign In</a>
-          <a href="/signup" className="flex min-w-[84px] items-center justify-center rounded-full h-10 px-4 bg-primary text-white text-sm font-bold transition-all duration-300 neo-button-light neo-button-dark">Sign Up</a>
+          <a href="/signup" className="flex min-w-[84px] items-center justify-center rounded-full h-10 px-4 bg-background-light dark:bg-background-dark text-sm font-bold transition-all duration-300 neo-button-light neo-button-dark text-foreground dark:text-white">Sign Up</a>
         </div>
         <div className="md:hidden">
           <button className="rounded-full p-2 neo-button-light neo-button-dark">
