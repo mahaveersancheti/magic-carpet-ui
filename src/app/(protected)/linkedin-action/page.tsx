@@ -13,7 +13,7 @@ const LinkedInAction = () => {
         <div className="w-full max-w-4xl mx-auto flex flex-col gap-6">
           {/* Back button */}
           <div>
-          <button onClick={() => {router.push('/dashboard')}} className="flex items-center gap-2 rounded-full p-2 shadow-neo-light-outset dark:shadow-neo-dark-outset hover:shadow-neo-light-inset dark:hover:shadow-neo-dark-inset transition-all active:scale-95 bg-white dark:bg-[#25282c] text-foreground dark:text-white">
+          <button onClick={() => {router.push('/home')}} className="flex items-center gap-2 rounded-full p-2 shadow-neo-light-outset dark:shadow-neo-dark-outset hover:shadow-neo-light-inset dark:hover:shadow-neo-dark-inset transition-all active:scale-95 bg-white dark:bg-[#25282c] text-foreground dark:text-white">
               <span className="material-symbols-outlined text-xl">
                 arrow_back
               </span>

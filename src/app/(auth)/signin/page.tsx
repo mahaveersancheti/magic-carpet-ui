@@ -7,7 +7,7 @@ export default function SignIn() {
   const router = useRouter();
 
   const handleSignIn = () => {
-    router.push('dashboard');
+    router.push('/home');
   }
 
   return (

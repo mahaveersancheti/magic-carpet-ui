@@ -42,12 +42,12 @@ export default function Home() {
     <div className="relative min-h-screen w-full flex flex-col items-center bg-background-light dark:bg-black text-foreground dark:text-white transition-colors duration-300">
       <LandingHeader />
       <main className="w-full max-w-6xl px-4 md:px-10 py-5">
-        <section className="w-full py-16 md:py-24">
+        <section className="w-full py-16 md:py-7">
           <div className="flex flex-col-reverse lg:flex-row gap-12 items-center">
             <div className="flex flex-col gap-8 text-center lg:text-left flex-1">
               <div className="flex flex-col gap-4">
-                <h1 className="text-4xl md:text-6xl font-black tracking-tight text-foreground dark:text-white">Simplify Your Visitor Search Management</h1>
-                <p className="text-base md:text-lg text-foreground dark:text-gray-300">Our platform provides real-time search analytics, secure data handling, and an intuitive dashboard to streamline your operations.</p>
+                <h1 className="text-4xl md:text-6xl font-black tracking-tight text-foreground dark:text-white">Turn Every Cold Call Into a Warm Conversation</h1>
+                <p className="text-base md:text-lg text-foreground dark:text-gray-300">AI-powered intelligence briefs that help sales teams approach prospects like trusted advisors. <b>3-5X higher connect rates</b> in just 60 seconds.</p>
               </div>
               <a href="/signup" className="text-foreground dark:text-white self-center lg:self-start flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-primary font-bold tracking-wide transition-all duration-300 neo-button-light neo-button-dark">
                 Get Started for Free
@@ -69,7 +69,7 @@ export default function Home() {
                 <p className="text-primary text-sm font-semibold tracking-wider uppercase">About The Company</p>
                 <p className="text-2xl font-bold text-foreground dark:text-white">Our Mission</p>
                 <p className="text-base md:text-lg text-foreground dark:text-gray-300">
-                  Our vision is to provide the most intuitive and powerful visitor management tools, helping you focus on what truly matters. We are dedicated to innovation, security, and exceptional user experience.
+                Our mission is to empower sales teams with instant, AI-driven intelligence that transforms every cold call into a warm, personalized conversation—enabling them to engage prospects like trusted advisors and achieve 3–5X higher connect rates within seconds.
                 </p>
               </div>
               <div className="w-full max-w-md flex-1 aspect-video rounded-lg shadow-neo-light-inset dark:shadow-neo-dark-inset p-2">
