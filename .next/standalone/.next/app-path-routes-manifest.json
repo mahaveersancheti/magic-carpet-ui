@@ -1,0 +1,12 @@
+{
+  "/(auth)/signin/page": "/signin",
+  "/(auth)/signup/page": "/signup",
+  "/(protected)/home/page": "/home",
+  "/(protected)/linkedin-action/page": "/linkedin-action",
+  "/(protected)/request/[id]/page": "/request/[id]",
+  "/(protected)/userprofile/page": "/userprofile",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/"
+}

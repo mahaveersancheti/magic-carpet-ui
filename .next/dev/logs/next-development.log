@@ -1,0 +1,104 @@
+[00:00:00.958] Server  LOG      ✓ Ready in 719ms
+[00:00:03.227] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:05.202] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:05.636] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:17.521] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:17.946] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:18.384] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:26.701] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:20.318] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:11:56.716] Server  LOG      ✓ Compiled in 56ms
+[01:15:50.871] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:18:59.345] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:40:40.288] Server  LOG      ✓ Compiled in 38ms
+[01:40:49.225] Server  LOG      ✓ Compiled in 35ms
+[01:40:53.963] Server  LOG      ✓ Compiled in 38ms
+[01:41:00.275] Server  LOG      ✓ Compiled in 71ms
+[01:41:35.436] Server  LOG      ✓ Compiled in 38ms
+[01:41:44.000] Server  LOG      ✓ Compiled in 36ms
+[01:41:52.285] Server  LOG      ✓ Compiled in 72ms
+[01:41:56.824] Server  LOG      ✓ Compiled in 23ms
+[01:42:01.181] Server  LOG      ✓ Compiled in 53ms
+[01:42:52.039] Server  LOG      ✓ Compiled in 37ms
+[01:42:55.133] Server  LOG      ✓ Compiled in 18ms
+[01:43:05.782] Server  LOG      ✓ Compiled in 61ms
+[01:43:09.729] Server  LOG      ✓ Compiled in 37ms
+[01:43:19.354] Server  LOG      ✓ Compiled in 20ms
+[01:48:06.468] Server  LOG      ✓ Compiled in 51ms
+[01:49:28.795] Server  LOG      ✓ Compiled in 39ms
+[01:51:32.951] Server  LOG      ✓ Compiled in 54ms
+[01:52:00.102] Server  LOG      ✓ Compiled in 36ms
+[01:53:24.971] Server  LOG      ✓ Compiled in 41ms
+[01:54:46.992] Server  LOG      ✓ Compiled in 18ms
+[01:55:18.568] Server  LOG      ✓ Compiled in 16ms
+[01:55:59.180] Server  LOG      ✓ Compiled in 31ms
+[01:56:04.613] Server  LOG      ✓ Compiled in 37ms
+[01:56:10.876] Server  LOG      ✓ Compiled in 40ms
+[01:56:52.365] Server  LOG      ✓ Compiled in 32ms
+[01:58:21.823] Server  LOG      ✓ Compiled in 54ms
+[01:58:31.821] Server  LOG      ✓ Compiled in 40ms
+[01:59:48.325] Server  LOG      ✓ Compiled in 25ms
+[01:59:48.896] Browser ERROR   Each child in a list should have a unique "key" prop.%s%s See https://react.dev/link/warning-keys for more information. 
+
+Check the render method of `ActionButtons`. 
+[01:59:54.328] Browser ERROR   Each child in a list should have a unique "key" prop.%s%s See https://react.dev/link/warning-keys for more information. 
+
+Check the render method of `ActionButtons`. 
+[02:00:05.805] Server  LOG      ✓ Compiled in 36ms
+[02:00:08.366] Browser ERROR   Each child in a list should have a unique "key" prop.%s%s See https://react.dev/link/warning-keys for more information. 
+
+Check the render method of `ActionButtons`. 
+[02:00:14.614] Server  LOG      ✓ Compiled in 36ms
+[02:00:50.847] Server  LOG      ✓ Compiled in 34ms
+[02:02:53.710] Server  LOG      ✓ Compiled in 62ms
+[02:05:38.864] Server  LOG      ✓ Compiled in 39ms
+[02:06:11.993] Server  LOG      ✓ Compiled in 59ms
+[02:06:26.019] Server  LOG      ✓ Compiled in 32ms
+[02:06:48.323] Server  LOG      ✓ Compiled in 24ms
+[02:06:51.861] Server  LOG      ✓ Compiled in 51ms
+[02:07:54.124] Server  LOG      ✓ Compiled in 35ms
+[02:13:12.765] Server  LOG      ✓ Compiled in 89ms
+[02:13:47.083] Server  LOG      ✓ Compiled in 29ms
+[02:19:31.315] Server  LOG      ✓ Compiled in 29ms
+[02:19:34.099] Server  LOG      ✓ Compiled in 57ms
+[02:22:55.682] Server  LOG      ✓ Compiled in 51ms
+[02:25:04.733] Server  LOG      ✓ Compiled in 58ms
+[02:26:21.488] Server  LOG      ✓ Compiled in 42ms
+[02:26:32.456] Server  LOG      ✓ Compiled in 38ms
+[02:28:22.879] Server  LOG      ✓ Compiled in 29ms
+[02:29:02.165] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[02:33:38.017] Server  LOG      ✓ Compiled in 74ms
+[02:35:15.956] Server  LOG      ✓ Compiled in 53ms
+[02:36:19.101] Server  LOG      ✓ Compiled in 42ms
+[02:36:40.987] Server  LOG      ✓ Compiled in 41ms
+[02:37:31.248] Server  LOG      ✓ Compiled in 44ms
+[02:37:42.124] Server  LOG      ✓ Compiled in 43ms
+[02:37:50.035] Server  LOG      ✓ Compiled in 22ms
+[02:38:21.255] Server  LOG      ✓ Compiled in 55ms
+[02:38:30.455] Server  LOG      ✓ Compiled in 24ms
+[02:39:36.113] Server  LOG      ✓ Compiled in 57ms
+[02:39:46.601] Server  LOG      ✓ Compiled in 42ms
+[02:40:02.894] Server  LOG      ✓ Compiled in 24ms
+[02:40:08.412] Server  LOG      ✓ Compiled in 38ms
+[02:40:14.412] Server  LOG      ✓ Compiled in 28ms
+[02:40:21.116] Server  LOG      ✓ Compiled in 29ms
+[02:40:25.393] Server  LOG      ✓ Compiled in 36ms
+[02:40:30.132] Server  LOG      ✓ Compiled in 23ms
+[02:40:42.117] Server  LOG      ✓ Compiled in 24ms
+[02:40:50.723] Server  LOG      ✓ Compiled in 35ms
+[02:41:29.599] Server  LOG      ✓ Compiled in 39ms
+[02:42:07.026] Server  LOG      ✓ Compiled in 35ms
+[02:42:34.022] Server  LOG      ✓ Compiled in 27ms
+[02:43:02.349] Server  LOG      ✓ Compiled in 25ms
+[02:43:27.856] Server  LOG      ✓ Compiled in 28ms
+[02:43:31.247] Server  LOG      ✓ Compiled in 20ms
+[02:43:55.056] Server  LOG      ✓ Compiled in 29ms
+[02:44:15.481] Server  LOG      ✓ Compiled in 25ms
+[02:47:51.554] Server  LOG      ✓ Compiled in 66ms
+[02:48:32.428] Server  LOG      ✓ Compiled in 54ms
+[02:48:36.721] Server  LOG      ✓ Compiled in 23ms
+[02:49:08.338] Server  LOG      ✓ Compiled in 62ms
+[02:49:12.873] Server  LOG      ✓ Compiled in 27ms
+[02:49:48.849] Server  LOG      ✓ Compiled in 28ms
+[02:50:08.511] Server  LOG      ✓ Compiled in 65ms
+[02:50:28.141] Server  LOG      ✓ Compiled in 29ms

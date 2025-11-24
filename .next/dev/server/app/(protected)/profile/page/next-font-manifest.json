@@ -1,0 +1,12 @@
+{
+  "pages": {},
+  "app": {
+    "[project]/src/app/(protected)/profile/page": [
+      "static/media/a343f882a40d2cc9-s.p.71e1367e.woff2",
+      "static/media/a218039a3287bcfd-s.p.4a23d71b.woff2",
+      "static/media/47fe1b7cd6e6ed85-s.p.855a563b.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pagesUsingSizeAdjust": false
+}
