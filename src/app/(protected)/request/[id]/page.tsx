@@ -1,7 +1,7 @@
 // components/MagicCarpetReport.jsx
 "use client";
 import React, { useState, useEffect } from "react";
-
+import { Volume2 } from "lucide-react";
 const REPORT_JSON = {
   meta: {
     title: "Magic Carpet",
@@ -349,7 +349,13 @@ export default function MagicCarpetReport() {;
           className="rounded-2xl p-6 shadow-neo-light-convex dark:shadow-neo-dark-convex border border-gray-200 dark:border-[#3a3f45]"
           style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
         >
-          <h3 className="text-lg font-semibold mb-3 text-foreground dark:text-white">Recent News & Context</h3>
+          <h3 className="flex justify-between text-lg font-semibold mb-3 text-foreground dark:text-white">
+            Recent News & Context
+            <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 text-white rounded-md text-sm transition">
+              <Volume2 className="w-4 h-4" />
+              Listen
+            </button>
+            </h3>
           <div className="space-y-3">
             {REPORT_JSON.recentNews.map((n, i) => (
               <div 
@@ -367,12 +373,153 @@ export default function MagicCarpetReport() {;
           </div>
         </section>
 
+            {/* ==================== NEW SECTION: Industry Outlook ==================== */}
+        <section
+          className="rounded-2xl p-6 shadow-neo-light-convex dark:shadow-neo-dark-convex border border-gray-200 dark:border-[#3a3f45]"
+          style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
+        >
+          <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground dark:text-white">
+            Industry Outlook – Music & Entertainment 2025–2026
+            <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 text-white rounded-md text-sm transition">
+              <Volume2 className="w-4 h-4" />
+              Listen
+            </button>
+          </h3>
+          <div className="grid md:grid-cols-2 gap-5 text-sm text-foreground dark:text-gray-300">
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
+                  <span className="text-red-600 dark:text-red-400 font-bold text-xs">!</span>
+                </div>
+                <div>
+                  <div className="font-medium">Rising M&A Activity</div>
+                  <div className="text-xs mt-1 opacity-90">
+                    42% increase in music-label acquisitions expected in 2025–2026 (PwC Entertainment Report). Identity sprawl and compliance harmonization are top post-merger risks.
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center flex-shrink-0">
+                  <span className="text-orange-600 dark:text-orange-400 font-bold text-xs">↑</span>
+                </div>
+                <div>
+                  <div className="font-medium">AI-Generated Content Surge</div>
+                  <div className="text-xs mt-1 opacity-90">
+                    Labels face new risks around deepfakes, royalty fraud, and unauthorized voice cloning — driving demand for zero-trust identity controls.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center flex-shrink-0">
+                <span className="text-purple-600 dark:text-purple-400 font-bold text-xs">$</span>
+              </div>
+              <div>
+                <div className="font-medium">Cyber Insurance Premiums Up 38%</div>
+                <div className="text-xs mt-1 opacity-90">
+                  Entertainment firms paying highest increases due to ransomware targeting high-value IP (Marsh 2025 Report).
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+          {/* ==================== NEW SECTION: Financial Section ==================== */}
+        <section
+          className="rounded-2xl p-6 shadow-neo-light-convex dark:shadow-neo-dark-convex border border-gray-200 dark:border-[#3a3f45]"
+          style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
+        >
+          <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground dark:text-white">
+            Financial Snapshot – Warner Music Group (NASDAQ: WMG)
+            <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 text-white rounded-md text-sm transition">
+              <Volume2 className="w-4 h-4" />
+              Listen
+            </button>
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">$6.92B</div>
+              <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">TTM Revenue</div>
+            </div>
+            <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">+12%</div>
+              <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">YoY Growth</div>
+            </div>
+            <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">$200M</div>
+              <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">2025 Tech/Security Budget (announced)</div>
+            </div>
+            <div className="p-4 bg-orange-50 dark:bg-orange-900/30 rounded-lg">
+              <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">47</div>
+              <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">Subsidiaries / Labels Globally</div>
+            </div>
+          </div>
+
+          <div className="mt-5 p-4 bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200 dark:border-amber-800 rounded-lg text-sm">
+            <strong className="text-amber-700 dark:text-amber-300">Budget Signal:</strong> WMG explicitly allocated $200M toward “digital infrastructure and security modernization” in June 2025 earnings call — strong indicator of available budget and executive sponsorship for identity/consolidation projects.
+          </div>
+        </section>
+
+          {/* ==================== NEW SECTION: Product Fit ==================== */}
+        <section
+          className="rounded-2xl p-6 shadow-neo-light-convex dark:shadow-neo-dark-convex border border-gray-200 dark:border-[#3a3f45]"
+          style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
+        >
+          <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground dark:text-white">
+            Product Fit – Why [Your Product] Solves Warner Music’s Biggest Pain
+            <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 text-white rounded-md text-sm transition">
+              <Volume2 className="w-4 h-4" />
+              Listen
+            </button>
+          </h3>
+
+          <div className="space-y-4">
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="p-4 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 border border-teal-200 dark:border-teal-800 rounded-lg">
+                <div className="font-semibold text-teal-700 dark:text-teal-300 mb-2">M&A Identity Orchestration</div>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  On-day-1 integration of acquired labels’ identity systems without rip-and-replace. Proven at Universal Music (reduced integration time 68%).
+                </p>
+              </div>
+
+              <div className="p-4 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 border border-indigo-200 dark:border-indigo-800 rounded-lg">
+                <div className="font-semibold text-indigo-700 dark:text-indigo-300 mb-2">Zero-Trust for Creative Workflows</div>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Granular access to masters, royalties, and AI training datasets — aligns perfectly with Brian’s public focus on human-centric zero-trust.
+                </p>
+              </div>
+
+              <div className="p-4 bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20 border border-pink-200 dark:border-pink-800 rounded-lg">
+                <div className="font-semibold text-pink-700 dark:text-pink-300 mb-2">Entertainment Reference Customers</div>
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Universal Music Group, Sony Music, Live Nation already live — immediate social proof and compliance artifacts available.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 bg-orange-50 dark:bg-orange-900/30 border border-orange-200 dark:border-orange-800 rounded-lg">
+              <div className="font-semibold text-orange-700 dark:text-orange-300 mb-2">Fit Score: 94/100</div>
+              <div className="text-sm text-gray-700 dark:text-gray-300">
+                Combination of active M&A, announced security budget, Brian’s zero-trust advocacy, and existing peer adoption makes Warner Music one of the highest-fit accounts in the pipeline.
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Psychology & Approach */}
         <section 
           className="rounded-2xl p-6 shadow-neo-light-convex dark:shadow-neo-dark-convex border border-gray-200 dark:border-[#3a3f45]"
           style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
         >
-          <h3 className="text-lg font-semibold mb-3 text-foreground dark:text-white">Psychology & Approach Strategy</h3>
+          <h3 className="flex justify-between text-lg font-semibold mb-3 text-foreground dark:text-white">
+            Psychology & Approach Strategy
+            <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 text-white rounded-md text-sm transition">
+              <Volume2 className="w-4 h-4" />
+              Listen
+            </button>
+            </h3>
           <div className="flex flex-wrap gap-2 mb-4">
             {REPORT_JSON.psychologyAndApproach.tabs.map((t, i) => (
               <span key={i} className="px-3 py-1 text-xs rounded-full bg-gray-100 dark:bg-[#3a3f45] text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-[#4a4f55]">{t}</span>
@@ -405,7 +552,13 @@ export default function MagicCarpetReport() {;
           className="rounded-2xl p-6 shadow-neo-light-convex dark:shadow-neo-dark-convex border border-gray-200 dark:border-[#3a3f45]"
           style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
         >
-          <h3 className="text-lg font-semibold mb-3 text-foreground dark:text-white">Conversation Starters</h3>
+          <h3 className="flex justify-between text-lg font-semibold mb-3 text-foreground dark:text-white">
+            Conversation Starters
+            <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 text-white rounded-md text-sm transition">
+              <Volume2 className="w-4 h-4" />
+              Listen
+            </button>
+            </h3>
           <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">Framework: {REPORT_JSON.conversationStarters.framework}</div>
 
           <div className="space-y-4">
@@ -436,7 +589,13 @@ export default function MagicCarpetReport() {;
           className="rounded-2xl p-6 shadow-neo-light-convex dark:shadow-neo-dark-convex border border-gray-200 dark:border-[#3a3f45]"
           style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
         >
-          <h3 className="text-lg font-semibold mb-3 text-foreground dark:text-white">War-Gaming: Predicted Objections & Counters</h3>
+          <h3 className="flex justify-between text-lg font-semibold mb-3 text-foreground dark:text-white">
+            War-Gaming: Predicted Objections & Counters
+            <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 text-white rounded-md text-sm transition">
+              <Volume2 className="w-4 h-4" />
+              Listen
+            </button>
+          </h3>
 
           <div className="space-y-4">
             {REPORT_JSON.objections.map((o, i) => (
@@ -473,7 +632,13 @@ export default function MagicCarpetReport() {;
           className="rounded-2xl p-6 shadow-neo-light-convex dark:shadow-neo-dark-convex border border-gray-200 dark:border-[#3a3f45]"
           style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
         >
-          <h3 className="text-lg font-semibold mb-3 text-foreground dark:text-white">Optimal Timing & Tactics</h3>
+          <h3 className="flex justify-between text-lg font-semibold mb-3 text-foreground dark:text-white">
+            Optimal Timing & Tactics
+            <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 text-white rounded-md text-sm transition">
+              <Volume2 className="w-4 h-4" />
+              Listen
+            </button>
+            </h3>
           <div className="grid md:grid-cols-2 gap-4">
             <div 
               className="p-4 rounded-lg border border-gray-200 dark:border-[#3a3f45]"
@@ -501,7 +666,13 @@ export default function MagicCarpetReport() {;
         <section className="bg-gradient-to-r from-blue-700 to-indigo-600 dark:from-blue-800 dark:to-indigo-700 text-white rounded-2xl p-6 shadow-lg">
           <div className="flex items-start justify-between gap-4">
             <div className="max-w-4xl">
-              <h3 className="text-xl font-semibold mb-2">{REPORT_JSON.actionRecommendation.title}</h3>
+              <h3 className="flex justify-between text-xl font-semibold mb-2">
+                {REPORT_JSON.actionRecommendation.title}
+                <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 dark:bg-orange-600 hover:bg-orange-600 dark:hover:bg-orange-700 text-white rounded-md text-sm transition">
+              <Volume2 className="w-4 h-4" />
+              Listen
+            </button>
+                </h3> <br />
               <p className="text-sm opacity-90">{REPORT_JSON.actionRecommendation.body}</p>
             </div>
 

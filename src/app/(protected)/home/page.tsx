@@ -2,7 +2,8 @@
 import { UploadModal } from "@/app/components/UploadModal";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect, useMemo } from "react";
-import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react"; // Optional: for sort icons
+import { ArrowUpDown, ArrowUp, ArrowDown, Linkedin, Instagram, Twitter, Globe, Plus } from "lucide-react";
+import { AddRequestModal } from "@/app/components/AddRequestFormModal";
 
 type StatusType = "Complete" | "Pending" | "Failed";
 
@@ -10,16 +11,18 @@ interface TableRow {
   id: number;
   name: string;
   company: string;
+  email: string;
+  phone: string;
   status: StatusType;
   date: string;
 }
 
 const RAW_TABLE_ROWS: TableRow[] = [
-  { id: 1, name: "John Doe", company: "Innovate Inc.", status: "Complete", date: "2023-10-26" },
-  { id: 2, name: "Jane Smith", company: "Tech Solutions", status: "Pending", date: "2023-10-25" },
-  { id: 3, name: "Mary Johnson", company: "Data Corp", status: "Failed", date: "2023-10-24" },
-  { id: 4, name: "Alex Brown", company: "Future Labs", status: "Complete", date: "2023-10-22" },
-  { id: 5, name: "Sarah Lee", company: "NexGen AI", status: "Pending", date: "2023-10-20" },
+  { id: 1, name: "John Doe", company: "Innovate Inc.", email: "john@innovate.com", phone: "+1 555-0101", status: "Complete", date: "2023-10-26" },
+  { id: 2, name: "Jane Smith", company: "Tech Solutions", email: "jane@techsol.com", phone: "+1 555-0102", status: "Pending", date: "2023-10-25" },
+  { id: 3, name: "Mary Johnson", company: "Data Corp", email: "mary@datacorp.com", phone: "+1 555-0103", status: "Failed", date: "2023-10-24" },
+  { id: 4, name: "Alex Brown", company: "Future Labs", email: "alex@futurelabs.ai", phone: "+1 555-0104", status: "Complete", date: "2023-10-22" },
+  { id: 5, name: "Sarah Lee", company: "NexGen AI", email: "sarah@nexgen.ai", phone: "+1 555-0105", status: "Pending", date: "2023-10-20" },
 ];
 
 export default function DashboardPage() {
@@ -28,6 +31,8 @@ export default function DashboardPage() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isAddRequestModalOpen, setIsAddRequestModalOpen] = useState(false);
+  const [openSocialRowId, setOpenSocialRowId] = useState<number | null>(null); // Lifted state for single open menu
 
   // Sorting & Filtering State
   const [searchTerm, setSearchTerm] = useState("");
@@ -137,16 +142,40 @@ export default function DashboardPage() {
     );
   }
 
-  function ActionButtons() {
-    const actions = [
+  function ActionButtons({ row }: { row: TableRow }) {
+    const isSocialOpen = openSocialRowId === row.id;
+  
+    const originalActions = [
       { icon: "visibility", label: "View Details" },
       { icon: "upload", label: "Upload Document" },
       { icon: "download", label: "Download" },
     ];
-
+  
+    const socialLinks = [
+      { icon: Linkedin, color: "text-[#0A66C2]", label: "LinkedIn", url: `https://linkedin.com/in/${row.name.toLowerCase().replace(" ", "-")}` },
+      { icon: Instagram, color: "text-pink-600", label: "Instagram", url: `https://instagram.com/${row.name.toLowerCase().replace(" ", ".")}` },
+      { icon: Twitter, color: "text-black dark:text-white", label: "X (Twitter)", url: `https://x.com/${row.name.toLowerCase().replace(" ", "")}` },
+      { icon: Globe, color: "text-purple-600", label: "Website", url: `https://facebook.com/${row.name.toLowerCase().replace(" ", ".")}` },
+    ];
+  
+    const toggleSocial = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      setOpenSocialRowId(isSocialOpen ? null : row.id);
+    };
+  
+    // Close when clicking outside
+    useEffect(() => {
+      const handleClickOutside = () => setOpenSocialRowId(null);
+      if (isSocialOpen) {
+        document.addEventListener("click", handleClickOutside);
+        return () => document.removeEventListener("click", handleClickOutside);
+      }
+    }, [isSocialOpen]);
+  
     return (
-      <div className="flex items-center gap-1 sm:gap-2">
-        {actions.map((action) => (
+      <div className="flex items-center gap-1 sm:gap-2 relative">
+        {/* Original 3 buttons */}
+        {originalActions.map((action) => (
           <button
             key={action.icon}
             onClick={() => viewDetails(action.icon)}
@@ -156,11 +185,56 @@ export default function DashboardPage() {
             <span className="material-symbols-outlined text-gray-700 dark:text-gray-300 text-xs sm:text-sm">
               {action.icon}
             </span>
-            <span className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none z-10">
+            <span className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none z-50">
               {action.label}
             </span>
           </button>
         ))}
+  
+        {/* Social FAB Button */}
+        <div className="relative">
+          {/* Social Icons - Open to the LEFT */}
+          <div
+            style={{zIndex: 9999, backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
+            className={`absolute right-full top-1/2 -translate-y-1/2 mr-3 flex items-center gap-1 transition-all duration-400 origin-right ${
+              isSocialOpen
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-0 pointer-events-none"
+            }`}
+            // style={{  }}
+          >
+            {socialLinks.map((social, i) => (
+              <a
+                key={social.label}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave transition-all bg-white dark:bg-[#2a2d31] group"
+                style={{
+                  animation: isSocialOpen ? `popInLeft 0.3s ease-out ${i * 70}ms both` : "",
+                }}
+              >
+                <social.icon className={`w-5 h-5 ${social.color}`} strokeWidth={2.5} />
+                <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none z-50 shadow-lg">
+                  {social.label}
+                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 border-8 border-transparent border-b-black"></span>
+                </span>
+              </a>
+            ))}
+          </div>
+  
+          {/* Main + Button */}
+          <button
+            onClick={toggleSocial}
+            className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave transition bg-gradient-to-br from-blue-500 to-blue-600 text-white group z-10"
+            title="Social Profiles"
+          >
+            <Plus
+              className={`w-5 h-5 transition-transform duration-300 ${isSocialOpen ? "rotate-45" : ""}`}
+              strokeWidth={3}
+            />
+          </button>
+        </div>
       </div>
     );
   }
@@ -189,11 +263,11 @@ export default function DashboardPage() {
                     className="flex-1 bg-transparent outline-none text-foreground dark:text-white placeholder-gray-500"
                   />
                 </label>
-
+                {/* Status Filter */}
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value as any)}
-                  className="h-12 px-4 rounded-full shadow-neo-light-concave dark:shadow-neo-dark-concave bg-white dark:bg-[#2a2d31] text-foreground dark:text-white outline-none"
+                  className="text-foreground dark:text-white h-12 px-4 rounded-full shadow-neo-light-concave dark:bg-[#2a2d31] outline-none dark:bg-[#2a2d31]"
                 >
                   <option value="all">All Status</option>
                   <option value="Complete">Complete</option>
@@ -202,6 +276,24 @@ export default function DashboardPage() {
                 </select>
               </div>
 
+              <button
+                onClick={() => setIsAddRequestModalOpen(true)}
+                className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave dark:hover:shadow-neo-dark-concave transition bg-white dark:bg-[#2a2d31] group relative"
+                title="Add New Request"
+              >
+                <span className="material-symbols-outlined text-gray-700 dark:text-gray-300 text-lg sm:text-xl">
+                  add
+                </span>
+
+                {/* Tooltip at BOTTOM */}
+                <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap pointer-events-none z-50 shadow-lg">
+                  Add New Request
+                  {/* Little triangle pointer */}
+                  <span className="absolute bottom-full left-1/2 -translate-x-1/2 border-8 border-transparent border-b-black"></span>
+                </span>
+              </button>
+
+              {/* Toggle Theme */}
               <div className="flex items-center gap-3">
                 <HeaderIcon icon="notifications" />
                 <button onClick={toggleTheme} className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave dark:hover:shadow-neo-dark-concave transition bg-white dark:bg-[#2a2d31]">
@@ -215,7 +307,7 @@ export default function DashboardPage() {
 
           {/* Table Section */}
           <section
-            className="p-4 sm:p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex overflow-hidden"
+            className="p-4 sm:p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex overflow-visible" // Changed to overflow-visible to prevent clipping
             style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
           >
             <h2 className="text-xl sm:text-2xl font-bold text-foreground dark:text-white mb-4">
@@ -237,10 +329,16 @@ export default function DashboardPage() {
                           Person's Name <SortIcon column="name" />
                         </button>
                       </th>
-                      <th className="pb-3 px-2 sm:px-4 hidden sm:table-cell">
+                      <th className="pb-3 px-2 sm:px-4 hidden lg:table-cell">
                         <button onClick={() => handleSort("company")} className="flex items-center gap-1 hover:text-blue-600 dark:hover:text-blue-400">
                           Company <SortIcon column="company" />
                         </button>
+                      </th>
+                      <th className="pb-3 px-2 sm:px-4 hidden xl:table-cell">
+                        Email
+                      </th>
+                      <th className="pb-3 px-2 sm:px-4 hidden xl:table-cell">
+                        Phone
                       </th>
                       <th className="pb-3 px-2 sm:px-4">Status</th>
                       <th className="pb-3 px-2 sm:px-4 hidden md:table-cell">
@@ -255,7 +353,7 @@ export default function DashboardPage() {
                   <tbody className="text-foreground dark:text-white">
                     {filteredAndSortedRows.length === 0 ? (
                       <tr>
-                        <td colSpan={6} className="text-center py-12 text-gray-500">
+                        <td colSpan={8} className="text-center py-12 text-gray-500">
                           No requests found matching your filters.
                         </td>
                       </tr>
@@ -267,13 +365,23 @@ export default function DashboardPage() {
                         >
                           <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm">{row.id}</td>
                           <td className="font-semibold px-2 sm:px-4 py-3 text-xs sm:text-sm">{row.name}</td>
-                          <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm hidden sm:table-cell">{row.company}</td>
+                          <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm hidden lg:table-cell">{row.company}</td>
+                          <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm hidden xl:table-cell">
+                            <a href={`mailto:${row.email}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                              {row.email}
+                            </a>
+                          </td>
+                          <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm hidden xl:table-cell">
+                            <a href={`tel:${row.phone}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                              {row.phone}
+                            </a>
+                          </td>
                           <td className="px-2 sm:px-4 py-3">
                             <StatusPill status={row.status} />
                           </td>
                           <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm hidden md:table-cell">{row.date}</td>
                           <td className="px-2 sm:px-4 py-3">
-                            <ActionButtons />
+                            <ActionButtons row={row} />
                           </td>
                         </tr>
                       ))
@@ -282,27 +390,6 @@ export default function DashboardPage() {
                 </table>
               </div>
             </div>
-          </section>
-
-          {/* Add Request Form */}
-          <section
-            className="p-4 sm:p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex"
-            style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
-          >
-            <h2 className="text-xl sm:text-2xl font-bold text-foreground dark:text-white mb-4">
-              Add New Search Request
-            </h2>
-
-            <form className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-end">
-              <FormInput label="Name of Person" placeholder="e.g., John Doe" />
-              <FormInput label="Company Name" placeholder="e.g., Innovate Inc." />
-              <FormInput label="Industry Name" placeholder="e.g., Tech" />
-              <FormInput label="City" placeholder="e.g., San Francisco" />
-
-              <button className="h-12 px-6 sm:px-8 bg-[#1B7FE6] text-white rounded-full font-semibold text-sm sm:text-base shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition w-full md:col-span-3 md:w-auto">
-                Submit Request
-              </button>
-            </form>
           </section>
         </div>
       </main>
@@ -317,6 +404,12 @@ export default function DashboardPage() {
           console.log("Uploading file:", file);
           alert(`Uploaded: ${file.name}`);
         }}
+      />
+
+      <AddRequestModal
+        isOpen={isAddRequestModalOpen}
+        onClose={() => setIsAddRequestModalOpen(false)}
+        theme={theme}
       />
     </div>
   );
