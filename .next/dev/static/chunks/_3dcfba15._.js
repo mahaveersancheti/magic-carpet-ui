@@ -601,7 +601,7 @@ function DashboardPage() {
     };
     const viewDetails = (action)=>{
         if (action === "visibility") {
-            router.push("/request/10");
+            router.push("/request");
         } else if (action === "upload") {
             setIsUploadModalOpen(true);
         }

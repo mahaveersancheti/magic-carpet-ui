@@ -3,7 +3,7 @@
   "/(auth)/signup/page": "app/(auth)/signup/page.js",
   "/(protected)/home/page": "app/(protected)/home/page.js",
   "/(protected)/linkedin-action/page": "app/(protected)/linkedin-action/page.js",
-  "/(protected)/request/[id]/page": "app/(protected)/request/[id]/page.js",
+  "/(protected)/request/page": "app/(protected)/request/page.js",
   "/(protected)/userprofile/page": "app/(protected)/userprofile/page.js",
   "/_global-error/page": "app/_global-error/page.js",
   "/_not-found/page": "app/_not-found/page.js",

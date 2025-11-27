@@ -12,7 +12,7 @@ package-lock.json
 /coverage
 
 next.js
-/out/
+# /out/
 
 # production
 /build

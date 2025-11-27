@@ -125,7 +125,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$
 ;
 ;
 ;
-const heroImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuAmlGeNXnVDB94--T-Wr8dPXCh9qxzwf79BFvQ3wDtyHd7bzRK0Z4EMsuKwCKhkcanTcocBEwr-KAoODyuIqVjSnjGPf22lkHUZrnk_C9fq72l-ccE_sfDlqGZ6QAJmO9gTsqj63ZYWYgqNw05-laTYtOLqk_2WU2OKr9ImDRFGGzXW06e21wYF6yxauUgPIqCq5JXV0veNF0od5vHFLLNvAN1Wr_mBlES6aQoilIQ62IzsyKVCYeCtFDJo-oCd6HgNf7sahldAD6Yb";
+const heroImage = "/landing.png";
+// "https://lh3.googleusercontent.com/aida-public/AB6AXuAmlGeNXnVDB94--T-Wr8dPXCh9qxzwf79BFvQ3wDtyHd7bzRK0Z4EMsuKwCKhkcanTcocBEwr-KAoODyuIqVjSnjGPf22lkHUZrnk_C9fq72l-ccE_sfDlqGZ6QAJmO9gTsqj63ZYWYgqNw05-laTYtOLqk_2WU2OKr9ImDRFGGzXW06e21wYF6yxauUgPIqCq5JXV0veNF0od5vHFLLNvAN1Wr_mBlES6aQoilIQ62IzsyKVCYeCtFDJo-oCd6HgNf7sahldAD6Yb";
 const aboutImage = "https://lh3.googleusercontent.com/aida-public/AB6AXuBgMzqEasJKD211pVtrnOAWz7FlUEhFyb4XiVJsYaSDyg8HGJF_Q2kwupBdKUBblkqOwWlVbyPzGctWwjLTNpt5iHRsyYhdt4cjBNY0ITVHvZbd1TWbcqoH4gT7ZgWwsB-gJa566vbudVHEiyiS-vva-_hT67lkzRCRCoTikBDyb6wxkulo-jSA9ltivAB44tgLywONaoapqD6j_m4Zd3zws8fEGsmzggTBLBQJGC6ucj-3-KArpZGyRMBm2UzJCEMXynyAqsD0zI85";
 const featureCards = [
     {
@@ -308,7 +309,7 @@ function Home() {
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                     className: "text-base md:text-lg text-foreground dark:text-gray-300",
-                                                    children: "Our mission is to empower sales teams with instant, AI-driven intelligence that transforms every cold call into a warm, personalized conversation—enabling them to engage prospects like trusted advisors and achieve 3–5X higher connect rates within seconds."
+                                                    children: "Our purpose is to turn uncertainty into expertise. We provide cutting-edge, AI-powered intelligence designed to eliminate the friction of traditional cold calling. Our platform ensures that within seconds, your sales team is briefed and ready to approach prospects like informed, trusted partners. This commitment to instant personalization is the key to unlocking 3–5X higher connect rates and accelerating your sales success."
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/page.tsx",
                                                     lineNumber: 71,

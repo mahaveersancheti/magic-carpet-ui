@@ -1,8 +1,8 @@
 import LandingHeader from "./components/LandingHeader";
 import LandingFooter from "./components/LandingFooter";
 
-const heroImage =
-  "https://lh3.googleusercontent.com/aida-public/AB6AXuAmlGeNXnVDB94--T-Wr8dPXCh9qxzwf79BFvQ3wDtyHd7bzRK0Z4EMsuKwCKhkcanTcocBEwr-KAoODyuIqVjSnjGPf22lkHUZrnk_C9fq72l-ccE_sfDlqGZ6QAJmO9gTsqj63ZYWYgqNw05-laTYtOLqk_2WU2OKr9ImDRFGGzXW06e21wYF6yxauUgPIqCq5JXV0veNF0od5vHFLLNvAN1Wr_mBlES6aQoilIQ62IzsyKVCYeCtFDJo-oCd6HgNf7sahldAD6Yb";
+const heroImage = "/landing.png"
+  // "https://lh3.googleusercontent.com/aida-public/AB6AXuAmlGeNXnVDB94--T-Wr8dPXCh9qxzwf79BFvQ3wDtyHd7bzRK0Z4EMsuKwCKhkcanTcocBEwr-KAoODyuIqVjSnjGPf22lkHUZrnk_C9fq72l-ccE_sfDlqGZ6QAJmO9gTsqj63ZYWYgqNw05-laTYtOLqk_2WU2OKr9ImDRFGGzXW06e21wYF6yxauUgPIqCq5JXV0veNF0od5vHFLLNvAN1Wr_mBlES6aQoilIQ62IzsyKVCYeCtFDJo-oCd6HgNf7sahldAD6Yb";
 
 const aboutImage =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuBgMzqEasJKD211pVtrnOAWz7FlUEhFyb4XiVJsYaSDyg8HGJF_Q2kwupBdKUBblkqOwWlVbyPzGctWwjLTNpt5iHRsyYhdt4cjBNY0ITVHvZbd1TWbcqoH4gT7ZgWwsB-gJa566vbudVHEiyiS-vva-_hT67lkzRCRCoTikBDyb6wxkulo-jSA9ltivAB44tgLywONaoapqD6j_m4Zd3zws8fEGsmzggTBLBQJGC6ucj-3-KArpZGyRMBm2UzJCEMXynyAqsD0zI85";
@@ -69,7 +69,7 @@ export default function Home() {
                 <p className="text-primary text-sm font-semibold tracking-wider uppercase">About The Company</p>
                 <p className="text-2xl font-bold text-foreground dark:text-white">Our Mission</p>
                 <p className="text-base md:text-lg text-foreground dark:text-gray-300">
-                Our mission is to empower sales teams with instant, AI-driven intelligence that transforms every cold call into a warm, personalized conversation—enabling them to engage prospects like trusted advisors and achieve 3–5X higher connect rates within seconds.
+                Our purpose is to turn uncertainty into expertise. We provide cutting-edge, AI-powered intelligence designed to eliminate the friction of traditional cold calling. Our platform ensures that within seconds, your sales team is briefed and ready to approach prospects like informed, trusted partners. This commitment to instant personalization is the key to unlocking 3–5X higher connect rates and accelerating your sales success.
                 </p>
               </div>
               <div className="w-full max-w-md flex-1 aspect-video rounded-lg shadow-neo-light-inset dark:shadow-neo-dark-inset p-2">

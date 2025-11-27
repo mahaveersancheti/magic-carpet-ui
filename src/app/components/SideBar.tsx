@@ -119,7 +119,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                             className="size-9 sm:size-11 rounded-full bg-cover bg-center shadow-neo-light-convex dark:shadow-neo-dark-convex shrink-0"
                             style={{
                                 backgroundImage:
-                                    'url("https://lh3.googleusercontent.com/aida-public/AB6AXuD8GfqTO1JesMaHQ9vmnYnPY_KR16CBayMpwMoOTdBJackbKjHcSMUz_A4_fAxYmdY-dZMMzMnn4BN1a-Tn5lDAW9OTXxJTYQ05M4b6nAOnRSrwBkeW5kaB2qOg9TOHvzA0oj75ei0VWjFB6ybDP-whRqADCG7D7xenLVUbcdoXsY6lOmO4QAlDKUNveNSXqDbj5W0lDFUH86Ar9I7dAvpwQMXtK_GCkQE2n_7slNoZqPn6ouhQp0pfd617JoFV_4oaFWvMmDkGoFK7")',
+                                    'url("/icon.png")',
                             }}
                         />
                         <h1 className="text-lg sm:text-xl font-semibold text-foreground dark:text-white">Magic Carpet</h1>

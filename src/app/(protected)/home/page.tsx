@@ -72,7 +72,7 @@ export default function DashboardPage() {
 
   const viewDetails = (action: string) => {
     if (action === "visibility") {
-      router.push("/request/10");
+      router.push("/request");
     } else if (action === "upload") {
       setIsUploadModalOpen(true);
     }

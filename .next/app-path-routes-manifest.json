@@ -3,7 +3,7 @@
   "/(auth)/signup/page": "/signup",
   "/(protected)/home/page": "/home",
   "/(protected)/linkedin-action/page": "/linkedin-action",
-  "/(protected)/request/[id]/page": "/request/[id]",
+  "/(protected)/request/page": "/request",
   "/(protected)/userprofile/page": "/userprofile",
   "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",

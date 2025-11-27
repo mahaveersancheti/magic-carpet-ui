@@ -17,45 +17,45 @@ import {
   Facebook,
   Linkedin,
   Twitter,
-  Instagram
+  Instagram,
+  Sun,
+  Moon,
 } from "lucide-react";
-import { useTheme } from "@/app/contexts/ThemeProvider";
 
 export default function UserProfile() {
   const [showUploadOverlay, setShowUploadOverlay] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  // Theme handling
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    
     setMounted(true);
-    
-    // Get initial theme from DOM
-    const checkTheme = () => {
-      if (typeof document !== 'undefined' && document.documentElement) {
-        const isDark = document.documentElement.classList.contains("dark");
-        setTheme(isDark ? "dark" : "light");
-      }
-    };
-    
-    checkTheme();
-    
-    // Watch for changes to the dark class on html element
-    let observer: MutationObserver | null = null;
-    if (typeof document !== 'undefined' && document.documentElement) {
-      observer = new MutationObserver(checkTheme);
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["class"],
-      });
-    }
 
-    return () => {
-      if (observer) {
-        observer.disconnect();
-      }
+    const checkTheme = () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      setTheme(isDark ? "dark" : "light");
     };
+    checkTheme();
+
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
   }, []);
+
+  const toggleTheme = () => {
+    const isDark = document.documentElement.classList.contains("dark");
+    if (isDark) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setTheme("light");
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setTheme("dark");
+    }
+  };
 
   const userData = {
     name: "Jordan Smith",
@@ -67,8 +67,8 @@ export default function UserProfile() {
   };
 
   const files = [
-    { name: "Resume_JordanSmith.pdf", size: "2.1 MB", type: "pdf" },
-    { name: "Project_Brief_Final.docx", size: "856 KB", type: "doc" },
+    { name: "Document1.pdf", size: "2.1 MB", type: "pdf" },
+    { name: "Document2.docx", size: "856 KB", type: "doc" },
   ];
 
   const products = [
@@ -91,6 +91,16 @@ export default function UserProfile() {
     { label: "Book a Meeting", href: "#meeting", icon: Calendar },
   ];
 
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-background-light dark:bg-[#1c1f22] py-6 px-4 sm:px-6 lg:px-8 transition-colors duration-200">
+        <div className="mx-auto max-w-6xl">
+          {/* Placeholder content while mounting */}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background-light dark:bg-[#1c1f22] py-6 px-4 sm:px-6 lg:px-8 transition-colors duration-200">
       <div className="mx-auto max-w-6xl">
@@ -99,9 +109,17 @@ export default function UserProfile() {
           <div className="space-y-6">
             {/* Profile Card */}
             <div 
-            className="bg-white dark:bg-[#2a2d31] p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex transition-all duration-200"
-            style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
+              className="bg-white dark:bg-[#2a2d31] p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex transition-all duration-200 relative"
+              style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
             >
+              {/* Theme Toggle Button */}
+              <button
+                onClick={toggleTheme}
+                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave dark:hover:shadow-neo-dark-concave transition bg-white dark:bg-[#2a2d31]"
+              >
+                {theme === "light" ? <Sun className="w-5 h-5 text-yellow-600" /> : <Moon className="w-5 h-5 text-indigo-400" />}
+              </button>
+
               <div className="flex flex-col items-center">
                 <div className="relative mb-4">
                   <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden ring-4 ring-primary/20 dark:ring-primary/30 shadow-lg">
@@ -128,9 +146,7 @@ export default function UserProfile() {
                     { Icon: Twitter, label: "Link" },
                     { Icon: Instagram, label: "Link" },
                     { Icon: Facebook, label: "Link" },
-                    // { Icon: Link2, label: "Link" },
                     { Icon: Share2, label: "Share" },
-                    // { Icon: MoreHorizontal, label: "More" },
                   ].map(({ Icon, label }, i) => (
                     <button
                       key={i}
@@ -145,9 +161,9 @@ export default function UserProfile() {
             </div>
 
             {/* Contact Info Card */}
-            <div 
-            style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
-            className="bg-white dark:bg-[#2a2d31] p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex transition-all duration-200"
+            <div
+              style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
+              className="bg-white dark:bg-[#2a2d31] p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex transition-all duration-200"
             >
               <h3 className="font-bold text-lg text-foreground dark:text-white mb-4">
                 Contact Information
@@ -167,7 +183,7 @@ export default function UserProfile() {
                 </div>
 
                 <div style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }} className="border border-gray-200 dark:border-gray-700 flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-[#36393e] hover:bg-gray-100 dark:hover:bg-[#3a3f45] transition-colors">
-                  <div  className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
+                  <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
                     <Phone className="w-4 h-4 text-primary dark:text-accent-dark" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -181,9 +197,9 @@ export default function UserProfile() {
             </div>
 
             {/* Quick Actions Card */}
-            <div 
-            style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
-            className="bg-white dark:bg-[#2a2d31] p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex transition-all duration-200">
+            <div
+              style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
+              className="bg-white dark:bg-[#2a2d31] p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex transition-all duration-200">
               <h3 className="font-bold text-lg text-foreground dark:text-white mb-4">
                 Quick Actions
               </h3>
@@ -228,7 +244,7 @@ export default function UserProfile() {
             <div style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }} className="bg-white dark:bg-[#2a2d31] p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex transition-all duration-200">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-bold text-lg sm:text-xl text-foreground dark:text-white">
-                  Uploaded Files
+                  Uploaded Product Documents
                 </h3>
 
                 <button
@@ -262,11 +278,10 @@ export default function UserProfile() {
                   >
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                       <div
-                        className={`px-3 py-1.5 rounded-lg text-white text-xs font-semibold shrink-0 ${
-                          file.type === "pdf"
+                        className={`px-3 py-1.5 rounded-lg text-white text-xs font-semibold shrink-0 ${file.type === "pdf"
                             ? "bg-red-500 dark:bg-red-600"
                             : "bg-blue-500 dark:bg-blue-600"
-                        }`}
+                          }`}
                       >
                         {file.type.toUpperCase()}
                       </div>
@@ -327,7 +342,7 @@ export default function UserProfile() {
             onClick={() => setShowUploadOverlay(false)}
           >
             <div
-            style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
+              style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
               className="bg-white dark:bg-[#2a2d31] rounded-2xl p-6 w-full max-w-md border border-gray-200 dark:border-gray-700 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
