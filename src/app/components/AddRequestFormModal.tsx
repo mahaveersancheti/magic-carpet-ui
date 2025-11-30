@@ -1,11 +1,9 @@
 export function AddRequestModal({
     isOpen,
-    onClose,
-    theme
+    onClose
 }: {
     isOpen: boolean;
     onClose: () => void;
-    theme: any
 }) {
     if (!isOpen) return null;
 
@@ -13,10 +11,10 @@ export function AddRequestModal({
     function FormInput({ label, placeholder }: { label: string; placeholder: string }) {
         return (
             <div className="flex flex-col gap-2 text-start">
-                <label className="text-foreground dark:text-white text-sm">{label}</label>
+                <label className="text-foreground text-sm">{label}</label>
                 <input
                     placeholder={placeholder}
-                    className="border border-gray-200 dark:border-gray-700 h-12 px-5 rounded-full bg-white dark:bg-[#2a2d31] shadow-neo-light-concave dark:shadow-neo-dark-concave text-foreground dark:text-white outline-none placeholder-gray-500"
+                    className="border border-gray-200 h-12 px-5 rounded-full bg-white shadow-neo-light-concave text-foreground outline-none placeholder-gray-500"
                 />
             </div>
         );
@@ -31,14 +29,14 @@ export function AddRequestModal({
             />
 
             {/* Modal */}
-            <div style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }} className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl bg-white dark:bg-[#0f1419] p-6 sm:p-8">
+            <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl bg-white p-6 sm:p-8">
                 <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl sm:text-3xl font-bold text-foreground dark:text-white">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
                         Add New Search Request
                     </h2>
                     <button
                         onClick={onClose}
-                        className="w-10 h-10 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 flex items-center justify-center transition"
+                        className="w-10 h-10 rounded-full hover:bg-gray-200 flex items-center justify-center transition"
                     >
                         <span className="material-symbols-outlined text-xl">close</span>
                     </button>
@@ -64,7 +62,7 @@ export function AddRequestModal({
                         <button
                             type="button"
                             onClick={onClose}
-                            className="h-12 px-8 rounded-full border border-gray-300 dark:border-gray-600 text-foreground dark:text-white dark:hover:text-black font-medium hover:bg-gray-100 dark:hover:bg-gray-400 transition"
+                            className="h-12 px-8 rounded-full border border-gray-300 text-foreground font-medium hover:bg-gray-100 transition"
                         >
                             Cancel
                         </button>

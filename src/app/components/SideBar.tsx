@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface SidebarProps {
     isOpen?: boolean;
@@ -10,42 +10,6 @@ interface SidebarProps {
 export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     const router = useRouter();
     const [selectedMenu, setSelectedMenu] = useState("Home");
-    const [mounted, setMounted] = useState(false);
-    const [isDark, setIsDark] = useState(false);
-
-    useEffect(() => {
-        // Only run on client side
-        if (typeof window === 'undefined') return;
-        
-        setMounted(true);
-        
-        // Get initial theme from DOM
-        const checkTheme = () => {
-            if (typeof document !== 'undefined' && document.documentElement) {
-                const hasDarkClass = document.documentElement.classList.contains("dark");
-                setIsDark(hasDarkClass);
-            }
-        };
-        
-        // Check theme immediately
-        checkTheme();
-        
-        // Watch for changes to the dark class on html element
-        let observer: MutationObserver | null = null;
-        if (typeof document !== 'undefined' && document.documentElement) {
-            observer = new MutationObserver(checkTheme);
-            observer.observe(document.documentElement, {
-                attributes: true,
-                attributeFilter: ["class"],
-            });
-        }
-
-        return () => {
-            if (observer) {
-                observer.disconnect();
-            }
-        };
-    }, []);
 
     const handleNavigation = (label: string) => {
         setSelectedMenu(label); // highlight selected item
@@ -73,16 +37,6 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         ["person", "User Profile"],
     ];
 
-    if (!mounted) {
-        return (
-            <aside className="w-80 p-3 h-full">
-                <div className="flex flex-col h-full rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex p-5 bg-white dark:bg-[#111315]">
-                    <div className="h-full" />
-                </div>
-            </aside>
-        );
-    }
-
     return (
         <>
             {/* Mobile Overlay */}
@@ -102,13 +56,12 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
             `}>
                 <div 
-                    className="flex flex-col h-full rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex p-4 sm:p-5 bg-white dark:bg-[#111315]"
-                    style={{ backgroundColor: isDark ? '#111315' : '#ffffff' }}
+                    className="flex flex-col h-full rounded-2xl shadow-neo-light-convex p-4 sm:p-5 bg-white"
                 >
                     {/* Mobile Close Button */}
                     <button
                         onClick={onClose}
-                        className="lg:hidden absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-[#2b2f34] text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-[#3a3f45] transition"
+                        className="lg:hidden absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
                     >
                         <span className="material-symbols-outlined text-lg">close</span>
                     </button>
@@ -116,13 +69,13 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                     {/* Logo */}
                     <div className="flex items-center gap-3 p-2 mb-6 sm:mb-10">
                         <div
-                            className="size-9 sm:size-11 rounded-full bg-cover bg-center shadow-neo-light-convex dark:shadow-neo-dark-convex shrink-0"
+                            className="size-9 sm:size-11 rounded-full bg-cover bg-center shadow-neo-light-convex shrink-0"
                             style={{
                                 backgroundImage:
                                     'url("/icon.png")',
                             }}
                         />
-                        <h1 className="text-lg sm:text-xl font-semibold text-foreground dark:text-white">Magic Carpet</h1>
+                        <h1 className="text-lg sm:text-xl font-semibold text-foreground">Magic Carpet</h1>
                     </div>
 
                     {/* Navigation */}
@@ -134,7 +87,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                             className={`flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl cursor-pointer text-sm sm:text-base
                                 ${selectedMenu === "Home"
                                     ? "bg-[#1B7FE6] text-white shadow-[0_4px_10px_rgba(27,127,230,0.35)]"
-                                    : "text-foreground dark:text-white"
+                                    : "text-foreground"
                                 }
                             `}
                         >
@@ -150,7 +103,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                 className={`flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl cursor-pointer transition text-sm sm:text-base
                                     ${selectedMenu === label
                                         ? "bg-[#1B7FE6] text-white shadow-[0_4px_12px_rgba(27,127,230,0.35)]"
-                                        : "text-foreground dark:text-white hover:shadow-neo-light-concave dark:hover:shadow-neo-dark-concave"
+                                        : "text-foreground hover:shadow-neo-light-concave"
                                     }
                                 `}
                             >
@@ -164,13 +117,12 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
 
                     {/* Upgrade Card */}
                     <div 
-                    className={`border border-gray-200 dark:border-gray-700 mt-auto p-4 sm:p-5 rounded-2xl ${isDark ? 'shadow-neo-light-concave' : 'shadow-neo-dark-concave'} bg-gray-100 dark:bg-[#2b2f34]`}
-                    style={{ backgroundColor: isDark ? '#111315' : '#ffffff' }}
+                    className="border border-gray-200 mt-auto p-4 sm:p-5 rounded-2xl shadow-neo-light-concave bg-gray-100"
                     >
-                        <p className="text-xs sm:text-sm font-semibold text-foreground dark:text-white text-center">
+                        <p className="text-xs sm:text-sm font-semibold text-foreground text-center">
                             Upgrade to Pro
                         </p>
-                        <p className="text-xs text-foreground dark:text-white mt-1 text-center">
+                        <p className="text-xs text-foreground mt-1 text-center">
                             Get access to all features and enhance your search capabilities.
                         </p>
                         <button className="mt-3 sm:mt-4 w-full py-2 rounded-xl bg-[#1B7FE6] text-white font-semibold text-sm sm:text-base shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition">

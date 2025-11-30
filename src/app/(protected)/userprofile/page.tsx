@@ -18,44 +18,10 @@ import {
   Linkedin,
   Twitter,
   Instagram,
-  Sun,
-  Moon,
 } from "lucide-react";
 
 export default function UserProfile() {
   const [showUploadOverlay, setShowUploadOverlay] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  // Theme handling
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    setMounted(true);
-
-    const checkTheme = () => {
-      const isDark = document.documentElement.classList.contains("dark");
-      setTheme(isDark ? "dark" : "light");
-    };
-    checkTheme();
-
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const toggleTheme = () => {
-    const isDark = document.documentElement.classList.contains("dark");
-    if (isDark) {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-      setTheme("light");
-    } else {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-      setTheme("dark");
-    }
-  };
 
   const userData = {
     name: "Jordan Smith",
@@ -91,38 +57,21 @@ export default function UserProfile() {
     { label: "Book a Meeting", href: "#meeting", icon: Calendar },
   ];
 
-  if (!mounted) {
-    return (
-      <div className="min-h-screen bg-background-light dark:bg-[#1c1f22] py-6 px-4 sm:px-6 lg:px-8 transition-colors duration-200">
-        <div className="mx-auto max-w-6xl">
-          {/* Placeholder content while mounting */}
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen bg-background-light dark:bg-[#1c1f22] py-6 px-4 sm:px-6 lg:px-8 transition-colors duration-200">
+    <div className="min-h-screen bg-background-light py-6 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <div className="grid lg:grid-cols-3 gap-6">
           {/* LEFT COLUMN */}
           <div className="space-y-6">
             {/* Profile Card */}
             <div 
-              className="bg-white dark:bg-[#2a2d31] p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex transition-all duration-200 relative"
-              style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
+              className="bg-white p-6 rounded-2xl shadow-neo-light-convex transition-all duration-200 relative"
+              style={{ backgroundColor: '#ffffff' }}
             >
-              {/* Theme Toggle Button */}
-              <button
-                onClick={toggleTheme}
-                className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full shadow-neo-light-convex dark:shadow-neo-dark-convex hover:shadow-neo-light-concave dark:hover:shadow-neo-dark-concave transition bg-white dark:bg-[#2a2d31]"
-              >
-                {theme === "light" ? <Sun className="w-5 h-5 text-yellow-600" /> : <Moon className="w-5 h-5 text-indigo-400" />}
-              </button>
 
               <div className="flex flex-col items-center">
                 <div className="relative mb-4">
-                  <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden ring-4 ring-primary/20 dark:ring-primary/30 shadow-lg">
+                  <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden ring-4 ring-primary/20 shadow-lg">
                     <img
                       src={userData.avatar}
                       alt="Avatar"
@@ -133,10 +82,10 @@ export default function UserProfile() {
                     <Edit2 className="w-4 h-4" />
                   </button>
                 </div>
-                <h2 className="font-bold text-lg sm:text-xl text-foreground dark:text-white mb-1">
+                <h2 className="font-bold text-lg sm:text-xl text-foreground mb-1">
                   {userData.name}
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 text-center">
+                <p className="text-gray-600 text-sm mb-4 text-center">
                   {userData.title}
                 </p>
 
@@ -150,10 +99,10 @@ export default function UserProfile() {
                   ].map(({ Icon, label }, i) => (
                     <button
                       key={i}
-                      className="p-2.5 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#36393e] transition-colors shadow-neo-light-concave dark:shadow-neo-dark-concave bg-white dark:bg-[#2a2d31]"
+                      className="p-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors shadow-neo-light-concave bg-white"
                       aria-label={label}
                     >
-                      <Icon className="w-4 h-4 text-gray-700 dark:text-gray-300" />
+                      <Icon className="w-4 h-4 text-gray-700" />
                     </button>
                   ))}
                 </div>
@@ -162,33 +111,33 @@ export default function UserProfile() {
 
             {/* Contact Info Card */}
             <div
-              style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
-              className="bg-white dark:bg-[#2a2d31] p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex transition-all duration-200"
+              style={{ backgroundColor: '#ffffff' }}
+              className="bg-white p-6 rounded-2xl shadow-neo-light-convex transition-all duration-200"
             >
-              <h3 className="font-bold text-lg text-foreground dark:text-white mb-4">
+              <h3 className="font-bold text-lg text-foreground mb-4">
                 Contact Information
               </h3>
 
               <div className="space-y-4">
-                <div style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }} className="border border-gray-200 dark:border-gray-700 flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-[#36393e] hover:bg-gray-100 dark:hover:bg-[#3a3f45] transition-colors">
-                  <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
-                    <Mail className="w-4 h-4 text-primary dark:text-accent-dark" />
+                <div className="border border-gray-200 flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
+                  <div className="p-2 rounded-lg bg-primary/10">
+                    <Mail className="w-4 h-4 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Email</p>
-                    <p className="text-sm font-medium text-foreground dark:text-white truncate">
+                    <p className="text-xs text-gray-500 mb-0.5">Email</p>
+                    <p className="text-sm font-medium text-foreground truncate">
                       {userData.email}
                     </p>
                   </div>
                 </div>
 
-                <div style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }} className="border border-gray-200 dark:border-gray-700 flex items-center gap-3 p-3 rounded-xl bg-gray-50 dark:bg-[#36393e] hover:bg-gray-100 dark:hover:bg-[#3a3f45] transition-colors">
-                  <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20">
-                    <Phone className="w-4 h-4 text-primary dark:text-accent-dark" />
+                <div className="border border-gray-200 flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
+                  <div className="p-2 rounded-lg bg-primary/10">
+                    <Phone className="w-4 h-4 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Phone</p>
-                    <p className="text-sm font-medium text-foreground dark:text-white">
+                    <p className="text-xs text-gray-500 mb-0.5">Phone</p>
+                    <p className="text-sm font-medium text-foreground">
                       {userData.phone}
                     </p>
                   </div>
@@ -198,9 +147,9 @@ export default function UserProfile() {
 
             {/* Quick Actions Card */}
             <div
-              style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
-              className="bg-white dark:bg-[#2a2d31] p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex transition-all duration-200">
-              <h3 className="font-bold text-lg text-foreground dark:text-white mb-4">
+              style={{ backgroundColor: '#ffffff' }}
+              className="bg-white p-6 rounded-2xl shadow-neo-light-convex transition-all duration-200">
+              <h3 className="font-bold text-lg text-foreground mb-4">
                 Quick Actions
               </h3>
 
@@ -211,26 +160,25 @@ export default function UserProfile() {
                     <a
                       key={item.label}
                       href={item.href}
-                      style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
-                      className="border border-gray-200 dark:border-gray-700 flex items-center justify-between p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#36393e] transition-all group shadow-neo-light-concave dark:shadow-neo-dark-concave bg-white dark:bg-[#2a2d31]"
+                      className="border border-gray-200 flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-all group shadow-neo-light-concave bg-white"
                     >
                       <div className="flex items-center gap-3">
-                        <Icon className="w-4 h-4 text-gray-600 dark:text-gray-400 group-hover:text-primary dark:group-hover:text-accent-dark transition-colors" />
-                        <span className="text-sm font-medium text-foreground dark:text-white">
+                        <Icon className="w-4 h-4 text-gray-600 group-hover:text-primary transition-colors" />
+                        <span className="text-sm font-medium text-foreground">
                           {item.label}
                         </span>
                       </div>
-                      <Link2 className="w-4 h-4 text-gray-400 dark:text-gray-500 group-hover:text-primary dark:group-hover:text-accent-dark transition-colors" />
+                      <Link2 className="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors" />
                     </a>
                   );
                 })}
 
                 <button
                   onClick={() => setShowUploadOverlay(true)}
-                  className="w-full flex items-center justify-center gap-2 border-2 border-dashed border-gray-300 dark:border-gray-600 p-3 rounded-xl hover:border-primary dark:hover:border-accent-dark hover:bg-primary/5 dark:hover:bg-primary/10 transition-all group"
+                  className="w-full flex items-center justify-center gap-2 border-2 border-dashed border-gray-300 p-3 rounded-xl hover:border-primary hover:bg-primary/5 transition-all group"
                 >
-                  <Plus className="w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-primary dark:group-hover:text-accent-dark transition-colors" />
-                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary dark:group-hover:text-accent-dark transition-colors">
+                  <Plus className="w-4 h-4 text-gray-500 group-hover:text-primary transition-colors" />
+                  <span className="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">
                     Add New Link
                   </span>
                 </button>
@@ -241,15 +189,15 @@ export default function UserProfile() {
           {/* RIGHT COLUMN */}
           <div className="lg:col-span-2 space-y-6">
             {/* Uploaded Files Card */}
-            <div style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }} className="bg-white dark:bg-[#2a2d31] p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex transition-all duration-200">
+            <div className="bg-white p-6 rounded-2xl shadow-neo-light-convex transition-all duration-200">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="font-bold text-lg sm:text-xl text-foreground dark:text-white">
+                <h3 className="font-bold text-lg sm:text-xl text-foreground">
                   Uploaded Product Documents
                 </h3>
 
                 <button
                   onClick={() => setShowUploadOverlay(true)}
-                  className="text-foreground dark:text-white flex items-center gap-2 bg-primary px-4 py-2 rounded-xl text-sm font-semibold shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition-all"
+                  className="text-foreground flex items-center gap-2 bg-primary px-4 py-2 rounded-xl text-sm font-semibold shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition-all"
                 >
                   <CloudUpload className="w-4 h-4" />
                   Upload
@@ -258,13 +206,13 @@ export default function UserProfile() {
 
               <div
                 onClick={() => setShowUploadOverlay(true)}
-                className="border-2 border-dashed border-gray-300 dark:border-gray-600 p-8 text-center rounded-xl mb-4 hover:border-primary dark:hover:border-accent-dark hover:bg-primary/5 dark:hover:bg-primary/10 transition-all cursor-pointer group"
+                className="border-2 border-dashed border-gray-300 p-8 text-center rounded-xl mb-4 hover:border-primary hover:bg-primary/5 transition-all cursor-pointer group"
               >
-                <CloudUpload className="w-10 h-10 mx-auto mb-3 text-gray-400 dark:text-gray-500 group-hover:text-primary dark:group-hover:text-accent-dark transition-colors" />
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <CloudUpload className="w-10 h-10 mx-auto mb-3 text-gray-400 group-hover:text-primary transition-colors" />
+                <p className="text-sm font-medium text-gray-700 mb-1">
                   Drop files here or click to upload
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-gray-500">
                   Supports PDF, DOC, DOCX up to 10MB
                 </p>
               </div>
@@ -273,29 +221,28 @@ export default function UserProfile() {
                 {files.map((file) => (
                   <div
                     key={file.name}
-                    style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
-                    className="flex items-center justify-between p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-[#36393e] hover:bg-white dark:hover:bg-[#3a3f45] transition-all shadow-neo-light-concave dark:shadow-neo-dark-concave"
+                    className="flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-gray-50 hover:bg-white transition-all shadow-neo-light-concave"
                   >
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                       <div
                         className={`px-3 py-1.5 rounded-lg text-white text-xs font-semibold shrink-0 ${file.type === "pdf"
-                            ? "bg-red-500 dark:bg-red-600"
-                            : "bg-blue-500 dark:bg-blue-600"
+                            ? "bg-red-500"
+                            : "bg-blue-500"
                           }`}
                       >
                         {file.type.toUpperCase()}
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-sm text-foreground dark:text-white truncate">
+                        <p className="font-semibold text-sm text-foreground truncate">
                           {file.name}
                         </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">{file.size}</p>
+                        <p className="text-xs text-gray-500">{file.size}</p>
                       </div>
                     </div>
 
-                    <button className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-[#4a4e53] transition-colors ml-3 shrink-0">
-                      <Download className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                    <button className="p-2 rounded-lg hover:bg-gray-200 transition-colors ml-3 shrink-0">
+                      <Download className="w-4 h-4 text-gray-600" />
                     </button>
                   </div>
                 ))}
@@ -303,8 +250,8 @@ export default function UserProfile() {
             </div>
 
             {/* Product Showcase Card */}
-            <div style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }} className="bg-white dark:bg-[#2a2d31] p-6 rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex transition-all duration-200">
-              <h3 className="font-bold text-lg sm:text-xl text-foreground dark:text-white mb-4">
+            <div className="bg-white p-6 rounded-2xl shadow-neo-light-convex transition-all duration-200">
+              <h3 className="font-bold text-lg sm:text-xl text-foreground mb-4">
                 Product Showcase
               </h3>
 
@@ -312,7 +259,7 @@ export default function UserProfile() {
                 {products.map((product) => (
                   <div
                     key={product.title}
-                    className="group border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-[#36393e] overflow-hidden hover:shadow-lg dark:hover:shadow-xl transition-all cursor-pointer"
+                    className="group border border-gray-200 rounded-xl bg-white overflow-hidden hover:shadow-lg transition-all cursor-pointer"
                   >
                     <div
                       className="w-full h-40 bg-cover bg-center relative overflow-hidden"
@@ -322,10 +269,10 @@ export default function UserProfile() {
                     </div>
 
                     <div className="p-4">
-                      <h4 className="font-bold text-base text-foreground dark:text-white mb-1">
+                      <h4 className="font-bold text-base text-foreground mb-1">
                         {product.title}
                       </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+                      <p className="text-sm text-gray-600 line-clamp-2">
                         {product.desc}
                       </p>
                     </div>
@@ -338,33 +285,32 @@ export default function UserProfile() {
 
         {/* Upload Modal */}
         {showUploadOverlay && (
-          <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
             onClick={() => setShowUploadOverlay(false)}
           >
             <div
-              style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }}
-              className="bg-white dark:bg-[#2a2d31] rounded-2xl p-6 w-full max-w-md border border-gray-200 dark:border-gray-700 shadow-2xl"
+              className="bg-white rounded-2xl p-6 w-full max-w-md border border-gray-200 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-foreground dark:text-white">
+                <h3 className="text-lg font-bold text-foreground">
                   Upload Files
                 </h3>
 
                 <button
                   onClick={() => setShowUploadOverlay(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#36393e] transition-colors"
+                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
                 >
-                  <X className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                  <X className="w-5 h-5 text-gray-600" />
                 </button>
               </div>
 
-              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 p-8 text-center rounded-xl mb-4 hover:border-primary dark:hover:border-accent-dark transition-colors">
-                <CloudUpload className="w-12 h-12 mx-auto mb-3 text-gray-400 dark:text-gray-500" />
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <div className="border-2 border-dashed border-gray-300 p-8 text-center rounded-xl mb-4 hover:border-primary transition-colors">
+                <CloudUpload className="w-12 h-12 mx-auto mb-3 text-gray-400" />
+                <p className="text-sm font-medium text-gray-700 mb-1">
                   Drag & drop files here
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-gray-500">
                   or click to browse
                 </p>
               </div>
@@ -372,12 +318,12 @@ export default function UserProfile() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowUploadOverlay(false)}
-                  className="text-foreground dark:text-white flex-1 border border-gray-300 dark:border-gray-600 rounded-xl p-3 text-sm font-medium transition-colors"
+                  className="text-foreground flex-1 border border-gray-300 rounded-xl p-3 text-sm font-medium transition-colors"
                 >
                   Cancel
                 </button>
 
-                <button className=" text-foreground dark:text-white flex-1 p-3 rounded-xl bg-primary text-sm font-semibold shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition-all">
+                <button className="text-foreground flex-1 p-3 rounded-xl bg-primary text-sm font-semibold shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition-all">
                   Upload Files
                 </button>
               </div>

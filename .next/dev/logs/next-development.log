@@ -1,2 +1,103 @@
-[00:00:00.764] Server  LOG      ✓ Ready in 551ms
-[00:00:07.445] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:00:01.026] Server  LOG      ✓ Ready in 744ms
+[00:01:27.122] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:09:33.395] Server  LOG      ✓ Compiled in 105ms
+[00:09:41.098] Server  LOG      ✓ Compiled in 56ms
+[00:09:43.504] Server  LOG      ✓ Compiled in 27ms
+[00:09:47.634] Server  LOG      ✓ Compiled in 36ms
+[00:09:56.781] Server  LOG      ✓ Compiled in 23ms
+[00:10:01.678] Server  LOG      ✓ Compiled in 26ms
+[00:10:34.672] Server  LOG      ✓ Compiled in 25ms
+[00:10:47.691] Server  LOG      ✓ Compiled in 22ms
+[00:10:49.399] Server  LOG      ✓ Compiled in 27ms
+[00:12:10.633] Server  ERROR    ⨯ Error: useTheme must be used within a ThemeProvider
+[00:12:10.948] Browser ERROR   uncaughtError: Error: useTheme must be used within a ThemeProvider
+[00:12:51.989] Server  ERROR    ⨯ Error: useTheme must be used within a ThemeProvider
+[00:12:51.997] Server  LOG      ✓ Compiled in 39ms
+[00:12:52.721] Browser ERROR   uncaughtError: Error: useTheme must be used within a ThemeProvider
+[00:13:09.427] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:13:09.428] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./src/app/contexts/ThemeProvider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:13:09.428] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:13:09.553] Server  LOG      ✓ Compiled in 56ms
+[00:14:04.419] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:15:00.463] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:15:15.556] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:17:40.063] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./src/app/contexts/ThemeProvider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:17:40.121] Server  LOG      ✓ Compiled in 87ms
+[00:17:42.902] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./src/app/contexts/ThemeProvider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:17:42.952] Server  LOG      ✓ Compiled in 93ms
+[00:17:55.866] Server  LOG      ✓ Compiled in 152ms
+[00:19:25.031] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:19:38.210] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./src/app/contexts/ThemeProvider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:24:43.539] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:26:00.974] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./src/app/contexts/ThemeProvider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:26:01.023] Server  LOG      ✓ Compiled in 26ms
+[00:26:04.976] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./src/app/contexts/ThemeProvider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:26:05.024] Server  LOG      ✓ Compiled in 30ms
+[00:26:46.401] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:27:22.615] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:29:11.603] Server  LOG      ✓ Compiled in 64ms
+[00:29:14.962] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./src/app/contexts/ThemeProvider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:29:15.101] Server  LOG      ✓ Compiled in 29ms
+[00:29:19.052] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./src/app/contexts/ThemeProvider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:29:19.100] Server  LOG      ✓ Compiled in 29ms
+[00:29:44.737] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:29:51.560] Server  LOG      ✓ Compiled in 84ms
+[00:30:11.543] Server  LOG      ✓ Compiled in 60ms
+[00:31:34.598] Server  LOG      ✓ Compiled in 62ms
+[00:31:39.135] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./src/app/contexts/ThemeProvider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:31:39.161] Server  LOG      ✓ Compiled in 28ms
+[00:31:43.643] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./src/app/contexts/ThemeProvider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:31:43.758] Server  LOG      ✓ Compiled in 25ms
+[00:32:14.355] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:33:26.766] Server  LOG      ✓ Compiled in 64ms
+[00:33:42.552] Server  LOG      ✓ Compiled in 81ms
+[00:33:50.715] Server  LOG      ✓ Compiled in 83ms
+[00:34:05.497] Server  LOG      ✓ Compiled in 86ms
+[00:34:55.400] Server  LOG      ✓ Compiled in 64ms
+[00:34:58.904] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./src/app/contexts/ThemeProvider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:34:58.970] Server  LOG      ✓ Compiled in 28ms
+[00:35:02.582] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./src/app/contexts/ThemeProvider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:35:02.650] Server  LOG      ✓ Compiled in 25ms
+[00:38:26.671] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:38:51.817] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./src/app/contexts/ThemeProvider.tsx changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[00:45:53.190] Server  LOG      ✓ Compiled in 55ms
+[00:46:57.189] Server  LOG      ✓ Compiled in 22ms
+[00:51:31.964] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:51:44.496] Browser ERROR   uncaughtError: ReferenceError: theme is not defined
+[00:51:46.477] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:51:46.544] Server  LOG      ✓ Compiled in 23ms
+[01:00:38.307] Server  LOG      ✓ Compiled in 73ms
+[01:07:18.475] Server  LOG      ✓ Compiled in 23ms
+[01:07:21.240] Server  LOG      ✓ Compiled in 24ms
+[01:07:22.899] Server  LOG      ✓ Compiled in 21ms
+[01:07:24.446] Server  LOG      ✓ Compiled in 20ms
+[01:07:25.621] Server  LOG      ✓ Compiled in 21ms
+[01:07:27.591] Server  LOG      ✓ Compiled in 20ms
+[01:07:29.012] Server  LOG      ✓ Compiled in 22ms
+[01:07:30.791] Server  LOG      ✓ Compiled in 22ms
+[01:07:32.526] Server  LOG      ✓ Compiled in 22ms
+[01:07:34.274] Server  LOG      ✓ Compiled in 22ms
+[01:07:36.359] Server  LOG      ✓ Compiled in 24ms
+[01:07:38.385] Server  LOG      ✓ Compiled in 23ms
+[01:07:39.677] Server  LOG      ✓ Compiled in 22ms
+[01:07:40.923] Server  LOG      ✓ Compiled in 24ms
+[01:07:48.777] Server  LOG      ✓ Compiled in 22ms
+[01:07:50.112] Server  LOG      ✓ Compiled in 21ms
+[01:07:52.555] Server  LOG      ✓ Compiled in 20ms
+[01:07:54.712] Server  LOG      ✓ Compiled in 20ms
+[01:07:56.860] Server  LOG      ✓ Compiled in 19ms
+[01:07:58.109] Server  LOG      ✓ Compiled in 29ms
+[01:07:59.961] Server  LOG      ✓ Compiled in 18ms
+[01:08:02.659] Server  LOG      ✓ Compiled in 18ms
+[01:08:04.429] Server  LOG      ✓ Compiled in 20ms
+[01:08:06.318] Server  LOG      ✓ Compiled in 18ms
+[01:08:25.253] Server  LOG      ✓ Compiled in 19ms
+[01:08:41.228] Server  LOG      ✓ Compiled in 23ms
+[01:08:42.564] Server  LOG      ✓ Compiled in 25ms
+[01:08:44.261] Server  LOG      ✓ Compiled in 21ms
+[01:08:45.772] Server  LOG      ✓ Compiled in 25ms
+[01:09:15.496] Server  LOG      ✓ Compiled in 66ms
+[01:09:38.176] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:10:50.112] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:12:24.425] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:13:45.863] Server  LOG      ✓ Compiled in 33ms

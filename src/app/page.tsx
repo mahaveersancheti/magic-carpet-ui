@@ -39,22 +39,22 @@ const contactItems = [
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen w-full flex flex-col items-center bg-background-light dark:bg-black text-foreground dark:text-white transition-colors duration-300">
+    <div className="relative min-h-screen w-full flex flex-col items-center bg-background-light text-foreground">
       <LandingHeader />
       <main className="w-full max-w-6xl px-4 md:px-10 py-5">
         <section className="w-full py-16 md:py-7">
           <div className="flex flex-col-reverse lg:flex-row gap-12 items-center">
             <div className="flex flex-col gap-8 text-center lg:text-left flex-1">
               <div className="flex flex-col gap-4">
-                <h1 className="text-4xl md:text-6xl font-black tracking-tight text-foreground dark:text-white">Turn Every Cold Call Into a Warm Conversation</h1>
-                <p className="text-base md:text-lg text-foreground dark:text-gray-300">AI-powered intelligence briefs that help sales teams approach prospects like trusted advisors. <b>3-5X higher connect rates</b> in just 60 seconds.</p>
+                <h1 className="text-4xl md:text-6xl font-black tracking-tight text-foreground">Turn Every Cold Call Into a Warm Conversation</h1>
+                <p className="text-base md:text-lg text-foreground">AI-powered intelligence briefs that help sales teams approach prospects like trusted advisors. <b>3-5X higher connect rates</b> in just 60 seconds.</p>
               </div>
-              <a href="/signup" className="text-foreground dark:text-white self-center lg:self-start flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-primary font-bold tracking-wide transition-all duration-300 neo-button-light neo-button-dark">
+              <a href="/signup" className="text-foreground self-center lg:self-start flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-6 bg-primary font-bold tracking-wide transition-all duration-300 neo-button-light">
                 Get Started for Free
               </a>
             </div>
             <div className="flex-1 w-full max-w-lg">
-              <div className="w-full aspect-square bg-center bg-no-repeat bg-cover rounded-xl neo-card-light neo-card-dark p-2" data-alt="Abstract 3D illustration of interconnected data nodes">
+              <div className="w-full aspect-square bg-center bg-no-repeat bg-cover rounded-xl neo-card-light p-2" data-alt="Abstract 3D illustration of interconnected data nodes">
                 <div className="w-full h-full bg-center bg-no-repeat bg-cover rounded-lg" style={{ backgroundImage: `url("${heroImage}")` }}></div>
               </div>
             </div>
@@ -63,16 +63,16 @@ export default function Home() {
 
         <section className="w-full py-16 md:py-24" id="about-company">
             <div className="flex flex-col gap-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground dark:text-white">Who We Are</h2>
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-12 rounded-xl bg-background-light dark:bg-background-dark neo-card-light neo-card-dark p-8 md:p-12 transition-shadow duration-300">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground">Who We Are</h2>
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-12 rounded-xl bg-background-light neo-card-light p-8 md:p-12 transition-shadow duration-300">
               <div className="flex flex-col gap-4 flex-[2_2_0px] text-center lg:text-left">
                 <p className="text-primary text-sm font-semibold tracking-wider uppercase">About The Company</p>
-                <p className="text-2xl font-bold text-foreground dark:text-white">Our Mission</p>
-                <p className="text-base md:text-lg text-foreground dark:text-gray-300">
+                <p className="text-2xl font-bold text-foreground">Our Mission</p>
+                <p className="text-base md:text-lg text-foreground">
                 Our purpose is to turn uncertainty into expertise. We provide cutting-edge, AI-powered intelligence designed to eliminate the friction of traditional cold calling. Our platform ensures that within seconds, your sales team is briefed and ready to approach prospects like informed, trusted partners. This commitment to instant personalization is the key to unlocking 3–5X higher connect rates and accelerating your sales success.
                 </p>
               </div>
-              <div className="w-full max-w-md flex-1 aspect-video rounded-lg shadow-neo-light-inset dark:shadow-neo-dark-inset p-2">
+              <div className="w-full max-w-md flex-1 aspect-video rounded-lg shadow-neo-light-inset p-2">
                 <div className="w-full h-full bg-center bg-no-repeat bg-cover rounded" data-alt="A modern office space with a team collaborating" style={{ backgroundImage: `url("${aboutImage}")` }}></div>
               </div>
             </div>
@@ -82,18 +82,18 @@ export default function Home() {
         <section className="w-full py-16 md:py-24" id="about-product">
             <div className="flex flex-col gap-12">
             <div className="flex flex-col gap-4 text-center max-w-3xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground dark:text-white">Features You'll Love</h2>
-              <p className="text-base md:text-lg text-foreground dark:text-gray-300">Discover the tools designed to enhance your visitor management process from start to finish.</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">Features You'll Love</h2>
+              <p className="text-base md:text-lg text-foreground">Discover the tools designed to enhance your visitor management process from start to finish.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {featureCards.map((feature) => (
-                <div key={feature.title} className="flex flex-col gap-4 rounded-xl bg-background-light dark:bg-background-dark neo-card-light neo-card-dark p-6 transition-shadow duration-300">
-                  <div className="w-full aspect-video rounded-lg shadow-neo-light-inset dark:shadow-neo-dark-inset p-2">
+                <div key={feature.title} className="flex flex-col gap-4 rounded-xl bg-background-light neo-card-light p-6 transition-shadow duration-300">
+                  <div className="w-full aspect-video rounded-lg shadow-neo-light-inset p-2">
                     <div className="w-full h-full bg-center bg-no-repeat bg-cover rounded" data-alt={feature.alt} style={{ backgroundImage: `url("${feature.image}")` }}></div>
                   </div>
                   <div>
-                    <p className="text-lg font-bold text-foreground dark:text-white">{feature.title}</p>
-                    <p className="text-sm text-foreground dark:text-gray-300">{feature.description}</p>
+                    <p className="text-lg font-bold text-foreground">{feature.title}</p>
+                    <p className="text-sm text-foreground">{feature.description}</p>
                   </div>
                 </div>
               ))}
@@ -102,20 +102,20 @@ export default function Home() {
         </section>
 
         <section className="w-full py-16 md:py-24" id="contact">
-          <div className="rounded-xl bg-background-light dark:bg-background-dark neo-card-light neo-card-dark p-8 md:p-12 transition-shadow duration-300">
+          <div className="rounded-xl bg-background-light neo-card-light p-8 md:p-12 transition-shadow duration-300">
             <div className="flex flex-col gap-10">
               <div className="flex flex-col gap-4 text-center max-w-3xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-bold text-foreground dark:text-white">Get In Touch</h2>
-                <p className="text-base md:text-lg text-foreground dark:text-gray-300">Have questions? We'd love to hear from you. Reach out and we'll get back to you shortly.</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground">Get In Touch</h2>
+                <p className="text-base md:text-lg text-foreground">Have questions? We'd love to hear from you. Reach out and we'll get back to you shortly.</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 {contactItems.map((item) => (
                   <div key={item.label} className="flex flex-col items-center gap-3">
-                    <div className="rounded-full p-4 neo-button-light neo-button-dark transition-shadow duration-300">
+                    <div className="rounded-full p-4 neo-button-light transition-shadow duration-300">
                       <span className="material-symbols-outlined text-3xl text-primary">{item.icon}</span>
                     </div>
-                    <h3 className="font-bold text-foreground dark:text-white">{item.label}</h3>
-                    <p className="text-sm text-foreground dark:text-gray-300">{item.value}</p>
+                    <h3 className="font-bold text-foreground">{item.label}</h3>
+                    <p className="text-sm text-foreground">{item.value}</p>
                   </div>
                 ))}
               </div>

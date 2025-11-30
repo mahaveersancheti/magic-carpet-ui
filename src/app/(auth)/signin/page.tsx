@@ -11,27 +11,27 @@ export default function SignIn() {
   }
 
   return (
-    <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-background-light dark:bg-[#0f141b] font-display">
+    <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-background-light font-display">
 
       {/* Background Glow Effects */}
-      <div className="absolute top-[-20%] left-[-15%] h-[400px] w-[400px] rounded-full bg-blue-700/20 blur-[150px] dark:bg-blue-700/20"></div>
-      <div className="absolute bottom-[-20%] right-[-15%] h-[400px] w-[400px] rounded-full bg-purple-700/20 blur-[150px] dark:bg-purple-700/20"></div>
+      <div className="absolute top-[-20%] left-[-15%] h-[400px] w-[400px] rounded-full bg-blue-700/20 blur-[150px]"></div>
+      <div className="absolute bottom-[-20%] right-[-15%] h-[400px] w-[400px] rounded-full bg-purple-700/20 blur-[150px]"></div>
 
       {/* LOGIN CARD */}
       <main className="relative z-10 flex w-full max-w-lg flex-col items-center rounded-3xl p-6 sm:p-10">
-        <div className="w-full rounded-3xl bg-white/80 dark:bg-black/30 p-10 backdrop-blur-2xl shadow-neo-light-convex dark:shadow-[0_0_40px_rgba(0,0,0,0.6)] border border-gray-200 dark:border-white/10">
+        <div className="w-full rounded-3xl bg-white/80 p-10 backdrop-blur-2xl shadow-neo-light-convex border border-gray-200">
 
           {/* Title */}
           <div className="flex flex-col items-center">
-            <h1 className="text-3xl font-bold tracking-tight text-foreground dark:text-white">Welcome Back</h1>
-            <p className="mt-2 text-base text-gray-600 dark:text-gray-400">Sign in to continue to your account.</p>
+            <h1 className="text-3xl font-bold tracking-tight text-foreground">Welcome Back</h1>
+            <p className="mt-2 text-base text-gray-600">Sign in to continue to your account.</p>
           </div>
 
           {/* FORM */}
           <form className="mt-8 space-y-6">
             {/* EMAIL */}
             <div className="flex flex-col">
-              <label className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Email / Username</label>
+              <label className="mb-2 text-sm font-medium text-gray-700">Email / Username</label>
               <div className="relative">
                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
                   person
@@ -39,7 +39,7 @@ export default function SignIn() {
                 <input
                   type="email"
                   placeholder="Enter your email or username"
-                  className="w-full rounded-xl bg-white/50 dark:bg-black/20 border border-gray-300 dark:border-white/10 py-3 pl-12 pr-4 text-foreground dark:text-white placeholder-gray-500 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 outline-none backdrop-blur-xl"
+                  className="w-full rounded-xl bg-white/50 border border-gray-300 py-3 pl-12 pr-4 text-foreground placeholder-gray-500 focus:ring-2 focus:ring-blue-500 outline-none backdrop-blur-xl"
                 />
               </div>
             </div>
@@ -47,8 +47,8 @@ export default function SignIn() {
             {/* PASSWORD */}
             <div className="flex flex-col">
               <div className="flex items-center justify-between">
-                <label className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-                <a href="#" className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                <label className="mb-2 text-sm font-medium text-gray-700">Password</label>
+                <a href="#" className="text-sm font-medium text-blue-600 hover:underline">
                   Forgot Password?
                 </a>
               </div>
@@ -60,7 +60,7 @@ export default function SignIn() {
                 <input
                   type="password"
                   placeholder="Enter your password"
-                  className="w-full rounded-xl bg-white/50 dark:bg-black/20 border border-gray-300 dark:border-white/10 py-3 pl-12 pr-12 text-foreground dark:text-white placeholder-gray-500 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500 outline-none backdrop-blur-xl"
+                  className="w-full rounded-xl bg-white/50 border border-gray-300 py-3 pl-12 pr-12 text-foreground placeholder-gray-500 focus:ring-2 focus:ring-blue-500 outline-none backdrop-blur-xl"
                 />
 
                 <button
@@ -82,15 +82,15 @@ export default function SignIn() {
 
             {/* Divider */}
             <div className="flex items-center gap-4">
-              <hr className="w-full border-gray-300 dark:border-gray-700" />
-              <span className="text-sm text-gray-600 dark:text-gray-400">or</span>
-              <hr className="w-full border-gray-300 dark:border-gray-700" />
+              <hr className="w-full border-gray-300" />
+              <span className="text-sm text-gray-600">or</span>
+              <hr className="w-full border-gray-300" />
             </div>
 
             {/* GOOGLE BUTTON */}
             <button
               type="button"
-              className="flex w-full items-center justify-center gap-3 rounded-xl bg-white/50 dark:bg-black/20 py-3 text-foreground dark:text-white border border-gray-300 dark:border-white/10 hover:bg-white/70 dark:hover:bg-black/30 transition-all backdrop-blur-xl"
+              className="flex w-full items-center justify-center gap-3 rounded-xl bg-white/50 py-3 text-foreground border border-gray-300 hover:bg-white/70 transition-all backdrop-blur-xl"
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -103,9 +103,9 @@ export default function SignIn() {
           </form>
 
           {/* SIGN UP */}
-          <p className="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-8 text-center text-sm text-gray-600">
             Don&apos;t have an account?{" "}
-            <a href="/signup" className="font-semibold text-blue-600 dark:text-blue-400 hover:underline">Sign Up</a>
+            <a href="/signup" className="font-semibold text-blue-600 hover:underline">Sign Up</a>
           </p>
         </div>
       </main>

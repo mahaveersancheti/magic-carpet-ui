@@ -15,7 +15,7 @@ export default function ProtectedLayout({
                 {/* Mobile Menu Button */}
                 <button
                     onClick={() => setSidebarOpen(true)}
-                    className="lg:hidden fixed top-4 left-4 z-30 w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-[#2a2d31] shadow-neo-light-convex dark:shadow-neo-dark-convex text-gray-700 dark:text-gray-300 hover:shadow-neo-light-concave dark:hover:shadow-neo-dark-concave transition"
+                    className="lg:hidden fixed top-4 left-4 z-30 w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-neo-light-convex text-gray-700 hover:shadow-neo-light-concave transition"
                 >
                     <span className="material-symbols-outlined">menu</span>
                 </button>

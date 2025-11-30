@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const UploadModal = ({
     isOpen,
@@ -11,40 +11,6 @@ export const UploadModal = ({
   }) => {
     const [file, setFile] = useState<File | null>(null);
     const [dragging, setDragging] = useState(false);
-    const [mounted, setMounted] = useState(false);
-    const [theme, setTheme] = useState<"light" | "dark">("light");
-
-    useEffect(() => {
-        if (typeof window === 'undefined') return;
-    
-        setMounted(true);
-    
-        // Get initial theme from DOM
-        const checkTheme = () => {
-          if (typeof document !== 'undefined' && document.documentElement) {
-            const isDark = document.documentElement.classList.contains("dark");
-            setTheme(isDark ? "dark" : "light");
-          }
-        };
-    
-        checkTheme();
-    
-        // Watch for changes to the dark class on html element
-        let observer: MutationObserver | null = null;
-        if (typeof document !== 'undefined' && document.documentElement) {
-          observer = new MutationObserver(checkTheme);
-          observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ["class"],
-          });
-        }
-    
-        return () => {
-          if (observer) {
-            observer.disconnect();
-          }
-        };
-      }, []);
     
   
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -80,8 +46,8 @@ export const UploadModal = ({
         />
   
         {/* Modal */}
-        <div style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }} className="relative bg-white dark:bg-[#1c1f22] rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-md mx-4">
-          <h3 className="text-2xl font-bold text-foreground dark:text-white mb-6">
+        <div className="relative bg-white rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-md mx-4">
+          <h3 className="text-2xl font-bold text-foreground mb-6">
             Upload Document
           </h3>
   
@@ -93,14 +59,14 @@ export const UploadModal = ({
             onDragLeave={() => setDragging(false)}
             className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors ${
               dragging
-                ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                : "border-gray-300 dark:border-gray-600"
+                ? "border-blue-500 bg-blue-50"
+                : "border-gray-300"
             }`}
           >
             <span className="material-symbols-outlined text-5xl text-gray-400 mb-4 block">
               cloud_upload
             </span>
-            <p className="text-foreground dark:text-gray-300 mb-4">
+            <p className="text-foreground mb-4">
               Drag & drop your file here, or click to select
             </p>
             <label className="cursor-pointer">
@@ -118,12 +84,12 @@ export const UploadModal = ({
   
           {/* Selected File Preview */}
           {file && (
-            <div style={{ backgroundColor: theme === 'dark' ? '#0f141b' : '#ffffff' }} className="border border-gray-200 dark:border-gray-700 mt-4 p-4 bg-gray-50 dark:bg-[#2a2d31] rounded-lg flex items-center gap-3">
+            <div className="border border-gray-200 mt-4 p-4 bg-gray-50 rounded-lg flex items-center gap-3">
               <span className="material-symbols-outlined text-gray-500">
                 description
               </span>
               <div className="flex-1">
-                <p className="text-sm font-medium text-foreground dark:text-white truncate">
+                <p className="text-sm font-medium text-foreground truncate">
                   {file.name}
                 </p>
                 <p className="text-xs text-gray-500">
@@ -143,7 +109,7 @@ export const UploadModal = ({
           <div className="flex gap-3 mt-6">
             <button
               onClick={onClose}
-              className="flex-1 h-12 rounded-full border border-gray-300 dark:border-gray-600 text-foreground dark:text-white font-medium hover:bg-gray-100 dark:hover:bg-[#2a2d31] transition"
+              className="flex-1 h-12 rounded-full border border-gray-300 text-foreground font-medium hover:bg-gray-100 transition"
             >
               Cancel
             </button>

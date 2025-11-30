@@ -3701,20 +3701,8 @@
     box-shadow: inset 5px 5px 10px #bec3c9, inset -5px -5px 10px #fff;
   }
 
-  .dark .neo-button-dark {
-    box-shadow: 5px 5px 10px #1e2022, -5px -5px 10px #3a3e44;
-  }
-
-  .dark .neo-button-dark:hover, .dark .neo-button-dark:active {
-    box-shadow: inset 5px 5px 10px #1e2022, inset -5px -5px 10px #3a3e44;
-  }
-
   .neo-card-light {
     box-shadow: 5px 5px 10px #bec3c9, -5px -5px 10px #fff;
-  }
-
-  .dark .neo-card-dark {
-    box-shadow: 5px 5px 10px #1e2022, -5px -5px 10px #3a3e44;
   }
 }
 
@@ -3725,11 +3713,6 @@
 
 html {
   scroll-behavior: smooth;
-}
-
-.dark {
-  --background: #2c2f33;
-  --foreground: #ededed;
 }
 
 body {
