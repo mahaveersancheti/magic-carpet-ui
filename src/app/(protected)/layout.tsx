@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Sidebar from '../components/SideBar';
 
 export default function ProtectedLayout({
@@ -8,6 +9,18 @@ export default function ProtectedLayout({
     children: React.ReactNode;
 }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const router = useRouter();
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+
+    useEffect(() => {
+        if (!token) {
+            router.push('/signin');
+        }
+    }, [token, router]);
+
+    if (!token) {
+        return null;
+    }
 
     return (
         <>

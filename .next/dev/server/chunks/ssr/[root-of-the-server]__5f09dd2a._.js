@@ -34,18 +34,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 function Sidebar({ isOpen = true, onClose }) {
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const [selectedMenu, setSelectedMenu] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("Home");
-    const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [isDark, setIsDark] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        // Only run on client side
-        if ("TURBOPACK compile-time truthy", 1) return;
-        //TURBOPACK unreachable
-        ;
-        // Get initial theme from DOM
-        const checkTheme = undefined;
-        // Watch for changes to the dark class on html element
-        let observer;
-    }, []);
     const handleNavigation = (label)=>{
         setSelectedMenu(label); // highlight selected item
         if (label == "Home") {
@@ -69,29 +57,6 @@ function Sidebar({ isOpen = true, onClose }) {
             "User Profile"
         ]
     ];
-    if (!mounted) {
-        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
-            className: "w-80 p-3 h-full",
-            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex flex-col h-full rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex p-5 bg-white dark:bg-[#111315]",
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "h-full"
-                }, void 0, false, {
-                    fileName: "[project]/src/app/components/SideBar.tsx",
-                    lineNumber: 80,
-                    columnNumber: 21
-                }, this)
-            }, void 0, false, {
-                fileName: "[project]/src/app/components/SideBar.tsx",
-                lineNumber: 79,
-                columnNumber: 17
-            }, this)
-        }, void 0, false, {
-            fileName: "[project]/src/app/components/SideBar.tsx",
-            lineNumber: 78,
-            columnNumber: 13
-        }, this);
-    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
             isOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -99,7 +64,7 @@ function Sidebar({ isOpen = true, onClose }) {
                 onClick: onClose
             }, void 0, false, {
                 fileName: "[project]/src/app/components/SideBar.tsx",
-                lineNumber: 90,
+                lineNumber: 44,
                 columnNumber: 17
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
@@ -112,52 +77,49 @@ function Sidebar({ isOpen = true, onClose }) {
                 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
             `,
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex flex-col h-full rounded-2xl shadow-neo-light-convex dark:shadow-neo-dark-convex p-4 sm:p-5 bg-white dark:bg-[#111315]",
-                    style: {
-                        backgroundColor: isDark ? '#111315' : '#ffffff'
-                    },
+                    className: "flex flex-col h-full rounded-2xl shadow-neo-light-convex p-4 sm:p-5 bg-white",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: onClose,
-                            className: "lg:hidden absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-[#2b2f34] text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-[#3a3f45] transition",
+                            className: "lg:hidden absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 className: "material-symbols-outlined text-lg",
                                 children: "close"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/components/SideBar.tsx",
-                                lineNumber: 113,
+                                lineNumber: 66,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/SideBar.tsx",
-                            lineNumber: 109,
+                            lineNumber: 62,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex items-center gap-3 p-2 mb-6 sm:mb-10",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "size-9 sm:size-11 rounded-full bg-cover bg-center shadow-neo-light-convex dark:shadow-neo-dark-convex shrink-0",
+                                    className: "size-9 sm:size-11 rounded-full bg-cover bg-center shadow-neo-light-convex shrink-0",
                                     style: {
                                         backgroundImage: 'url("/icon.png")'
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 118,
+                                    lineNumber: 71,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                    className: "text-lg sm:text-xl font-semibold text-foreground dark:text-white",
+                                    className: "text-lg sm:text-xl font-semibold text-foreground",
                                     children: "Magic Carpet"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 125,
+                                    lineNumber: 78,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/components/SideBar.tsx",
-                            lineNumber: 117,
+                            lineNumber: 70,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -166,7 +128,7 @@ function Sidebar({ isOpen = true, onClose }) {
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                     onClick: ()=>handleNavigation("Home"),
                                     className: `flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl cursor-pointer text-sm sm:text-base
-                                ${selectedMenu === "Home" ? "bg-[#1B7FE6] text-white shadow-[0_4px_10px_rgba(27,127,230,0.35)]" : "text-foreground dark:text-white"}
+                                ${selectedMenu === "Home" ? "bg-[#1B7FE6] text-white shadow-[0_4px_10px_rgba(27,127,230,0.35)]" : "text-foreground"}
                             `,
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -174,26 +136,26 @@ function Sidebar({ isOpen = true, onClose }) {
                                             children: "Home"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/components/SideBar.tsx",
-                                            lineNumber: 141,
+                                            lineNumber: 94,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             children: "Home"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/components/SideBar.tsx",
-                                            lineNumber: 142,
+                                            lineNumber: 95,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 132,
+                                    lineNumber: 85,
                                     columnNumber: 25
                                 }, this),
                                 menuItems.map(([icon, label])=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                         onClick: ()=>handleNavigation(label),
                                         className: `flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl cursor-pointer transition text-sm sm:text-base
-                                    ${selectedMenu === label ? "bg-[#1B7FE6] text-white shadow-[0_4px_12px_rgba(27,127,230,0.35)]" : "text-foreground dark:text-white hover:shadow-neo-light-concave dark:hover:shadow-neo-dark-concave"}
+                                    ${selectedMenu === label ? "bg-[#1B7FE6] text-white shadow-[0_4px_12px_rgba(27,127,230,0.35)]" : "text-foreground hover:shadow-neo-light-concave"}
                                 `,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -201,48 +163,45 @@ function Sidebar({ isOpen = true, onClose }) {
                                                 children: icon
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/components/SideBar.tsx",
-                                                lineNumber: 157,
+                                                lineNumber: 110,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                 children: label
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/components/SideBar.tsx",
-                                                lineNumber: 160,
+                                                lineNumber: 113,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, label, true, {
                                         fileName: "[project]/src/app/components/SideBar.tsx",
-                                        lineNumber: 147,
+                                        lineNumber: 100,
                                         columnNumber: 29
                                     }, this))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/components/SideBar.tsx",
-                            lineNumber: 129,
+                            lineNumber: 82,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: `border border-gray-200 dark:border-gray-700 mt-auto p-4 sm:p-5 rounded-2xl ${isDark ? 'shadow-neo-light-concave' : 'shadow-neo-dark-concave'} bg-gray-100 dark:bg-[#2b2f34]`,
-                            style: {
-                                backgroundColor: isDark ? '#111315' : '#ffffff'
-                            },
+                            className: "border border-gray-200 mt-auto p-4 sm:p-5 rounded-2xl shadow-neo-light-concave bg-gray-100",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-xs sm:text-sm font-semibold text-foreground dark:text-white text-center",
+                                    className: "text-xs sm:text-sm font-semibold text-foreground text-center",
                                     children: "Upgrade to Pro"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 170,
+                                    lineNumber: 122,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-xs text-foreground dark:text-white mt-1 text-center",
+                                    className: "text-xs text-foreground mt-1 text-center",
                                     children: "Get access to all features and enhance your search capabilities."
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 173,
+                                    lineNumber: 125,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -250,24 +209,24 @@ function Sidebar({ isOpen = true, onClose }) {
                                     children: "Upgrade Now"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 176,
+                                    lineNumber: 128,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/components/SideBar.tsx",
-                            lineNumber: 166,
+                            lineNumber: 119,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/components/SideBar.tsx",
-                    lineNumber: 104,
+                    lineNumber: 58,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/components/SideBar.tsx",
-                lineNumber: 96,
+                lineNumber: 50,
                 columnNumber: 13
             }, this)
         ]
@@ -283,56 +242,30 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$SideBar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/components/SideBar.tsx [app-ssr] (ecmascript)");
 "use client";
 ;
 ;
 ;
+;
 function ProtectedLayout({ children }) {
     const [sidebarOpen, setSidebarOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
-        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "flex min-h-screen h-screen w-full relative",
-            children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                    onClick: ()=>setSidebarOpen(true),
-                    className: "lg:hidden fixed top-4 left-4 z-30 w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-[#2a2d31] shadow-neo-light-convex dark:shadow-neo-dark-convex text-gray-700 dark:text-gray-300 hover:shadow-neo-light-concave dark:hover:shadow-neo-dark-concave transition",
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                        className: "material-symbols-outlined",
-                        children: "menu"
-                    }, void 0, false, {
-                        fileName: "[project]/src/app/(protected)/layout.tsx",
-                        lineNumber: 20,
-                        columnNumber: 21
-                    }, this)
-                }, void 0, false, {
-                    fileName: "[project]/src/app/(protected)/layout.tsx",
-                    lineNumber: 16,
-                    columnNumber: 17
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$SideBar$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                    isOpen: sidebarOpen,
-                    onClose: ()=>setSidebarOpen(false)
-                }, void 0, false, {
-                    fileName: "[project]/src/app/(protected)/layout.tsx",
-                    lineNumber: 23,
-                    columnNumber: 17
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex-1 overflow-y-auto w-full lg:w-auto h-full",
-                    children: children
-                }, void 0, false, {
-                    fileName: "[project]/src/app/(protected)/layout.tsx",
-                    lineNumber: 24,
-                    columnNumber: 17
-                }, this)
-            ]
-        }, void 0, true, {
-            fileName: "[project]/src/app/(protected)/layout.tsx",
-            lineNumber: 14,
-            columnNumber: 13
-        }, this)
-    }, void 0, false);
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
+    const token = ("TURBOPACK compile-time falsy", 0) ? "TURBOPACK unreachable" : null;
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if ("TURBOPACK compile-time truthy", 1) {
+            router.push('/signin');
+        }
+    }, [
+        token,
+        router
+    ]);
+    if ("TURBOPACK compile-time truthy", 1) {
+        return null;
+    }
+    //TURBOPACK unreachable
+    ;
 }
 }),
 "[project]/node_modules/@swc/helpers/cjs/_interop_require_wildcard.cjs [app-ssr] (ecmascript)", ((__turbopack_context__, module, exports) => {
