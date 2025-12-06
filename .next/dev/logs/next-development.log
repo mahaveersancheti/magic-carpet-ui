@@ -1,11 +1,6 @@
-[00:00:00.864] Server  LOG      ✓ Ready in 643ms
-[00:11:30.501] Server  ERROR    ⨯ Error: could not find react-redux context value; please ensure the component is wrapped in a <Provider>
-[00:11:30.739] Browser ERROR   uncaughtError: Error: could not find react-redux context value; please ensure the component is wrapped in a <Provider>
-[00:12:03.210] Server  ERROR    ⨯ ReferenceError: ReduxProvider is not defined
-[00:12:04.366] Browser ERROR   uncaughtError: ReferenceError: ReduxProvider is not defined
-[00:12:04.469] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:12:05.363] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:12:36.266] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+[00:00:00.707] Server  LOG      ✓ Ready in 513ms
+[00:00:05.526] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:05.654] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -38,128 +33,344 @@ https://react.dev/link/hydration-mismatch
                     ...
         ...
 
-[00:12:40.383] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:12:56.415] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:15:48.308] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:16:26.887] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:17:05.330] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:17:08.732] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:17:13.997] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:17:14.163] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:17:33.337] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:20:42.814] Server  LOG      ✓ Compiled in 31ms
-[00:20:50.410] Server  LOG      ✓ Compiled in 59ms
-[00:21:27.800] Server  LOG      ✓ Compiled in 46ms
-[00:59:28.932] Server  LOG      ✓ Compiled in 451ms
-[00:59:43.920] Server  ERROR    ⨯ ReferenceError: ToasterProvider is not defined
-[00:59:43.976] Server  ERROR    ⨯ ReferenceError: ToasterProvider is not defined
-[00:59:44.006] Server  ERROR    ⨯ ReferenceError: ToasterProvider is not defined
-[00:59:44.020] Server  ERROR    ⨯ ReferenceError: ToasterProvider is not defined
-[00:59:44.037] Server  ERROR    ⨯ ReferenceError: ToasterProvider is not defined
-[00:59:44.047] Server  ERROR    ⨯ ReferenceError: ToasterProvider is not defined
-[00:59:44.066] Server  ERROR    ⨯ ReferenceError: ToasterProvider is not defined
-[00:59:44.076] Server  ERROR    ⨯ ReferenceError: ToasterProvider is not defined
-[00:59:44.096] Server  ERROR    ⨯ ReferenceError: ToasterProvider is not defined
-[00:59:44.106] Server  ERROR    ⨯ ReferenceError: ToasterProvider is not defined
-[00:59:44.123] Server  ERROR    ⨯ ReferenceError: ToasterProvider is not defined
-[00:59:44.136] Server  ERROR    ⨯ ReferenceError: ToasterProvider is not defined
-[00:59:44.370] Browser ERROR   uncaughtError: ReferenceError: ToasterProvider is not defined
-[00:59:44.370] Browser ERROR   uncaughtError: ReferenceError: ToasterProvider is not defined
-[00:59:45.101] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:59:45.270] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:59:45.274] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:59:45.313] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:59:45.496] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:59:59.724] Server  LOG      ✓ Compiled in 35ms
-[00:59:59.879] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:00:18.991] Server  LOG      ✓ Compiled in 48ms
-[01:02:49.792] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:02:53.262] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[01:03:04.084] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:03:04.238] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[01:03:22.831] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:04:33.942] Server  LOG      ✓ Compiled in 43ms
-[01:04:35.908] Server  LOG      ✓ Compiled in 21ms
-[01:05:36.062] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[01:06:44.558] Server  LOG      ✓ Compiled in 26ms
-[01:06:46.500] Server  LOG      ✓ Compiled in 29ms
-[01:06:47.366] Browser ERROR   ./src/app/(auth)/signin/page.tsx:15:20
+[00:00:15.416] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:15.558] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+              <HTTPAccessFallbackErrorBoundary pathname="/home" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/home" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                      <SegmentViewNode type="layout" pagePath="(protected...">
+                        <SegmentTrieNode>
+                        <script>
+                        <script>
+                        <ClientSegmentRoot Component={function ProtectedLayout} slots={{...}} ...>
+                          <ProtectedLayout params={Promise}>
++                           <div className="flex min-h-screen h-screen w-full relative">
+-                           <script id="_R_">
+                    ...
+        ...
+
+[00:00:51.999] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:52.439] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:04:21.104] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:21.235] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+              <HTTPAccessFallbackErrorBoundary pathname="/home" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/home" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                      <SegmentViewNode type="layout" pagePath="(protected...">
+                        <SegmentTrieNode>
+                        <script>
+                        <script>
+                        <ClientSegmentRoot Component={function ProtectedLayout} slots={{...}} ...>
+                          <ProtectedLayout params={Promise}>
++                           <div className="flex min-h-screen h-screen w-full relative">
+-                           <script id="_R_">
+                    ...
+        ...
+
+[00:06:26.695] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:06:26.823] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+              <HTTPAccessFallbackErrorBoundary pathname="/home" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/home" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                      <SegmentViewNode type="layout" pagePath="(protected...">
+                        <SegmentTrieNode>
+                        <script>
+                        <script>
+                        <ClientSegmentRoot Component={function ProtectedLayout} slots={{...}} ...>
+                          <ProtectedLayout params={Promise}>
++                           <div className="flex min-h-screen h-screen w-full relative">
+-                           <script id="_R_">
+                    ...
+        ...
+
+[00:07:25.553] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:07:25.689] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+              <HTTPAccessFallbackErrorBoundary pathname="/home" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/home" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                      <SegmentViewNode type="layout" pagePath="(protected...">
+                        <SegmentTrieNode>
+                        <script>
+                        <script>
+                        <ClientSegmentRoot Component={function ProtectedLayout} slots={{...}} ...>
+                          <ProtectedLayout params={Promise}>
++                           <div className="flex min-h-screen h-screen w-full relative">
+-                           <script id="_R_">
+                    ...
+        ...
+
+[00:08:11.520] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:08:11.654] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+              <HTTPAccessFallbackErrorBoundary pathname="/home" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/home" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                      <SegmentViewNode type="layout" pagePath="(protected...">
+                        <SegmentTrieNode>
+                        <script>
+                        <script>
+                        <ClientSegmentRoot Component={function ProtectedLayout} slots={{...}} ...>
+                          <ProtectedLayout params={Promise}>
++                           <div className="flex min-h-screen h-screen w-full relative">
+-                           <script id="_R_">
+                    ...
+        ...
+
+[00:08:30.409] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:08:30.546] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+              <HTTPAccessFallbackErrorBoundary pathname="/home" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/home" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                      <SegmentViewNode type="layout" pagePath="(protected...">
+                        <SegmentTrieNode>
+                        <script>
+                        <script>
+                        <ClientSegmentRoot Component={function ProtectedLayout} slots={{...}} ...>
+                          <ProtectedLayout params={Promise}>
++                           <div className="flex min-h-screen h-screen w-full relative">
+-                           <script id="_R_">
+                    ...
+        ...
+
+[00:09:09.518] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:09:09.674] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+              <HTTPAccessFallbackErrorBoundary pathname="/home" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/home" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                      <SegmentViewNode type="layout" pagePath="(protected...">
+                        <SegmentTrieNode>
+                        <script>
+                        <script>
+                        <ClientSegmentRoot Component={function ProtectedLayout} slots={{...}} ...>
+                          <ProtectedLayout params={Promise}>
++                           <div className="flex min-h-screen h-screen w-full relative">
+-                           <script id="_R_">
+                    ...
+        ...
+
+[00:10:02.818] Server  LOG      ✓ Compiled in 39ms
+[00:11:25.770] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:25.904] Browser ERROR   uncaughtError: Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <ScrollAndFocusHandler segmentPath={[...]}>
+      <InnerScrollAndFocusHandler segmentPath={[...]} focusAndScrollRef={{apply:false, ...}}>
+        <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+          <LoadingBoundary name="/" loading={null}>
+            <HTTPAccessFallbackBoundary notFound={<SegmentViewNode>} forbidden={undefined} unauthorized={undefined}>
+              <HTTPAccessFallbackErrorBoundary pathname="/home" notFound={<SegmentViewNode>} forbidden={undefined} ...>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/home" tree={[...]} params={{}} cacheNode={{lazyData:null, ...}} ...>
+                      <SegmentViewNode type="layout" pagePath="(protected...">
+                        <SegmentTrieNode>
+                        <script>
+                        <script>
+                        <ClientSegmentRoot Component={function ProtectedLayout} slots={{...}} ...>
+                          <ProtectedLayout params={Promise}>
++                           <div className="flex min-h-screen h-screen w-full relative">
+-                           <script id="_R_">
+                    ...
+        ...
+
+[00:12:40.856] Server  LOG      ✓ Compiled in 33ms
+[00:12:53.635] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:11.438] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:25.532] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:39.204] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:14:34.414] Server  LOG      ✓ Compiled in 153ms
+[00:14:34.725] Browser ERROR   ./src/app/components/ToasterProvider.tsx:2:10
 Ecmascript file had an error
-  13 |   const { loading, error, token } = useSelector((state: RootState) => state.auth);
-  14 |   const [username, setUsername] = useState('');
-> 15 |   const [username, setUsername] = useState('');
-     |                    ^^^^^^^^^^^
-  16 |   const [password, setPassword] = useState('');
-  17 |   const [showPassword, setShowPassword] = useState(false);
-  18 |
+  1 | import { Toaster, useToasterStore, toast } from 'react-hot-toast';
+> 2 | import { useEffect } from 'react';
+    |          ^^^^^^^^^
+  3 |
+  4 | const ToasterProvider = () => {
+  5 |     const { toasts } = useToasterStore();
 
-the name `setUsername` is defined multiple times
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
 
-Import traces:
-  Client Component Browser:
-    ./src/app/(auth)/signin/page.tsx [Client Component Browser]
-    ./src/app/(auth)/signin/page.tsx [Server Component]
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
 
-  Client Component SSR:
-    ./src/app/(auth)/signin/page.tsx [Client Component SSR]
-    ./src/app/(auth)/signin/page.tsx [Server Component]
-[01:06:47.366] Browser ERROR   ./src/app/(auth)/signin/page.tsx:15:10
+Import trace:
+  Server Component:
+    ./src/app/components/ToasterProvider.tsx
+    ./src/app/layout.tsx
+[00:14:34.725] Browser ERROR   ./src/app/components/ToasterProvider.tsx:2:10
 Ecmascript file had an error
-  13 |   const { loading, error, token } = useSelector((state: RootState) => state.auth);
-  14 |   const [username, setUsername] = useState('');
-> 15 |   const [username, setUsername] = useState('');
-     |          ^^^^^^^^
-  16 |   const [password, setPassword] = useState('');
-  17 |   const [showPassword, setShowPassword] = useState(false);
-  18 |
+  1 | import { Toaster, useToasterStore, toast } from 'react-hot-toast';
+> 2 | import { useEffect } from 'react';
+    |          ^^^^^^^^^
+  3 |
+  4 | const ToasterProvider = () => {
+  5 |     const { toasts } = useToasterStore();
 
-the name `username` is defined multiple times
+You're importing a component that needs `useEffect`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
 
-Import traces:
-  Client Component Browser:
-    ./src/app/(auth)/signin/page.tsx [Client Component Browser]
-    ./src/app/(auth)/signin/page.tsx [Server Component]
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
 
-  Client Component SSR:
-    ./src/app/(auth)/signin/page.tsx [Client Component SSR]
-    ./src/app/(auth)/signin/page.tsx [Server Component]
-[01:06:47.366] Browser ERROR   ./src/app/(auth)/signin/page.tsx:15:20
-Ecmascript file had an error
-  13 |   const { loading, error, token } = useSelector((state: RootState) => state.auth);
-  14 |   const [username, setUsername] = useState('');
-> 15 |   const [username, setUsername] = useState('');
-     |                    ^^^^^^^^^^^
-  16 |   const [password, setPassword] = useState('');
-  17 |   const [showPassword, setShowPassword] = useState(false);
-  18 |
-
-the name `setUsername` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./src/app/(auth)/signin/page.tsx [Client Component Browser]
-    ./src/app/(auth)/signin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./src/app/(auth)/signin/page.tsx [Client Component SSR]
-    ./src/app/(auth)/signin/page.tsx [Server Component]
-[01:06:47.366] Browser ERROR   ./src/app/(auth)/signin/page.tsx:15:10
-Ecmascript file had an error
-  13 |   const { loading, error, token } = useSelector((state: RootState) => state.auth);
-  14 |   const [username, setUsername] = useState('');
-> 15 |   const [username, setUsername] = useState('');
-     |          ^^^^^^^^
-  16 |   const [password, setPassword] = useState('');
-  17 |   const [showPassword, setShowPassword] = useState(false);
-  18 |
-
-the name `username` is defined multiple times
-
-Import traces:
-  Client Component Browser:
-    ./src/app/(auth)/signin/page.tsx [Client Component Browser]
-    ./src/app/(auth)/signin/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./src/app/(auth)/signin/page.tsx [Client Component SSR]
-    ./src/app/(auth)/signin/page.tsx [Server Component]
+Import trace:
+  Server Component:
+    ./src/app/components/ToasterProvider.tsx
+    ./src/app/layout.tsx
+[00:15:05.261] Server  LOG      ✓ Compiled in 82ms
+[00:15:09.817] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:19:30.810] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:20:47.619] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:20:51.772] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:22:55.416] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:23:02.590] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:24:25.809] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:25:29.480] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:28:24.480] Server  LOG      ✓ Compiled in 65ms
+[00:28:33.064] Server  LOG      ✓ Compiled in 36ms
+[00:35:33.872] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:36:21.265] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:40:15.143] Server  LOG      ✓ Compiled in 66ms
+[00:40:22.732] Server  LOG      ✓ Compiled in 27ms
+[00:40:39.534] Server  LOG      ✓ Compiled in 24ms
+[00:40:41.653] Server  LOG      ✓ Compiled in 45ms
+[00:40:59.124] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:41:08.475] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:41:10.317] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:41:21.826] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:41:23.293] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:44:39.245] Server  LOG      ✓ Compiled in 53ms
+[00:47:36.762] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:47:41.421] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:48:09.643] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold

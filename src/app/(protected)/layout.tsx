@@ -12,11 +12,18 @@ export default function ProtectedLayout({
     const router = useRouter();
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
+    const [isMounted, setIsMounted] = useState(false);
+
     useEffect(() => {
+        setIsMounted(true);
         if (!token) {
             router.push('/signin');
         }
     }, [token, router]);
+
+    if (!isMounted) {
+        return null;
+    }
 
     if (!token) {
         return null;

@@ -2,45 +2,62 @@
 import { UploadModal } from "@/app/components/UploadModal";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect, useMemo } from "react";
-import { ArrowUpDown, ArrowUp, ArrowDown, Linkedin, Instagram, Twitter, Globe, Plus } from "lucide-react";
+import { ArrowUpDown, ArrowUp, ArrowDown, Linkedin, Instagram, Twitter, Globe, Plus, Loader2 } from "lucide-react";
 import { AddRequestModal } from "@/app/components/AddRequestFormModal";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../redux/store/store";
+import { fetchProfiles } from "../../redux/slices/ProfileSlice";
+import toast from "react-hot-toast";
 
 type StatusType = "Complete" | "Pending" | "Failed";
 
 interface TableRow {
-  id: number;
+  id: string; // Changed to string to match API
   name: string;
   company: string;
   email: string;
   phone: string;
-  status: StatusType;
+  status: string; // Relaxed type for mapping
   date: string;
 }
 
-const RAW_TABLE_ROWS: TableRow[] = [
-  { id: 1, name: "John Doe", company: "Innovate Inc.", email: "john@innovate.com", phone: "+1 555-0101", status: "Complete", date: "2023-10-26" },
-  { id: 2, name: "Jane Smith", company: "Tech Solutions", email: "jane@techsol.com", phone: "+1 555-0102", status: "Pending", date: "2023-10-25" },
-  { id: 3, name: "Mary Johnson", company: "Data Corp", email: "mary@datacorp.com", phone: "+1 555-0103", status: "Failed", date: "2023-10-24" },
-  { id: 4, name: "Alex Brown", company: "Future Labs", email: "alex@futurelabs.ai", phone: "+1 555-0104", status: "Complete", date: "2023-10-22" },
-  { id: 5, name: "Sarah Lee", company: "NexGen AI", email: "sarah@nexgen.ai", phone: "+1 555-0105", status: "Pending", date: "2023-10-20" },
-];
+// const RAW_TABLE_ROWS: TableRow[] = [
+//   { id: 1, name: "John Doe", company: "Innovate Inc.", email: "john@innovate.com", phone: "+1 555-0101", status: "Complete", date: "2023-10-26" },
+//   { id: 2, name: "Jane Smith", company: "Tech Solutions", email: "jane@techsol.com", phone: "+1 555-0102", status: "Pending", date: "2023-10-25" },
+//   { id: 3, name: "Mary Johnson", company: "Data Corp", email: "mary@datacorp.com", phone: "+1 555-0103", status: "Failed", date: "2023-10-24" },
+//   { id: 4, name: "Alex Brown", company: "Future Labs", email: "alex@futurelabs.ai", phone: "+1 555-0104", status: "Complete", date: "2023-10-22" },
+//   { id: 5, name: "Sarah Lee", company: "NexGen AI", email: "sarah@nexgen.ai", phone: "+1 555-0105", status: "Pending", date: "2023-10-20" },
+// ];
 
 export default function DashboardPage() {
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+  const { profiles, loading, error } = useSelector((state: RootState) => state.profiles);
+
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isAddRequestModalOpen, setIsAddRequestModalOpen] = useState(false);
-  const [openSocialRowId, setOpenSocialRowId] = useState<number | null>(null); // Lifted state for single open menu
+  const [openSocialRowId, setOpenSocialRowId] = useState<string | null>(null); // Lifted state for single open menu
+
+  useEffect(() => {
+    dispatch(fetchProfiles());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
 
   // Sorting & Filtering State
   const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"all" | StatusType>("all");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
   const [sortKey, setSortKey] = useState<keyof TableRow>("id");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
-  const viewDetails = (action: string) => {
+  const viewDetails = (action: string, id: string) => {
     if (action === "visibility") {
-      router.push("/request");
+      router.push(`/request/${id}`);
     } else if (action === "upload") {
       setIsUploadModalOpen(true);
     }
@@ -58,7 +75,18 @@ export default function DashboardPage() {
 
   // Filtered & Sorted Data
   const filteredAndSortedRows = useMemo(() => {
-    let filtered = RAW_TABLE_ROWS;
+    // Map API profiles to TableRow format
+    const mappedRows: TableRow[] = profiles.map(p => ({
+      id: p.id, // Ensure ID type matches (string vs number) - adjusting TableRow interface below might be needed if ID is string
+      name: p.name,
+      company: p.currentCompanyName || 'N/A',
+      email: p.email,
+      phone: p.phone || 'N/A',
+      status: (p.status === 'NEW' ? 'Pending' : p.status) as StatusType || 'Pending', // Mapping status
+      date: p.createdAt ? p.createdAt.substring(0, 10) : 'N/A'
+    }));
+
+    let filtered = mappedRows;
 
     // Search filter
     if (searchTerm.trim()) {
@@ -101,25 +129,25 @@ export default function DashboardPage() {
 
   function ActionButtons({ row }: { row: TableRow }) {
     const isSocialOpen = openSocialRowId === row.id;
-  
+
     const originalActions = [
       { icon: "visibility", label: "View Details" },
       { icon: "upload", label: "Upload Document" },
       { icon: "download", label: "Download" },
     ];
-  
+
     const socialLinks = [
       { icon: Linkedin, color: "text-[#0A66C2]", label: "LinkedIn", url: `https://linkedin.com/in/${row.name.toLowerCase().replace(" ", "-")}` },
       { icon: Instagram, color: "text-pink-600", label: "Instagram", url: `https://instagram.com/${row.name.toLowerCase().replace(" ", ".")}` },
       { icon: Twitter, color: "text-black", label: "X (Twitter)", url: `https://x.com/${row.name.toLowerCase().replace(" ", "")}` },
       { icon: Globe, color: "text-purple-600", label: "Website", url: `https://facebook.com/${row.name.toLowerCase().replace(" ", ".")}` },
     ];
-  
+
     const toggleSocial = (e: React.MouseEvent) => {
       e.stopPropagation();
       setOpenSocialRowId(isSocialOpen ? null : row.id);
     };
-  
+
     // Close when clicking outside
     useEffect(() => {
       const handleClickOutside = () => setOpenSocialRowId(null);
@@ -128,14 +156,14 @@ export default function DashboardPage() {
         return () => document.removeEventListener("click", handleClickOutside);
       }
     }, [isSocialOpen]);
-  
+
     return (
       <div className="flex items-center gap-1 sm:gap-2 relative">
         {/* Original 3 buttons */}
         {originalActions.map((action) => (
           <button
             key={action.icon}
-            onClick={() => viewDetails(action.icon)}
+            onClick={() => viewDetails(action.icon, row.id)}
             title={action.label}
             className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full shadow-neo-light-convex hover:shadow-neo-light-concave transition bg-white group relative"
           >
@@ -147,18 +175,17 @@ export default function DashboardPage() {
             </span>
           </button>
         ))}
-  
+
         {/* Social FAB Button */}
         <div className="relative">
           {/* Social Icons - Open to the LEFT */}
           <div
-            style={{zIndex: 10, backgroundColor: '#ffffff' }}
-            className={`absolute right-full top-1/2 -translate-y-1/2 mr-3 flex items-center gap-1 transition-all duration-400 origin-right ${
-              isSocialOpen
-                ? "opacity-100 scale-100"
-                : "opacity-0 scale-0 pointer-events-none"
-            }`}
-            // style={{  }}
+            style={{ zIndex: 10, backgroundColor: '#ffffff' }}
+            className={`absolute right-full top-1/2 -translate-y-1/2 mr-3 flex items-center gap-1 transition-all duration-400 origin-right ${isSocialOpen
+              ? "opacity-100 scale-100"
+              : "opacity-0 scale-0 pointer-events-none"
+              }`}
+          // style={{  }}
           >
             {socialLinks.map((social, i) => (
               <a
@@ -179,7 +206,7 @@ export default function DashboardPage() {
               </a>
             ))}
           </div>
-  
+
           {/* Main + Button */}
           <button
             onClick={toggleSocial}
@@ -344,6 +371,16 @@ export default function DashboardPage() {
           </section>
         </div>
       </main>
+
+      {/* Loader Overlay */}
+      {loading && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center backdrop-blur-sm">
+          <div className="bg-white p-6 rounded-2xl shadow-neo-light-convex flex flex-col items-center gap-4">
+            <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
+            <p className="text-gray-700 font-medium">Loading Profiles...</p>
+          </div>
+        </div>
+      )}
 
       <UploadModal
         isOpen={isUploadModalOpen}

@@ -250,8 +250,10 @@ function ProtectedLayout({ children }) {
     const [sidebarOpen, setSidebarOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const token = ("TURBOPACK compile-time truthy", 1) ? localStorage.getItem('token') : "TURBOPACK unreachable";
+    const [isMounted, setIsMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ProtectedLayout.useEffect": ()=>{
+            setIsMounted(true);
             if (!token) {
                 router.push('/signin');
             }
@@ -260,6 +262,9 @@ function ProtectedLayout({ children }) {
         token,
         router
     ]);
+    if (!isMounted) {
+        return null;
+    }
     if (!token) {
         return null;
     }
@@ -275,12 +280,12 @@ function ProtectedLayout({ children }) {
                         children: "menu"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(protected)/layout.tsx",
-                        lineNumber: 33,
+                        lineNumber: 40,
                         columnNumber: 21
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/app/(protected)/layout.tsx",
-                    lineNumber: 29,
+                    lineNumber: 36,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$components$2f$SideBar$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -288,7 +293,7 @@ function ProtectedLayout({ children }) {
                     onClose: ()=>setSidebarOpen(false)
                 }, void 0, false, {
                     fileName: "[project]/src/app/(protected)/layout.tsx",
-                    lineNumber: 36,
+                    lineNumber: 43,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -296,18 +301,18 @@ function ProtectedLayout({ children }) {
                     children: children
                 }, void 0, false, {
                     fileName: "[project]/src/app/(protected)/layout.tsx",
-                    lineNumber: 37,
+                    lineNumber: 44,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/(protected)/layout.tsx",
-            lineNumber: 27,
+            lineNumber: 34,
             columnNumber: 13
         }, this)
     }, void 0, false);
 }
-_s(ProtectedLayout, "ThcBHo/xmiZjXvrMGDJsqTkz71I=", false, function() {
+_s(ProtectedLayout, "Iewi8FyMlHwvv0FsXODzMU/9ylg=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];
