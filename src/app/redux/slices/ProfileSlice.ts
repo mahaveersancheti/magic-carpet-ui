@@ -37,7 +37,7 @@ export const fetchProfiles = createAsyncThunk(
     'profiles/fetchProfiles',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await api.get<Profile[]>(endpoints.profiles);
+            const response = await api.get<Profile[]>(endpoints.profiles, { 'Skip-Auth': 'true' });
             return response;
         } catch (error: any) {
             return rejectWithValue(error.message || 'Failed to fetch profiles');
@@ -49,7 +49,8 @@ export const fetchProfileById = createAsyncThunk(
     'profiles/fetchProfileById',
     async (id: string, { rejectWithValue }) => {
         try {
-            const response = await api.get<Profile>(endpoints.getProfileById(id));
+            // Attempt with Skip-Auth to bypass potential redirect issues if token is invalid/unwanted for this endpoint
+            const response = await api.get<Profile>(endpoints.getProfileById(id), { 'Skip-Auth': 'true' });
             return response;
         } catch (error: any) {
             return rejectWithValue(error.message || 'Failed to fetch profile');

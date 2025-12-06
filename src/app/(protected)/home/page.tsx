@@ -57,7 +57,7 @@ export default function DashboardPage() {
 
   const viewDetails = (action: string, id: string) => {
     if (action === "visibility") {
-      router.push(`/request/${id}`);
+      router.push(`/request?id=${id}`);
     } else if (action === "upload") {
       setIsUploadModalOpen(true);
     }
@@ -73,22 +73,21 @@ export default function DashboardPage() {
     }
   };
 
+
   // Filtered & Sorted Data
   const filteredAndSortedRows = useMemo(() => {
-    // Map API profiles to TableRow format
     const mappedRows: TableRow[] = profiles.map(p => ({
-      id: p.id, // Ensure ID type matches (string vs number) - adjusting TableRow interface below might be needed if ID is string
+      id: p.id,
       name: p.name,
-      company: p.currentCompanyName || 'N/A',
+      company: p.currentCompanyName || "N/A",
       email: p.email,
-      phone: p.phone || 'N/A',
-      status: (p.status === 'NEW' ? 'Pending' : p.status) as StatusType || 'Pending', // Mapping status
-      date: p.createdAt ? p.createdAt.substring(0, 10) : 'N/A'
+      phone: p.phone || "N/A",
+      status: (p.status === "NEW" ? "Pending" : p.status) || "Pending",
+      date: p.createdAt ? p.createdAt.substring(0, 10) : "N/A",
     }));
 
     let filtered = mappedRows;
 
-    // Search filter
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(row =>
@@ -98,12 +97,10 @@ export default function DashboardPage() {
       );
     }
 
-    // Status filter
     if (statusFilter !== "all") {
       filtered = filtered.filter(row => row.status === statusFilter);
     }
 
-    // Sorting
     return [...filtered].sort((a, b) => {
       const aVal = a[sortKey];
       const bVal = b[sortKey];
@@ -114,11 +111,10 @@ export default function DashboardPage() {
           : bVal.localeCompare(aVal);
       }
 
-      if (aVal < bVal) return sortOrder === "asc" ? -1 : 1;
-      if (aVal > bVal) return sortOrder === "asc" ? 1 : -1;
-      return 0;
+      return sortOrder === "asc" ? (aVal < bVal ? -1 : 1) : (aVal > bVal ? -1 : 1);
     });
-  }, [searchTerm, statusFilter, sortKey, sortOrder]);
+  }, [profiles, searchTerm, statusFilter, sortKey, sortOrder]);
+
 
   // Sort Icon Component
   const SortIcon = ({ column }: { column: keyof TableRow }) => {
@@ -336,12 +332,12 @@ export default function DashboardPage() {
                         </td>
                       </tr>
                     ) : (
-                      filteredAndSortedRows.map((row) => (
+                      filteredAndSortedRows.map((row, index) => (
                         <tr
                           key={row.id}
                           className="h-auto sm:h-[76px] border-t border-gray-200"
                         >
-                          <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm">{row.id}</td>
+                          <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm">{index + 1}</td>
                           <td className="font-semibold px-2 sm:px-4 py-3 text-xs sm:text-sm">{row.name}</td>
                           <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm hidden lg:table-cell">{row.company}</td>
                           <td className="px-2 sm:px-4 py-3 text-xs sm:text-sm hidden xl:table-cell">
