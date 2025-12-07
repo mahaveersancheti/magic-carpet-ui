@@ -19,11 +19,22 @@ export interface Profile {
     // Add other fields as needed based on API response
 }
 
+export interface CreateProfilePayload {
+    name: string;
+    email: string;
+    currentCompanyName: string;
+    city: string;
+    country?: string;
+    industryName: string;
+    linkedinProfileLink?: string;
+}
+
 interface ProfileState {
     profiles: Profile[];
     selectedProfile: Profile | null;
     loading: boolean;
     error: string | null;
+    createLoading: boolean;
 }
 
 const initialState: ProfileState = {
@@ -31,6 +42,7 @@ const initialState: ProfileState = {
     selectedProfile: null,
     loading: false,
     error: null,
+    createLoading: false,
 };
 
 export const fetchProfiles = createAsyncThunk(
@@ -51,9 +63,22 @@ export const fetchProfileById = createAsyncThunk(
         try {
             // Attempt with Skip-Auth to bypass potential redirect issues if token is invalid/unwanted for this endpoint
             const response = await api.get<Profile>(endpoints.getProfileById(id), { 'Skip-Auth': 'true' });
+            // const response = await api.get<Profile>(endpoints.getProfileByIdPopulateDummy(id), { 'Skip-Auth': 'true' });
             return response;
         } catch (error: any) {
             return rejectWithValue(error.message || 'Failed to fetch profile');
+        }
+    }
+);
+
+export const createProfile = createAsyncThunk(
+    'profiles/createProfile',
+    async (payload: CreateProfilePayload, { rejectWithValue }) => {
+        try {
+            const response = await api.post<Profile>(endpoints.createProfile, payload, { 'Skip-Auth': 'true' });
+            return response;
+        } catch (error: any) {
+            return rejectWithValue(error.message || 'Failed to create profile');
         }
     }
 );
@@ -93,6 +118,18 @@ const profileSlice = createSlice({
             })
             .addCase(fetchProfileById.rejected, (state, action) => {
                 state.loading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(createProfile.pending, (state) => {
+                state.createLoading = true;
+                state.error = null;
+            })
+            .addCase(createProfile.fulfilled, (state, action) => {
+                state.createLoading = false;
+                state.profiles.push(action.payload);
+            })
+            .addCase(createProfile.rejected, (state, action) => {
+                state.createLoading = false;
                 state.error = action.payload as string;
             });
     },

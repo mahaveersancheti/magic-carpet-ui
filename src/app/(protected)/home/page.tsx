@@ -393,6 +393,7 @@ export default function DashboardPage() {
       <AddRequestModal
         isOpen={isAddRequestModalOpen}
         onClose={() => setIsAddRequestModalOpen(false)}
+        onSuccess={() => dispatch(fetchProfiles())}
       />
     </div>
   );

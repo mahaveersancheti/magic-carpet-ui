@@ -265,18 +265,18 @@ function ReportContent() {
                     </div>
                 </section>
 
-                {REPORT_JSON.financialSnapshot.length > 0 && (
-                    <section
-                        className="rounded-2xl p-6 shadow-neo-light-convex border border-gray-200"
-                        style={{ backgroundColor: '#ffffff' }}
-                    >
-                        <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
-                            Financial Snapshot
-                            <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
-                                <Volume2 className="w-4 h-4" />
-                                Listen
-                            </button>
-                        </h3>
+                <section
+                    className="rounded-2xl p-6 shadow-neo-light-convex border border-gray-200"
+                    style={{ backgroundColor: '#ffffff' }}
+                >
+                    <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
+                        Financial Snapshot
+                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                            <Volume2 className="w-4 h-4" />
+                            Listen
+                        </button>
+                    </h3>
+                    {REPORT_JSON.financialSnapshot.length > 0 ? (
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                             {REPORT_JSON.financialSnapshot.map((item: any, i: number) => (
                                 <div key={i} className="p-4 bg-blue-50 rounded-lg">
@@ -284,8 +284,203 @@ function ReportContent() {
                                 </div>
                             ))}
                         </div>
-                    </section>
-                )}
+                    ) : (
+                        <div className="text-sm text-gray-500 italic">No financial snapshot data available.</div>
+                    )}
+                </section>
+
+                <section
+                    className="rounded-2xl p-6 shadow-neo-light-convex border border-gray-200"
+                    style={{ backgroundColor: '#ffffff' }}
+                >
+                    <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
+                        Product Fit
+                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                            <Volume2 className="w-4 h-4" />
+                            Listen
+                        </button>
+                    </h3>
+                    <div className="space-y-3">
+                        {REPORT_JSON.profileSummary.productFitBullets.length > 0 ? (
+                            REPORT_JSON.profileSummary.productFitBullets.map((item: any, i: number) => (
+                                <div
+                                    key={i}
+                                    className="p-4 rounded-lg border border-gray-200"
+                                    style={{ backgroundColor: '#ffffff' }}
+                                >
+                                    <div className="text-sm text-foreground">
+                                        {typeof item === 'string' ? item : item.description || JSON.stringify(item)}
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="text-sm text-gray-500 italic">No product fit data available.</div>
+                        )}
+                    </div>
+                </section>
+
+                <section
+                    className="rounded-2xl p-6 shadow-neo-light-convex border border-gray-200"
+                    style={{ backgroundColor: '#ffffff' }}
+                >
+                    <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
+                        Psychology & Approach Strategy
+                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                            <Volume2 className="w-4 h-4" />
+                            Listen
+                        </button>
+                    </h3>
+                    <div className="space-y-3">
+                        {safeList((selectedProfile as any).approachStrategy).length > 0 ? (
+                            safeList((selectedProfile as any).approachStrategy).map((item: any, i: number) => (
+                                <div
+                                    key={i}
+                                    className="p-4 rounded-lg border border-gray-200"
+                                    style={{ backgroundColor: '#ffffff' }}
+                                >
+                                    <div className="text-sm font-semibold text-foreground mb-1">
+                                        {item.title || `Strategy ${i + 1}`}
+                                    </div>
+                                    <div className="text-sm text-foreground">
+                                        {item.description || typeof item === 'string' ? item : JSON.stringify(item)}
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="text-sm text-gray-500 italic">No approach strategy data available.</div>
+                        )}
+                    </div>
+                </section>
+
+                <section
+                    className="rounded-2xl p-6 shadow-neo-light-convex border border-gray-200"
+                    style={{ backgroundColor: '#ffffff' }}
+                >
+                    <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
+                        Conversation Starters
+                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                            <Volume2 className="w-4 h-4" />
+                            Listen
+                        </button>
+                    </h3>
+                    <div className="space-y-3">
+                        {REPORT_JSON.conversations.length > 0 ? (
+                            REPORT_JSON.conversations.map((item: any, i: number) => (
+                                <div
+                                    key={i}
+                                    className="p-4 rounded-lg border border-gray-200 bg-blue-50"
+                                >
+                                    <div className="flex items-start justify-between gap-2 mb-2">
+                                        <div className="text-sm font-semibold text-blue-900">
+                                            {item.question || item.tag || `Starter ${i + 1}`}
+                                        </div>
+                                        {item.salesFramework && (
+                                            <span className="text-xs px-2 py-1 rounded-full bg-blue-200 text-blue-800">
+                                                {item.salesFramework}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className="text-sm text-foreground">
+                                        {item.description || typeof item === 'string' ? item : JSON.stringify(item)}
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="text-sm text-gray-500 italic">No conversation starters available.</div>
+                        )}
+                    </div>
+                </section>
+
+                <section
+                    className="rounded-2xl p-6 shadow-neo-light-convex border border-gray-200"
+                    style={{ backgroundColor: '#ffffff' }}
+                >
+                    <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
+                        War-Gaming: Predicted Objections & Counters
+                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                            <Volume2 className="w-4 h-4" />
+                            Listen
+                        </button>
+                    </h3>
+                    <div className="space-y-4">
+                        {REPORT_JSON.objections.length > 0 ? (
+                            REPORT_JSON.objections.map((item: any, i: number) => (
+                                <div
+                                    key={i}
+                                    className="p-4 rounded-lg border border-gray-200"
+                                    style={{ backgroundColor: '#ffffff' }}
+                                >
+                                    <div className="mb-3">
+                                        <div className="text-xs font-semibold text-red-600 mb-1">OBJECTION:</div>
+                                        <div className="text-sm text-foreground font-medium">
+                                            {item.objection || 'No objection specified'}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="text-xs font-semibold text-green-600 mb-1">COUNTER:</div>
+                                        <div className="text-sm text-foreground">
+                                            {item.counter || item.description || 'No counter specified'}
+                                        </div>
+                                    </div>
+                                    {item.matchingDescription && (
+                                        <div className="mt-2 text-xs text-gray-600 italic">
+                                            {item.matchingDescription}
+                                        </div>
+                                    )}
+                                </div>
+                            ))
+                        ) : (
+                            <div className="text-sm text-gray-500 italic">No objections and counters available.</div>
+                        )}
+                    </div>
+                </section>
+
+                <section
+                    className="rounded-2xl p-6 shadow-neo-light-convex border border-gray-200"
+                    style={{ backgroundColor: '#ffffff' }}
+                >
+                    <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
+                        Optimal Timing & Tactics
+                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                            <Volume2 className="w-4 h-4" />
+                            Listen
+                        </button>
+                    </h3>
+                    <div className="space-y-3">
+                        {(selectedProfile as any).actionRecommendation ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="p-4 rounded-lg bg-purple-50 border border-purple-200">
+                                    <div className="text-xs font-semibold text-purple-600 mb-1">NEXT STEP</div>
+                                    <div className="text-sm text-foreground">
+                                        {(selectedProfile as any).actionRecommendation.nextStep || 'Not specified'}
+                                    </div>
+                                </div>
+                                <div className="p-4 rounded-lg bg-orange-50 border border-orange-200">
+                                    <div className="text-xs font-semibold text-orange-600 mb-1">PRIORITY</div>
+                                    <div className="text-sm text-foreground">
+                                        {(selectedProfile as any).actionRecommendation.priority || 'Not specified'}
+                                    </div>
+                                </div>
+                                <div className="p-4 rounded-lg bg-blue-50 border border-blue-200">
+                                    <div className="text-xs font-semibold text-blue-600 mb-1">DUE DATE</div>
+                                    <div className="text-sm text-foreground">
+                                        {(selectedProfile as any).actionRecommendation.dueDate
+                                            ? new Date((selectedProfile as any).actionRecommendation.dueDate).toLocaleDateString()
+                                            : 'Not specified'}
+                                    </div>
+                                </div>
+                                <div className="p-4 rounded-lg bg-green-50 border border-green-200 md:col-span-2">
+                                    <div className="text-xs font-semibold text-green-600 mb-1">RECOMMENDATION</div>
+                                    <div className="text-sm text-foreground">
+                                        {(selectedProfile as any).actionRecommendation.recommendation || 'Not specified'}
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="text-sm text-gray-500 italic">No timing and tactics data available.</div>
+                        )}
+                    </div>
+                </section>
 
                 <section className="bg-gradient-to-r from-blue-700 to-indigo-600 text-white rounded-2xl p-6 shadow-lg">
                     <div className="flex items-start justify-between gap-4">
@@ -353,7 +548,7 @@ function ReportContent() {
                     </div>
                 </section>
             </main>
-        </div>
+        </div >
     );
 }
 

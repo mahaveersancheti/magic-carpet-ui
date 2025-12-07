@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store/store';
 import { loginUser, clearError } from '../../redux/slices/LoginSlice';
 import toast from 'react-hot-toast';
+import { endpoints } from '@/app/lib/endpoints';
 
 
 export default function SignIn() {
@@ -35,6 +36,11 @@ export default function SignIn() {
     } else {
       toast.error("Please enter both username and password.");
     }
+  }
+
+  // Create funtion of google sign
+  const handleGoogleSignIn = () => {
+    window.open(endpoints.googleLogin, "_blank");
   }
 
   return (
@@ -128,6 +134,7 @@ export default function SignIn() {
 
             {/* GOOGLE BUTTON */}
             <button
+              onClick={handleGoogleSignIn}
               type="button"
               className="flex w-full items-center justify-center gap-3 rounded-xl bg-white/50 py-3 text-foreground border border-gray-300 hover:bg-white/70 transition-all backdrop-blur-xl"
             >
