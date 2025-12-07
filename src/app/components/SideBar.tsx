@@ -14,11 +14,11 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     const handleNavigation = (label: string) => {
         setSelectedMenu(label); // highlight selected item
 
-        if(label == "Home"){
+        if (label == "Home") {
             router.push("/home");
         }
 
-        if(label == "User Profile"){
+        if (label == "User Profile") {
             router.push("/userprofile");
         }
 
@@ -32,6 +32,17 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         }
     };
 
+    const handleLogout = () => {
+        // Clear token from localStorage
+        localStorage.removeItem('token');
+
+        // Close mobile menu if open
+        if (onClose) {
+            onClose();
+        }
+        window.location.href = '/';
+    };
+
     const menuItems = [
         // ["settings", "LinkedIn Action"],
         ["person", "User Profile"],
@@ -41,12 +52,12 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         <>
             {/* Mobile Overlay */}
             {isOpen && (
-                <div 
+                <div
                     className="fixed inset-0 bg-black/50 z-40 lg:hidden"
                     onClick={onClose}
                 />
             )}
-            
+
             <aside className={`
                 h-screen lg:h-full
                 fixed lg:sticky top-0 left-0 z-50
@@ -55,7 +66,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                 transform transition-transform duration-300 ease-in-out
                 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
             `}>
-                <div 
+                <div
                     className="flex flex-col h-full rounded-2xl shadow-neo-light-convex p-4 sm:p-5 bg-white"
                 >
                     {/* Mobile Close Button */}
@@ -115,9 +126,22 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                         ))}
                     </nav>
 
+                    {/* Logout Button */}
+                    <div className="mt-4">
+                        <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl w-full text-foreground hover:bg-red-50 hover:text-red-600 transition text-sm sm:text-base border border-gray-200"
+                        >
+                            <span className="material-symbols-outlined text-xl sm:text-2xl">
+                                logout
+                            </span>
+                            <p>Logout</p>
+                        </button>
+                    </div>
+
                     {/* Upgrade Card */}
-                    <div 
-                    className="border border-gray-200 mt-auto p-4 sm:p-5 rounded-2xl shadow-neo-light-concave bg-gray-100"
+                    <div
+                        className="border border-gray-200 mt-auto p-4 sm:p-5 rounded-2xl shadow-neo-light-concave bg-gray-100"
                     >
                         <p className="text-xs sm:text-sm font-semibold text-foreground text-center">
                             Upgrade to Pro

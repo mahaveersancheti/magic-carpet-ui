@@ -40,7 +40,7 @@ export default function SignIn() {
 
   // Create funtion of google sign
   const handleGoogleSignIn = () => {
-    window.open(endpoints.googleLogin, "_blank");
+    window.open(endpoints.googleLogin, "_self");
   }
 
   return (
