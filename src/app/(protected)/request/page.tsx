@@ -81,19 +81,19 @@ function ReportContent() {
                 warmContacts: 0,
             },
             topTopics: [],
-            recentPost: (selectedProfile as any).recentNews?.[0]?.summary || "No recent activity detected.",
+            recentPost: (selectedProfile as any).recentNews?.[0]?.description || "No recent activity detected.",
         },
         recentNews: safeList((selectedProfile as any).recentNews).map((news: any) => ({
             category: "News",
-            title: news,
-            summary: news,
-            date: "Recent"
+            title: news.title || "No Title",
+            summary: news.description || "No description available",
+            date: news.date || "Recent"
         })),
         industryOutlook: safeList((selectedProfile as any).industryOutlook),
         financialSnapshot: safeList((selectedProfile as any).financialSnapshot),
         conversations: safeList((selectedProfile as any).conversationStarters),
         objections: safeList((selectedProfile as any).objectionsCounters),
-        recommendationBody: (selectedProfile as any).actionRecommendation || "No specific recommendation generated."
+        recommendationBody: (selectedProfile as any).actionRecommendation?.recommendation || "No specific recommendation generated."
     };
 
     return (
@@ -172,15 +172,18 @@ function ReportContent() {
 
                                     <ul className="list-disc ml-5 text-foreground">
                                         {REPORT_JSON.profileSummary.productFitBullets.map((b: any, i: number) => (
-                                            <li key={i} className="text-sm mb-1">{typeof b === 'string' ? b : JSON.stringify(b)}</li>
+                                            <li key={i} className="text-sm mb-1">
+                                                {typeof b === 'string' ? b : (b.description || b.title || 'Product fit item')}
+                                            </li>
                                         ))}
                                     </ul>
 
                                     <div className="mt-4">
                                         <div className="text-xs text-gray-500 mb-1">Skills / Topics</div>
                                         <div className="flex flex-wrap gap-2">
-                                            {selectedProfile.skills && selectedProfile.skills.length > 0 ? (
-                                                selectedProfile.skills.map((t, i) => (
+                                            {((selectedProfile as any).allSkills || (selectedProfile as any).topSkills) &&
+                                                ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills).length > 0 ? (
+                                                ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills).map((t: string, i: number) => (
                                                     <span key={i} className="text-xs px-3 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-100">
                                                         {t}
                                                     </span>
@@ -256,8 +259,13 @@ function ReportContent() {
                     </h3>
                     <div className="flex flex-col gap-3">
                         {REPORT_JSON.industryOutlook.length > 0 ? REPORT_JSON.industryOutlook.map((item: any, i: number) => (
-                            <div key={i} className="p-3 bg-gray-50 rounded-lg text-sm">
-                                {typeof item === 'string' ? item : JSON.stringify(item)}
+                            <div key={i} className="p-4 bg-gray-50 rounded-lg">
+                                <div className="text-sm font-semibold text-foreground mb-2">
+                                    {item.title || `Outlook ${i + 1}`}
+                                </div>
+                                <div className="text-sm text-foreground">
+                                    {item.description || (typeof item === 'string' ? item : 'No description available')}
+                                </div>
                             </div>
                         )) : (
                             <div className="text-sm text-gray-500 italic">No industry outlook data available.</div>
@@ -277,10 +285,45 @@ function ReportContent() {
                         </button>
                     </h3>
                     {REPORT_JSON.financialSnapshot.length > 0 ? (
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                        <div className="space-y-3">
                             {REPORT_JSON.financialSnapshot.map((item: any, i: number) => (
-                                <div key={i} className="p-4 bg-blue-50 rounded-lg">
-                                    <div className="text-sm font-bold text-blue-600">{typeof item === 'string' ? item : JSON.stringify(item)}</div>
+                                <div key={i} className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                    {item.revenue && (
+                                        <div className="p-3 bg-blue-50 rounded-lg">
+                                            <div className="text-xs text-gray-600 mb-1">Revenue</div>
+                                            <div className="text-sm font-semibold text-blue-600">{item.revenue}</div>
+                                        </div>
+                                    )}
+                                    {item.profit && (
+                                        <div className="p-3 bg-green-50 rounded-lg">
+                                            <div className="text-xs text-gray-600 mb-1">Profit</div>
+                                            <div className="text-sm font-semibold text-green-600">{item.profit}</div>
+                                        </div>
+                                    )}
+                                    {item.growth && (
+                                        <div className="p-3 bg-purple-50 rounded-lg">
+                                            <div className="text-xs text-gray-600 mb-1">Growth</div>
+                                            <div className="text-sm font-semibold text-purple-600">{item.growth}</div>
+                                        </div>
+                                    )}
+                                    {item.marketCap && (
+                                        <div className="p-3 bg-orange-50 rounded-lg">
+                                            <div className="text-xs text-gray-600 mb-1">Market Cap</div>
+                                            <div className="text-sm font-semibold text-orange-600">{item.marketCap}</div>
+                                        </div>
+                                    )}
+                                    {item.debt && (
+                                        <div className="p-3 bg-red-50 rounded-lg">
+                                            <div className="text-xs text-gray-600 mb-1">Debt</div>
+                                            <div className="text-sm font-semibold text-red-600">{item.debt}</div>
+                                        </div>
+                                    )}
+                                    {item.budget && (
+                                        <div className="p-3 bg-indigo-50 rounded-lg">
+                                            <div className="text-xs text-gray-600 mb-1">Budget</div>
+                                            <div className="text-sm font-semibold text-indigo-600">{item.budget}</div>
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>
@@ -309,7 +352,7 @@ function ReportContent() {
                                     style={{ backgroundColor: '#ffffff' }}
                                 >
                                     <div className="text-sm text-foreground">
-                                        {typeof item === 'string' ? item : item.description || JSON.stringify(item)}
+                                        {typeof item === 'string' ? item : (item.description || item.title || 'No description available')}
                                     </div>
                                 </div>
                             ))
@@ -342,7 +385,7 @@ function ReportContent() {
                                         {item.title || `Strategy ${i + 1}`}
                                     </div>
                                     <div className="text-sm text-foreground">
-                                        {item.description || typeof item === 'string' ? item : JSON.stringify(item)}
+                                        {item.description || (typeof item === 'string' ? item : 'No description available')}
                                     </div>
                                 </div>
                             ))
@@ -381,7 +424,7 @@ function ReportContent() {
                                         )}
                                     </div>
                                     <div className="text-sm text-foreground">
-                                        {item.description || typeof item === 'string' ? item : JSON.stringify(item)}
+                                        {item.description || (typeof item === 'string' ? item : 'No description available')}
                                     </div>
                                 </div>
                             ))
