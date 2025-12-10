@@ -9,7 +9,7 @@ const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-poppins" });
 
 export const metadata: Metadata = {
-  title: "Visitor Search Management",
+  title: "Magic Carpet",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

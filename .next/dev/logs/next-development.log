@@ -1,20 +1,35 @@
-[00:00:00.670] Server  LOG      ✓ Ready in 487ms
-[00:00:07.723] Browser ERROR   uncaughtError: Error: Objects are not valid as a React child (found: object with keys {title, description, date, source, url}). If you meant to render a collection of children, use an array instead.
-[00:01:49.899] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:01:49.987] Server  LOG      ✓ Compiled in 51ms
-[00:04:02.391] Server  LOG      ✓ Compiled in 51ms
-[00:06:41.708] Server  LOG      ✓ Compiled in 35ms
-[00:07:20.138] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:08:11.706] Browser ERROR   uncaughtError: Error: Objects are not valid as a React child (found: object with keys {nextStep, priority, dueDate, recommendation}). If you meant to render a collection of children, use an array instead.
-[00:08:29.131] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:08:51.956] Browser ERROR   uncaughtError: Error: Objects are not valid as a React child (found: object with keys {nextStep, priority, dueDate, recommendation}). If you meant to render a collection of children, use an array instead.
-[00:09:22.249] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:10:18.317] Browser ERROR   uncaughtError: Error: Objects are not valid as a React child (found: object with keys {nextStep, priority, dueDate, recommendation}). If you meant to render a collection of children, use an array instead.
-[00:10:32.191] Browser ERROR   uncaughtError: Error: Objects are not valid as a React child (found: object with keys {nextStep, priority, dueDate, recommendation}). If you meant to render a collection of children, use an array instead.
-[00:11:11.528] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:11:11.537] Server  LOG      ✓ Compiled in 39ms
-[00:12:06.805] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:13:16.425] Server  LOG      ✓ Compiled in 50ms
-[00:13:35.172] Server  LOG      ✓ Compiled in 27ms
-[00:18:12.057] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:23:34.388] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:00:00.980] Server  LOG      ✓ Ready in 755ms
+[00:03:37.049] Server  LOG      ✓ Compiled in 70ms
+[00:04:32.910] Server  LOG      ✓ Compiled in 27ms
+[00:05:47.780] Server  LOG      ✓ Compiled in 61ms
+[00:06:15.652] Server  LOG      ✓ Compiled in 40ms
+[00:11:22.568] Server  LOG      ✓ Compiled in 39ms
+[00:14:49.151] Server  LOG      ✓ Compiled in 43ms
+[00:20:38.748] Server  LOG      ✓ Compiled in 38ms
+[00:21:13.663] Server  LOG      ✓ Compiled in 35ms
+[00:21:56.890] Server  LOG      ✓ Compiled in 43ms
+[00:22:47.529] Server  LOG      ✓ Compiled in 32ms
+[00:23:16.206] Server  LOG      ✓ Compiled in 38ms
+[00:23:54.579] Server  LOG      ✓ Compiled in 49ms
+[00:46:33.479] Server  LOG      ✓ Compiled in 37ms
+[00:47:11.802] Server  LOG      ✓ Compiled in 27ms
+[00:47:53.966] Server  LOG      ✓ Compiled in 58ms
+[00:48:21.412] Server  LOG      ✓ Compiled in 35ms
+[00:52:21.537] Server  LOG      ✓ Compiled in 55ms
+[00:52:55.859] Server  LOG      ✓ Compiled in 48ms
+[00:54:25.412] Server  LOG      ✓ Compiled in 35ms
+[00:55:08.206] Server  LOG      ✓ Compiled in 72ms
+[01:21:51.616] Server  LOG      ✓ Compiled in 76ms
+[01:22:29.500] Server  LOG      ✓ Compiled in 48ms
+[01:25:03.600] Server  LOG      ✓ Compiled in 35ms
+[01:25:19.789] Server  LOG      ✓ Compiled in 32ms
+[01:25:21.463] Server  LOG      ✓ Compiled in 33ms
+[01:26:09.221] Server  LOG      ✓ Compiled in 43ms
+[01:26:18.140] Server  LOG      ✓ Compiled in 29ms
+[01:26:28.536] Server  LOG      ✓ Compiled in 25ms
+[01:26:32.805] Server  LOG      ✓ Compiled in 34ms
+[01:26:39.705] Server  LOG      ✓ Compiled in 30ms
+[01:28:20.078] Server  LOG      ✓ Compiled in 55ms
+[01:28:40.113] Server  LOG      ✓ Compiled in 40ms
+[01:29:09.995] Server  LOG      ✓ Compiled in 38ms
+[01:29:16.408] Server  LOG      ✓ Compiled in 37ms
