@@ -285,7 +285,7 @@ export default function UserProfile() {
             </div>
 
             {/* Quick Actions Card */}
-            <div
+            {/* <div
               style={{ backgroundColor: '#ffffff' }}
               className="bg-white p-6 rounded-2xl shadow-neo-light-convex transition-all duration-200">
               <h3 className="font-bold text-lg text-foreground mb-4">
@@ -322,7 +322,7 @@ export default function UserProfile() {
                   </span>
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* RIGHT COLUMN */}

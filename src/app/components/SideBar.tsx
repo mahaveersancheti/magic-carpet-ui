@@ -1,6 +1,6 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface SidebarProps {
     isOpen?: boolean;
@@ -9,7 +9,18 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     const router = useRouter();
+    const pathname = usePathname();
     const [selectedMenu, setSelectedMenu] = useState("Home");
+
+    useEffect(() => {
+        if (pathname?.includes("/userprofile")) {
+            setSelectedMenu("User Profile");
+        } else if (pathname?.includes("/linkedin-action")) {
+            setSelectedMenu("LinkedIn Action");
+        } else {
+            setSelectedMenu("Home");
+        }
+    }, [pathname]);
 
     const handleNavigation = (label: string) => {
         setSelectedMenu(label); // highlight selected item
@@ -140,7 +151,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                     </div>
 
                     {/* Upgrade Card */}
-                    <div
+                    {/* <div
                         className="border border-gray-200 mt-auto p-4 sm:p-5 rounded-2xl shadow-neo-light-concave bg-gray-100"
                     >
                         <p className="text-xs sm:text-sm font-semibold text-foreground text-center">
@@ -152,7 +163,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                         <button className="mt-3 sm:mt-4 w-full py-2 rounded-xl bg-[#1B7FE6] text-white font-semibold text-sm sm:text-base shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition">
                             Upgrade Now
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </aside>
         </>

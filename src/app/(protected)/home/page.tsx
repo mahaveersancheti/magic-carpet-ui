@@ -128,8 +128,8 @@ export default function DashboardPage() {
 
     const originalActions = [
       { icon: "visibility", label: "View Details" },
-      { icon: "upload", label: "Upload Document" },
-      { icon: "download", label: "Download" },
+      // { icon: "upload", label: "Upload Document" },
+      // { icon: "download", label: "Download" },
     ];
 
     const socialLinks = [
