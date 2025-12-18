@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchProductsByUserId, createProduct, updateProduct, deleteProduct, CreateProductPayload, Product } from "../../redux/slices/ProductSlice";
 import { getBaseUrl } from "../../services/apiService";
 import toast from 'react-hot-toast';
+import { useUser } from '../../hooks/useUser';
 import {
   Mail,
   Phone,
@@ -28,6 +29,30 @@ import {
 
 export default function UserProfile() {
   const dispatch = useDispatch<AppDispatch>();
+
+  const { user } = useUser();
+  const [userData, setUserData] = useState({
+    name: "",
+    title: "",
+    email: "",
+    phone: "",
+    avatar: "https://lh3.googleusercontent.com/aida-public/AB6AXuCsF819KQIZRWOc4COafT_vJqvIQ5rcdJ_nMnsTyj1BqbAkXU20i4PmkOx2i2pwT3b7ogKzv4W4tCuYok6rOSrDyxRPEpMHWT9aVJUY1FdWhg25NK0wqqpO7hpbAgh6czPzpu50wq_JWIfQvpDrYDoYYbCKJdM0Cq6WBMkWKcoc4qg0cSvgEGD2ZDLR8cjqxgZkcc6Qn3xnja0PJGj7gPMFVUWH1RLu0S6g5CN5NU02RnANCarAaASXlUd6B19ybkl0Ppmg1WnKCsxw",
+  });
+
+  useEffect(() => {
+    if (user) {
+      setUserData(prev => ({
+        ...prev,
+        name: user.name || prev.name,
+        title: user.designation && user.companyName
+          ? `${user.designation} @ ${user.companyName}`
+          : user.designation || prev.title,
+        email: user.email || prev.email,
+        phone: user.phone || prev.phone,
+      }));
+    }
+  }, [user]);
+
   const [showUploadOverlay, setShowUploadOverlay] = useState(false);
   const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -46,10 +71,11 @@ export default function UserProfile() {
 
   // Fetch products when component mounts or when selectedProfile changes
   useEffect(() => {
-    if (selectedProfile?.id || '691c611ece59ee583f9339a4') {
-      dispatch(fetchProductsByUserId(selectedProfile?.id || '691c611ece59ee583f9339a4'));
+    const targetUserId = selectedProfile?.id || user?.userId;
+    if (targetUserId) {
+      dispatch(fetchProductsByUserId(targetUserId));
     }
-  }, [dispatch, selectedProfile?.id]);
+  }, [dispatch, selectedProfile?.id, user?.userId]);
 
   // Validate form
   const validateForm = (): boolean => {
@@ -77,7 +103,8 @@ export default function UserProfile() {
       return;
     }
 
-    const userId = selectedProfile?.id || '691c611ece59ee583f9339a4';
+    const userId = selectedProfile?.id || user?.userId;
+    if (!userId) return;
 
     try {
       await dispatch(createProduct({ userId, payload: productForm })).unwrap();
@@ -109,7 +136,8 @@ export default function UserProfile() {
       return;
     }
 
-    const userId = selectedProfile?.id || '691c611ece59ee583f9339a4';
+    const userId = selectedProfile?.id || user?.userId;
+    if (!userId) return;
 
     try {
       await dispatch(updateProduct({
@@ -136,7 +164,8 @@ export default function UserProfile() {
   const handleDeleteConfirm = async () => {
     if (!deletingProductId) return;
 
-    const userId = selectedProfile?.id || '691c611ece59ee583f9339a4';
+    const userId = selectedProfile?.id || user?.userId;
+    if (!userId) return;
 
     try {
       await dispatch(deleteProduct({ productId: deletingProductId, userId })).unwrap();
@@ -147,14 +176,7 @@ export default function UserProfile() {
     }
   };
 
-  const userData = {
-    name: "Jordan Smith",
-    title: "Product Designer @ NeoVision",
-    email: "jordan.smith@email.com",
-    phone: "+1 (555) 123-4567",
-    avatar:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCsF819KQIZRWOc4COafT_vJqvIQ5rcdJ_nMnsTyj1BqbAkXU20i4PmkOx2i2pwT3b7ogKzv4W4tCuYok6rOSrDyxRPEpMHWT9aVJUY1FdWhg25NK0wqqpO7hpbAgh6czPzpu50wq_JWIfQvpDrYDoYYbCKJdM0Cq6WBMkWKcoc4qg0cSvgEGD2ZDLR8cjqxgZkcc6Qn3xnja0PJGj7gPMFVUWH1RLu0S6g5CN5NU02RnANCarAaASXlUd6B19ybkl0Ppmg1WnKCsxw",
-  };
+
 
   const files = [
     { name: "Document1.pdf", size: "2.1 MB", type: "pdf" },
@@ -187,9 +209,9 @@ export default function UserProfile() {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <button className="absolute bottom-0 right-0 p-2 bg-primary text-white rounded-full shadow-lg bg-[#176cc3] hover:bg-[#176cc3] transition-colors">
+                  {/* <button className="absolute bottom-0 right-0 p-2 bg-primary text-white rounded-full shadow-lg bg-[#176cc3] hover:bg-[#176cc3] transition-colors">
                     <Edit2 className="w-4 h-4" />
-                  </button>
+                  </button> */}
                 </div>
                 <h2 className="font-bold text-lg sm:text-xl text-foreground mb-1">
                   {userData.name}
@@ -200,20 +222,28 @@ export default function UserProfile() {
 
                 <div className="flex gap-2 mt-2">
                   {[
-                    { Icon: Linkedin, label: "Link" },
-                    { Icon: Twitter, label: "Link" },
-                    { Icon: Instagram, label: "Link" },
-                    { Icon: Facebook, label: "Link" },
-                    { Icon: Share2, label: "Share" },
-                  ].map(({ Icon, label }, i) => (
-                    <button
+                    { Icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com" },
+                    { Icon: Twitter, label: "Twitter", href: "https://twitter.com" },
+                    { Icon: Instagram, label: "Instagram", href: "https://www.instagram.com" },
+                    { Icon: Facebook, label: "Facebook", href: "https://www.facebook.com" },
+                  ].map(({ Icon, label, href }, i) => (
+                    <a
                       key={i}
-                      className="p-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors shadow-neo-light-concave bg-white"
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors shadow-neo-light-concave bg-white flex items-center justify-center"
                       aria-label={label}
                     >
                       <Icon className="w-4 h-4 text-gray-700" />
-                    </button>
+                    </a>
                   ))}
+                  <button
+                    className="p-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors shadow-neo-light-concave bg-white"
+                    aria-label="Share"
+                  >
+                    <Share2 className="w-4 h-4 text-gray-700" />
+                  </button>
                 </div>
               </div>
             </div>

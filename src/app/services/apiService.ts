@@ -25,11 +25,10 @@ const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.request.use((config) => {
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : "";
   // Check if we should skip auth
-  if (config.headers && config.headers['Skip-Auth']) {
-    delete config.headers['Skip-Auth']; // Remove the custom header before sending
-    return config;
-  }
-
+  // if (config.headers && config.headers['Skip-Auth']) {
+  //   delete config.headers['Skip-Auth']; // Remove the custom header before sending
+  //   return config;
+  // }
   if (token) {
     config.headers = config.headers || {};
     (config.headers as any)['Authorization'] = `Bearer ${token}`;
