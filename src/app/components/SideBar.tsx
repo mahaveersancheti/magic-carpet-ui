@@ -89,15 +89,12 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                     </button>
 
                     {/* Logo */}
-                    <div className="flex items-center gap-3 p-2 mb-6 sm:mb-10">
-                        <div
-                            className="size-9 sm:size-11 rounded-full bg-cover bg-center shadow-neo-light-convex shrink-0"
-                            style={{
-                                backgroundImage:
-                                    'url("/icon.png")',
-                            }}
+                    <div className="flex items-center justify-center">
+                        <img
+                            src="/magic_carpet_logo.png"
+                            alt="Magic Carpet Logo"
+                            className="w-full max-w-[200px] h-auto object-contain transition-all duration-300 hover:scale-105"
                         />
-                        <h1 className="text-lg sm:text-xl font-semibold text-foreground">Magic Carpet</h1>
                     </div>
 
                     {/* Navigation */}

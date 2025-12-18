@@ -927,6 +927,10 @@
     height: calc(var(--spacing) * 14);
   }
 
+  .h-16 {
+    height: calc(var(--spacing) * 16);
+  }
+
   .h-24 {
     height: calc(var(--spacing) * 24);
   }
@@ -1007,6 +1011,10 @@
     width: 400px;
   }
 
+  .w-auto {
+    width: auto;
+  }
+
   .w-full {
     width: 100%;
   }
@@ -1021,6 +1029,10 @@
 
   .max-w-6xl {
     max-width: var(--container-6xl);
+  }
+
+  .max-w-\[200px\] {
+    max-width: 200px;
   }
 
   .max-w-lg {
@@ -1643,6 +1655,11 @@
     background-repeat: no-repeat;
   }
 
+  .object-contain {
+    -o-object-fit: contain;
+    object-fit: contain;
+  }
+
   .object-cover {
     -o-object-fit: cover;
     object-fit: cover;
@@ -2151,6 +2168,15 @@
 
   .placeholder\:text-gray-500::placeholder {
     color: var(--color-gray-500);
+  }
+
+  @media (hover: hover) {
+    .hover\:scale-105:hover {
+      --tw-scale-x: 105%;
+      --tw-scale-y: 105%;
+      --tw-scale-z: 105%;
+      scale: var(--tw-scale-x) var(--tw-scale-y);
+    }
   }
 
   @media (hover: hover) {

@@ -103,28 +103,17 @@ function Sidebar({ isOpen = true, onClose }) {
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex items-center gap-3 p-2 mb-6 sm:mb-10",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "size-9 sm:size-11 rounded-full bg-cover bg-center shadow-neo-light-convex shrink-0",
-                                    style: {
-                                        backgroundImage: 'url("/icon.png")'
-                                    }
-                                }, void 0, false, {
-                                    fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 93,
-                                    columnNumber: 25
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                    className: "text-lg sm:text-xl font-semibold text-foreground",
-                                    children: "Magic Carpet"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 100,
-                                    columnNumber: 25
-                                }, this)
-                            ]
-                        }, void 0, true, {
+                            className: "flex items-center justify-center",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                src: "/magic_carpet_logo.png",
+                                alt: "Magic Carpet Logo",
+                                className: "w-full max-w-[200px] h-auto object-contain transition-all duration-300 hover:scale-105"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/components/SideBar.tsx",
+                                lineNumber: 93,
+                                columnNumber: 25
+                            }, this)
+                        }, void 0, false, {
                             fileName: "[project]/src/app/components/SideBar.tsx",
                             lineNumber: 92,
                             columnNumber: 21
@@ -143,20 +132,20 @@ function Sidebar({ isOpen = true, onClose }) {
                                             children: "Home"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/components/SideBar.tsx",
-                                            lineNumber: 116,
+                                            lineNumber: 113,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             children: "Home"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/components/SideBar.tsx",
-                                            lineNumber: 117,
+                                            lineNumber: 114,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 107,
+                                    lineNumber: 104,
                                     columnNumber: 25
                                 }, this),
                                 menuItems.map(([icon, label])=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -170,26 +159,26 @@ function Sidebar({ isOpen = true, onClose }) {
                                                 children: icon
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/components/SideBar.tsx",
-                                                lineNumber: 132,
+                                                lineNumber: 129,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                 children: label
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/components/SideBar.tsx",
-                                                lineNumber: 135,
+                                                lineNumber: 132,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, label, true, {
                                         fileName: "[project]/src/app/components/SideBar.tsx",
-                                        lineNumber: 122,
+                                        lineNumber: 119,
                                         columnNumber: 29
                                     }, this))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/components/SideBar.tsx",
-                            lineNumber: 104,
+                            lineNumber: 101,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -203,25 +192,25 @@ function Sidebar({ isOpen = true, onClose }) {
                                         children: "logout"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/components/SideBar.tsx",
-                                        lineNumber: 146,
+                                        lineNumber: 143,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         children: "Logout"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/components/SideBar.tsx",
-                                        lineNumber: 149,
+                                        lineNumber: 146,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/components/SideBar.tsx",
-                                lineNumber: 142,
+                                lineNumber: 139,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/SideBar.tsx",
-                            lineNumber: 141,
+                            lineNumber: 138,
                             columnNumber: 21
                         }, this)
                     ]
