@@ -16,7 +16,22 @@ export interface Profile {
     experience?: any[];
     education?: any[];
     skills?: string[];
-    // Add other fields as needed based on API response
+    location?: string;
+    warmCallScore?: string | number;
+    recentNews?: any[];
+    recentPost?: string;
+    productFit?: any[];
+    industryOutlook?: any[];
+    financialSnapshot?: any[];
+    conversationStarters?: any[];
+    objections?: any[];
+    objectionsCounters?: any[];
+    actionRecommendation?: any;
+    timing?: any;
+    approachStrategy?: any[];
+    psychologyApproach?: any;
+    allSkills?: string[];
+    topSkills?: string[];
 }
 
 export interface CreateProfilePayload {

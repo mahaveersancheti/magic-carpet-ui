@@ -62,7 +62,7 @@ function ReportContent() {
             name: selectedProfile.name || "Unknown",
             title: selectedProfile.designation || "N/A",
             company: selectedProfile.currentCompanyName || "N/A",
-            location: "Location N/A",
+            location: selectedProfile.location || "Location N/A",
             tenure: "N/A",
             timestamp: `Generated: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`,
         },
@@ -81,7 +81,7 @@ function ReportContent() {
                 warmContacts: 0,
             },
             topTopics: [],
-            recentPost: (selectedProfile as any).recentNews?.[0]?.description || "No recent activity detected.",
+            recentPost: (selectedProfile as any).recentPost || (selectedProfile as any).recentNews?.[0]?.description || "No recent activity detected.",
         },
         recentNews: safeList((selectedProfile as any).recentNews).map((news: any) => ({
             category: "News",
@@ -91,9 +91,31 @@ function ReportContent() {
         })),
         industryOutlook: safeList((selectedProfile as any).industryOutlook),
         financialSnapshot: safeList((selectedProfile as any).financialSnapshot),
-        conversations: safeList((selectedProfile as any).conversationStarters),
-        objections: safeList((selectedProfile as any).objectionsCounters),
-        recommendationBody: (selectedProfile as any).actionRecommendation?.recommendation || "No specific recommendation generated."
+        conversations: safeList((selectedProfile as any).conversationStarters).map((c: any) => ({
+            question: c.text,
+            tag: c.label,
+            description: c.why?.join(' • '),
+            salesFramework: c.cialdini
+        })),
+        objections: safeList((selectedProfile as any).objections).map((o: any) => ({
+            objection: o.objection,
+            counter: o.counter,
+            matchingDescription: o.whyWorks?.join(' • '),
+            type: o.cialdini
+        })),
+        timing: (selectedProfile as any).timing || {},
+        recommendationBody: (selectedProfile as any).actionRecommendation || "No specific recommendation generated."
+    };
+
+    // Text-to-speech helper
+    const handleSpeak = (text: string) => {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel(); // Stop any current speech
+            const utterance = new SpeechSynthesisUtterance(text);
+            window.speechSynthesis.speak(utterance);
+        } else {
+            console.warn("Text-to-speech not supported in this browser.");
+        }
     };
 
     return (
@@ -153,6 +175,9 @@ function ReportContent() {
                                     </div>
                                     <div className="text-xs text-gray-500 mt-1">
                                         {selectedProfile.email} • {selectedProfile.phone || 'No Phone'}
+                                    </div>
+                                    <div className="text-xs text-gray-500 mt-1">
+                                        {REPORT_JSON.prospect.location}
                                     </div>
                                 </div>
 
@@ -222,12 +247,22 @@ function ReportContent() {
                 >
                     <h3 className="flex justify-between text-lg font-semibold mb-3 text-foreground">
                         Recent News & Context
-                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                        <button
+                            onClick={() => {
+                                const textToSpeak = REPORT_JSON.recentNews.map(n => `${n.title}. ${n.summary}`).join('. ');
+                                handleSpeak(textToSpeak || "No recent news found.");
+                            }}
+                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                        >
                             <Volume2 className="w-4 h-4" />
                             Listen
                         </button>
                     </h3>
                     <div className="space-y-3">
+                        <div className="p-4 rounded-lg border border-gray-200 bg-blue-50/50">
+                            <div className="text-sm font-semibold text-foreground mb-1">Recent Post Analysis</div>
+                            <div className="text-sm text-foreground">{REPORT_JSON.profileSummary.recentPost}</div>
+                        </div>
                         {REPORT_JSON.recentNews.length > 0 ? REPORT_JSON.recentNews.map((n: any, i: number) => (
                             <div
                                 key={i}
@@ -252,7 +287,15 @@ function ReportContent() {
                 >
                     <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
                         Industry Outlook
-                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                        <button
+                            onClick={() => {
+                                const textToSpeak = REPORT_JSON.industryOutlook.map((item: any) =>
+                                    `${item.title || ''}. ${item.description || (typeof item === 'string' ? item : '')}`
+                                ).join('. ');
+                                handleSpeak(textToSpeak || "No industry outlook data available.");
+                            }}
+                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                        >
                             <Volume2 className="w-4 h-4" />
                             Listen
                         </button>
@@ -279,7 +322,22 @@ function ReportContent() {
                 >
                     <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
                         Financial Snapshot
-                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                        <button
+                            onClick={() => {
+                                const textToSpeak = REPORT_JSON.financialSnapshot.map((item: any) => {
+                                    const parts = [];
+                                    if (item.revenue) parts.push(`Revenue: ${item.revenue}`);
+                                    if (item.profit) parts.push(`Profit: ${item.profit}`);
+                                    if (item.growth) parts.push(`Growth: ${item.growth}`);
+                                    if (item.marketCap) parts.push(`Market Cap: ${item.marketCap}`);
+                                    if (item.debt) parts.push(`Debt: ${item.debt}`);
+                                    if (item.budget) parts.push(`Budget: ${item.budget}`);
+                                    return parts.join(', ');
+                                }).join('. ');
+                                handleSpeak(textToSpeak || "No financial snapshot data available.");
+                            }}
+                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                        >
                             <Volume2 className="w-4 h-4" />
                             Listen
                         </button>
@@ -338,7 +396,15 @@ function ReportContent() {
                 >
                     <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
                         Product Fit
-                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                        <button
+                            onClick={() => {
+                                const textToSpeak = REPORT_JSON.profileSummary.productFitBullets.map((item: any) =>
+                                    typeof item === 'string' ? item : (item.description || item.title || '')
+                                ).join('. ');
+                                handleSpeak(textToSpeak || "No product fit data available.");
+                            }}
+                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                        >
                             <Volume2 className="w-4 h-4" />
                             Listen
                         </button>
@@ -351,9 +417,31 @@ function ReportContent() {
                                     className="p-4 rounded-lg border border-gray-200"
                                     style={{ backgroundColor: '#ffffff' }}
                                 >
-                                    <div className="text-sm text-foreground">
-                                        {typeof item === 'string' ? item : (item.description || item.title || 'No description available')}
+                                    <div className="text-sm font-semibold text-foreground mb-1">
+                                        {item.productName ? `${item.productName} (${item.fitScore || 0}% Fit)` : 'Product Fit Analysis'}
                                     </div>
+                                    <div className="text-sm text-foreground">
+                                        {item.description || (typeof item === 'string' ? item : 'No description available')}
+                                    </div>
+                                    {(item.title1 || item.description1) && (
+                                        <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-3">
+                                            {item.title1 && (
+                                                <div className="bg-gray-50 p-2 rounded text-xs">
+                                                    <strong>{item.title1}</strong>: {item.description1}
+                                                </div>
+                                            )}
+                                            {item.title2 && (
+                                                <div className="bg-gray-50 p-2 rounded text-xs">
+                                                    <strong>{item.title2}</strong>: {item.description2}
+                                                </div>
+                                            )}
+                                            {item.title3 && (
+                                                <div className="bg-gray-50 p-2 rounded text-xs">
+                                                    <strong>{item.title3}</strong>: {item.description3}
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
                             ))
                         ) : (
@@ -368,30 +456,38 @@ function ReportContent() {
                 >
                     <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
                         Psychology & Approach Strategy
-                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                        <button
+                            onClick={() => {
+                                const textToSpeak = safeList((selectedProfile as any).psychologyApproach?.dos).map((item: string) =>
+                                    `Do: ${item}`
+                                ).concat(safeList((selectedProfile as any).psychologyApproach?.donts).map((item: string) =>
+                                    `Don't: ${item}`
+                                )).join('. ');
+                                handleSpeak(textToSpeak || "No approach strategy data available.");
+                            }}
+                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                        >
                             <Volume2 className="w-4 h-4" />
                             Listen
                         </button>
                     </h3>
-                    <div className="space-y-3">
-                        {safeList((selectedProfile as any).approachStrategy).length > 0 ? (
-                            safeList((selectedProfile as any).approachStrategy).map((item: any, i: number) => (
-                                <div
-                                    key={i}
-                                    className="p-4 rounded-lg border border-gray-200"
-                                    style={{ backgroundColor: '#ffffff' }}
-                                >
-                                    <div className="text-sm font-semibold text-foreground mb-1">
-                                        {item.title || `Strategy ${i + 1}`}
-                                    </div>
-                                    <div className="text-sm text-foreground">
-                                        {item.description || (typeof item === 'string' ? item : 'No description available')}
-                                    </div>
-                                </div>
-                            ))
-                        ) : (
-                            <div className="text-sm text-gray-500 italic">No approach strategy data available.</div>
-                        )}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="p-4 rounded-lg border border-green-200 bg-green-50/50">
+                            <div className="font-semibold text-green-800 mb-2">DO'S</div>
+                            <ul className="list-disc ml-5 space-y-1">
+                                {safeList((selectedProfile as any).psychologyApproach?.dos).map((item: string, i: number) => (
+                                    <li key={i} className="text-sm text-foreground">{item}</li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className="p-4 rounded-lg border border-red-200 bg-red-50/50">
+                            <div className="font-semibold text-red-800 mb-2">DON'TS</div>
+                            <ul className="list-disc ml-5 space-y-1">
+                                {safeList((selectedProfile as any).psychologyApproach?.donts).map((item: string, i: number) => (
+                                    <li key={i} className="text-sm text-foreground">{item}</li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                 </section>
 
@@ -401,7 +497,15 @@ function ReportContent() {
                 >
                     <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
                         Conversation Starters
-                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                        <button
+                            onClick={() => {
+                                const textToSpeak = REPORT_JSON.conversations.map((item: any) =>
+                                    `${item.question || item.tag || ''}. ${item.description || (typeof item === 'string' ? item : '')}`
+                                ).join('. ');
+                                handleSpeak(textToSpeak || "No conversation starters available.");
+                            }}
+                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                        >
                             <Volume2 className="w-4 h-4" />
                             Listen
                         </button>
@@ -415,7 +519,7 @@ function ReportContent() {
                                 >
                                     <div className="flex items-start justify-between gap-2 mb-2">
                                         <div className="text-sm font-semibold text-blue-900">
-                                            {item.question || item.tag || `Starter ${i + 1}`}
+                                            {item.tag || `Starter ${i + 1}`}
                                         </div>
                                         {item.salesFramework && (
                                             <span className="text-xs px-2 py-1 rounded-full bg-blue-200 text-blue-800">
@@ -423,9 +527,14 @@ function ReportContent() {
                                             </span>
                                         )}
                                     </div>
-                                    <div className="text-sm text-foreground">
-                                        {item.description || (typeof item === 'string' ? item : 'No description available')}
+                                    <div className="text-sm text-foreground italic">
+                                        "{item.question}"
                                     </div>
+                                    {item.description && (
+                                        <div className="mt-2 text-xs text-gray-600">
+                                            <strong>Why:</strong> {item.description}
+                                        </div>
+                                    )}
                                 </div>
                             ))
                         ) : (
@@ -440,7 +549,15 @@ function ReportContent() {
                 >
                     <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
                         War-Gaming: Predicted Objections & Counters
-                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                        <button
+                            onClick={() => {
+                                const textToSpeak = REPORT_JSON.objections.map((item: any) =>
+                                    `Objection: ${item.objection || ''}. Counter: ${item.counter || ''}.`
+                                ).join('. ');
+                                handleSpeak(textToSpeak || "No objections and counters available.");
+                            }}
+                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                        >
                             <Volume2 className="w-4 h-4" />
                             Listen
                         </button>
@@ -454,7 +571,10 @@ function ReportContent() {
                                     style={{ backgroundColor: '#ffffff' }}
                                 >
                                     <div className="mb-3">
-                                        <div className="text-xs font-semibold text-red-600 mb-1">OBJECTION:</div>
+                                        <div className="flex justify-between">
+                                            <div className="text-xs font-semibold text-red-600 mb-1">OBJECTION:</div>
+                                            {item.type && <div className="text-xs text-gray-500">{item.type}</div>}
+                                        </div>
                                         <div className="text-sm text-foreground font-medium">
                                             {item.objection || 'No objection specified'}
                                         </div>
@@ -462,12 +582,12 @@ function ReportContent() {
                                     <div>
                                         <div className="text-xs font-semibold text-green-600 mb-1">COUNTER:</div>
                                         <div className="text-sm text-foreground">
-                                            {item.counter || item.description || 'No counter specified'}
+                                            {item.counter || 'No counter specified'}
                                         </div>
                                     </div>
                                     {item.matchingDescription && (
                                         <div className="mt-2 text-xs text-gray-600 italic">
-                                            {item.matchingDescription}
+                                            Why works: {item.matchingDescription}
                                         </div>
                                     )}
                                 </div>
@@ -484,39 +604,40 @@ function ReportContent() {
                 >
                     <h3 className="flex justify-between text-lg font-semibold mb-4 text-foreground">
                         Optimal Timing & Tactics
-                        <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                        <button
+                            onClick={() => {
+                                const time = REPORT_JSON.timing;
+                                if (time && (time.bestTimes?.length || time.tactics?.length)) {
+                                    const textToSpeak = `Best Times: ${time.bestTimes?.join(', ') || 'None'}. Tactics: ${time.tactics?.join(', ') || 'None'}`;
+                                    handleSpeak(textToSpeak);
+                                } else {
+                                    handleSpeak("No timing and tactics data available.");
+                                }
+                            }}
+                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                        >
                             <Volume2 className="w-4 h-4" />
                             Listen
                         </button>
                     </h3>
                     <div className="space-y-3">
-                        {(selectedProfile as any).actionRecommendation ? (
+                        {REPORT_JSON.timing && (REPORT_JSON.timing.bestTimes?.length > 0 || REPORT_JSON.timing.tactics?.length > 0) ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="p-4 rounded-lg bg-purple-50 border border-purple-200">
-                                    <div className="text-xs font-semibold text-purple-600 mb-1">NEXT STEP</div>
-                                    <div className="text-sm text-foreground">
-                                        {(selectedProfile as any).actionRecommendation.nextStep || 'Not specified'}
-                                    </div>
-                                </div>
-                                <div className="p-4 rounded-lg bg-orange-50 border border-orange-200">
-                                    <div className="text-xs font-semibold text-orange-600 mb-1">PRIORITY</div>
-                                    <div className="text-sm text-foreground">
-                                        {(selectedProfile as any).actionRecommendation.priority || 'Not specified'}
-                                    </div>
-                                </div>
                                 <div className="p-4 rounded-lg bg-blue-50 border border-blue-200">
-                                    <div className="text-xs font-semibold text-blue-600 mb-1">DUE DATE</div>
-                                    <div className="text-sm text-foreground">
-                                        {(selectedProfile as any).actionRecommendation.dueDate
-                                            ? new Date((selectedProfile as any).actionRecommendation.dueDate).toLocaleDateString()
-                                            : 'Not specified'}
-                                    </div>
+                                    <div className="text-xs font-semibold text-blue-600 mb-2">BEST TIMES TO CONTACT</div>
+                                    <ul className="list-disc ml-4 space-y-1">
+                                        {safeList(REPORT_JSON.timing.bestTimes).map((t: string, i: number) => (
+                                            <li key={i} className="text-sm text-foreground">{t}</li>
+                                        ))}
+                                    </ul>
                                 </div>
-                                <div className="p-4 rounded-lg bg-green-50 border border-green-200 md:col-span-2">
-                                    <div className="text-xs font-semibold text-green-600 mb-1">RECOMMENDATION</div>
-                                    <div className="text-sm text-foreground">
-                                        {(selectedProfile as any).actionRecommendation.recommendation || 'Not specified'}
-                                    </div>
+                                <div className="p-4 rounded-lg bg-purple-50 border border-purple-200">
+                                    <div className="text-xs font-semibold text-purple-600 mb-2">ENGAGEMENT TACTICS</div>
+                                    <ul className="list-disc ml-4 space-y-1">
+                                        {safeList(REPORT_JSON.timing.tactics).map((t: string, i: number) => (
+                                            <li key={i} className="text-sm text-foreground">{t}</li>
+                                        ))}
+                                    </ul>
                                 </div>
                             </div>
                         ) : (
@@ -530,7 +651,10 @@ function ReportContent() {
                         <div className="max-w-4xl">
                             <h3 className="flex justify-between text-xl font-semibold mb-2">
                                 Action Recommendation
-                                <button className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition">
+                                <button
+                                    onClick={() => handleSpeak(REPORT_JSON.recommendationBody || "No recommendation available.")}
+                                    className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                                >
                                     <Volume2 className="w-4 h-4" />
                                     Listen
                                 </button>

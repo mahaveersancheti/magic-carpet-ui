@@ -13,7 +13,8 @@ function FormInput({
     required = false,
     value,
     onChange,
-    disabled
+    disabled,
+    error
 }: {
     label: string;
     placeholder: string;
@@ -22,6 +23,7 @@ function FormInput({
     value: string;
     onChange: (field: keyof CreateProfilePayload, value: string) => void;
     disabled: boolean;
+    error?: string;
 }) {
     return (
         <div className="flex flex-col gap-2 text-start">
@@ -33,8 +35,10 @@ function FormInput({
                 onChange={(e) => onChange(field, e.target.value)}
                 placeholder={placeholder}
                 disabled={disabled}
-                className="border border-gray-200 h-12 px-5 rounded-full bg-white shadow-neo-light-concave text-foreground outline-none placeholder-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className={`border h-12 px-5 rounded-full bg-white shadow-neo-light-concave text-foreground outline-none placeholder-gray-500 disabled:opacity-50 disabled:cursor-not-allowed ${error ? "border-red-500" : "border-gray-200"
+                    }`}
             />
+            {error && <span className="text-red-500 text-xs px-2">{error}</span>}
         </div>
     );
 }
@@ -61,10 +65,15 @@ export function AddRequestModal({
         linkedinProfileLink: ""
     });
 
+    const [errors, setErrors] = useState<Partial<Record<keyof CreateProfilePayload, string>>>({});
+
     if (!isOpen) return null;
 
     const handleInputChange = (field: keyof CreateProfilePayload, value: string) => {
         setFormData(prev => ({ ...prev, [field]: value }));
+        if (errors[field]) {
+            setErrors(prev => ({ ...prev, [field]: undefined }));
+        }
     };
 
     const resetForm = () => {
@@ -77,37 +86,30 @@ export function AddRequestModal({
             industryName: "",
             linkedinProfileLink: ""
         });
+        setErrors({});
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Validate required fields
-        if (!formData.name.trim()) {
-            toast.error("Name is required");
-            return;
-        }
-        if (!formData.email.trim()) {
-            toast.error("Email is required");
-            return;
-        }
-        if (!formData.currentCompanyName.trim()) {
-            toast.error("Company Name is required");
-            return;
-        }
-        if (!formData.city.trim()) {
-            toast.error("City is required");
-            return;
-        }
-        if (!formData.industryName.trim()) {
-            toast.error("Industry Name is required");
-            return;
-        }
+        const newErrors: Partial<Record<keyof CreateProfilePayload, string>> = {};
 
-        // Basic email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
-            toast.error("Please enter a valid email address");
+        if (!formData.name.trim()) newErrors.name = "Name is required";
+        if (!formData.currentCompanyName.trim()) newErrors.currentCompanyName = "Company Name is required";
+        if (!formData.email.trim()) {
+            newErrors.email = "Email is required";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            newErrors.email = "Please enter a valid email address";
+        }
+        if (!formData.industryName.trim()) newErrors.industryName = "Industry Name is required";
+        if (!formData.city.trim()) newErrors.city = "City is required";
+
+        // New mandatory fields
+        if (!(formData.country || "").trim()) newErrors.country = "Country is required";
+        if (!(formData.linkedinProfileLink || "").trim()) newErrors.linkedinProfileLink = "LinkedIn Profile is required";
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
             return;
         }
 
@@ -160,6 +162,7 @@ export function AddRequestModal({
                         value={formData.name}
                         onChange={handleInputChange}
                         disabled={createLoading}
+                        error={errors.name}
                     />
                     <FormInput
                         label="Company Name"
@@ -169,6 +172,7 @@ export function AddRequestModal({
                         value={formData.currentCompanyName}
                         onChange={handleInputChange}
                         disabled={createLoading}
+                        error={errors.currentCompanyName}
                     />
                     <FormInput
                         label="Email"
@@ -178,6 +182,7 @@ export function AddRequestModal({
                         value={formData.email}
                         onChange={handleInputChange}
                         disabled={createLoading}
+                        error={errors.email}
                     />
                     <FormInput
                         label="Industry Name"
@@ -187,6 +192,7 @@ export function AddRequestModal({
                         value={formData.industryName}
                         onChange={handleInputChange}
                         disabled={createLoading}
+                        error={errors.industryName}
                     />
                     <FormInput
                         label="City"
@@ -196,22 +202,27 @@ export function AddRequestModal({
                         value={formData.city}
                         onChange={handleInputChange}
                         disabled={createLoading}
+                        error={errors.city}
                     />
                     <FormInput
-                        label="Country (Optional)"
+                        label="Country"
                         placeholder="e.g., USA"
                         field="country"
+                        required
                         value={formData.country || ""}
                         onChange={handleInputChange}
                         disabled={createLoading}
+                        error={errors.country}
                     />
                     <FormInput
-                        label="LinkedIn URL (Optional)"
+                        label="LinkedIn URL"
                         placeholder="https://linkedin.com/in/..."
                         field="linkedinProfileLink"
+                        required
                         value={formData.linkedinProfileLink || ""}
                         onChange={handleInputChange}
                         disabled={createLoading}
+                        error={errors.linkedinProfileLink}
                     />
 
                     <div className="lg:col-span-3 flex gap-4 justify-end mt-4">
