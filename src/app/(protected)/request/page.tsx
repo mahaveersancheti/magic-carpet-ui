@@ -1,7 +1,7 @@
 // components/MagicCarpetReport.tsx
 "use client";
 import React, { useState, useEffect, Suspense } from "react";
-import { Volume2, Loader2, AlertCircle } from "lucide-react";
+import { Volume2, Loader2, AlertCircle, Square } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
@@ -15,6 +15,7 @@ function ReportContent() {
 
     const [observations, setObservations] = useState<any[]>([]);
     const [note, setNote] = useState("");
+    const [speakingSection, setSpeakingSection] = useState<string | null>(null);
 
     useEffect(() => {
         if (id) {
@@ -108,11 +109,20 @@ function ReportContent() {
     };
 
     // Text-to-speech helper
-    const handleSpeak = (text: string) => {
+    const handleSpeak = (text: string, sectionId: string) => {
         if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel(); // Stop any current speech
-            const utterance = new SpeechSynthesisUtterance(text);
-            window.speechSynthesis.speak(utterance);
+            if (speakingSection === sectionId) {
+                // Stop if clicking the same section
+                window.speechSynthesis.cancel();
+                setSpeakingSection(null);
+            } else {
+                // Stop current and start new
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.onend = () => setSpeakingSection(null);
+                window.speechSynthesis.speak(utterance);
+                setSpeakingSection(sectionId);
+            }
         } else {
             console.warn("Text-to-speech not supported in this browser.");
         }
@@ -158,6 +168,22 @@ function ReportContent() {
                                 {REPORT_JSON.warmCallScore.recommendation}
                             </div>
                         </div>
+
+                        <div className="mt-6 bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
+                            <div className="text-xs uppercase font-semibold text-gray-500 text-center mb-4">
+                                Quick Metrics
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="p-3 bg-orange-50 rounded-xl text-center">
+                                    <div className="text-2xl font-bold text-orange-600">-</div>
+                                    <div className="text-[10px] uppercase tracking-wider text-gray-500 mt-1">Meetings</div>
+                                </div>
+                                <div className="p-3 bg-orange-50 rounded-xl text-center">
+                                    <div className="text-2xl font-bold text-orange-600">-</div>
+                                    <div className="text-[10px] uppercase tracking-wider text-gray-500 mt-1">Warm Contacts</div>
+                                </div>
+                            </div>
+                        </div>
                     </aside>
 
                     <section className="lg:col-span-9">
@@ -188,52 +214,33 @@ function ReportContent() {
 
                             <hr className="my-4 border-gray-200" />
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div className="md:col-span-2">
-                                    <h3 className="text-sm font-semibold text-foreground mb-2">Profile Summary</h3>
-                                    <p className="text-sm text-foreground mb-2">
-                                        <strong className="text-foreground">About:</strong> {selectedProfile.about || "No details available."}
-                                    </p>
+                            <div className="mt-6">
+                                <h3 className="text-sm font-semibold text-foreground mb-2">Profile Summary</h3>
+                                <p className="text-sm text-foreground mb-2">
+                                    <strong className="text-foreground">About:</strong> {selectedProfile.about || "No details available."}
+                                </p>
 
-                                    <ul className="list-disc ml-5 text-foreground">
-                                        {REPORT_JSON.profileSummary.productFitBullets.map((b: any, i: number) => (
-                                            <li key={i} className="text-sm mb-1">
-                                                {typeof b === 'string' ? b : (b.description || b.title || 'Product fit item')}
-                                            </li>
-                                        ))}
-                                    </ul>
+                                <ul className="list-disc ml-5 text-foreground">
+                                    {REPORT_JSON.profileSummary.productFitBullets.map((b: any, i: number) => (
+                                        <li key={i} className="text-sm mb-1">
+                                            {typeof b === 'string' ? b : (b.description || b.title || 'Product fit item')}
+                                        </li>
+                                    ))}
+                                </ul>
 
-                                    <div className="mt-4">
-                                        <div className="text-xs text-gray-500 mb-1">Skills / Topics</div>
-                                        <div className="flex flex-wrap gap-2">
-                                            {((selectedProfile as any).allSkills || (selectedProfile as any).topSkills) &&
-                                                ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills).length > 0 ? (
-                                                ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills).map((t: string, i: number) => (
-                                                    <span key={i} className="text-xs px-3 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-100">
-                                                        {t}
-                                                    </span>
-                                                ))
-                                            ) : (
-                                                <span className="text-xs text-gray-400">No skills listed</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div
-                                    className="rounded-lg border border-gray-200 p-3"
-                                    style={{ backgroundColor: '#ffffff' }}
-                                >
-                                    <div className="text-sm text-gray-500">Quick Metrics</div>
-                                    <div className="mt-3 grid grid-cols-2 gap-3">
-                                        <div className="p-3 bg-orange-50 rounded-md text-center">
-                                            <div className="text-2xl font-bold text-orange-600">-</div>
-                                            <div className="text-xs text-gray-500">Meetings</div>
-                                        </div>
-                                        <div className="p-3 bg-orange-50 rounded-md text-center">
-                                            <div className="text-2xl font-bold text-orange-600">-</div>
-                                            <div className="text-xs text-gray-500">Connections</div>
-                                        </div>
+                                <div className="mt-4">
+                                    <div className="text-xs text-gray-500 mb-1">Skills / Topics</div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {((selectedProfile as any).allSkills || (selectedProfile as any).topSkills) &&
+                                            ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills).length > 0 ? (
+                                            ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills).map((t: string, i: number) => (
+                                                <span key={i} className="text-xs px-3 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-100">
+                                                    {t}
+                                                </span>
+                                            ))
+                                        ) : (
+                                            <span className="text-xs text-gray-400">No skills listed</span>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -250,12 +257,12 @@ function ReportContent() {
                         <button
                             onClick={() => {
                                 const textToSpeak = REPORT_JSON.recentNews.map(n => `${n.title}. ${n.summary}`).join('. ');
-                                handleSpeak(textToSpeak || "No recent news found.");
+                                handleSpeak(textToSpeak || "No recent news found.", 'recentNews');
                             }}
-                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                            className={`flex gap-1 items-center justify-center px-3 py-1 rounded-md text-sm transition ${speakingSection === 'recentNews' ? 'bg-red-500 hover:bg-red-600' : 'bg-orange-500 hover:bg-orange-600'} text-white`}
                         >
-                            <Volume2 className="w-4 h-4" />
-                            Listen
+                            {speakingSection === 'recentNews' ? <Square className="w-4 h-4 fill-current" /> : <Volume2 className="w-4 h-4" />}
+                            {speakingSection === 'recentNews' ? "Stop" : "Listen"}
                         </button>
                     </h3>
                     <div className="space-y-3">
@@ -292,12 +299,12 @@ function ReportContent() {
                                 const textToSpeak = REPORT_JSON.industryOutlook.map((item: any) =>
                                     `${item.title || ''}. ${item.description || (typeof item === 'string' ? item : '')}`
                                 ).join('. ');
-                                handleSpeak(textToSpeak || "No industry outlook data available.");
+                                handleSpeak(textToSpeak || "No industry outlook data available.", 'industryOutlook');
                             }}
-                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                            className={`flex gap-1 items-center justify-center px-3 py-1 rounded-md text-sm transition ${speakingSection === 'industryOutlook' ? 'bg-red-500 hover:bg-red-600' : 'bg-orange-500 hover:bg-orange-600'} text-white`}
                         >
-                            <Volume2 className="w-4 h-4" />
-                            Listen
+                            {speakingSection === 'industryOutlook' ? <Square className="w-4 h-4 fill-current" /> : <Volume2 className="w-4 h-4" />}
+                            {speakingSection === 'industryOutlook' ? "Stop" : "Listen"}
                         </button>
                     </h3>
                     <div className="flex flex-col gap-3">
@@ -334,12 +341,12 @@ function ReportContent() {
                                     if (item.budget) parts.push(`Budget: ${item.budget}`);
                                     return parts.join(', ');
                                 }).join('. ');
-                                handleSpeak(textToSpeak || "No financial snapshot data available.");
+                                handleSpeak(textToSpeak || "No financial snapshot data available.", 'financialSnapshot');
                             }}
-                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                            className={`flex gap-1 items-center justify-center px-3 py-1 rounded-md text-sm transition ${speakingSection === 'financialSnapshot' ? 'bg-red-500 hover:bg-red-600' : 'bg-orange-500 hover:bg-orange-600'} text-white`}
                         >
-                            <Volume2 className="w-4 h-4" />
-                            Listen
+                            {speakingSection === 'financialSnapshot' ? <Square className="w-4 h-4 fill-current" /> : <Volume2 className="w-4 h-4" />}
+                            {speakingSection === 'financialSnapshot' ? "Stop" : "Listen"}
                         </button>
                     </h3>
                     {REPORT_JSON.financialSnapshot.length > 0 ? (
@@ -401,12 +408,12 @@ function ReportContent() {
                                 const textToSpeak = REPORT_JSON.profileSummary.productFitBullets.map((item: any) =>
                                     typeof item === 'string' ? item : (item.description || item.title || '')
                                 ).join('. ');
-                                handleSpeak(textToSpeak || "No product fit data available.");
+                                handleSpeak(textToSpeak || "No product fit data available.", 'productFit');
                             }}
-                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                            className={`flex gap-1 items-center justify-center px-3 py-1 rounded-md text-sm transition ${speakingSection === 'productFit' ? 'bg-red-500 hover:bg-red-600' : 'bg-orange-500 hover:bg-orange-600'} text-white`}
                         >
-                            <Volume2 className="w-4 h-4" />
-                            Listen
+                            {speakingSection === 'productFit' ? <Square className="w-4 h-4 fill-current" /> : <Volume2 className="w-4 h-4" />}
+                            {speakingSection === 'productFit' ? "Stop" : "Listen"}
                         </button>
                     </h3>
                     <div className="space-y-3">
@@ -463,12 +470,12 @@ function ReportContent() {
                                 ).concat(safeList((selectedProfile as any).psychologyApproach?.donts).map((item: string) =>
                                     `Don't: ${item}`
                                 )).join('. ');
-                                handleSpeak(textToSpeak || "No approach strategy data available.");
+                                handleSpeak(textToSpeak || "No approach strategy data available.", 'psychologyApproach');
                             }}
-                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                            className={`flex gap-1 items-center justify-center px-3 py-1 rounded-md text-sm transition ${speakingSection === 'psychologyApproach' ? 'bg-red-500 hover:bg-red-600' : 'bg-orange-500 hover:bg-orange-600'} text-white`}
                         >
-                            <Volume2 className="w-4 h-4" />
-                            Listen
+                            {speakingSection === 'psychologyApproach' ? <Square className="w-4 h-4 fill-current" /> : <Volume2 className="w-4 h-4" />}
+                            {speakingSection === 'psychologyApproach' ? "Stop" : "Listen"}
                         </button>
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -502,12 +509,12 @@ function ReportContent() {
                                 const textToSpeak = REPORT_JSON.conversations.map((item: any) =>
                                     `${item.question || item.tag || ''}. ${item.description || (typeof item === 'string' ? item : '')}`
                                 ).join('. ');
-                                handleSpeak(textToSpeak || "No conversation starters available.");
+                                handleSpeak(textToSpeak || "No conversation starters available.", 'conversations');
                             }}
-                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                            className={`flex gap-1 items-center justify-center px-3 py-1 rounded-md text-sm transition ${speakingSection === 'conversations' ? 'bg-red-500 hover:bg-red-600' : 'bg-orange-500 hover:bg-orange-600'} text-white`}
                         >
-                            <Volume2 className="w-4 h-4" />
-                            Listen
+                            {speakingSection === 'conversations' ? <Square className="w-4 h-4 fill-current" /> : <Volume2 className="w-4 h-4" />}
+                            {speakingSection === 'conversations' ? "Stop" : "Listen"}
                         </button>
                     </h3>
                     <div className="space-y-3">
@@ -554,12 +561,12 @@ function ReportContent() {
                                 const textToSpeak = REPORT_JSON.objections.map((item: any) =>
                                     `Objection: ${item.objection || ''}. Counter: ${item.counter || ''}.`
                                 ).join('. ');
-                                handleSpeak(textToSpeak || "No objections and counters available.");
+                                handleSpeak(textToSpeak || "No objections and counters available.", 'objections');
                             }}
-                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                            className={`flex gap-1 items-center justify-center px-3 py-1 rounded-md text-sm transition ${speakingSection === 'objections' ? 'bg-red-500 hover:bg-red-600' : 'bg-orange-500 hover:bg-orange-600'} text-white`}
                         >
-                            <Volume2 className="w-4 h-4" />
-                            Listen
+                            {speakingSection === 'objections' ? <Square className="w-4 h-4 fill-current" /> : <Volume2 className="w-4 h-4" />}
+                            {speakingSection === 'objections' ? "Stop" : "Listen"}
                         </button>
                     </h3>
                     <div className="space-y-4">
@@ -609,15 +616,15 @@ function ReportContent() {
                                 const time = REPORT_JSON.timing;
                                 if (time && (time.bestTimes?.length || time.tactics?.length)) {
                                     const textToSpeak = `Best Times: ${time.bestTimes?.join(', ') || 'None'}. Tactics: ${time.tactics?.join(', ') || 'None'}`;
-                                    handleSpeak(textToSpeak);
+                                    handleSpeak(textToSpeak, 'timing');
                                 } else {
-                                    handleSpeak("No timing and tactics data available.");
+                                    handleSpeak("No timing and tactics data available.", 'timing');
                                 }
                             }}
-                            className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                            className={`flex gap-1 items-center justify-center px-3 py-1 rounded-md text-sm transition ${speakingSection === 'timing' ? 'bg-red-500 hover:bg-red-600' : 'bg-orange-500 hover:bg-orange-600'} text-white`}
                         >
-                            <Volume2 className="w-4 h-4" />
-                            Listen
+                            {speakingSection === 'timing' ? <Square className="w-4 h-4 fill-current" /> : <Volume2 className="w-4 h-4" />}
+                            {speakingSection === 'timing' ? "Stop" : "Listen"}
                         </button>
                     </h3>
                     <div className="space-y-3">
@@ -652,11 +659,11 @@ function ReportContent() {
                             <h3 className="flex justify-between text-xl font-semibold mb-2">
                                 Action Recommendation
                                 <button
-                                    onClick={() => handleSpeak(REPORT_JSON.recommendationBody || "No recommendation available.")}
-                                    className="flex gap-1 items-center justify-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white rounded-md text-sm transition"
+                                    onClick={() => handleSpeak(REPORT_JSON.recommendationBody || "No recommendation available.", 'recommendation')}
+                                    className={`flex gap-1 items-center justify-center px-3 py-1 rounded-md text-sm transition ${speakingSection === 'recommendation' ? 'bg-red-500 hover:bg-red-600' : 'bg-orange-500 hover:bg-orange-600'} text-white`}
                                 >
-                                    <Volume2 className="w-4 h-4" />
-                                    Listen
+                                    {speakingSection === 'recommendation' ? <Square className="w-4 h-4 fill-current" /> : <Volume2 className="w-4 h-4" />}
+                                    {speakingSection === 'recommendation' ? "Stop" : "Listen"}
                                 </button>
                             </h3> <br />
                             <p className="text-sm opacity-90">{REPORT_JSON.recommendationBody}</p>
@@ -714,7 +721,7 @@ function ReportContent() {
                         ))}
                     </div>
                 </section>
-            </main>
+            </main >
         </div >
     );
 }
