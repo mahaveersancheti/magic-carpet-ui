@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store/store';
@@ -10,11 +10,13 @@ import { endpoints } from '@/app/lib/endpoints';
 
 export default function SignIn() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error, token } = useSelector((state: RootState) => state.auth);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const tokenFromUrl = searchParams.get('token');
 
   useEffect(() => {
     if (token) {
@@ -22,6 +24,13 @@ export default function SignIn() {
       router.push('/home');
     }
   }, [token, router]);
+
+  useEffect(() => {
+    if (tokenFromUrl) {
+      localStorage.setItem('token', tokenFromUrl);
+      router.push('/home');
+    }
+  }, [tokenFromUrl, router]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();

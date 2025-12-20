@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store/store';
 import { registerUser, clearError } from '../../redux/slices/LoginSlice';
 import toast from 'react-hot-toast';
+import { endpoints } from '@/app/lib/endpoints';
 
 export default function SignUp() {
   const router = useRouter();
@@ -37,6 +38,10 @@ export default function SignUp() {
       [e.target.id]: e.target.value,
     });
   };
+
+  const handleGoogleSignIn = () => {
+    window.open(endpoints.googleLogin, "_self");
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -219,6 +224,7 @@ export default function SignUp() {
             {/* GOOGLE BUTTON */}
             <button
               type="button"
+              onClick={handleGoogleSignIn}
               className="flex w-full items-center justify-center gap-3 rounded-xl bg-white/50 py-3 text-foreground border border-gray-300 hover:bg-white/70 transition-all backdrop-blur-xl"
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">

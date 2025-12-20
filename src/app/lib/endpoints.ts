@@ -9,5 +9,5 @@ export const endpoints = {
     createProduct: (userId: string) => `products?userId=${userId}`,
     updateProduct: (productId: string, userId: string) => `products/${productId}?userId=${userId}`,
     deleteProduct: (productId: string, userId: string) => `products/${productId}?userId=${userId}`,
-    googleLogin: 'http://magic-carpet.data-magnum.com:8080/oauth2/authorization/google'
+    googleLogin: 'https://magic-carpet.data-magnum.com/v1/oauth2/authorization/google'
 }
