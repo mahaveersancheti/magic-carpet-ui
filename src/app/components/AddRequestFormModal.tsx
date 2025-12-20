@@ -3,7 +3,11 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store/store";
 import { createProfile, CreateProfilePayload } from "../redux/slices/ProfileSlice";
+import { fetchProductsByUserId, Product } from "../redux/slices/ProductSlice";
+import { useUser } from "../hooks/useUser";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { MultiSelectDropdown } from "./MultiSelectDropdown";
 
 // FormInput component moved outside to prevent re-creation on every render
 function FormInput({
@@ -54,6 +58,16 @@ export function AddRequestModal({
 }) {
     const dispatch = useDispatch<AppDispatch>();
     const { createLoading } = useSelector((state: RootState) => state.profiles);
+    const { products } = useSelector((state: RootState) => state.products);
+    const { user } = useUser();
+
+    const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        if (user?.userId) {
+            dispatch(fetchProductsByUserId(user.userId));
+        }
+    }, [dispatch, user?.userId]);
 
     const [formData, setFormData] = useState<CreateProfilePayload>({
         name: "",
@@ -86,6 +100,7 @@ export function AddRequestModal({
             industryName: "",
             linkedinProfileLink: ""
         });
+        setSelectedProducts([]);
         setErrors({});
     };
 
@@ -114,7 +129,12 @@ export function AddRequestModal({
         }
 
         try {
-            await dispatch(createProfile(formData)).unwrap();
+            const payload = {
+                ...formData,
+                // productIds: selectedProducts.map(p => p.id)
+                productId: selectedProducts.map(p => p.id)[0]
+            };
+            await dispatch(createProfile(payload)).unwrap();
             toast.success("Profile created successfully!");
             resetForm();
             onClose();
@@ -223,6 +243,16 @@ export function AddRequestModal({
                         onChange={handleInputChange}
                         disabled={createLoading}
                         error={errors.linkedinProfileLink}
+                    />
+
+                    {/* Product Selection - Now fits in grid naturally */}
+                    <MultiSelectDropdown
+                        label="Products"
+                        options={products}
+                        selected={selectedProducts}
+                        onChange={(selected) => setSelectedProducts(selected as Product[])}
+                        placeholder="Select products..."
+                        disabled={createLoading}
                     />
 
                     <div className="lg:col-span-3 flex gap-4 justify-end mt-4">

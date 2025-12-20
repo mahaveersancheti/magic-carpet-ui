@@ -42,6 +42,7 @@ export interface CreateProfilePayload {
     country?: string;
     industryName: string;
     linkedinProfileLink?: string;
+    productIds?: string[];
 }
 
 interface ProfileState {

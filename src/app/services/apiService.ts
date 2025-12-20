@@ -4,7 +4,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 
 export const getBaseUrl = () => {
-  return "http://magic-carpet.data-magnum.com:8080/api/";
+  return "https://magic-carpet.data-magnum.com/v1/api/";
   // if (typeof window !== 'undefined') {
   //   const URL = window.location.origin;
   //   return URL.includes('localhost')
