@@ -30,8 +30,8 @@ function FormInput({
     error?: string;
 }) {
     return (
-        <div className="flex flex-col gap-2 text-start">
-            <label className="text-gray-700 text-sm font-bold">
+        <div className="flex flex-col gap-1.5 text-start">
+            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1.5 px-1">
                 {label} {required && <span className="text-red-500">*</span>}
             </label>
             <input
@@ -39,10 +39,10 @@ function FormInput({
                 onChange={(e) => onChange(field, e.target.value)}
                 placeholder={placeholder}
                 disabled={disabled}
-                className={`h-12 px-5 rounded-2xl bg-gray-50 border transition-all text-gray-900 outline-none placeholder-gray-400 disabled:opacity-50 disabled:cursor-not-allowed focus:bg-white focus:ring-4 focus:ring-blue-50 focus:border-blue-500 ${error ? "border-red-500" : "border-gray-200"
+                className={`h-11 px-4 rounded-xl bg-gray-50 border transition-all text-gray-900 text-sm outline-none placeholder-gray-400 disabled:opacity-50 disabled:cursor-not-allowed focus:bg-white focus:ring-4 focus:ring-blue-50 focus:border-blue-500 ${error ? "border-red-500" : "border-gray-200"
                     }`}
             />
-            {error && <span className="text-red-500 text-[10px] font-bold px-2 uppercase tracking-tight">{error}</span>}
+            {error && <span className="text-red-500 text-[9px] font-black px-1 uppercase tracking-tighter">{error}</span>}
         </div>
     );
 }
@@ -79,7 +79,7 @@ export function AddRequestModal({
         linkedinProfileLink: ""
     });
 
-    const [errors, setErrors] = useState<Partial<Record<keyof CreateProfilePayload, string>>>({});
+    const [errors, setErrors] = useState<Partial<Record<keyof CreateProfilePayload | 'products', string>>>({});
 
     if (!isOpen) return null;
 
@@ -107,7 +107,7 @@ export function AddRequestModal({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const newErrors: Partial<Record<keyof CreateProfilePayload, string>> = {};
+        const newErrors: Partial<Record<keyof CreateProfilePayload | 'products', string>> = {};
 
         if (!formData.name.trim()) newErrors.name = "Name is required";
         if (!formData.currentCompanyName.trim()) newErrors.currentCompanyName = "Company Name is required";
@@ -122,6 +122,11 @@ export function AddRequestModal({
         // New mandatory fields
         if (!(formData.country || "").trim()) newErrors.country = "Country is required";
         if (!(formData.linkedinProfileLink || "").trim()) newErrors.linkedinProfileLink = "LinkedIn Profile is required";
+
+        // Validate products
+        if (selectedProducts.length === 0) {
+            newErrors.products = "At least one product must be selected";
+        }
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -160,10 +165,10 @@ export function AddRequestModal({
                 <div className="p-8 sm:p-10">
                     <div className="flex items-center justify-between mb-8">
                         <div>
-                            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
-                                Add New Search Request
+                            <h2 className="text-xl font-black text-gray-900 uppercase tracking-tight">
+                                New Search Request
                             </h2>
-                            <p className="text-sm text-gray-500 mt-1">Populate the details to initiate a strategic intelligence gathering</p>
+                            <p className="text-[10px] font-medium text-gray-400 mt-1 uppercase tracking-widest">Strategic Intelligence Gathering</p>
                         </div>
                         <button
                             onClick={onClose}
@@ -249,14 +254,20 @@ export function AddRequestModal({
                             error={errors.linkedinProfileLink}
                         />
 
-                        {/* Product Selection - Now fits in grid naturally */}
                         <MultiSelectDropdown
-                            label="Products"
+                            label="Target Products"
+                            required
                             options={products}
                             selected={selectedProducts}
-                            onChange={(selected) => setSelectedProducts(selected as Product[])}
+                            onChange={(selected) => {
+                                setSelectedProducts(selected as Product[]);
+                                if (errors.products) {
+                                    setErrors(prev => ({ ...prev, products: undefined }));
+                                }
+                            }}
                             placeholder="Select products..."
                             disabled={createLoading}
+                            error={errors.products}
                         />
 
                         <div className="lg:col-span-3 flex gap-4 justify-end mt-10">

@@ -275,9 +275,7 @@ export default function DashboardPage() {
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-200">
                     <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                      <button onClick={() => handleSort("id")} className="flex items-center gap-1 hover:text-gray-700">
-                        # <SortIcon column="id" />
-                      </button>
+                      {/* # */}
                     </th>
                     <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       <button onClick={() => handleSort("name")} className="flex items-center gap-1 hover:text-gray-700">
@@ -290,9 +288,15 @@ export default function DashboardPage() {
                       </button>
                     </th>
                     <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden xl:table-cell">
-                      Contact
+                      <button onClick={() => handleSort("email")} className="flex items-center gap-1 hover:text-gray-700">
+                        Contact <SortIcon column="email" />
+                      </button>
                     </th>
-                    <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                    <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                      <button onClick={() => handleSort("status")} className="flex items-center gap-1 hover:text-gray-700">
+                        Status <SortIcon column="status" />
+                      </button>
+                    </th>
                     <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">
                       <button onClick={() => handleSort("date")} className="flex items-center gap-1 hover:text-gray-700">
                         Date <SortIcon column="date" />
@@ -319,7 +323,14 @@ export default function DashboardPage() {
                         className="hover:bg-gray-50 transition-colors"
                       >
                         <td className="px-4 py-4 text-sm text-gray-500">{index + 1}</td>
-                        <td className="px-4 py-4 text-sm font-medium text-gray-900">{row.name}</td>
+                        <td className="px-4 py-4 text-sm font-medium text-gray-900">
+                          <button
+                            onClick={() => viewDetails("visibility", row.id)}
+                            className="hover:text-blue-600 transition-colors text-left"
+                          >
+                            {row.name}
+                          </button>
+                        </td>
                         <td className="px-4 py-4 text-sm text-gray-500 hidden lg:table-cell">{row.company}</td>
                         <td className="px-4 py-4 text-sm text-gray-500 hidden xl:table-cell">
                           <div className="flex flex-col">

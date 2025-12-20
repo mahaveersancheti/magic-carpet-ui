@@ -60,29 +60,31 @@ export function MultiSelectDropdown({
     };
 
     return (
-        <div className="flex flex-col gap-2 text-start relative" ref={containerRef}>
-            <label className="text-gray-700 text-sm font-bold">
-                {label} {required && <span className="text-red-500">*</span>}
-            </label>
+        <div className="flex flex-col gap-1.5 text-start relative" ref={containerRef}>
+            {label && (
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-1.5 px-1">
+                    {label} {required && <span className="text-red-500">*</span>}
+                </label>
+            )}
 
             <div
-                className={`min-h-[3rem] px-3 py-2 rounded-2xl bg-gray-50 border transition-all cursor-text flex flex-wrap gap-2 items-center ${isOpen ? "border-blue-500 ring-4 ring-blue-50 bg-white" : "border-gray-200"
+                className={`min-h-[2.75rem] px-3.5 py-1.5 rounded-xl bg-gray-50 border transition-all cursor-text flex flex-wrap gap-2 items-center ${isOpen ? "border-blue-500 ring-4 ring-blue-50 bg-white" : "border-gray-200"
                     } ${error ? "border-red-500" : ""} ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
                 onClick={() => !disabled && setIsOpen(true)}
             >
                 {selected.map(item => (
                     <span
                         key={item.id}
-                        className="bg-blue-600 text-white text-[11px] font-bold pl-3 pr-1 py-1 rounded-xl flex items-center gap-1 shadow-sm transition-transform active:scale-95"
+                        className="bg-blue-600 text-white text-[10px] font-black pl-2.5 pr-0.5 py-0.5 rounded-lg flex items-center gap-1 shadow-sm transition-transform active:scale-95 uppercase tracking-tighter"
                     >
                         {item.name}
                         <button
                             type="button"
                             onClick={(e) => handleRemove(item.id, e)}
                             disabled={disabled}
-                            className="p-1 hover:bg-white/20 rounded-lg transition-colors"
+                            className="p-1 hover:bg-white/20 rounded-md transition-colors"
                         >
-                            <span className="material-symbols-outlined text-[14px]">close</span>
+                            <span className="material-symbols-outlined text-[12px]">close</span>
                         </button>
                     </span>
                 ))}
@@ -96,11 +98,11 @@ export function MultiSelectDropdown({
                     onFocus={() => setIsOpen(true)}
                     disabled={disabled}
                     placeholder={selected.length === 0 ? placeholder : ""}
-                    className="flex-1 min-w-[100px] bg-transparent outline-none text-sm text-gray-900 placeholder:text-gray-400"
+                    className="flex-1 min-w-[80px] bg-transparent outline-none text-sm text-gray-900 placeholder:text-gray-400"
                 />
             </div>
 
-            {error && <span className="text-red-500 text-[10px] font-bold px-2 uppercase tracking-tight">{error}</span>}
+            {error && <span className="text-red-500 text-[9px] font-black px-1 uppercase tracking-tighter">{error}</span>}
 
             {isOpen && !disabled && (
                 <div className="absolute top-[calc(100%+8px)] left-0 right-0 z-[60] max-h-64 overflow-y-auto bg-white border border-gray-100 rounded-2xl shadow-2xl p-2 animate-in fade-in zoom-in duration-200">

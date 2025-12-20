@@ -323,3 +323,505 @@ Import traces:
 [02:26:10.649] Server  LOG      ✓ Compiled in 55ms
 [02:27:44.597] Server  LOG      ✓ Compiled in 27ms
 [02:27:55.092] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[02:31:23.001] Server  LOG      ✓ Compiled in 149ms
+[02:31:23.791] Browser ERROR   ./src/app/(protected)/request/page.tsx:593:15
+Parsing ecmascript source code failed
+  591 |                     </div>
+  592 |                 </div>
+> 593 |         </div>
+      |               ^
+> 594 |
+      | ^
+> 595 |                 {/* AI Recommendation Banner */ }
+      | ^^^^^^^^^^^^^^^^^
+  596 |     <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group">
+  597 |         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-white/10 transition-colors duration-700" />
+  598 |         <div className="relative z-10">
+
+Expected '</', got 'jsx text (
+
+                )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:31:23.791] Browser ERROR   ./src/app/(protected)/request/page.tsx:593:15
+Parsing ecmascript source code failed
+  591 |                     </div>
+  592 |                 </div>
+> 593 |         </div>
+      |               ^
+> 594 |
+      | ^
+> 595 |                 {/* AI Recommendation Banner */ }
+      | ^^^^^^^^^^^^^^^^^
+  596 |     <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group">
+  597 |         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-white/10 transition-colors duration-700" />
+  598 |         <div className="relative z-10">
+
+Expected '</', got 'jsx text (
+
+                )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:34:16.190] Server  LOG      ✓ Compiled in 33ms
+[02:34:16.299] Browser ERROR   ./src/app/(protected)/request/page.tsx:585:30
+Parsing ecmascript source code failed
+  583 |                             )) : (
+  584 |                                 <div className="col-span-2 flex flex-col items-center justify-center py-16 opacity-40">
+> 585 |                             )}
+      |                              ^
+  586 |                                 </div>
+  587 |                     </div>
+  588 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:34:16.299] Browser ERROR   ./src/app/(protected)/request/page.tsx:587:22
+Parsing ecmascript source code failed
+  585 |                             )}
+  586 |                                 </div>
+> 587 |                     </div>
+      |                      ^^^^^
+  588 |
+  589 |                         {/* AI Recommendation Banner */}
+  590 |                         <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group">
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:34:16.791] Browser ERROR   ./src/app/(protected)/request/page.tsx:585:30
+Parsing ecmascript source code failed
+  583 |                             )) : (
+  584 |                                 <div className="col-span-2 flex flex-col items-center justify-center py-16 opacity-40">
+> 585 |                             )}
+      |                              ^
+  586 |                                 </div>
+  587 |                     </div>
+  588 |
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:34:16.791] Browser ERROR   ./src/app/(protected)/request/page.tsx:587:22
+Parsing ecmascript source code failed
+  585 |                             )}
+  586 |                                 </div>
+> 587 |                     </div>
+      |                      ^^^^^
+  588 |
+  589 |                         {/* AI Recommendation Banner */}
+  590 |                         <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group">
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:34:30.171] Server  LOG      ✓ Compiled in 31ms
+[02:34:30.791] Browser ERROR   ./src/app/(protected)/request/page.tsx:671:21
+Parsing ecmascript source code failed
+  669 |                         )}
+  670 |                     </div>
+> 671 |             </main >
+      |                     ^
+> 672 |
+      | ^
+> 673 |             <style jsx global>{`
+      | ^^^^^^^^^^^^^
+  674 |                 .custom-scrollbar::-webkit-scrollbar {
+  675 |                     width: 4px;
+  676 |                 }
+
+Expected '</', got 'jsx text (
+
+            )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:34:30.791] Browser ERROR   ./src/app/(protected)/request/page.tsx:671:21
+Parsing ecmascript source code failed
+  669 |                         )}
+  670 |                     </div>
+> 671 |             </main >
+      |                     ^
+> 672 |
+      | ^
+> 673 |             <style jsx global>{`
+      | ^^^^^^^^^^^^^
+  674 |                 .custom-scrollbar::-webkit-scrollbar {
+  675 |                     width: 4px;
+  676 |                 }
+
+Expected '</', got 'jsx text (
+
+            )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:34:43.790] Browser ERROR   ./src/app/(protected)/request/page.tsx:671:21
+Parsing ecmascript source code failed
+  669 |                         )}
+  670 |                     </div>
+> 671 |             </main >
+      |                     ^
+> 672 |
+      | ^
+> 673 |             <style jsx global>{`
+      | ^^^^^^^^^^^^^
+  674 |                 .custom-scrollbar::-webkit-scrollbar {
+  675 |                     width: 4px;
+  676 |                 }
+
+Expected '</', got 'jsx text (
+
+            )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:34:43.790] Browser ERROR   ./src/app/(protected)/request/page.tsx:671:21
+Parsing ecmascript source code failed
+  669 |                         )}
+  670 |                     </div>
+> 671 |             </main >
+      |                     ^
+> 672 |
+      | ^
+> 673 |             <style jsx global>{`
+      | ^^^^^^^^^^^^^
+  674 |                 .custom-scrollbar::-webkit-scrollbar {
+  675 |                     width: 4px;
+  676 |                 }
+
+Expected '</', got 'jsx text (
+
+            )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:37:24.734] Server  LOG      ✓ Compiled in 51ms
+[02:40:52.293] Server  LOG      ✓ Compiled in 39ms
+[02:40:52.400] Browser ERROR   ./src/app/(protected)/request/page.tsx:276:15
+Parsing ecmascript source code failed
+  274 |                     </div>
+  275 |                 </div>
+> 276 |         </div>
+      |               ^
+> 277 |                     </div >
+      | ^^^^^^^^^^^^^^^^^^^^^
+  278 |
+  279 |         {/* Row 2: Strategic Insights (Product Fit & Competencies) */ }
+  280 |         < div className = "grid grid-cols-1 lg:grid-cols-12 gap-6" >
+
+Expected '</', got 'jsx text (
+                    )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:40:52.790] Browser ERROR   ./src/app/(protected)/request/page.tsx:276:15
+Parsing ecmascript source code failed
+  274 |                     </div>
+  275 |                 </div>
+> 276 |         </div>
+      |               ^
+> 277 |                     </div >
+      | ^^^^^^^^^^^^^^^^^^^^^
+  278 |
+  279 |         {/* Row 2: Strategic Insights (Product Fit & Competencies) */ }
+  280 |         < div className = "grid grid-cols-1 lg:grid-cols-12 gap-6" >
+
+Expected '</', got 'jsx text (
+                    )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:48:44.956] Server  LOG      ✓ Compiled in 40ms
+[02:48:45.789] Browser ERROR   ./src/app/(protected)/request/page.tsx:434:18
+Parsing ecmascript source code failed
+  432 |                                     )) : (
+  433 |                                         <div className="text-[11px] text-gray-400 italic text-center py-10">No specific outlook factors were identified in the current report.</div>
+> 434 |                 </div>
+      |                  ^^^^^
+  435 |
+  436 |                                 {/* Row 3: Conversation Starters & Psychology */}
+  437 |                                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:48:45.791] Browser ERROR   ./src/app/(protected)/request/page.tsx:434:18
+Parsing ecmascript source code failed
+  432 |                                     )) : (
+  433 |                                         <div className="text-[11px] text-gray-400 italic text-center py-10">No specific outlook factors were identified in the current report.</div>
+> 434 |                 </div>
+      |                  ^^^^^
+  435 |
+  436 |                                 {/* Row 3: Conversation Starters & Psychology */}
+  437 |                                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+Unterminated regexp literal
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:51:23.609] Server  LOG      ✓ Compiled in 47ms
+[02:51:23.790] Browser ERROR   ./src/app/(protected)/request/page.tsx:433:38
+Parsing ecmascript source code failed
+  431 |                                         </div>
+  432 |                                     )) : (
+> 433 |                                     )}
+      |                                      ^
+  434 |                                 </div>
+  435 |                             </div>
+  436 |                         </div>
+
+Expected '</', got '}'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:51:23.790] Browser ERROR   ./src/app/(protected)/request/page.tsx:433:38
+Parsing ecmascript source code failed
+  431 |                                         </div>
+  432 |                                     )) : (
+> 433 |                                     )}
+      |                                      ^
+  434 |                                 </div>
+  435 |                             </div>
+  436 |                         </div>
+
+Expected '</', got '}'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:51:41.791] Browser ERROR   ./src/app/(protected)/request/page.tsx:433:38
+Parsing ecmascript source code failed
+  431 |                                         </div>
+  432 |                                     )) : (
+> 433 |                                     )}
+      |                                      ^
+  434 |                                 </div>
+  435 |                             </div>
+  436 |                         </div>
+
+Expected '</', got '}'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:51:41.791] Browser ERROR   ./src/app/(protected)/request/page.tsx:433:38
+Parsing ecmascript source code failed
+  431 |                                         </div>
+  432 |                                     )) : (
+> 433 |                                     )}
+      |                                      ^
+  434 |                                 </div>
+  435 |                             </div>
+  436 |                         </div>
+
+Expected '</', got '}'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:53:13.039] Server  LOG      ✓ Compiled in 32ms
+[02:53:13.791] Browser ERROR   ./src/app/(protected)/request/page.tsx:677:20
+Parsing ecmascript source code failed
+  675 |                         )}
+  676 |                     </div>
+> 677 |             </main>
+      |                    ^
+> 678 |
+      | ^
+> 679 |             <style jsx global>{`
+      | ^^^^^^^^^^^^^
+  680 |                 .custom-scrollbar::-webkit-scrollbar {
+  681 |                     width: 4px;
+  682 |                 }
+
+Expected '</', got 'jsx text (
+
+            )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:53:13.791] Browser ERROR   ./src/app/(protected)/request/page.tsx:677:20
+Parsing ecmascript source code failed
+  675 |                         )}
+  676 |                     </div>
+> 677 |             </main>
+      |                    ^
+> 678 |
+      | ^
+> 679 |             <style jsx global>{`
+      | ^^^^^^^^^^^^^
+  680 |                 .custom-scrollbar::-webkit-scrollbar {
+  681 |                     width: 4px;
+  682 |                 }
+
+Expected '</', got 'jsx text (
+
+            )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:55:26.015] Server  LOG      ✓ Compiled in 50ms
+[02:55:37.590] Server  LOG      ✓ Compiled in 36ms
+[02:55:57.955] Server  LOG      ✓ Compiled in 42ms
+[02:56:17.717] Server  LOG      ✓ Compiled in 43ms
+[02:56:47.374] Server  LOG      ✓ Compiled in 45ms
+[02:57:01.518] Server  LOG      ✓ Compiled in 32ms
+[02:57:30.877] Server  LOG      ✓ Compiled in 42ms
+[02:57:46.369] Server  LOG      ✓ Compiled in 39ms
+[02:58:08.798] Server  LOG      ✓ Compiled in 41ms
+[02:58:59.606] Server  LOG      ✓ Compiled in 50ms
+[02:59:03.685] Server  LOG      ✓ Compiled in 30ms
+[02:59:16.811] Server  LOG      ✓ Compiled in 46ms
+[02:59:27.297] Server  LOG      ✓ Compiled in 57ms
+[02:59:30.339] Server  LOG      ✓ Compiled in 46ms
+[03:00:21.185] Server  LOG      ✓ Compiled in 35ms
+[03:00:28.787] Server  LOG      ✓ Compiled in 29ms
+[03:02:23.352] Server  LOG      ✓ Compiled in 70ms
+[03:04:54.770] Server  LOG      ✓ Compiled in 126ms
+[03:07:05.914] Server  LOG      ✓ Compiled in 57ms
+[03:12:42.268] Server  LOG      ✓ Compiled in 129ms
+[03:15:00.660] Server  LOG      ✓ Compiled in 44ms
+[03:15:53.357] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[03:16:59.569] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[03:19:13.516] Server  LOG      ✓ Compiled in 39ms
+[03:19:22.687] Server  LOG      ✓ Compiled in 33ms
+[03:20:15.891] Server  LOG      ✓ Compiled in 49ms
+[03:20:53.762] Server  LOG      ✓ Compiled in 35ms
+[03:22:59.164] Server  LOG      ✓ Compiled in 55ms
+[03:23:11.094] Server  LOG      ✓ Compiled in 40ms
+[03:24:29.275] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[03:26:02.923] Server  LOG      ✓ Compiled in 49ms
+[03:27:03.704] Server  LOG      ✓ Compiled in 34ms
+[03:27:09.959] Server  LOG      ✓ Compiled in 40ms
+[03:27:39.237] Server  LOG      ✓ Compiled in 51ms
+[03:27:54.529] Server  LOG      ✓ Compiled in 45ms
+[03:28:51.751] Server  LOG      ✓ Compiled in 41ms
+[03:29:20.452] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[03:32:34.159] Server  LOG      ✓ Compiled in 133ms
+[03:32:45.941] Server  LOG      ✓ Compiled in 53ms
+[03:33:23.271] Server  LOG      ✓ Compiled in 88ms

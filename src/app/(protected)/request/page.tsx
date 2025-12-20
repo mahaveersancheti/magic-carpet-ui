@@ -76,7 +76,7 @@ function ReportContent() {
         profileSummary: {
             currentRole: `${selectedProfile.designation || 'Role N/A'} @ ${selectedProfile.currentCompanyName || 'Company N/A'}`,
             tenure: "N/A",
-            productFitBullets: safeList((selectedProfile as any).productFit),
+            productFitAnalysis: (selectedProfile as any).productFitAnalysis || null,
             quickMetrics: {
                 meetingsLast30Days: 0,
                 warmContacts: 0,
@@ -180,9 +180,9 @@ function ReportContent() {
 
                 <div className="space-y-6">
                     {/* Row 1: Profile & Financials */}
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
                         <div className="lg:col-span-8">
-                            <div className="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm">
+                            <div className="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm transition-all hover:shadow-md h-full">
                                 <div className="flex items-center justify-between mb-4">
                                     <h3 className="text-xs uppercase font-black text-gray-900 tracking-widest flex items-center gap-2">
                                         <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
@@ -199,59 +199,14 @@ function ReportContent() {
                                         {speakingSection === 'profileOverview' ? <Square className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                                     </button>
                                 </div>
-                                <div className="bg-gray-50 rounded-2xl p-6 text-gray-700 text-sm leading-relaxed border border-gray-100 italic font-medium mb-8">
+                                <div className="bg-gray-50 rounded-2xl p-6 text-gray-700 text-sm leading-relaxed border border-gray-100 italic font-medium">
                                     "{selectedProfile.about || "No detailed summary available for this profile. Strategic insights may be limited."}"
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    <div>
-                                        <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                                            <span className="material-symbols-outlined text-sm leading-none">star</span>
-                                            Strategic Product Fit
-                                        </h4>
-                                        <div className="space-y-2.5">
-                                            {REPORT_JSON.profileSummary.productFitBullets.length > 0 ? REPORT_JSON.profileSummary.productFitBullets.map((b: any, i: number) => (
-                                                <div key={i} className="flex items-start gap-3 text-sm text-gray-700 group">
-                                                    <span className="mt-0.5 text-blue-500 material-symbols-outlined text-lg leading-none">check_circle</span>
-                                                    <span className="font-bold">{typeof b === 'string' ? b : (b.description || b.title || 'Product fit item')}</span>
-                                                </div>
-                                            )) : (
-                                                <div className="flex flex-col items-center justify-center py-6 bg-gray-50/50 rounded-2xl border border-dashed border-gray-200 opacity-60">
-                                                    <span className="material-symbols-outlined text-gray-400 text-2xl mb-1">inventory_2</span>
-                                                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">No product fit data</span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                                            <span className="material-symbols-outlined text-sm leading-none">verified_user</span>
-                                            Core Competencies
-                                        </h4>
-                                        <div className="flex flex-wrap gap-2">
-                                            {((selectedProfile as any).allSkills || (selectedProfile as any).topSkills) &&
-                                                ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills).length > 0 ? (
-                                                ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills).map((t: string, i: number) => (
-                                                    <span key={i} className="px-3 py-1.5 rounded-lg bg-gray-50 text-gray-700 text-[10px] font-black border border-gray-200 hover:bg-white hover:border-blue-400 hover:text-blue-600 transition-all cursor-default uppercase tracking-tight flex items-center gap-1.5">
-                                                        <span className="w-1 h-1 rounded-full bg-blue-400" />
-                                                        {t}
-                                                    </span>
-                                                ))
-                                            ) : (
-                                                <div className="w-full flex flex-col items-center justify-center py-6 bg-gray-50/50 rounded-2xl border border-dashed border-gray-200 opacity-60">
-                                                    <span className="material-symbols-outlined text-gray-400 text-2xl mb-1">psychology</span>
-                                                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">No skills detected</span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <div className="lg:col-span-4 relative group">
-                            <div className="absolute inset-0 bg-white rounded-3xl border border-gray-200 shadow-sm p-6 overflow-hidden flex flex-col">
+                            <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-6 overflow-hidden flex flex-col h-full lg:absolute lg:inset-0 bg-white transition-all hover:shadow-md">
                                 <div className="absolute top-0 right-0 w-32 h-32 bg-green-50 rounded-full -mr-16 -mt-16 opacity-30 blur-2xl group-hover:bg-green-100 transition-all" />
                                 <div className="flex items-center justify-between mb-6 relative z-10 shrink-0">
                                     <h3 className="font-black text-gray-900 flex items-center gap-2 text-[10px] uppercase tracking-widest">
@@ -331,7 +286,198 @@ function ReportContent() {
                         </div>
                     </div>
 
-                    {/* Row 2: Recent News & Industry Outlook */}
+                    {/* Row 2: Strategic Insights (Product Fit & Competencies) */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <div className="lg:col-span-8">
+                            <div className="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm flex flex-col h-full">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                                        <span className="material-symbols-outlined text-sm leading-none">star</span>
+                                        Strategic Product Fit
+                                    </h4>
+                                    <button
+                                        onClick={() => {
+                                            if (!REPORT_JSON.profileSummary.productFitAnalysis) {
+                                                handleSpeak("No evaluation data available.", 'productFit');
+                                                return;
+                                            }
+                                            const analysis = REPORT_JSON.profileSummary.productFitAnalysis;
+                                            const rating = analysis?.rating || 'Strong Fit';
+                                            const score = analysis?.score || 0;
+                                            const features = safeList(analysis?.features).join(', ');
+                                            const valueProp = analysis?.valueProps?.time || 'Strategic efficiency';
+                                            const differentiators = safeList(analysis?.differentiators).join(', ');
+
+                                            const textToSpeak = `Fit Rating: ${rating} with a score of ${score}%. Features: ${features}. Key Value Prop: ${valueProp}. Differentiators: ${differentiators}`;
+                                            handleSpeak(textToSpeak, 'productFit');
+                                        }}
+                                        className={`p-1.5 rounded-lg transition-all active:scale-95 ${speakingSection === 'productFit' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-400 border border-gray-100 hover:text-blue-600 hover:bg-blue-50'}`}
+                                    >
+                                        {speakingSection === 'productFit' ? <Square className="w-3 h-3" /> : <Volume2 className="w-3 h-3" />}
+                                    </button>
+                                </div>
+                                <div className="flex-1 overflow-y-auto custom-scrollbar pr-1">
+                                    {REPORT_JSON.profileSummary.productFitAnalysis ? (
+                                        <div className="space-y-6">
+                                            {/* Score and Rating */}
+                                            <div className="flex items-center gap-4 bg-blue-50/50 p-4 rounded-2xl border border-blue-100/50">
+                                                <div className="relative w-16 h-16 flex items-center justify-center shrink-0">
+                                                    <svg className="w-full h-full transform -rotate-90">
+                                                        <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="4" fill="transparent" className="text-blue-100" />
+                                                        <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="4" fill="transparent" strokeDasharray={175.9} strokeDashoffset={175.9 - (175.9 * (REPORT_JSON.profileSummary.productFitAnalysis?.score || 0)) / 100} className="text-blue-600 transition-all duration-1000 ease-out" />
+                                                    </svg>
+                                                    <span className="absolute text-sm font-black text-blue-700">{REPORT_JSON.profileSummary.productFitAnalysis?.score || 0}%</span>
+                                                </div>
+                                                <div>
+                                                    <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-0.5">Evaluation Result</div>
+                                                    <div className="text-lg font-black text-gray-900 leading-tight">{REPORT_JSON.profileSummary.productFitAnalysis?.rating || 'Analysis Pending'}</div>
+                                                </div>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                {/* Left Column: Features & Value Props */}
+                                                <div className="space-y-6">
+                                                    <div>
+                                                        <h5 className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                                            <span className="material-symbols-outlined text-[14px]">extension</span>
+                                                            Target Capabilities
+                                                        </h5>
+                                                        <div className="space-y-2">
+                                                            {safeList(REPORT_JSON.profileSummary.productFitAnalysis?.features).length > 0 ? safeList(REPORT_JSON.profileSummary.productFitAnalysis.features).map((f, i) => (
+                                                                <div key={i} className="flex items-start gap-2 text-[11px] font-bold text-gray-700 leading-tight">
+                                                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />
+                                                                    {f}
+                                                                </div>
+                                                            )) : (
+                                                                <div className="text-[10px] text-gray-400 italic">No features identified</div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <h5 className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                                            <span className="material-symbols-outlined text-[14px]">bolt</span>
+                                                            Core Value Pillars
+                                                        </h5>
+                                                        <div className="grid grid-cols-1 gap-2">
+                                                            {REPORT_JSON.profileSummary.productFitAnalysis?.valueProps && Object.keys(REPORT_JSON.profileSummary.productFitAnalysis.valueProps).length > 0 ? Object.entries(REPORT_JSON.profileSummary.productFitAnalysis.valueProps).map(([k, v]) => (
+                                                                <div key={k} className="p-2.5 rounded-xl bg-gray-50 border border-gray-100 flex flex-col gap-1">
+                                                                    <span className="text-[8px] font-black text-blue-600 uppercase tracking-tighter">{k} Impact</span>
+                                                                    <span className="text-[10px] font-bold text-gray-800 leading-tight">{v as string || 'TBD'}</span>
+                                                                </div>
+                                                            )) : (
+                                                                <div className="p-4 rounded-xl bg-gray-50 border border-dashed border-gray-200 text-center">
+                                                                    <div className="text-[10px] text-gray-400 font-bold uppercase">Impact data pending</div>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Right Column: Pain Points & Proof */}
+                                                <div className="space-y-6">
+                                                    <div>
+                                                        <h5 className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2 text-red-600">
+                                                            <span className="material-symbols-outlined text-[14px]">error_outline</span>
+                                                            Strategic Pains
+                                                        </h5>
+                                                        <div className="space-y-3">
+                                                            {safeList(REPORT_JSON.profileSummary.productFitAnalysis?.painPoints).length > 0 ? safeList(REPORT_JSON.profileSummary.productFitAnalysis.painPoints).map((p, i) => {
+                                                                const [main, sub] = p.split(' (');
+                                                                return (
+                                                                    <div key={i} className="flex flex-col gap-1">
+                                                                        <div className="flex items-start gap-2 text-[11px] font-bold text-gray-800 leading-tight">
+                                                                            <span className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 shrink-0" />
+                                                                            {main}
+                                                                        </div>
+                                                                        {sub && <div className="ml-3.5 text-[9px] font-black text-blue-500 uppercase tracking-tighter italic">Map: {sub.replace(')', '')}</div>}
+                                                                    </div>
+                                                                );
+                                                            }) : (
+                                                                <div className="text-[10px] text-gray-400 italic">No strategic pains identified</div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <h5 className="text-[9px] font-black text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2 text-indigo-600">
+                                                            <span className="material-symbols-outlined text-[14px]">groups</span>
+                                                            Evidence / proof
+                                                        </h5>
+                                                        <div className="space-y-2">
+                                                            {safeList(REPORT_JSON.profileSummary.productFitAnalysis?.socialProof).length > 0 ? safeList(REPORT_JSON.profileSummary.productFitAnalysis.socialProof).map((s, i) => (
+                                                                <div key={i} className="p-2.5 rounded-xl bg-indigo-50/30 border border-indigo-100 flex items-start gap-2">
+                                                                    <span className="material-symbols-outlined text-indigo-500 text-xs mt-0.5">verified</span>
+                                                                    <span className="text-[10px] font-bold text-gray-700 italic leading-tight">{s}</span>
+                                                                </div>
+                                                            )) : (
+                                                                <div className="text-[10px] text-gray-400 italic">No social proof available</div>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Differentiators Footer */}
+                                            {safeList(REPORT_JSON.profileSummary.productFitAnalysis?.differentiators).length > 0 && (
+                                                <div className="pt-4 border-t border-gray-100 flex flex-wrap gap-2">
+                                                    {safeList(REPORT_JSON.profileSummary.productFitAnalysis.differentiators).map((d, i) => (
+                                                        <span key={i} className="px-2.5 py-1 rounded-full bg-blue-600 text-white text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5">
+                                                            <span className="material-symbols-outlined text-[12px]">verified</span>
+                                                            {d}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <div className="h-full flex flex-col items-center justify-center py-10 bg-gray-50/50 rounded-2xl border border-dashed border-gray-200 opacity-60">
+                                            <span className="material-symbols-outlined text-gray-400 text-3xl mb-1">query_stats</span>
+                                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Awaiting Analysis...</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="lg:col-span-4">
+                            <div className="bg-white rounded-3xl p-6 border border-gray-200 shadow-sm flex flex-col h-full">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                                        <span className="material-symbols-outlined text-sm leading-none">verified_user</span>
+                                        Core Competencies
+                                    </h4>
+                                    <button
+                                        onClick={() => {
+                                            const skills = ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills || []).join(', ');
+                                            handleSpeak(skills || "No skills detected.", 'competencies');
+                                        }}
+                                        className={`p-1.5 rounded-lg transition-all active:scale-95 ${speakingSection === 'competencies' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-400 border border-gray-100 hover:text-blue-600 hover:bg-blue-50'}`}
+                                    >
+                                        {speakingSection === 'competencies' ? <Square className="w-3 h-3" /> : <Volume2 className="w-3 h-3" />}
+                                    </button>
+                                </div>
+                                <div className="flex flex-wrap gap-2 flex-1 content-start">
+                                    {((selectedProfile as any).allSkills || (selectedProfile as any).topSkills) &&
+                                        ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills).length > 0 ? (
+                                        ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills).map((t: string, i: number) => (
+                                            <span key={i} className="px-3 py-1.5 rounded-lg bg-gray-50 text-gray-700 text-[10px] font-black border border-gray-200 hover:bg-white hover:border-blue-400 hover:text-blue-600 transition-all cursor-default uppercase tracking-tight flex items-center gap-1.5">
+                                                <span className="w-1 h-1 rounded-full bg-blue-400" />
+                                                {t}
+                                            </span>
+                                        ))
+                                    ) : (
+                                        <div className="w-full h-full flex flex-col items-center justify-center py-6 bg-gray-50/50 rounded-2xl border border-dashed border-gray-200 opacity-60">
+                                            <span className="material-symbols-outlined text-gray-400 text-2xl mb-1">psychology</span>
+                                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">No skills detected</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Row 3: Recent News & Industry Outlook */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                         <div className="lg:col-span-8">
                             <div className="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden flex flex-col h-[400px]">
@@ -409,7 +555,7 @@ function ReportContent() {
                         </div>
                     </div>
 
-                    {/* Row 3: Conversation Starters & Psychology */}
+                    {/* Row 4: Conversation Starters & Psychology */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                         <div className="lg:col-span-8">
                             <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-6 h-full">
@@ -519,7 +665,7 @@ function ReportContent() {
                         </div>
                     </div>
 
-                    {/* Row 4: Objection Handling (Full Width) */}
+                    {/* Row 5: Objection Handling (Full Width) */}
                     <div className="bg-slate-900 text-white rounded-3xl border-0 shadow-xl p-8 relative overflow-hidden group">
                         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/20 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-blue-600/30 transition-all duration-700" />
                         <div className="flex items-center justify-between mb-8 relative z-10">
@@ -567,87 +713,87 @@ function ReportContent() {
                             )}
                         </div>
                     </div>
-                </div>
 
-                {/* AI Recommendation Banner */}
-                <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group">
-                    <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-white/10 transition-colors duration-700" />
-                    <div className="relative z-10">
-                        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-                            <div className="flex-1 space-y-4 text-center md:text-left">
-                                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-black border border-white/20 uppercase tracking-widest">
-                                    AI Action Recommendation
+                    {/* AI Recommendation Banner */}
+                    <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-white/10 transition-colors duration-700" />
+                        <div className="relative z-10">
+                            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+                                <div className="flex-1 space-y-4 text-center md:text-left">
+                                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-black border border-white/20 uppercase tracking-widest">
+                                        AI Action Recommendation
+                                    </div>
+                                    <h3 className="text-lg font-black leading-tight max-w-2xl">{REPORT_JSON.recommendationBody}</h3>
                                 </div>
-                                <h3 className="text-lg font-black leading-tight max-w-2xl">{REPORT_JSON.recommendationBody}</h3>
-                            </div>
-                            <div className="flex gap-4 shrink-0 items-center">
-                                <button
-                                    onClick={() => handleSpeak(REPORT_JSON.recommendationBody, 'recommendation')}
-                                    className={`h-12 w-12 flex items-center justify-center rounded-xl transition-all active:scale-95 border border-white/20 backdrop-blur-sm ${speakingSection === 'recommendation' ? 'bg-red-500 text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}
-                                >
-                                    {speakingSection === 'recommendation' ? <Square className="w-4 h-4" /> : <Volume2 className="w-5 h-5" />}
-                                </button>
-                                <button className="h-12 px-6 bg-white text-blue-700 font-bold rounded-xl hover:bg-blue-50 transition-all shadow-lg active:scale-95 text-xs uppercase tracking-widest">Schedule Outreach</button>
-                                <button className="h-12 px-6 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-xs uppercase tracking-widest">Tactical Map</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Strategy Notes */}
-                <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 group">
-                    <div className="flex items-center justify-between mb-8">
-                        <h3 className="text-xs font-black text-gray-900 flex items-center gap-2 uppercase tracking-widest">
-                            <span className="material-symbols-outlined text-gray-400">rate_review</span>
-                            Strategic Notes
-                        </h3>
-                        <button
-                            onClick={() => alert("PDF Exporting...")}
-                            className="h-10 px-4 flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-black rounded-xl text-[10px] transition-all shadow-lg shadow-green-600/20 active:scale-95 uppercase tracking-widest"
-                        >
-                            <span className="material-symbols-outlined text-base">picture_as_pdf</span>
-                            EXPORT REPORT
-                        </button>
-                    </div>
-
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                        <div className="lg:col-span-12 relative overflow-hidden rounded-3xl bg-gray-50 border-2 border-transparent focus-within:border-blue-500 transition-all">
-                            <textarea
-                                value={note}
-                                onChange={(e) => setNote(e.target.value)}
-                                placeholder="Add strategic observations or meeting notes..."
-                                className="w-full p-6 text-sm min-h-[140px] bg-transparent outline-none font-bold text-gray-700 placeholder:text-gray-400 resize-none"
-                            />
-                            <div className="absolute bottom-4 right-4 flex items-center gap-2">
-                                <span className="text-[10px] text-gray-300 font-bold">Press Send to archive</span>
-                                <button
-                                    onClick={() => {
-                                        if (note.trim()) {
-                                            setObservations([...observations, { text: note, time: new Date().toLocaleTimeString() }]);
-                                            setNote("");
-                                        }
-                                    }}
-                                    className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-500/20 active:scale-95"
-                                >
-                                    <span className="material-symbols-outlined text-xl">send</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    {observations.length > 0 && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-                            {observations.map((o: any, i) => (
-                                <div key={i} className="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:border-blue-300 hover:shadow-md transition-all group/note relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-full -mr-12 -mt-12 opacity-0 group-hover/note:opacity-50 transition-all" />
-                                    <div className="text-[9px] font-black text-blue-500 uppercase tracking-widest mb-2 relative z-10">{o.time}</div>
-                                    <div className="text-xs font-bold text-gray-700 leading-relaxed relative z-10">{o.text}</div>
+                                <div className="flex gap-4 shrink-0 items-center">
+                                    <button
+                                        onClick={() => handleSpeak(REPORT_JSON.recommendationBody, 'recommendation')}
+                                        className={`h-12 w-12 flex items-center justify-center rounded-xl transition-all active:scale-95 border border-white/20 backdrop-blur-sm ${speakingSection === 'recommendation' ? 'bg-red-500 text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}
+                                    >
+                                        {speakingSection === 'recommendation' ? <Square className="w-4 h-4" /> : <Volume2 className="w-5 h-5" />}
+                                    </button>
+                                    <button className="h-12 px-6 bg-white text-blue-700 font-bold rounded-xl hover:bg-blue-50 transition-all shadow-lg active:scale-95 text-xs uppercase tracking-widest">Schedule Outreach</button>
+                                    <button className="h-12 px-6 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-xs uppercase tracking-widest">Tactical Map</button>
                                 </div>
-                            ))}
+                            </div>
                         </div>
-                    )}
+                    </section>
+
+                    {/* Strategy Notes */}
+                    <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 group">
+                        <div className="flex items-center justify-between mb-8">
+                            <h3 className="text-xs font-black text-gray-900 flex items-center gap-2 uppercase tracking-widest">
+                                <span className="material-symbols-outlined text-gray-400">rate_review</span>
+                                Strategic Notes
+                            </h3>
+                            <button
+                                onClick={() => alert("PDF Exporting...")}
+                                className="h-10 px-4 flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-black rounded-xl text-[10px] transition-all shadow-lg shadow-green-600/20 active:scale-95 uppercase tracking-widest"
+                            >
+                                <span className="material-symbols-outlined text-base">picture_as_pdf</span>
+                                EXPORT REPORT
+                            </button>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                            <div className="lg:col-span-12 relative overflow-hidden rounded-3xl bg-gray-50 border-2 border-transparent focus-within:border-blue-500 transition-all">
+                                <textarea
+                                    value={note}
+                                    onChange={(e) => setNote(e.target.value)}
+                                    placeholder="Add strategic observations or meeting notes..."
+                                    className="w-full p-6 text-sm min-h-[140px] bg-transparent outline-none font-bold text-gray-700 placeholder:text-gray-400 resize-none"
+                                />
+                                <div className="absolute bottom-4 right-4 flex items-center gap-2">
+                                    <span className="text-[10px] text-gray-300 font-bold">Press Send to archive</span>
+                                    <button
+                                        onClick={() => {
+                                            if (note.trim()) {
+                                                setObservations([...observations, { text: note, time: new Date().toLocaleTimeString() }]);
+                                                setNote("");
+                                            }
+                                        }}
+                                        className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-500/20 active:scale-95"
+                                    >
+                                        <span className="material-symbols-outlined text-xl">send</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {observations.length > 0 && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+                                {observations.map((o: any, i) => (
+                                    <div key={i} className="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:border-blue-300 hover:shadow-md transition-all group/note relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-full -mr-12 -mt-12 opacity-0 group-hover/note:opacity-50 transition-all" />
+                                        <div className="text-[9px] font-black text-blue-500 uppercase tracking-widest mb-2 relative z-10">{o.time}</div>
+                                        <div className="text-xs font-bold text-gray-700 leading-relaxed relative z-10">{o.text}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
-            </main >
+            </main>
 
             <style jsx global>{`
                 .custom-scrollbar::-webkit-scrollbar {
@@ -664,7 +810,7 @@ function ReportContent() {
                     background: #cbd5e1;
                 }
             `}</style>
-        </div >
+        </div>
     );
 }
 
