@@ -55,3 +55,271 @@ Import traces:
   Client Component SSR:
     ./src/app/(protected)/request/page.tsx [Client Component SSR]
     ./src/app/(protected)/request/page.tsx [Server Component]
+[00:25:47.389] Server  LOG      ✓ Compiled in 144ms
+[00:26:23.925] Server  LOG      ✓ Compiled in 72ms
+[00:27:40.630] Server  LOG      ✓ Compiled in 122ms
+[00:35:43.972] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:37:30.358] Server  LOG      ✓ Compiled in 136ms
+[00:37:30.556] Browser ERROR   ./src/app/(protected)/request/page.tsx:557:5
+Parsing ecmascript source code failed
+  555 |     );
+  556 | }
+> 557 |     );
+      |     ^
+  558 | }
+  559 |
+  560 | export default function MagicCarpetReportPage() {
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[00:37:30.556] Browser ERROR   ./src/app/(protected)/request/page.tsx:557:5
+Parsing ecmascript source code failed
+  555 |     );
+  556 | }
+> 557 |     );
+      |     ^
+  558 | }
+  559 |
+  560 | export default function MagicCarpetReportPage() {
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[00:40:04.744] Server  LOG      ✓ Compiled in 92ms
+[00:40:16.173] Server  LOG      ✓ Compiled in 38ms
+[00:40:55.749] Server  LOG      ✓ Compiled in 54ms
+[00:41:43.467] Server  LOG      ✓ Compiled in 48ms
+[00:42:12.737] Server  LOG      ✓ Compiled in 39ms
+[00:44:58.486] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:49:18.221] Server  LOG      ✓ Compiled in 70ms
+[00:49:18.555] Browser ERROR   ./src/app/components/AddRequestFormModal.tsx:294:1
+Parsing ecmascript source code failed
+  292 |             </div>
+  293 |             );
+> 294 | }
+      | ^
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./src/app/components/AddRequestFormModal.tsx [Client Component Browser]
+    ./src/app/(protected)/home/page.tsx [Client Component Browser]
+    ./src/app/(protected)/home/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/components/AddRequestFormModal.tsx [Client Component SSR]
+    ./src/app/(protected)/home/page.tsx [Client Component SSR]
+    ./src/app/(protected)/home/page.tsx [Server Component]
+[00:49:18.556] Browser ERROR   ./src/app/components/AddRequestFormModal.tsx:294:1
+Parsing ecmascript source code failed
+  292 |             </div>
+  293 |             );
+> 294 | }
+      | ^
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./src/app/components/AddRequestFormModal.tsx [Client Component Browser]
+    ./src/app/(protected)/home/page.tsx [Client Component Browser]
+    ./src/app/(protected)/home/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/components/AddRequestFormModal.tsx [Client Component SSR]
+    ./src/app/(protected)/home/page.tsx [Client Component SSR]
+    ./src/app/(protected)/home/page.tsx [Server Component]
+[00:50:22.811] Server  LOG      ✓ Compiled in 70ms
+[00:50:23.556] Browser ERROR   ./src/app/components/AddRequestFormModal.tsx:294:1
+Parsing ecmascript source code failed
+  292 |             </div>
+  293 |             );
+> 294 | }
+      | ^
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./src/app/components/AddRequestFormModal.tsx [Client Component Browser]
+    ./src/app/(protected)/home/page.tsx [Client Component Browser]
+    ./src/app/(protected)/home/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/components/AddRequestFormModal.tsx [Client Component SSR]
+    ./src/app/(protected)/home/page.tsx [Client Component SSR]
+    ./src/app/(protected)/home/page.tsx [Server Component]
+[00:50:23.556] Browser ERROR   ./src/app/components/AddRequestFormModal.tsx:294:1
+Parsing ecmascript source code failed
+  292 |             </div>
+  293 |             );
+> 294 | }
+      | ^
+
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+
+Import traces:
+  Client Component Browser:
+    ./src/app/components/AddRequestFormModal.tsx [Client Component Browser]
+    ./src/app/(protected)/home/page.tsx [Client Component Browser]
+    ./src/app/(protected)/home/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/components/AddRequestFormModal.tsx [Client Component SSR]
+    ./src/app/(protected)/home/page.tsx [Client Component SSR]
+    ./src/app/(protected)/home/page.tsx [Server Component]
+[00:51:08.360] Server  LOG      ✓ Compiled in 29ms
+[00:51:27.045] Server  LOG      ✓ Compiled in 96ms
+[00:52:38.400] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:54:24.443] Server  LOG      ✓ Compiled in 116ms
+[00:57:18.855] Server  LOG      ✓ Compiled in 110ms
+[00:58:53.906] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:01:58.533] Server  LOG      ✓ Compiled in 38ms
+[01:02:08.433] Server  LOG      ✓ Compiled in 30ms
+[01:02:29.834] Server  LOG      ✓ Compiled in 37ms
+[01:02:43.331] Server  LOG      ✓ Compiled in 27ms
+[01:03:13.261] Server  LOG      ✓ Compiled in 51ms
+[01:03:24.029] Server  LOG      ✓ Compiled in 123ms
+[01:05:23.005] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:10:27.617] Server  LOG      ✓ Compiled in 57ms
+[01:11:49.703] Server  LOG      ✓ Compiled in 78ms
+[01:30:00.954] Server  LOG      ✓ Compiled in 99ms
+[01:34:55.061] Server  LOG      ✓ Compiled in 136ms
+[01:38:52.281] Server  LOG      ✓ Compiled in 53ms
+[01:42:30.410] Server  LOG      ✓ Compiled in 83ms
+[01:46:31.378] Server  LOG      ✓ Compiled in 168ms
+[01:49:04.095] Server  LOG      ✓ Compiled in 58ms
+[01:50:02.844] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:55:07.167] Server  LOG      ✓ Compiled in 75ms
+[01:55:15.752] Server  LOG      ✓ Compiled in 33ms
+[01:56:55.688] Server  LOG      ✓ Compiled in 121ms
+[02:00:34.820] Server  LOG      ✓ Compiled in 72ms
+[02:00:34.928] Browser ERROR   ./src/app/(protected)/request/page.tsx:548:15
+Parsing ecmascript source code failed
+  546 |                     </div>
+  547 |                 </div>
+> 548 |         </div>
+      |               ^
+> 549 |
+      | ^
+> 550 |                 {/* AI Recommendation Banner */ }
+      | ^^^^^^^^^^^^^^^^^
+  551 |     <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group">
+  552 |         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-white/10 transition-colors duration-700" />
+  553 |         <div className="relative z-10">
+
+Expected '</', got 'jsx text (
+
+                )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:00:35.791] Browser ERROR   ./src/app/(protected)/request/page.tsx:548:15
+Parsing ecmascript source code failed
+  546 |                     </div>
+  547 |                 </div>
+> 548 |         </div>
+      |               ^
+> 549 |
+      | ^
+> 550 |                 {/* AI Recommendation Banner */ }
+      | ^^^^^^^^^^^^^^^^^
+  551 |     <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group">
+  552 |         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-white/10 transition-colors duration-700" />
+  553 |         <div className="relative z-10">
+
+Expected '</', got 'jsx text (
+
+                )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:02:43.997] Server  LOG      ✓ Compiled in 38ms
+[02:02:44.790] Browser ERROR   ./src/app/(protected)/request/page.tsx:548:15
+Parsing ecmascript source code failed
+  546 |                     </div>
+  547 |                 </div>
+> 548 |         </div>
+      |               ^
+> 549 |
+      | ^
+> 550 |                 {/* AI Recommendation Banner */ }
+      | ^^^^^^^^^^^^^^^^^
+  551 |     <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group">
+  552 |         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-white/10 transition-colors duration-700" />
+  553 |         <div className="relative z-10">
+
+Expected '</', got 'jsx text (
+
+                )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:02:44.790] Browser ERROR   ./src/app/(protected)/request/page.tsx:548:15
+Parsing ecmascript source code failed
+  546 |                     </div>
+  547 |                 </div>
+> 548 |         </div>
+      |               ^
+> 549 |
+      | ^
+> 550 |                 {/* AI Recommendation Banner */ }
+      | ^^^^^^^^^^^^^^^^^
+  551 |     <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group">
+  552 |         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-white/10 transition-colors duration-700" />
+  553 |         <div className="relative z-10">
+
+Expected '</', got 'jsx text (
+
+                )'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[02:06:14.968] Server  LOG      ✓ Compiled in 54ms
+[02:06:33.784] Server  LOG      ✓ Compiled in 38ms
+[02:16:29.599] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[02:21:53.506] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[02:24:25.855] Server  LOG      ✓ Compiled in 168ms
+[02:26:10.649] Server  LOG      ✓ Compiled in 55ms
+[02:27:44.597] Server  LOG      ✓ Compiled in 27ms
+[02:27:55.092] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior

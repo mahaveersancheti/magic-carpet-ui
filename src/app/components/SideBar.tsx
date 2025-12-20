@@ -23,31 +23,25 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     }, [pathname]);
 
     const handleNavigation = (label: string) => {
-        setSelectedMenu(label); // highlight selected item
+        setSelectedMenu(label);
 
-        if (label == "Home") {
+        if (label === "Home") {
             router.push("/home");
         }
-
-        if (label == "User Profile") {
+        if (label === "User Profile") {
             router.push("/userprofile");
         }
-
         if (label === "LinkedIn Action") {
             router.push("/linkedin-action");
         }
 
-        // Close mobile menu after navigation
         if (onClose) {
             onClose();
         }
     };
 
     const handleLogout = () => {
-        // Clear token from localStorage
         localStorage.removeItem('token');
-
-        // Close mobile menu if open
         if (onClose) {
             onClose();
         }
@@ -55,7 +49,6 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     };
 
     const menuItems = [
-        // ["settings", "LinkedIn Action"],
         ["person", "User Profile"],
     ];
 
@@ -72,45 +65,43 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             <aside className={`
                 h-screen lg:h-full
                 fixed lg:sticky top-0 left-0 z-50
-                w-64 sm:w-80 p-2 sm:p-3 
-                shrink-0 self-start overflow-y-auto
+                w-72 p-6
+                shrink-0 self-start
+                bg-white border-r border-gray-200 shadow-sm
                 transform transition-transform duration-300 ease-in-out
                 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
             `}>
-                <div
-                    className="flex flex-col h-full rounded-2xl shadow-neo-light-convex p-4 sm:p-5 bg-white"
-                >
+                <div className="flex flex-col h-full">
                     {/* Mobile Close Button */}
                     <button
                         onClick={onClose}
-                        className="lg:hidden absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
+                        className="lg:hidden absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 text-gray-500 transition"
                     >
-                        <span className="material-symbols-outlined text-lg">close</span>
+                        <span className="material-symbols-outlined text-xl">close</span>
                     </button>
 
-                    {/* Logo */}
+                    {/* Logo - Properly Aligned & Sized */}
                     <div className="flex items-center justify-center">
                         <img
                             src="/magic_carpet_logo.png"
                             alt="Magic Carpet Logo"
-                            className="w-full max-w-[200px] h-auto object-contain transition-all duration-300 hover:scale-105"
+                            className="w-48 h-auto object-contain transition-all duration-500 hover:scale-105 drop-shadow-sm"
                         />
                     </div>
 
                     {/* Navigation */}
-                    <nav className="flex flex-col gap-2 sm:gap-3">
-
+                    <nav className="flex flex-col gap-1">
                         {/* Dashboard */}
                         <a
                             onClick={() => handleNavigation("Home")}
-                            className={`flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl cursor-pointer text-sm sm:text-base
+                            className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer text-sm font-semibold transition-all duration-200
                                 ${selectedMenu === "Home"
-                                    ? "bg-[#1B7FE6] text-white shadow-[0_4px_10px_rgba(27,127,230,0.35)]"
-                                    : "text-foreground"
+                                    ? "bg-blue-50 text-blue-700"
+                                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                                 }
                             `}
                         >
-                            <span className="material-symbols-outlined text-xl sm:text-2xl">Home</span>
+                            <span className={`material-symbols-outlined text-xl ${selectedMenu === "Home" ? "fill-current" : ""}`}>home</span>
                             <p>Home</p>
                         </a>
 
@@ -119,14 +110,14 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                             <a
                                 key={label}
                                 onClick={() => handleNavigation(label)}
-                                className={`flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl cursor-pointer transition text-sm sm:text-base
+                                className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer text-sm font-semibold transition-all duration-200
                                     ${selectedMenu === label
-                                        ? "bg-[#1B7FE6] text-white shadow-[0_4px_12px_rgba(27,127,230,0.35)]"
-                                        : "text-foreground hover:shadow-neo-light-concave"
+                                        ? "bg-blue-50 text-blue-700"
+                                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                                     }
                                 `}
                             >
-                                <span className="material-symbols-outlined text-xl sm:text-2xl">
+                                <span className={`material-symbols-outlined text-xl ${selectedMenu === label ? "fill-current" : ""}`}>
                                     {icon}
                                 </span>
                                 <p>{label}</p>
@@ -135,12 +126,12 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                     </nav>
 
                     {/* Logout Button */}
-                    <div className="mt-4">
+                    <div className="mt-auto pt-4 border-t border-gray-100">
                         <button
                             onClick={handleLogout}
-                            className="flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl w-full text-foreground hover:bg-red-50 hover:text-red-600 transition text-sm sm:text-base border border-gray-200"
+                            className="flex items-center gap-3 px-4 py-3 rounded-xl w-full text-sm font-semibold text-gray-600 hover:bg-red-50 hover:text-red-700 transition-all duration-200"
                         >
-                            <span className="material-symbols-outlined text-xl sm:text-2xl">
+                            <span className="material-symbols-outlined text-xl">
                                 logout
                             </span>
                             <p>Logout</p>
@@ -148,16 +139,14 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                     </div>
 
                     {/* Upgrade Card */}
-                    <div
-                        className="border border-gray-200 mt-auto p-4 sm:p-5 rounded-2xl shadow-neo-light-concave bg-gray-100"
-                    >
-                        <p className="text-xs sm:text-sm font-semibold text-foreground text-center">
+                    <div className="mt-6 p-5 rounded-3xl bg-blue-50 border border-blue-100">
+                        <p className="text-sm font-bold text-gray-900">
                             Upgrade to Pro
                         </p>
-                        <p className="text-xs text-foreground mt-1 text-center">
-                            Get access to all features and enhance your search capabilities.
+                        <p className="text-xs text-gray-500 mt-1 mb-4 leading-relaxed">
+                            Unlock elite reports and deep tactical insights.
                         </p>
-                        <button className="mt-3 sm:mt-4 w-full py-2 rounded-xl bg-[#1B7FE6] text-white font-semibold text-sm sm:text-base shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition">
+                        <button className="w-full py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs hover:bg-blue-700 transition-all active:scale-95 shadow-sm">
                             Upgrade Now
                         </button>
                     </div>

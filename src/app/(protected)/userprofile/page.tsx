@@ -189,255 +189,167 @@ export default function UserProfile() {
   ];
 
   return (
-    <div className="min-h-screen bg-background-light py-6 px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid lg:grid-cols-3 gap-6">
+    <div className="min-h-screen bg-transparent py-6 px-4 sm:px-6 lg:px-8 pt-20 lg:pt-10">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid lg:grid-cols-12 gap-6">
           {/* LEFT COLUMN */}
-          <div className="space-y-6">
+          <div className="lg:col-span-4 space-y-4">
             {/* Profile Card */}
-            <div
-              className="bg-white p-6 rounded-2xl shadow-neo-light-convex transition-all duration-200 relative"
-              style={{ backgroundColor: '#ffffff' }}
-            >
+            <div className="bg-white p-6 rounded-2xl shadow-card border border-gray-100 transition-all duration-200 relative overflow-hidden">
+              {/* Subtle background element */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 opacity-50" />
 
-              <div className="flex flex-col items-center">
-                <div className="relative mb-4">
-                  <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden ring-4 ring-primary/20 shadow-lg">
+              <div className="relative z-10 flex flex-col items-center">
+                <div className="relative mb-6">
+                  <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl overflow-hidden ring-4 ring-blue-50 shadow-md">
                     <img
                       src={userData.avatar}
                       alt="Avatar"
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  {/* <button className="absolute bottom-0 right-0 p-2 bg-primary text-white rounded-full shadow-lg bg-[#176cc3] hover:bg-[#176cc3] transition-colors">
-                    <Edit2 className="w-4 h-4" />
-                  </button> */}
                 </div>
-                <h2 className="font-bold text-lg sm:text-xl text-foreground mb-1">
+
+                <h2 className="font-bold text-2xl text-gray-900 mb-1">
                   {userData.name}
                 </h2>
-                <p className="text-gray-600 text-sm mb-4 text-center">
+                <p className="text-blue-600 font-bold text-sm mb-6 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
                   {userData.title}
                 </p>
 
-                <div className="flex gap-2 mt-2">
+                <div className="flex gap-3">
                   {[
                     { Icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com" },
                     { Icon: Twitter, label: "Twitter", href: "https://twitter.com" },
-                    { Icon: Instagram, label: "Instagram", href: "https://www.instagram.com" },
-                    { Icon: Facebook, label: "Facebook", href: "https://www.facebook.com" },
                   ].map(({ Icon, label, href }, i) => (
                     <a
                       key={i}
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors shadow-neo-light-concave bg-white flex items-center justify-center"
+                      className="p-3 rounded-xl border border-gray-100 bg-gray-50 text-gray-600 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-200 transition-all shadow-sm"
                       aria-label={label}
                     >
-                      <Icon className="w-4 h-4 text-gray-700" />
+                      <Icon className="w-5 h-5" />
                     </a>
                   ))}
                   <button
-                    className="p-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors shadow-neo-light-concave bg-white"
+                    className="p-3 rounded-xl border border-gray-100 bg-gray-50 text-gray-600 hover:text-gray-900 hover:bg-white hover:border-gray-200 transition-all shadow-sm"
                     aria-label="Share"
                   >
-                    <Share2 className="w-4 h-4 text-gray-700" />
+                    <Share2 className="w-5 h-5" />
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Contact Info Card */}
-            <div
-              style={{ backgroundColor: '#ffffff' }}
-              className="bg-white p-6 rounded-2xl shadow-neo-light-convex transition-all duration-200"
-            >
-              <h3 className="font-bold text-lg text-foreground mb-4">
-                Contact Information
+            {/* Quick Stats Card */}
+            <div className="bg-white p-6 rounded-2xl shadow-card border border-gray-100">
+              <h3 className="text-[10px] uppercase font-black text-gray-400 tracking-widest mb-4">
+                Overview
               </h3>
-
-              <div className="space-y-4">
-                <div className="border border-gray-200 flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-                  <div className="p-2 rounded-lg bg-primary/10">
-                    <Mail className="w-4 h-4 text-primary" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-gray-500 mb-0.5">Email</p>
-                    <p className="text-sm font-medium text-foreground truncate">
-                      {userData.email}
-                    </p>
-                  </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tight mb-1">Products</p>
+                  <p className="text-xl font-black text-gray-900">{products.length}</p>
                 </div>
-
-                <div className="border border-gray-200 flex items-center gap-3 p-3 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors">
-                  <div className="p-2 rounded-lg bg-primary/10">
-                    <Phone className="w-4 h-4 text-primary" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-gray-500 mb-0.5">Phone</p>
-                    <p className="text-sm font-medium text-foreground">
-                      {userData.phone}
-                    </p>
+                <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tight mb-1">Status</p>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                    <p className="text-xs font-bold text-gray-900 tracking-tight">Active</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Quick Actions Card */}
-            {/* <div
-              style={{ backgroundColor: '#ffffff' }}
-              className="bg-white p-6 rounded-2xl shadow-neo-light-convex transition-all duration-200">
-              <h3 className="font-bold text-lg text-foreground mb-4">
-                Quick Actions
+            {/* Contact Info Card */}
+            <div className="bg-white p-6 rounded-2xl shadow-card border border-gray-100">
+              <h3 className="text-[10px] uppercase font-black text-gray-400 tracking-widest mb-4">
+                Contact Information
               </h3>
 
               <div className="space-y-3">
-                {quickLinks.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      className="border border-gray-200 flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-all group shadow-neo-light-concave bg-white"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Icon className="w-4 h-4 text-gray-600 group-hover:text-primary transition-colors" />
-                        <span className="text-sm font-medium text-foreground">
-                          {item.label}
-                        </span>
-                      </div>
-                      <Link2 className="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors" />
-                    </a>
-                  );
-                })}
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100 hover:border-blue-200 transition-colors group">
+                  <div className="p-2 rounded-lg bg-white shadow-sm border border-gray-100 text-blue-600 group-hover:scale-110 transition-transform">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[10px] uppercase font-bold text-gray-400 tracking-tight">Email</p>
+                    <p className="text-sm font-bold text-gray-900 truncate">
+                      {userData.email}
+                    </p>
+                  </div>
+                </div>
 
-                <button
-                  onClick={() => setShowUploadOverlay(true)}
-                  className="w-full flex items-center justify-center gap-2 border-2 border-dashed border-gray-300 p-3 rounded-xl hover:border-primary hover:bg-primary/5 transition-all group"
-                >
-                  <Plus className="w-4 h-4 text-gray-500 group-hover:text-primary transition-colors" />
-                  <span className="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">
-                    Add New Link
-                  </span>
-                </button>
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100 hover:border-blue-200 transition-colors group">
+                  <div className="p-2 rounded-lg bg-white shadow-sm border border-gray-100 text-blue-600 group-hover:scale-110 transition-transform">
+                    <Phone className="w- 4 h-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[10px] uppercase font-bold text-gray-400 tracking-tight">Phone</p>
+                    <p className="text-sm font-bold text-gray-900">
+                      {userData.phone || "Not provided"}
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div> */}
+            </div>
           </div>
 
           {/* RIGHT COLUMN */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Uploaded Files Card */}
-            {/* <div className="bg-white p-6 rounded-2xl shadow-neo-light-convex transition-all duration-200">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="font-bold text-lg sm:text-xl text-foreground">
-                  Uploaded Product Documents
-                </h3>
-
-                <button
-                  onClick={() => setShowUploadOverlay(true)}
-                  className="text-foreground flex items-center gap-2 bg-primary px-4 py-2 rounded-xl text-sm font-semibold shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition-all"
-                >
-                  <CloudUpload className="w-4 h-4" />
-                  Upload
-                </button>
-              </div>
-
-              <div
-                onClick={() => setShowUploadOverlay(true)}
-                className="border-2 border-dashed border-gray-300 p-8 text-center rounded-xl mb-4 hover:border-primary hover:bg-primary/5 transition-all cursor-pointer group"
-              >
-                <CloudUpload className="w-10 h-10 mx-auto mb-3 text-gray-400 group-hover:text-primary transition-colors" />
-                <p className="text-sm font-medium text-gray-700 mb-1">
-                  Drop files here or click to upload
-                </p>
-                <p className="text-xs text-gray-500">
-                  Supports PDF, DOC, DOCX up to 10MB
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                {files.map((file) => (
-                  <div
-                    key={file.name}
-                    className="flex items-center justify-between p-4 rounded-xl border border-gray-200 bg-gray-50 hover:bg-white transition-all shadow-neo-light-concave"
-                  >
-                    <div className="flex items-center gap-3 flex-1 min-w-0">
-                      <div
-                        className={`px-3 py-1.5 rounded-lg text-white text-xs font-semibold shrink-0 ${file.type === "pdf"
-                            ? "bg-red-500"
-                            : "bg-blue-500"
-                          }`}
-                      >
-                        {file.type.toUpperCase()}
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-sm text-foreground truncate">
-                          {file.name}
-                        </p>
-                        <p className="text-xs text-gray-500">{file.size}</p>
-                      </div>
-                    </div>
-
-                    <button className="p-2 rounded-lg hover:bg-gray-200 transition-colors ml-3 shrink-0">
-                      <Download className="w-4 h-4 text-gray-600" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div> */}
-
+          <div className="lg:col-span-8 space-y-4">
             {/* Product Showcase Card */}
-            <div className="bg-white p-6 rounded-2xl shadow-neo-light-convex transition-all duration-200">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="font-bold text-lg sm:text-xl text-foreground">
-                  Product Showcase
-                </h3>
+            <div className="bg-white p-6 rounded-2xl shadow-card border border-gray-100 transition-all duration-200">
+              <div className="flex justify-between items-center mb-6">
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900">Product Showcase</h3>
+                  <p className="text-xs text-gray-500 mt-1">Manage and display your strategic offerings</p>
+                </div>
                 <button
                   onClick={() => setShowAddProductModal(true)}
-                  className="p-2 rounded-xl bg-primary text-gray-700 hover:text-white hover:bg-[#176cc3] transition-colors shadow-lg"
-                  aria-label="Add Product"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-lg active:scale-95 text-xs"
                 >
-                  <Plus className="w-5 h-5" />
+                  <Plus className="w-3.5 h-3.5" />
+                  Add Product
                 </button>
               </div>
 
               {productsLoading ? (
-                // Loading skeleton
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {[1, 2].map((i) => (
-                    <div
-                      key={i}
-                      className="border border-gray-200 rounded-xl bg-white overflow-hidden animate-pulse"
-                    >
-                      <div className="w-full h-40 bg-gray-200" />
-                      <div className="p-4 space-y-2">
-                        <div className="h-5 bg-gray-200 rounded w-3/4" />
-                        <div className="h-4 bg-gray-200 rounded w-full" />
+                    <div key={i} className="border border-gray-100 rounded-2xl bg-white overflow-hidden animate-pulse">
+                      <div className="w-full h-48 bg-gray-50" />
+                      <div className="p-6 space-y-3">
+                        <div className="h-6 bg-gray-50 rounded-lg w-3/4" />
+                        <div className="h-4 bg-gray-50 rounded-lg w-full" />
+                        <div className="h-4 bg-gray-50 rounded-lg w-2/3" />
                       </div>
                     </div>
                   ))}
                 </div>
               ) : productsError ? (
-                // Error state
-                <div className="text-center py-8">
-                  <p className="text-red-500 text-sm font-medium">
-                    Failed to load products: {productsError}
-                  </p>
+                <div className="text-center py-12 bg-gray-50 rounded-2xl border border-gray-100">
+                  <p className="text-red-500 font-bold mb-2">Request Failed</p>
+                  <p className="text-sm text-gray-600">{productsError}</p>
                 </div>
               ) : products.length === 0 ? (
-                // Empty state
-                <div className="text-center py-8">
-                  <p className="text-gray-500 text-sm">
-                    No products available yet.
-                  </p>
+                <div className="text-center py-16 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+                  <div className="w-16 h-16 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mx-auto mb-4">
+                    <Plus className="w-8 h-8 text-gray-300" />
+                  </div>
+                  <h4 className="text-gray-900 font-bold mb-1">No products yet</h4>
+                  <p className="text-sm text-gray-500 mb-6">Start highlighting your core solutions here</p>
+                  <button
+                    onClick={() => setShowAddProductModal(true)}
+                    className="text-blue-600 font-bold text-sm hover:underline"
+                  >
+                    Create your first product
+                  </button>
                 </div>
               ) : (
-                // Products grid
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {products.map((product) => {
-                    // Construct image URL from filePaths
                     const imageUrl = product.filePaths && product.filePaths.length > 0
                       ? `${getBaseUrl().replace('/api/', '')}${product.filePaths[0]}`
                       : '/Image-not-found.png';
@@ -445,44 +357,38 @@ export default function UserProfile() {
                     return (
                       <div
                         key={product.id}
-                        className="group border border-gray-200 rounded-xl bg-white overflow-hidden hover:shadow-lg transition-all relative"
+                        className="group bg-white border border-gray-100 rounded-2xl overflow-hidden hover:border-blue-200 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 flex flex-col"
                       >
-                        {/* Edit and Delete Icons */}
-                        <div className="absolute top-2 right-2 z-10 flex gap-2">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleEditClick(product);
-                            }}
-                            className="p-2 rounded-lg bg-white/90 hover:bg-blue-500 hover:text-white text-gray-700 transition-all shadow-md"
-                            aria-label="Edit Product"
-                          >
-                            <Edit2 className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteClick(product.id);
-                            }}
-                            className="p-2 rounded-lg bg-white/90 hover:bg-red-500 hover:text-white text-gray-700 transition-all shadow-md"
-                            aria-label="Delete Product"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
+                        <div className="relative h-48 overflow-hidden bg-gray-50">
+                          <img
+                            src={imageUrl}
+                            alt={product.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                          {/* Actions Overlay */}
+                          <div className="absolute top-3 right-3 flex gap-2 translate-y-[-10px] opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleEditClick(product); }}
+                              className="p-2.5 rounded-xl bg-white/95 text-gray-600 hover:text-blue-600 hover:bg-white shadow-lg transition-all"
+                            >
+                              <Edit2 className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); handleDeleteClick(product.id); }}
+                              className="p-2.5 rounded-xl bg-white/95 text-gray-600 hover:text-red-500 hover:bg-white shadow-lg transition-all"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
                         </div>
 
-                        <div
-                          className="w-full h-40 bg-cover bg-center relative overflow-hidden"
-                          style={{ backgroundImage: `url('${imageUrl}')` }}
-                        >
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </div>
-
-                        <div className="p-4">
-                          <h4 className="font-bold text-base text-foreground mb-1">
+                        <div className="p-4 flex-1 flex flex-col">
+                          <h4 className="font-bold text-base text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
                             {product.name}
                           </h4>
-                          <p className="text-sm text-gray-600 line-clamp-2">
+                          <p className="text-gray-600 text-xs line-clamp-2 leading-relaxed flex-1">
                             {product.description}
                           </p>
                         </div>
@@ -496,153 +402,115 @@ export default function UserProfile() {
         </div>
 
         {/* Upload Modal */}
-        {showUploadOverlay && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
-            onClick={() => setShowUploadOverlay(false)}
-          >
-            <div
-              className="bg-white rounded-2xl p-6 w-full max-w-md border border-gray-200 shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-foreground">
-                  Upload Files
-                </h3>
-
-                <button
-                  onClick={() => setShowUploadOverlay(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                >
-                  <X className="w-5 h-5 text-gray-600" />
-                </button>
-              </div>
-
-              <div className="border-2 border-dashed border-gray-300 p-8 text-center rounded-xl mb-4 hover:border-primary transition-colors">
-                <CloudUpload className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-                <p className="text-sm font-medium text-gray-700 mb-1">
-                  Drag & drop files here
-                </p>
-                <p className="text-xs text-gray-500">
-                  or click to browse
-                </p>
-              </div>
-
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setShowUploadOverlay(false)}
-                  className="text-foreground flex-1 border border-gray-300 rounded-xl p-3 text-sm font-medium transition-colors"
-                >
-                  Cancel
-                </button>
-
-                <button className="text-foreground flex-1 p-3 rounded-xl bg-primary text-sm font-semibold shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition-all">
-                  Upload Files
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Add Product Modal */}
         {showAddProductModal && (
           <div
-            className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
-            onClick={() => setShowAddProductModal(false)}
+            className="fixed inset-0 bg-gray-900/60 flex items-center justify-center p-4 z-50 backdrop-blur-sm transition-opacity"
+            onClick={() => {
+              setShowAddProductModal(false);
+              setEditingProduct(null);
+              setProductForm({ name: '', description: '' });
+              setFormErrors({});
+            }}
           >
             <div
-              className="bg-white rounded-2xl p-6 w-full max-w-md border border-gray-200 shadow-2xl"
+              className="bg-white rounded-3xl w-full max-w-lg border border-gray-100 shadow-2xl relative overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-foreground">
-                  {editingProduct ? 'Edit Product' : 'Add New Product'}
-                </h3>
+              <div className="p-8">
+                <div className="flex justify-between items-center mb-8">
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900">
+                      {editingProduct ? 'Edit Product' : 'Add New Product'}
+                    </h3>
+                    <p className="text-sm text-gray-500 mt-1">Provide the details for your strategic offering</p>
+                  </div>
 
-                <button
-                  onClick={() => {
-                    setShowAddProductModal(false);
-                    setEditingProduct(null);
-                    setProductForm({ name: '', description: '' });
-                    setFormErrors({});
-                  }}
-                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-                >
-                  <X className="w-5 h-5 text-gray-600" />
-                </button>
-              </div>
-
-              <div className="space-y-4">
-                {/* Product Name */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Product Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={productForm.name}
-                    onChange={(e) => {
-                      setProductForm({ ...productForm, name: e.target.value });
-                      if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
+                  <button
+                    onClick={() => {
+                      setShowAddProductModal(false);
+                      setEditingProduct(null);
+                      setProductForm({ name: '', description: '' });
+                      setFormErrors({});
                     }}
-                    className={`w-full px-4 py-2 border ${formErrors.name ? 'border-red-500' : 'border-gray-300'
-                      } rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50`}
-                    placeholder="Enter product name"
-                  />
-                  {formErrors.name && (
-                    <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
-                  )}
+                    className="p-2.5 rounded-xl hover:bg-gray-100 text-gray-400 hover:text-gray-900 transition-all"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
                 </div>
 
-                {/* Product Description */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Description <span className="text-red-500">*</span>
-                  </label>
-                  <textarea
-                    value={productForm.description}
-                    onChange={(e) => {
-                      setProductForm({ ...productForm, description: e.target.value });
-                      if (formErrors.description) setFormErrors({ ...formErrors, description: undefined });
-                    }}
-                    className={`w-full px-4 py-2 border ${formErrors.description ? 'border-red-500' : 'border-gray-300'
-                      } rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none`}
-                    placeholder="Enter product description"
-                    rows={4}
-                  />
-                  {formErrors.description && (
-                    <p className="text-red-500 text-xs mt-1">{formErrors.description}</p>
-                  )}
+                <div className="space-y-6">
+                  {/* Product Name */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-gray-700">
+                      Product Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      autoFocus
+                      value={productForm.name}
+                      onChange={(e) => {
+                        setProductForm({ ...productForm, name: e.target.value });
+                        if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
+                      }}
+                      className={`w-full px-5 py-3.5 bg-gray-50 border ${formErrors.name ? 'border-red-500' : 'border-gray-200'} rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-50 focus:border-blue-500 focus:bg-white transition-all text-gray-900 placeholder:text-gray-400`}
+                      placeholder="e.g. Strategic Growth Suite"
+                    />
+                    {formErrors.name && (
+                      <p className="text-red-500 text-xs font-bold mt-1 px-1">{formErrors.name}</p>
+                    )}
+                  </div>
+
+                  {/* Product Description */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-gray-700">
+                      Description <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      value={productForm.description}
+                      onChange={(e) => {
+                        setProductForm({ ...productForm, description: e.target.value });
+                        if (formErrors.description) setFormErrors({ ...formErrors, description: undefined });
+                      }}
+                      className={`w-full px-5 py-3.5 bg-gray-50 border ${formErrors.description ? 'border-red-500' : 'border-gray-200'} rounded-2xl focus:outline-none focus:ring-4 focus:ring-blue-50 focus:border-blue-500 focus:bg-white transition-all text-gray-900 placeholder:text-gray-400 resize-none`}
+                      placeholder="Briefly describe what this product does..."
+                      rows={5}
+                    />
+                    {formErrors.description && (
+                      <p className="text-red-500 text-xs font-bold mt-1 px-1">{formErrors.description}</p>
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex gap-3 mt-6">
-                <button
-                  onClick={() => {
-                    setShowAddProductModal(false);
-                    setEditingProduct(null);
-                    setProductForm({ name: '', description: '' });
-                    setFormErrors({});
-                  }}
-                  className="text-foreground flex-1 border border-gray-300 rounded-xl p-3 text-sm font-medium hover:bg-gray-50 transition-colors"
-                  disabled={createLoading || updateLoading}
-                >
-                  Cancel
-                </button>
+                <div className="flex gap-4 mt-10">
+                  <button
+                    onClick={() => {
+                      setShowAddProductModal(false);
+                      setEditingProduct(null);
+                      setProductForm({ name: '', description: '' });
+                      setFormErrors({});
+                    }}
+                    className="flex-1 h-12 px-6 border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-[0.98] disabled:opacity-50"
+                    disabled={createLoading || updateLoading}
+                  >
+                    Cancel
+                  </button>
 
-                <button
-                  onClick={editingProduct ? handleUpdateProduct : handleAddProduct}
-                  disabled={createLoading || updateLoading}
-                  className="flex-1 p-3 rounded-xl bg-primary text-sm font-semibold shadow-[0_4px_12px_rgba(27,127,230,0.35)] text-gray-700 hover:text-white hover:bg-[#176cc3] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                  {(createLoading || updateLoading) ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      {editingProduct ? 'Updating...' : 'Adding...'}
-                    </>
-                  ) : (
-                    editingProduct ? 'Update Product' : 'Add Product'
-                  )}
-                </button>
+                  <button
+                    onClick={editingProduct ? handleUpdateProduct : handleAddProduct}
+                    disabled={createLoading || updateLoading}
+                    className="flex-[2] h-12 px-6 bg-blue-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-500/20 hover:bg-blue-700 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    {(createLoading || updateLoading) ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>{editingProduct ? 'Updating...' : 'Adding...'}</span>
+                      </>
+                    ) : (
+                      <span>{editingProduct ? 'Update Product' : 'Add Product'}</span>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -651,45 +519,49 @@ export default function UserProfile() {
         {/* Delete Confirmation Dialog */}
         {deletingProductId && (
           <div
-            className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
+            className="fixed inset-0 bg-gray-900/60 flex items-center justify-center p-4 z-50 backdrop-blur-sm transition-opacity"
             onClick={() => setDeletingProductId(null)}
           >
             <div
-              className="bg-white rounded-2xl p-6 w-full max-w-md border border-gray-200 shadow-2xl"
+              className="bg-white rounded-3xl w-full max-w-md border border-gray-100 shadow-2xl relative overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="mb-4">
-                <h3 className="text-lg font-bold text-foreground mb-2">
+              <div className="p-8">
+                <div className="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mb-6">
+                  <Trash2 className="w-8 h-8 text-red-500" />
+                </div>
+
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
                   Delete Product
                 </h3>
-                <p className="text-sm text-gray-600">
-                  Are you sure you want to delete "{products.find(p => p.id === deletingProductId)?.name}"? This action cannot be undone.
+                <p className="text-gray-600 leading-relaxed mb-8">
+                  Are you sure you want to delete <span className="font-bold text-gray-900">"{products.find(p => p.id === deletingProductId)?.name}"</span>? This action cannot be undone and will remove all associated data.
                 </p>
-              </div>
 
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setDeletingProductId(null)}
-                  className="text-foreground flex-1 border border-gray-300 rounded-xl p-3 text-sm font-medium hover:bg-gray-50 transition-colors"
-                  disabled={deleteLoading}
-                >
-                  Cancel
-                </button>
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => setDeletingProductId(null)}
+                    className="flex-1 h-12 px-6 border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-[0.98] disabled:opacity-50"
+                    disabled={deleteLoading}
+                  >
+                    Cancel
+                  </button>
 
-                <button
-                  onClick={handleDeleteConfirm}
-                  disabled={deleteLoading}
-                  className="text-white flex-1 p-3 rounded-xl bg-red-500 text-sm font-semibold hover:bg-red-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                  {deleteLoading ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      Deleting...
-                    </>
-                  ) : (
-                    'Delete'
-                  )}
-                </button>
+                  <button
+                    onClick={handleDeleteConfirm}
+                    disabled={deleteLoading}
+                    className="flex-1 h-12 px-6 bg-red-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-red-500/20 hover:bg-red-600 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    {deleteLoading ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>Deleting...</span>
+                      </>
+                    ) : (
+                      <span>Delete</span>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -33,32 +33,28 @@ function Sidebar({ isOpen = true, onClose }) {
         pathname
     ]);
     const handleNavigation = (label)=>{
-        setSelectedMenu(label); // highlight selected item
-        if (label == "Home") {
+        setSelectedMenu(label);
+        if (label === "Home") {
             router.push("/home");
         }
-        if (label == "User Profile") {
+        if (label === "User Profile") {
             router.push("/userprofile");
         }
         if (label === "LinkedIn Action") {
             router.push("/linkedin-action");
         }
-        // Close mobile menu after navigation
         if (onClose) {
             onClose();
         }
     };
     const handleLogout = ()=>{
-        // Clear token from localStorage
         localStorage.removeItem('token');
-        // Close mobile menu if open
         if (onClose) {
             onClose();
         }
         window.location.href = '/';
     };
     const menuItems = [
-        // ["settings", "LinkedIn Action"],
         [
             "person",
             "User Profile"
@@ -71,35 +67,36 @@ function Sidebar({ isOpen = true, onClose }) {
                 onClick: onClose
             }, void 0, false, {
                 fileName: "[project]/src/app/components/SideBar.tsx",
-                lineNumber: 66,
+                lineNumber: 59,
                 columnNumber: 17
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
                 className: `
                 h-screen lg:h-full
                 fixed lg:sticky top-0 left-0 z-50
-                w-64 sm:w-80 p-2 sm:p-3 
-                shrink-0 self-start overflow-y-auto
+                w-72 p-6
+                shrink-0 self-start
+                bg-white border-r border-gray-200 shadow-sm
                 transform transition-transform duration-300 ease-in-out
                 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
             `,
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex flex-col h-full rounded-2xl shadow-neo-light-convex p-4 sm:p-5 bg-white",
+                    className: "flex flex-col h-full",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: onClose,
-                            className: "lg:hidden absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition",
+                            className: "lg:hidden absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 text-gray-500 transition",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "material-symbols-outlined text-lg",
+                                className: "material-symbols-outlined text-xl",
                                 children: "close"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/components/SideBar.tsx",
-                                lineNumber: 88,
+                                lineNumber: 80,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/SideBar.tsx",
-                            lineNumber: 84,
+                            lineNumber: 76,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -107,154 +104,154 @@ function Sidebar({ isOpen = true, onClose }) {
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                 src: "/magic_carpet_logo.png",
                                 alt: "Magic Carpet Logo",
-                                className: "w-full max-w-[200px] h-auto object-contain transition-all duration-300 hover:scale-105"
+                                className: "w-48 h-auto object-contain transition-all duration-500 hover:scale-105 drop-shadow-sm"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/components/SideBar.tsx",
-                                lineNumber: 93,
+                                lineNumber: 85,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/SideBar.tsx",
-                            lineNumber: 92,
+                            lineNumber: 84,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
-                            className: "flex flex-col gap-2 sm:gap-3",
+                            className: "flex flex-col gap-1",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                     onClick: ()=>handleNavigation("Home"),
-                                    className: `flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl cursor-pointer text-sm sm:text-base
-                                ${selectedMenu === "Home" ? "bg-[#1B7FE6] text-white shadow-[0_4px_10px_rgba(27,127,230,0.35)]" : "text-foreground"}
+                                    className: `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer text-sm font-semibold transition-all duration-200
+                                ${selectedMenu === "Home" ? "bg-blue-50 text-blue-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"}
                             `,
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "material-symbols-outlined text-xl sm:text-2xl",
-                                            children: "Home"
+                                            className: `material-symbols-outlined text-xl ${selectedMenu === "Home" ? "fill-current" : ""}`,
+                                            children: "home"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/components/SideBar.tsx",
-                                            lineNumber: 113,
+                                            lineNumber: 104,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             children: "Home"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/components/SideBar.tsx",
-                                            lineNumber: 114,
+                                            lineNumber: 105,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 104,
+                                    lineNumber: 95,
                                     columnNumber: 25
                                 }, this),
                                 menuItems.map(([icon, label])=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                         onClick: ()=>handleNavigation(label),
-                                        className: `flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl cursor-pointer transition text-sm sm:text-base
-                                    ${selectedMenu === label ? "bg-[#1B7FE6] text-white shadow-[0_4px_12px_rgba(27,127,230,0.35)]" : "text-foreground hover:shadow-neo-light-concave"}
+                                        className: `flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer text-sm font-semibold transition-all duration-200
+                                    ${selectedMenu === label ? "bg-blue-50 text-blue-700" : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"}
                                 `,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "material-symbols-outlined text-xl sm:text-2xl",
+                                                className: `material-symbols-outlined text-xl ${selectedMenu === label ? "fill-current" : ""}`,
                                                 children: icon
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/components/SideBar.tsx",
-                                                lineNumber: 129,
+                                                lineNumber: 120,
                                                 columnNumber: 33
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                 children: label
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/components/SideBar.tsx",
-                                                lineNumber: 132,
+                                                lineNumber: 123,
                                                 columnNumber: 33
                                             }, this)
                                         ]
                                     }, label, true, {
                                         fileName: "[project]/src/app/components/SideBar.tsx",
-                                        lineNumber: 119,
+                                        lineNumber: 110,
                                         columnNumber: 29
                                     }, this))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/components/SideBar.tsx",
-                            lineNumber: 101,
+                            lineNumber: 93,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "mt-4",
+                            className: "mt-auto pt-4 border-t border-gray-100",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: handleLogout,
-                                className: "flex items-center gap-3 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl w-full text-foreground hover:bg-red-50 hover:text-red-600 transition text-sm sm:text-base border border-gray-200",
+                                className: "flex items-center gap-3 px-4 py-3 rounded-xl w-full text-sm font-semibold text-gray-600 hover:bg-red-50 hover:text-red-700 transition-all duration-200",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "material-symbols-outlined text-xl sm:text-2xl",
+                                        className: "material-symbols-outlined text-xl",
                                         children: "logout"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/components/SideBar.tsx",
-                                        lineNumber: 143,
+                                        lineNumber: 134,
                                         columnNumber: 29
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                         children: "Logout"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/components/SideBar.tsx",
-                                        lineNumber: 146,
+                                        lineNumber: 137,
                                         columnNumber: 29
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/components/SideBar.tsx",
-                                lineNumber: 139,
+                                lineNumber: 130,
                                 columnNumber: 25
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/components/SideBar.tsx",
-                            lineNumber: 138,
+                            lineNumber: 129,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "border border-gray-200 mt-auto p-4 sm:p-5 rounded-2xl shadow-neo-light-concave bg-gray-100",
+                            className: "mt-6 p-5 rounded-3xl bg-blue-50 border border-blue-100",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-xs sm:text-sm font-semibold text-foreground text-center",
+                                    className: "text-sm font-bold text-gray-900",
                                     children: "Upgrade to Pro"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 154,
+                                    lineNumber: 143,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-xs text-foreground mt-1 text-center",
-                                    children: "Get access to all features and enhance your search capabilities."
+                                    className: "text-xs text-gray-500 mt-1 mb-4 leading-relaxed",
+                                    children: "Unlock elite reports and deep tactical insights."
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 157,
+                                    lineNumber: 146,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    className: "mt-3 sm:mt-4 w-full py-2 rounded-xl bg-[#1B7FE6] text-white font-semibold text-sm sm:text-base shadow-[0_4px_12px_rgba(27,127,230,0.35)] hover:bg-[#176cc3] transition",
+                                    className: "w-full py-2.5 rounded-xl bg-blue-600 text-white font-bold text-xs hover:bg-blue-700 transition-all active:scale-95 shadow-sm",
                                     children: "Upgrade Now"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 160,
+                                    lineNumber: 149,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/components/SideBar.tsx",
-                            lineNumber: 151,
+                            lineNumber: 142,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/components/SideBar.tsx",
-                    lineNumber: 80,
+                    lineNumber: 74,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/components/SideBar.tsx",
-                lineNumber: 72,
+                lineNumber: 65,
                 columnNumber: 13
             }, this)
         ]

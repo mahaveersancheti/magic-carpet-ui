@@ -1,7 +1,9 @@
 {
   "/(auth)/signin/page": "app/(auth)/signin/page.js",
+  "/(auth)/signup/page": "app/(auth)/signup/page.js",
   "/(protected)/home/page": "app/(protected)/home/page.js",
   "/(protected)/request/page": "app/(protected)/request/page.js",
+  "/(protected)/userprofile/page": "app/(protected)/userprofile/page.js",
   "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js"
 }
