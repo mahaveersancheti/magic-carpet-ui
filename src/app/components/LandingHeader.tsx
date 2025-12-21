@@ -2,32 +2,32 @@
 
 export default function LandingHeader() {
   return (
-    <header className="sticky top-0 z-50 w-full max-w-6xl px-4 md:px-10 py-4 font-display">
-      <div 
-      className="flex items-center justify-between whitespace-nowrap rounded-full px-6 py-3 shadow-md"
-      style={{background: '#E0E5EB'}}
-      >
-        <div className="flex items-center gap-4">
-          <div className="size-6 text-primary">
+    <header className="sticky top-0 z-50 w-full max-w-6xl px-4 md:px-10 py-6 font-display">
+      <div className="flex items-center justify-between whitespace-nowrap rounded-3xl px-8 py-4 glass border border-white/40 shadow-2xl">
+        <div className="flex items-center gap-4 group cursor-pointer">
+          <div className="size-8 text-primary transition-transform duration-500 group-hover:rotate-12">
             <img
               src="/icon.png"
-              alt="A spell book with an open page and mystical symbols icon"
-              style={{ width: '100%', height: '100%' }}
+              alt="Magic Carpet Icon"
+              className="w-full h-full object-contain"
             />
           </div>
-          <h2 className="text-lg font-bold text-foreground">Magic Carpet</h2>
+          <h2 className="text-xl font-black text-foreground tracking-tighter uppercase">Magic Carpet</h2>
         </div>
-        <nav className="hidden md:flex flex-1 justify-center items-center gap-2">
-          <a href="#about-company" className="rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light text-foreground">About Company</a>
-          <a href="#about-product" className="rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light text-foreground">About Product</a>
-          <a href="#contact" className="rounded-full h-10 px-4 flex items-center justify-center text-sm font-medium transition-all duration-300 neo-button-light text-foreground">Contact Details</a>
+
+        <nav className="hidden md:flex flex-1 justify-center items-center gap-1">
+          <a href="#about-company" className="rounded-full h-11 px-6 flex items-center justify-center text-xs font-bold transition-all duration-300 hover:bg-black/5 text-gray-600 hover:text-black uppercase tracking-widest">About</a>
+          <a href="#about-product" className="rounded-full h-11 px-6 flex items-center justify-center text-xs font-bold transition-all duration-300 hover:bg-black/5 text-gray-600 hover:text-black uppercase tracking-widest">Features</a>
+          <a href="#contact" className="rounded-full h-11 px-6 flex items-center justify-center text-xs font-bold transition-all duration-300 hover:bg-black/5 text-gray-600 hover:text-black uppercase tracking-widest">Contact</a>
         </nav>
-        <div className="flex gap-2">
-          <a href="/signin" className="flex min-w-[84px] items-center justify-center rounded-full h-10 px-4 bg-background-light text-sm font-bold transition-all duration-300 neo-button-light text-foreground">Sign In</a>
-          <a href="/signup" className="flex min-w-[84px] items-center justify-center rounded-full h-10 px-4 bg-background-light text-sm font-bold transition-all duration-300 neo-button-light text-foreground">Sign Up</a>
+
+        <div className="flex gap-3">
+          <a href="/signin" className="flex items-center justify-center rounded-2xl h-11 px-6 text-xs font-black transition-all duration-300 border border-gray-200 hover:bg-gray-50 text-foreground uppercase tracking-widest shadow-sm active:scale-95">Sign In</a>
+          <a href="/signup" className="flex items-center justify-center rounded-2xl h-11 px-8 bg-blue-600 text-white text-xs font-black transition-all duration-300 hover:bg-blue-700 uppercase tracking-widest shadow-lg shadow-blue-500/20 active:scale-95">Get Started</a>
         </div>
+
         <div className="md:hidden">
-          <button className="rounded-full p-2 neo-button-light">
+          <button className="rounded-2xl p-2 bg-gray-100 hover:bg-gray-200 transition-colors">
             <span className="material-symbols-outlined">menu</span>
           </button>
         </div>

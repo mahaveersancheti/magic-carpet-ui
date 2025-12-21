@@ -8,7 +8,9 @@ import toast from 'react-hot-toast';
 import { endpoints } from '@/app/lib/endpoints';
 
 
-export default function SignIn() {
+import { Suspense } from 'react';
+
+function SignInContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
@@ -165,5 +167,13 @@ export default function SignIn() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function SignIn() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignInContent />
+    </Suspense>
   );
 }
