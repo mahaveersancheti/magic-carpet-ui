@@ -25,6 +25,8 @@ import {
   Twitter,
   Instagram,
   Trash2,
+  LayoutGrid,
+  List,
 } from "lucide-react";
 
 export default function UserProfile() {
@@ -62,6 +64,7 @@ export default function UserProfile() {
     description: ''
   });
   const [formErrors, setFormErrors] = useState<{ name?: string; description?: string }>({});
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
 
   // Get products from Redux store
   const { products, loading: productsLoading, createLoading, updateLoading, deleteLoading, error: productsError } = useSelector(
@@ -306,21 +309,39 @@ export default function UserProfile() {
                   <h3 className="text-xl font-bold text-gray-900">Product Showcase</h3>
                   <p className="text-xs text-gray-500 mt-1">Manage and display your strategic offerings</p>
                 </div>
-                <button
-                  onClick={() => setShowAddProductModal(true)}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-lg active:scale-95 text-xs"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  Add Product
-                </button>
+                <div className="flex items-center gap-3">
+                  <div className="flex bg-gray-50 p-1 rounded-xl border border-gray-100">
+                    <button
+                      onClick={() => setViewMode('grid')}
+                      className={`p-1.5 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
+                      title="Grid View"
+                    >
+                      <LayoutGrid className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => setViewMode('list')}
+                      className={`p-1.5 rounded-lg transition-all ${viewMode === 'list' ? 'bg-white shadow-sm text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
+                      title="List View"
+                    >
+                      <List className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <button
+                    onClick={() => setShowAddProductModal(true)}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-lg active:scale-95 text-xs"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    Add Product
+                  </button>
+                </div>
               </div>
 
               {productsLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 gap-6" : "space-y-4"}>
                   {[1, 2].map((i) => (
-                    <div key={i} className="border border-gray-100 rounded-2xl bg-white overflow-hidden animate-pulse">
-                      <div className="w-full h-48 bg-gray-50" />
-                      <div className="p-6 space-y-3">
+                    <div key={i} className={`border border-gray-100 rounded-2xl bg-white overflow-hidden animate-pulse ${viewMode === 'list' ? 'flex items-center p-4' : ''}`}>
+                      <div className={viewMode === 'grid' ? "w-full h-48 bg-gray-50" : "w-32 h-32 rounded-xl bg-gray-50 shrink-0"} />
+                      <div className={`${viewMode === 'grid' ? 'p-6' : 'ml-4 flex-1'} space-y-3`}>
                         <div className="h-6 bg-gray-50 rounded-lg w-3/4" />
                         <div className="h-4 bg-gray-50 rounded-lg w-full" />
                         <div className="h-4 bg-gray-50 rounded-lg w-2/3" />
@@ -348,11 +369,53 @@ export default function UserProfile() {
                   </button>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 gap-6" : "space-y-4"}>
                   {products.map((product) => {
                     const imageUrl = product.filePaths && product.filePaths.length > 0
                       ? `${getBaseUrl().replace('/api/', '')}${product.filePaths[0]}`
                       : '/Image-not-found.png';
+
+                    if (viewMode === 'list') {
+                      return (
+                        <div
+                          key={product.id}
+                          className="group bg-white border border-gray-100 rounded-2xl overflow-hidden hover:border-blue-200 hover:shadow-lg transition-all duration-300 flex items-center p-4"
+                        >
+                          <div className="relative w-32 h-32 rounded-xl overflow-hidden bg-gray-50 shrink-0">
+                            <img
+                              src={imageUrl}
+                              alt={product.name}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            />
+                          </div>
+
+                          <div className="ml-5 flex-1 min-w-0">
+                            <div className="flex justify-between items-start">
+                              <h4 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors truncate">
+                                {product.name}
+                              </h4>
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); handleEditClick(product); }}
+                                  className="p-2 rounded-lg bg-gray-50 text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-all"
+                                >
+                                  <Edit2 className="w-4 h-4" />
+                                </button>
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); handleDeleteClick(product.id); }}
+                                  className="p-2 rounded-lg bg-gray-50 text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </div>
+                            <p className="text-gray-600 text-sm line-clamp-2 leading-relaxed mt-1">
+                              {product.description}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    }
 
                     return (
                       <div

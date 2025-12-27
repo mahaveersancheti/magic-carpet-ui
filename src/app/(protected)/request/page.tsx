@@ -1,11 +1,66 @@
 // components/MagicCarpetReport.tsx
 "use client";
 import React, { useState, useEffect, Suspense } from "react";
-import { Volume2, Loader2, AlertCircle, Square } from "lucide-react";
+import { Volume2, Loader2, AlertCircle, Square, Play, Pause, RotateCcw, RotateCw, X, FastForward, Rewind } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchProfileById, clearSelectedProfile } from "../../redux/slices/ProfileSlice";
+
+const ScoreGauge = ({ score, size = 100, title, showPercentage = false }: { score: number; size?: number; title?: string; showPercentage?: boolean }) => {
+    const [animatedScore, setAnimatedScore] = useState(0);
+    const radius = 40;
+    const circumference = Math.PI * radius; // Semi-circle
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setAnimatedScore(score);
+        }, 100);
+        return () => clearTimeout(timer);
+    }, [score]);
+
+    const strokeDashoffset = circumference - (Math.min(100, Math.max(0, animatedScore)) / 100) * circumference;
+
+    const getColor = (s: number) => {
+        if (s < 40) return "#ef4444"; // Red
+        if (s < 75) return "#f59e0b"; // Amber
+        return "#10b981"; // Emerald
+    };
+
+    const color = getColor(score);
+
+    return (
+        <div className="relative flex flex-col items-center" style={{ width: size }}>
+            <svg width={size} height={size * 0.6} viewBox="0 0 100 60" className="transform overflow-visible">
+                {/* Background Track */}
+                <path
+                    d="M 10,50 A 40,40 0 0,1 90,50"
+                    fill="none"
+                    stroke="#f1f5f9"
+                    strokeWidth="10"
+                    strokeLinecap="round"
+                />
+                {/* Progress Path */}
+                <path
+                    d="M 10,50 A 40,40 0 0,1 90,50"
+                    fill="none"
+                    stroke={color}
+                    strokeWidth="10"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={strokeDashoffset}
+                    strokeLinecap="round"
+                    className="transition-all duration-1000 cubic-bezier(0.34, 1.56, 0.64, 1)"
+                />
+            </svg>
+            <div className="absolute top-[45%] flex flex-col items-center">
+                <span className="text-xl font-black text-gray-900 leading-none">
+                    {animatedScore}{showPercentage && "%"}
+                </span>
+                {title && <span className="text-[8px] font-black text-gray-400 uppercase tracking-widest mt-1 text-center">{title}</span>}
+            </div>
+        </div>
+    );
+};
 
 function ReportContent() {
     const searchParams = useSearchParams();
@@ -16,6 +71,10 @@ function ReportContent() {
     const [observations, setObservations] = useState<any[]>([]);
     const [note, setNote] = useState("");
     const [speakingSection, setSpeakingSection] = useState<string | null>(null);
+    const [isPaused, setIsPaused] = useState(false);
+    const [currentCharIndex, setCurrentCharIndex] = useState(0);
+    const [currentText, setCurrentText] = useState("");
+    const [speakingSectionTitle, setSpeakingSectionTitle] = useState("");
 
     useEffect(() => {
         if (id) {
@@ -108,24 +167,102 @@ function ReportContent() {
         recommendationBody: (selectedProfile as any).actionRecommendation || "No specific recommendation generated."
     };
 
-    // Text-to-speech helper
-    const handleSpeak = (text: string, sectionId: string) => {
+    // Text-to-speech helpers
+    const startSpeechFromIndex = (text: string, index: number, sectionId: string) => {
+        window.speechSynthesis.cancel();
+        const textToSpeak = text.slice(index);
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        utterance.onboundary = (event: any) => {
+            setCurrentCharIndex(index + event.charIndex);
+        };
+        utterance.onend = () => {
+            setSpeakingSection(null);
+            setCurrentText("");
+            setCurrentCharIndex(0);
+        };
+        window.speechSynthesis.speak(utterance);
+        setIsPaused(false);
+    };
+
+    const handleSpeak = (text: string, sectionId: string, sectionTitle: string) => {
         if ('speechSynthesis' in window) {
             if (speakingSection === sectionId) {
-                // Stop if clicking the same section
                 window.speechSynthesis.cancel();
                 setSpeakingSection(null);
+                setCurrentText("");
+                setCurrentCharIndex(0);
+                setIsPaused(false);
             } else {
-                // Stop current and start new
                 window.speechSynthesis.cancel();
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.onend = () => setSpeakingSection(null);
-                window.speechSynthesis.speak(utterance);
+                setCurrentText(text);
                 setSpeakingSection(sectionId);
+                setSpeakingSectionTitle(sectionTitle);
+                setCurrentCharIndex(0);
+                setIsPaused(false);
+
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.onboundary = (event) => {
+                    setCurrentCharIndex(event.charIndex);
+                };
+                utterance.onend = () => {
+                    setSpeakingSection(null);
+                    setCurrentText("");
+                    setCurrentCharIndex(0);
+                };
+                window.speechSynthesis.speak(utterance);
             }
         } else {
-            console.warn("Text-to-speech not supported in this browser.");
+            console.warn("Text-to-speech not supported.");
         }
+    };
+
+    const handlePauseToggle = () => {
+        if (isPaused) {
+            window.speechSynthesis.resume();
+            setIsPaused(false);
+        } else {
+            window.speechSynthesis.pause();
+            setIsPaused(true);
+        }
+    };
+
+    const handleSkip = (direction: 'forward' | 'backward') => {
+        const offset = direction === 'forward' ? 100 : -100;
+        const newIndex = Math.max(0, Math.min(currentText.length - 1, currentCharIndex + offset));
+        setCurrentCharIndex(newIndex);
+
+        window.speechSynthesis.cancel();
+        const remainingText = currentText.slice(newIndex);
+        const utterance = new SpeechSynthesisUtterance(remainingText);
+        utterance.onboundary = (event) => {
+            setCurrentCharIndex(newIndex + event.charIndex);
+        };
+        utterance.onend = () => {
+            setSpeakingSection(null);
+            setCurrentText("");
+            setCurrentCharIndex(0);
+        };
+        window.speechSynthesis.speak(utterance);
+        setIsPaused(false);
+    };
+
+    const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newIndex = parseInt(e.target.value);
+        setCurrentCharIndex(newIndex);
+
+        window.speechSynthesis.cancel();
+        const remainingText = currentText.slice(newIndex);
+        const utterance = new SpeechSynthesisUtterance(remainingText);
+        utterance.onboundary = (event) => {
+            setCurrentCharIndex(newIndex + event.charIndex);
+        };
+        utterance.onend = () => {
+            setSpeakingSection(null);
+            setCurrentText("");
+            setCurrentCharIndex(0);
+        };
+        window.speechSynthesis.speak(utterance);
+        setIsPaused(false);
     };
 
     return (
@@ -160,11 +297,12 @@ function ReportContent() {
                         </div>
 
                         <div className="flex flex-col items-center md:items-end gap-3 shrink-0">
-                            <div className="text-center md:text-right">
-                                <div className="text-[10px] uppercase font-black text-gray-400 tracking-widest">Warm Call Score</div>
-                                <div className="text-4xl font-black text-blue-600 tabular-nums">
-                                    {REPORT_JSON.warmCallScore.score || "0"}<span className="text-gray-300 text-lg">/100</span>
-                                </div>
+                            <div className="flex flex-col items-center md:items-end">
+                                <ScoreGauge
+                                    score={REPORT_JSON.warmCallScore.score}
+                                    size={140}
+                                    title="Warm Call Score"
+                                />
                             </div>
                             <div className="flex gap-2">
                                 <div className="p-2 rounded-xl bg-orange-50 border border-orange-100 flex items-center gap-2">
@@ -192,7 +330,7 @@ function ReportContent() {
                                         onClick={() => {
                                             const skills = ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills || []).join(', ');
                                             const textToSpeak = `Summary: ${selectedProfile.about || "No detailed summary available"}. Core Competencies: ${skills}`;
-                                            handleSpeak(textToSpeak, 'profileOverview');
+                                            handleSpeak(textToSpeak, 'profileOverview', 'Profile Overview');
                                         }}
                                         className={`p-2 rounded-xl transition-all active:scale-95 ${speakingSection === 'profileOverview' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-600 border border-gray-100 hover:text-blue-600 hover:bg-blue-50'}`}
                                     >
@@ -229,7 +367,7 @@ function ReportContent() {
                                                 });
                                                 return parts.join(', ');
                                             }).join('. ');
-                                            handleSpeak(textToSpeak || "No financial data available.", 'financialSnapshot');
+                                            handleSpeak(textToSpeak || "No financial data available.", 'financialSnapshot', 'Financial Snapshot');
                                         }}
                                         className={`p-2 rounded-xl transition-all active:scale-95 ${speakingSection === 'financialSnapshot' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-600 border border-gray-100 hover:text-green-600 hover:bg-green-50'}`}
                                     >
@@ -298,7 +436,7 @@ function ReportContent() {
                                     <button
                                         onClick={() => {
                                             if (!REPORT_JSON.profileSummary.productFitAnalysis) {
-                                                handleSpeak("No evaluation data available.", 'productFit');
+                                                handleSpeak("No evaluation data available.", 'productFit', 'Strategic Product Fit');
                                                 return;
                                             }
                                             const analysis = REPORT_JSON.profileSummary.productFitAnalysis;
@@ -309,7 +447,7 @@ function ReportContent() {
                                             const differentiators = safeList(analysis?.differentiators).join(', ');
 
                                             const textToSpeak = `Fit Rating: ${rating} with a score of ${score}%. Features: ${features}. Key Value Prop: ${valueProp}. Differentiators: ${differentiators}`;
-                                            handleSpeak(textToSpeak, 'productFit');
+                                            handleSpeak(textToSpeak, 'productFit', 'Strategic Product Fit');
                                         }}
                                         className={`p-1.5 rounded-lg transition-all active:scale-95 ${speakingSection === 'productFit' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-400 border border-gray-100 hover:text-blue-600 hover:bg-blue-50'}`}
                                     >
@@ -321,12 +459,12 @@ function ReportContent() {
                                         <div className="space-y-6">
                                             {/* Score and Rating */}
                                             <div className="flex items-center gap-4 bg-blue-50/50 p-4 rounded-2xl border border-blue-100/50">
-                                                <div className="relative w-16 h-16 flex items-center justify-center shrink-0">
-                                                    <svg className="w-full h-full transform -rotate-90">
-                                                        <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="4" fill="transparent" className="text-blue-100" />
-                                                        <circle cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="4" fill="transparent" strokeDasharray={175.9} strokeDashoffset={175.9 - (175.9 * (REPORT_JSON.profileSummary.productFitAnalysis?.score || 0)) / 100} className="text-blue-600 transition-all duration-1000 ease-out" />
-                                                    </svg>
-                                                    <span className="absolute text-sm font-black text-blue-700">{REPORT_JSON.profileSummary.productFitAnalysis?.score || 0}%</span>
+                                                <div className="shrink-0 flex items-center justify-center">
+                                                    <ScoreGauge
+                                                        score={REPORT_JSON.profileSummary.productFitAnalysis?.score || 0}
+                                                        size={100}
+                                                        showPercentage={true}
+                                                    />
                                                 </div>
                                                 <div>
                                                     <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-0.5">Evaluation Result</div>
@@ -450,7 +588,7 @@ function ReportContent() {
                                     <button
                                         onClick={() => {
                                             const skills = ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills || []).join(', ');
-                                            handleSpeak(skills || "No skills detected.", 'competencies');
+                                            handleSpeak(skills || "No skills detected.", 'competencies', 'Core Competencies');
                                         }}
                                         className={`p-1.5 rounded-lg transition-all active:scale-95 ${speakingSection === 'competencies' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-400 border border-gray-100 hover:text-blue-600 hover:bg-blue-50'}`}
                                     >
@@ -489,7 +627,7 @@ function ReportContent() {
                                     <button
                                         onClick={() => {
                                             const textToSpeak = REPORT_JSON.recentNews.map(n => `${n.title}. ${n.summary}`).join('. ');
-                                            handleSpeak(textToSpeak || "No recent news found.", 'recentNews');
+                                            handleSpeak(textToSpeak || "No recent news found.", 'recentNews', 'Recent News');
                                         }}
                                         className={`p-2 rounded-xl transition-all active:scale-95 ${speakingSection === 'recentNews' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-600 border border-gray-100 hover:text-blue-600 hover:bg-blue-50'}`}
                                     >
@@ -532,7 +670,7 @@ function ReportContent() {
                                             const textToSpeak = REPORT_JSON.industryOutlook.map((item: any) =>
                                                 `${item.title || ''}. ${item.description || (typeof item === 'string' ? item : '')}`
                                             ).join('. ');
-                                            handleSpeak(textToSpeak || "No outlook data available.", 'industryOutlook');
+                                            handleSpeak(textToSpeak || "No outlook data available.", 'industryOutlook', 'Industry Outlook');
                                         }}
                                         className={`p-2 rounded-xl transition-all active:scale-95 ${speakingSection === 'industryOutlook' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-600 border border-gray-100 hover:text-purple-600 hover:bg-purple-50'}`}
                                     >
@@ -567,7 +705,7 @@ function ReportContent() {
                                     <button
                                         onClick={() => {
                                             const textToSpeak = REPORT_JSON.conversations.map((item: any) => `${item.question}`).join('. ');
-                                            handleSpeak(textToSpeak || "No openers available.", 'conversations');
+                                            handleSpeak(textToSpeak || "No openers available.", 'conversations', 'Conversation Starters');
                                         }}
                                         className={`p-2 rounded-xl transition-all active:scale-95 ${speakingSection === 'conversations' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-600 border border-gray-100 hover:text-blue-600 hover:bg-blue-50'}`}
                                     >
@@ -610,7 +748,7 @@ function ReportContent() {
                                     <button
                                         onClick={() => {
                                             const textToSpeak = safeList((selectedProfile as any).psychologyApproach?.dos).map((item: string) => `Do: ${item}`).concat(safeList((selectedProfile as any).psychologyApproach?.donts).map((item: string) => `Don't: ${item}`)).join('. ');
-                                            handleSpeak(textToSpeak || "No strategy data available.", 'psychologyApproach');
+                                            handleSpeak(textToSpeak || "No strategy data available.", 'psychologyApproach', 'Psychology Approach');
                                         }}
                                         className={`p-1.5 rounded-lg transition-all active:scale-95 ${speakingSection === 'psychologyApproach' ? 'text-red-600 bg-red-50' : 'text-gray-400 hover:text-orange-600'}`}
                                     >
@@ -676,7 +814,7 @@ function ReportContent() {
                             <button
                                 onClick={() => {
                                     const textToSpeak = REPORT_JSON.objections.map(o => `Objection: ${o.objection}. Strategy: ${o.counter}`).join('. ');
-                                    handleSpeak(textToSpeak || "No objections predicted.", 'objections');
+                                    handleSpeak(textToSpeak || "No objections predicted.", 'objections', 'Objection Handling');
                                 }}
                                 className={`p-2 rounded-xl transition-all active:scale-95 ${speakingSection === 'objections' ? 'bg-red-500 text-white shadow-lg' : 'bg-white/10 text-blue-400 border border-white/10 hover:bg-white/20'}`}
                             >
@@ -727,7 +865,7 @@ function ReportContent() {
                                 </div>
                                 <div className="flex gap-4 shrink-0 items-center">
                                     <button
-                                        onClick={() => handleSpeak(REPORT_JSON.recommendationBody, 'recommendation')}
+                                        onClick={() => handleSpeak(REPORT_JSON.recommendationBody, 'recommendation', 'AI Recommendation')}
                                         className={`h-12 w-12 flex items-center justify-center rounded-xl transition-all active:scale-95 border border-white/20 backdrop-blur-sm ${speakingSection === 'recommendation' ? 'bg-red-500 text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}
                                     >
                                         {speakingSection === 'recommendation' ? <Square className="w-4 h-4" /> : <Volume2 className="w-5 h-5" />}
@@ -793,6 +931,82 @@ function ReportContent() {
                         )}
                     </div>
                 </div>
+
+                {/* Floating TTS Player */}
+                {speakingSection && (
+                    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-2xl px-4 z-[100] animate-in slide-in-from-bottom-10 duration-500">
+                        <div className="bg-white/80 backdrop-blur-2xl border border-blue-100 rounded-[2.5rem] p-6 shadow-2xl shadow-blue-500/10 flex flex-col gap-4">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-4 min-w-0">
+                                    <div className="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0">
+                                        <Volume2 className="w-6 h-6 text-white" />
+                                    </div>
+                                    <div className="min-w-0">
+                                        <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest leading-none mb-1">Now Playing</div>
+                                        <h4 className="text-sm font-black text-gray-900 truncate leading-none">{speakingSectionTitle}</h4>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => {
+                                        window.speechSynthesis.cancel();
+                                        setSpeakingSection(null);
+                                    }}
+                                    className="p-2 rounded-xl hover:bg-gray-100 text-gray-400 transition-colors"
+                                >
+                                    <X className="w-5 h-5" />
+                                </button>
+                            </div>
+
+                            <div className="flex flex-col gap-2">
+                                <div className="flex items-center gap-4">
+                                    <span className="text-[10px] font-black text-gray-400 tabular-nums w-8">
+                                        {Math.floor((currentCharIndex / Math.max(1, currentText.length)) * 100) || 0}%
+                                    </span>
+                                    <div className="flex-1 relative flex items-center">
+                                        <input
+                                            type="range"
+                                            min="0"
+                                            max={currentText.length}
+                                            value={currentCharIndex}
+                                            onChange={handleSeek}
+                                            className="w-full h-1.5 bg-gray-100 rounded-full appearance-none cursor-pointer accent-blue-600 hover:accent-blue-700 transition-all [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-600 [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:shadow-lg"
+                                        />
+                                        <div
+                                            className="absolute left-0 top-1/2 -translate-y-1/2 h-1.5 bg-blue-600 rounded-full pointer-events-none transition-all"
+                                            style={{ width: `${(currentCharIndex / Math.max(1, currentText.length)) * 100}%` }}
+                                        />
+                                    </div>
+                                    <span className="text-[10px] font-black text-gray-400 tabular-nums w-8 text-right">
+                                        100%
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center justify-center gap-8">
+                                    <button
+                                        onClick={() => handleSkip('backward')}
+                                        className="p-2 rounded-xl text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-all active:scale-90"
+                                    >
+                                        <Rewind className="w-6 h-6" />
+                                    </button>
+
+                                    <button
+                                        onClick={handlePauseToggle}
+                                        className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-xl shadow-blue-500/20 hover:bg-blue-700 transition-all active:scale-95"
+                                    >
+                                        {isPaused ? <Play className="w-7 h-7 fill-current" /> : <Pause className="w-7 h-7 fill-current" />}
+                                    </button>
+
+                                    <button
+                                        onClick={() => handleSkip('forward')}
+                                        className="p-2 rounded-xl text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-all active:scale-90"
+                                    >
+                                        <FastForward className="w-6 h-6" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </main>
 
             <style jsx global>{`

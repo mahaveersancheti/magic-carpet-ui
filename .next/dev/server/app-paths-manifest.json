@@ -3,5 +3,6 @@
   "/(auth)/signup/page": "app/(auth)/signup/page.js",
   "/(protected)/home/page": "app/(protected)/home/page.js",
   "/(protected)/request/page": "app/(protected)/request/page.js",
+  "/(protected)/userprofile/page": "app/(protected)/userprofile/page.js",
   "/page": "app/page.js"
 }
