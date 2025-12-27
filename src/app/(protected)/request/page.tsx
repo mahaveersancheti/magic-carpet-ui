@@ -1,7 +1,8 @@
 // components/MagicCarpetReport.tsx
 "use client";
 import React, { useState, useEffect, Suspense } from "react";
-import { Volume2, Loader2, AlertCircle, Square, Play, Pause, RotateCcw, RotateCw, X, FastForward, Rewind } from "lucide-react";
+import { Volume2, Loader2, AlertCircle, Square, Play, Pause, RotateCcw, RotateCw, X, FastForward, Rewind, HelpCircle } from "lucide-react";
+import { UserGuide, GuideStep } from "@/app/components/UserGuide";
 import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
@@ -75,6 +76,48 @@ function ReportContent() {
     const [currentCharIndex, setCurrentCharIndex] = useState(0);
     const [currentText, setCurrentText] = useState("");
     const [speakingSectionTitle, setSpeakingSectionTitle] = useState("");
+
+    // User Guide State
+    const [showGuide, setShowGuide] = useState(false);
+
+    useEffect(() => {
+        const hasSeenGuide = localStorage.getItem('hasSeenReportGuide_v1');
+        if (!hasSeenGuide && !loading && selectedProfile) {
+            setTimeout(() => setShowGuide(true), 1500);
+        }
+    }, [loading, selectedProfile]);
+
+    const handleGuideComplete = () => {
+        localStorage.setItem('hasSeenReportGuide_v1', 'true');
+        setShowGuide(false);
+    };
+
+    const GUIDE_STEPS: GuideStep[] = [
+        {
+            targetId: 'report-header',
+            title: 'Profile Overview',
+            description: 'This is the comprehensive AI report for your prospect. It contains key insights, scores, and strategies.',
+            placement: 'bottom'
+        },
+        {
+            targetId: 'warm-call-score',
+            title: 'Warm Call Score',
+            description: 'A quick metric to gauge how receptive this prospect likely is. Higher scores indicate better timing.',
+            placement: 'left'
+        },
+        {
+            targetId: 'listen-button',
+            title: 'Audio Insights',
+            description: 'Prefer listening? Click the speaker icon to hear an AI-generated summary of this section.',
+            placement: 'bottom'
+        },
+        {
+            targetId: 'action-bar',
+            title: 'Take Action',
+            description: 'Export this report to PDF or share it with your team directly from here.',
+            placement: 'bottom'
+        }
+    ];
 
     useEffect(() => {
         if (id) {
@@ -268,6 +311,30 @@ function ReportContent() {
     return (
         <div className="min-h-screen bg-transparent p-4 md:p-6 lg:p-8 pt-20 lg:pt-8 font-sans">
             <main className="max-w-7xl mx-auto space-y-6">
+                {/* Navigation & Actions */}
+                <div id="report-header" className="flex items-center justify-between pb-2">
+                    <button
+                        onClick={() => window.history.back()}
+                        className="flex items-center gap-2 text-gray-500 hover:text-blue-600 transition"
+                    >
+                        <span className="material-symbols-outlined">arrow_back</span>
+                        <span className="font-medium">Back to Dashboard</span>
+                    </button>
+                    <div id="action-bar" className="flex items-center gap-3">
+                        <button
+                            onClick={() => setShowGuide(true)}
+                            className="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-blue-600 hover:border-blue-200 shadow-sm transition"
+                            title="Help / Tour"
+                        >
+                            <HelpCircle className="w-5 h-5" />
+                        </button>
+                        <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-blue-600 shadow-sm transition">
+                            <span className="material-symbols-outlined text-lg">ios_share</span>
+                            Export PDF
+                        </button>
+                    </div>
+                </div>
+
                 {/* Header Section */}
                 <div className="bg-white rounded-3xl p-6 md:p-8 border border-gray-200 shadow-sm relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full -mr-32 -mt-32 opacity-50 blur-3xl transition-all group-hover:bg-blue-100" />
@@ -296,7 +363,7 @@ function ReportContent() {
                             </div>
                         </div>
 
-                        <div className="flex flex-col items-center md:items-end gap-3 shrink-0">
+                        <div id="warm-call-score" className="flex flex-col items-center md:items-end gap-3 shrink-0">
                             <div className="flex flex-col items-center md:items-end">
                                 <ScoreGauge
                                     score={REPORT_JSON.warmCallScore.score}
@@ -332,6 +399,7 @@ function ReportContent() {
                                             const textToSpeak = `Summary: ${selectedProfile.about || "No detailed summary available"}. Core Competencies: ${skills}`;
                                             handleSpeak(textToSpeak, 'profileOverview', 'Profile Overview');
                                         }}
+                                        id="listen-button"
                                         className={`p-2 rounded-xl transition-all active:scale-95 ${speakingSection === 'profileOverview' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-600 border border-gray-100 hover:text-blue-600 hover:bg-blue-50'}`}
                                     >
                                         {speakingSection === 'profileOverview' ? <Square className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
@@ -1008,6 +1076,13 @@ function ReportContent() {
                     </div>
                 )}
             </main>
+
+            <UserGuide
+                steps={GUIDE_STEPS}
+                isOpen={showGuide}
+                onClose={() => setShowGuide(false)}
+                onComplete={handleGuideComplete}
+            />
 
             <style jsx global>{`
                 .custom-scrollbar::-webkit-scrollbar {

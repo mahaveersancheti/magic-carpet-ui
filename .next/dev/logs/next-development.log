@@ -198,3 +198,35 @@ It can also happen if the client has a browser extension installed which messes 
 [01:11:09.641] Server  LOG      ✓ Compiled in 110ms
 [01:11:16.842] Server  LOG      ✓ Compiled in 41ms
 [01:11:47.523] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:19:24.573] Server  LOG      ✓ Compiled in 40ms
+[01:19:27.979] Server  LOG      ✓ Compiled in 41ms
+[01:21:42.309] Server  LOG      ✓ Compiled in 76ms
+[01:23:15.358] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:26:30.696] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:29:56.539] Browser ERROR   ./src/app/(protected)/request/page.tsx:405:37
+Parsing ecmascript source code failed
+  403 |                                         className={`p-2 rounded-xl transition-all active:scale-95 ${speakingSection === 'profileOverview' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-600 border border-gray-100 hover:text-blue-600 hover:bg-blue-50'}`}
+  404 |                                     >
+> 405 |                                     >
+      |                                     ^
+  406 |                                         {speakingSection === 'profileOverview' ? <Square className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+  407 |                                     </button>
+  408 |                                 </div>
+
+Unexpected token. Did you mean `{'>'}` or `&gt;`?
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[01:30:04.251] Server  LOG      ✓ Compiled in 60ms
+[01:30:34.003] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:32:03.323] Server  LOG      ✓ Compiled in 47ms
+[01:33:25.455] Server  LOG      ✓ Compiled in 33ms
+[01:36:05.587] Server  LOG      ✓ Compiled in 42ms
+[01:36:14.126] Server  LOG      ✓ Compiled in 29ms
+[01:38:11.736] Server  LOG      ✓ Compiled in 30ms

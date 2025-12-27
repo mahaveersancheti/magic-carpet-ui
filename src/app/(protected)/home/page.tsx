@@ -2,8 +2,9 @@
 import { UploadModal } from "@/app/components/UploadModal";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect, useMemo } from "react";
-import { ArrowUpDown, ArrowUp, ArrowDown, Linkedin, Instagram, Twitter, Globe, Plus, Loader2 } from "lucide-react";
+import { ArrowUpDown, ArrowUp, ArrowDown, Linkedin, Instagram, Twitter, Globe, Plus, Loader2, HelpCircle } from "lucide-react";
 import { AddRequestModal } from "@/app/components/AddRequestFormModal";
+import { UserGuide, GuideStep } from "@/app/components/UserGuide";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchProfiles } from "../../redux/slices/ProfileSlice";
@@ -38,6 +39,50 @@ export default function DashboardPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isAddRequestModalOpen, setIsAddRequestModalOpen] = useState(false);
   const [openSocialRowId, setOpenSocialRowId] = useState<string | null>(null);
+
+  // User Guide State
+  const [showGuide, setShowGuide] = useState(false);
+
+  useEffect(() => {
+    // Check if user has seen the guide
+    const hasSeenGuide = localStorage.getItem('hasSeenDashboardGuide_v1');
+    if (!hasSeenGuide) {
+      // Small delay to ensure UI is ready
+      setTimeout(() => setShowGuide(true), 1000);
+    }
+  }, []);
+
+  const handleGuideComplete = () => {
+    localStorage.setItem('hasSeenDashboardGuide_v1', 'true');
+    setShowGuide(false);
+  };
+
+  const GUIDE_STEPS: GuideStep[] = [
+    {
+      targetId: 'dashboard-header',
+      title: 'Welcome to your Dashboard',
+      description: 'This is your mission control center. Here you can track all your lead generation requests and view their status at a glance.',
+      placement: 'bottom'
+    },
+    {
+      targetId: 'search-filter-bar',
+      title: 'Find What You Need',
+      description: 'Use the robust search and filter tools to quickly locate specific profiles or check the status of pending requests.',
+      placement: 'bottom'
+    },
+    {
+      targetId: 'new-request-btn',
+      title: 'Launch a New Request',
+      description: 'Ready to find new leads? Click here to start a new search request. You can specify industry, role, and other criteria.',
+      placement: 'bottom'
+    },
+    {
+      targetId: 'requests-table',
+      title: 'Monitor Progress',
+      description: 'View real-time updates on your requests. Click on any name to dive deep into the generated profile report.',
+      placement: 'left'
+    }
+  ];
 
   useEffect(() => {
     dispatch(fetchProfiles());
@@ -214,7 +259,7 @@ export default function DashboardPage() {
         <div className="flex flex-col gap-8 max-w-7xl mx-auto">
 
           {/* Header */}
-          <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <header id="dashboard-header" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
                 Dashboard
@@ -225,7 +270,7 @@ export default function DashboardPage() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
 
               {/* Search + Status Filter */}
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div id="search-filter-bar" className="flex flex-col sm:flex-row gap-3">
                 <label className="flex items-center gap-3 flex-1 h-10 px-4 rounded-lg border border-gray-300 bg-white focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 transition-all">
                   <span className="material-symbols-outlined text-gray-400 text-lg">search</span>
                   <input
@@ -249,6 +294,7 @@ export default function DashboardPage() {
               </div>
 
               <button
+                id="new-request-btn"
                 onClick={() => setIsAddRequestModalOpen(true)}
                 className="h-11 px-5 flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm transition-all shadow-lg shadow-blue-500/20 active:scale-95"
               >
@@ -257,13 +303,20 @@ export default function DashboardPage() {
               </button>
 
               <div className="flex items-center gap-3 pl-2 border-l border-gray-300">
+                <button
+                  onClick={() => setShowGuide(true)}
+                  className="w-9 h-9 flex items-center justify-center rounded-full text-gray-400 hover:bg-blue-50 hover:text-blue-600 transition"
+                  title="Start Tour"
+                >
+                  <HelpCircle className="w-5 h-5" />
+                </button>
                 <HeaderIcon icon="notifications" />
               </div>
             </div>
           </header>
 
           {/* Table Section */}
-          <section className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+          <section id="requests-table" className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200">
               <h2 className="text-lg font-semibold text-gray-900">
                 Active Requests
@@ -387,6 +440,13 @@ export default function DashboardPage() {
         isOpen={isAddRequestModalOpen}
         onClose={() => setIsAddRequestModalOpen(false)}
         onSuccess={() => dispatch(fetchProfiles())}
+      />
+
+      <UserGuide
+        steps={GUIDE_STEPS}
+        isOpen={showGuide}
+        onClose={() => setShowGuide(false)}
+        onComplete={handleGuideComplete}
       />
     </div>
   );
