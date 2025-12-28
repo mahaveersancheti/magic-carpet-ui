@@ -690,7 +690,7 @@ function ReportContent() {
                                 <div className="px-6 py-4 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
                                     <h3 className="font-black text-gray-900 flex items-center gap-2 text-[10px] uppercase tracking-widest">
                                         <span className="material-symbols-outlined text-blue-600 text-xl">newspaper</span>
-                                        Recent News
+                                        Recent Company News
                                     </h3>
                                     <button
                                         onClick={() => {
@@ -877,7 +877,7 @@ function ReportContent() {
                         <div className="flex items-center justify-between mb-8 relative z-10">
                             <h3 className="font-black flex items-center gap-2 text-[12px] uppercase tracking-widest text-blue-400">
                                 <span className="material-symbols-outlined">gavel</span>
-                                Objection Handling
+                                Objection Handling / Role Play
                             </h3>
                             <button
                                 onClick={() => {

@@ -262,9 +262,9 @@ export default function DashboardPage() {
           <header id="dashboard-header" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
-                Dashboard
+                Home
               </h1>
-              <p className="text-sm text-gray-500 mt-1">Manage your search requests and potential leads.</p>
+              <p className="text-sm text-gray-500 mt-1">Manage your Prospects and potential Leads.</p>
             </div>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
@@ -319,7 +319,7 @@ export default function DashboardPage() {
           <section id="requests-table" className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200">
               <h2 className="text-lg font-semibold text-gray-900">
-                Active Requests
+                Leads / Prospects
               </h2>
             </div>
 
