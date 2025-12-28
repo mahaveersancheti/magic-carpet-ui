@@ -78,6 +78,20 @@ export const api = {
   post: <T>(endpoint: string, body?: any, headers?: Record<string, string>) => request<T>(endpoint, { method: 'POST', data: body, headers }),
   put: <T>(endpoint: string, body?: any, headers?: Record<string, string>) => request<T>(endpoint, { method: 'PUT', data: body, headers }),
   delete: <T>(endpoint: string, headers?: Record<string, string>) => request<T>(endpoint, { method: 'DELETE', headers }),
+  download: async (endpoint: string) => {
+    const response = await axiosInstance.get(endpoint, { responseType: 'blob' });
+    const contentType = response.headers['content-type'];
+    if (contentType && (contentType.includes('text/html') || contentType.includes('application/json'))) {
+      const text = await response.data.text();
+      try {
+        const json = JSON.parse(text);
+        throw new Error(json.message || 'Download failed');
+      } catch (e) {
+        throw new Error('Download failed: Authentication required or file not found');
+      }
+    }
+    return response.data;
+  },
 };
 
 export type ApiClient = typeof api;

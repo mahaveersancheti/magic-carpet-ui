@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchProductsByUserId, createProduct, updateProduct, deleteProduct, uploadProductFiles, CreateProductPayload, Product } from "../../redux/slices/ProductSlice";
-import { getBaseUrl } from "../../services/apiService";
+import { getBaseUrl, api } from "../../services/apiService";
+import { endpoints } from "../../lib/endpoints";
 import toast from 'react-hot-toast';
 import { useUser } from '../../hooks/useUser';
 import {
@@ -108,6 +109,24 @@ export default function UserProfile() {
 
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
+  };
+
+  const handleDownloadTemplate = async () => {
+    try {
+      const blob = await api.download(endpoints.downloadProductTemplate);
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'product_template.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+      toast.success('Template downloaded successfully');
+    } catch (error: any) {
+      toast.error('Failed to download template');
+      console.error(error);
+    }
   };
 
   // Handle form submit
@@ -358,6 +377,13 @@ export default function UserProfile() {
                       <List className="w-4 h-4" />
                     </button>
                   </div>
+                  <button
+                    onClick={handleDownloadTemplate}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-blue-600 font-bold rounded-xl transition-all shadow-sm active:scale-95 text-xs"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    {/* Download */}
+                  </button>
                   <button
                     onClick={() => setShowAddProductModal(true)}
                     className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-lg active:scale-95 text-xs"
