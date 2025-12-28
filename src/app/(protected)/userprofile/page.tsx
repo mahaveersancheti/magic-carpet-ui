@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
-import { fetchProductsByUserId, createProduct, updateProduct, deleteProduct, CreateProductPayload, Product } from "../../redux/slices/ProductSlice";
+import { fetchProductsByUserId, createProduct, updateProduct, deleteProduct, uploadProductFiles, CreateProductPayload, Product } from "../../redux/slices/ProductSlice";
 import { getBaseUrl } from "../../services/apiService";
 import toast from 'react-hot-toast';
 import { useUser } from '../../hooks/useUser';
@@ -27,6 +27,9 @@ import {
   Trash2,
   LayoutGrid,
   List,
+  Upload,
+  Slack,
+  MessageCircle,
 } from "lucide-react";
 
 export default function UserProfile() {
@@ -63,11 +66,14 @@ export default function UserProfile() {
     name: '',
     description: ''
   });
-  const [formErrors, setFormErrors] = useState<{ name?: string; description?: string }>({});
+  const [productImage, setProductImage] = useState<File | null>(null);
+  const [productDocs, setProductDocs] = useState<File[]>([]);
+
+  const [formErrors, setFormErrors] = useState<{ name?: string; description?: string; image?: string }>({});
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
 
   // Get products from Redux store
-  const { products, loading: productsLoading, createLoading, updateLoading, deleteLoading, error: productsError } = useSelector(
+  const { products, loading: productsLoading, createLoading, updateLoading, deleteLoading, uploadLoading, error: productsError } = useSelector(
     (state: RootState) => state.products
   );
   const { selectedProfile } = useSelector((state: RootState) => state.profiles);
@@ -82,7 +88,7 @@ export default function UserProfile() {
 
   // Validate form
   const validateForm = (): boolean => {
-    const errors: { name?: string; description?: string } = {};
+    const errors: { name?: string; description?: string; image?: string } = {};
 
     if (!productForm.name.trim()) {
       errors.name = 'Product name is required';
@@ -94,6 +100,10 @@ export default function UserProfile() {
       errors.description = 'Description is required';
     } else if (productForm.description.trim().length < 10) {
       errors.description = 'Description must be at least 10 characters';
+    }
+
+    if (!editingProduct && !productImage) {
+      errors.image = 'Product image is required';
     }
 
     setFormErrors(errors);
@@ -110,10 +120,26 @@ export default function UserProfile() {
     if (!userId) return;
 
     try {
-      await dispatch(createProduct({ userId, payload: productForm })).unwrap();
+      const payload: CreateProductPayload = {
+        ...productForm,
+        image: productImage || undefined
+      };
+
+      const newProduct = await dispatch(createProduct({ userId, payload })).unwrap();
+
+      if (productDocs.length > 0) {
+        await dispatch(uploadProductFiles({
+          productId: newProduct.id,
+          userId,
+          files: productDocs
+        })).unwrap();
+      }
+
       toast.success('Product added successfully!');
       setShowAddProductModal(false);
       setProductForm({ name: '', description: '' });
+      setProductImage(null);
+      setProductDocs([]);
       setFormErrors({});
       // Refresh products list
       dispatch(fetchProductsByUserId(userId));
@@ -152,6 +178,8 @@ export default function UserProfile() {
       setShowAddProductModal(false);
       setEditingProduct(null);
       setProductForm({ name: '', description: '' });
+      setProductImage(null);
+      setProductDocs([]);
       setFormErrors({});
     } catch (error: any) {
       toast.error(error || 'Failed to update product');
@@ -220,28 +248,32 @@ export default function UserProfile() {
                   {userData.title}
                 </p>
 
-                <div className="flex gap-3">
+                <div className="flex gap-2 flex-wrap justify-center">
                   {[
                     { Icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com" },
                     { Icon: Twitter, label: "Twitter", href: "https://twitter.com" },
+                    { Icon: MessageCircle, label: "WhatsApp", href: "https://whatsapp.com" },
+                    { Icon: Slack, label: "Slack", href: "https://slack.com" },
+                    { Icon: Facebook, label: "Facebook", href: "https://facebook.com" },
+                    { Icon: Instagram, label: "Instagram", href: "https://instagram.com" },
                   ].map(({ Icon, label, href }, i) => (
                     <a
                       key={i}
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 rounded-xl border border-gray-100 bg-gray-50 text-gray-600 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-200 transition-all shadow-sm"
+                      className="p-2.5 rounded-xl border border-gray-100 bg-gray-50 text-gray-600 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-200 transition-all shadow-sm"
                       aria-label={label}
                     >
                       <Icon className="w-5 h-5" />
                     </a>
                   ))}
-                  <button
-                    className="p-3 rounded-xl border border-gray-100 bg-gray-50 text-gray-600 hover:text-gray-900 hover:bg-white hover:border-gray-200 transition-all shadow-sm"
+                  {/* <button
+                    className="p-2.5 rounded-xl border border-gray-100 bg-gray-50 text-gray-600 hover:text-gray-900 hover:bg-white hover:border-gray-200 transition-all shadow-sm"
                     aria-label="Share"
                   >
                     <Share2 className="w-5 h-5" />
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -473,35 +505,41 @@ export default function UserProfile() {
               setShowAddProductModal(false);
               setEditingProduct(null);
               setProductForm({ name: '', description: '' });
+              setProductImage(null);
+              setProductDocs([]);
               setFormErrors({});
             }}
           >
             <div
-              className="bg-white rounded-3xl w-full max-w-lg border border-gray-100 shadow-2xl relative overflow-hidden"
+              className="bg-white rounded-3xl w-full max-w-lg border border-gray-100 shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="p-8">
-                <div className="flex justify-between items-center mb-8">
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900">
-                      {editingProduct ? 'Edit Product' : 'Add New Product'}
-                    </h3>
-                    <p className="text-sm text-gray-500 mt-1">Provide the details for your strategic offering</p>
-                  </div>
-
-                  <button
-                    onClick={() => {
-                      setShowAddProductModal(false);
-                      setEditingProduct(null);
-                      setProductForm({ name: '', description: '' });
-                      setFormErrors({});
-                    }}
-                    className="p-2.5 rounded-xl hover:bg-gray-100 text-gray-400 hover:text-gray-900 transition-all"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
+              {/* Header */}
+              <div className="px-8 py-6 border-b border-gray-100 flex justify-between items-center shrink-0 bg-white z-10">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    {editingProduct ? 'Edit Product' : 'Add New Product'}
+                  </h3>
+                  <p className="text-sm text-gray-500 mt-1">Provide the details for your strategic offering</p>
                 </div>
 
+                <button
+                  onClick={() => {
+                    setShowAddProductModal(false);
+                    setEditingProduct(null);
+                    setProductForm({ name: '', description: '' });
+                    setProductImage(null);
+                    setProductDocs([]);
+                    setFormErrors({});
+                  }}
+                  className="p-2.5 rounded-xl hover:bg-gray-100 text-gray-400 hover:text-gray-900 transition-all"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Scrollable Content */}
+              <div className="p-8 overflow-y-auto custom-scrollbar flex-1">
                 <div className="space-y-6">
                   {/* Product Name */}
                   <div className="space-y-2">
@@ -543,37 +581,126 @@ export default function UserProfile() {
                       <p className="text-red-500 text-xs font-bold mt-1 px-1">{formErrors.description}</p>
                     )}
                   </div>
-                </div>
 
-                <div className="flex gap-4 mt-10">
-                  <button
-                    onClick={() => {
-                      setShowAddProductModal(false);
-                      setEditingProduct(null);
-                      setProductForm({ name: '', description: '' });
-                      setFormErrors({});
-                    }}
-                    className="flex-1 h-12 px-6 border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-[0.98] disabled:opacity-50"
-                    disabled={createLoading || updateLoading}
-                  >
-                    Cancel
-                  </button>
-
-                  <button
-                    onClick={editingProduct ? handleUpdateProduct : handleAddProduct}
-                    disabled={createLoading || updateLoading}
-                    className="flex-[2] h-12 px-6 bg-blue-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-500/20 hover:bg-blue-700 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-                  >
-                    {(createLoading || updateLoading) ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        <span>{editingProduct ? 'Updating...' : 'Adding...'}</span>
-                      </>
-                    ) : (
-                      <span>{editingProduct ? 'Update Product' : 'Add Product'}</span>
+                  {/* Product Image */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-gray-700">
+                      Product Image <span className="text-red-500">*</span>
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            setProductImage(file);
+                            if (formErrors.image) setFormErrors({ ...formErrors, image: undefined });
+                          }
+                        }}
+                        className="hidden"
+                        id="product-image-upload"
+                      />
+                      <label
+                        htmlFor="product-image-upload"
+                        className={`flex items-center gap-3 w-full px-5 py-3.5 bg-gray-50 border ${formErrors.image ? 'border-red-500' : 'border-gray-200'} rounded-2xl cursor-pointer hover:bg-gray-100 transition-all border-dashed`}
+                      >
+                        <Upload className="w-5 h-5 text-gray-400" />
+                        <span className="text-gray-500 text-sm font-medium">
+                          {productImage ? productImage.name : "Click to upload image"}
+                        </span>
+                      </label>
+                      {productImage && (
+                        <button
+                          onClick={() => setProductImage(null)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 hover:bg-gray-200 rounded-full text-gray-400 hover:text-red-500 transition-all"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
+                    {formErrors.image && (
+                      <p className="text-red-500 text-xs font-bold mt-1 px-1">{formErrors.image}</p>
                     )}
-                  </button>
+                  </div>
+
+                  {/* Product Documents */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-gray-700">
+                      Product Documents
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="file"
+                        multiple
+                        onChange={(e) => {
+                          if (e.target.files) {
+                            setProductDocs(Array.from(e.target.files));
+                          }
+                        }}
+                        className="hidden"
+                        id="product-docs-upload"
+                      />
+                      <label
+                        htmlFor="product-docs-upload"
+                        className="flex items-center gap-3 w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl cursor-pointer hover:bg-gray-100 transition-all border-dashed"
+                      >
+                        <Upload className="w-5 h-5 text-gray-400" />
+                        <span className="text-gray-500 text-sm font-medium">
+                          {productDocs.length > 0 ? `${productDocs.length} files selected` : "Click to upload documents"}
+                        </span>
+                      </label>
+                    </div>
+                    {productDocs.length > 0 && (
+                      <div className="space-y-2 mt-4 max-h-48 overflow-y-auto pr-2 custom-scrollbar border-t border-gray-100 pt-4">
+                        {productDocs.map((file, index) => (
+                          <div key={index} className="flex justify-between items-center p-2 bg-gray-50 rounded-lg border border-gray-100 text-sm">
+                            <span className="truncate text-gray-600">{file.name}</span>
+                            <button
+                              onClick={() => setProductDocs(prev => prev.filter((_, i) => i !== index))}
+                              className="text-gray-400 hover:text-red-500 shrink-0 ml-2"
+                            >
+                              <X className="w-4 h-4" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
+              </div>
+
+              {/* Footer */}
+              <div className="px-8 py-6 border-t border-gray-100 flex gap-4 shrink-0 bg-gray-50/30">
+                <button
+                  onClick={() => {
+                    setShowAddProductModal(false);
+                    setEditingProduct(null);
+                    setProductForm({ name: '', description: '' });
+                    setProductImage(null);
+                    setProductDocs([]);
+                    setFormErrors({});
+                  }}
+                  className="flex-1 h-12 px-6 border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-[0.98] disabled:opacity-50"
+                  disabled={createLoading || updateLoading || uploadLoading}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  onClick={editingProduct ? handleUpdateProduct : handleAddProduct}
+                  disabled={createLoading || updateLoading || uploadLoading}
+                  className="flex-[2] h-12 px-6 bg-blue-600 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-500/20 hover:bg-blue-700 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                >
+                  {(createLoading || updateLoading || uploadLoading) ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span>{editingProduct ? 'Updating...' : 'Adding...'}</span>
+                    </>
+                  ) : (
+                    <span>{editingProduct ? 'Update Product' : 'Add Product'}</span>
+                  )}
+                </button>
               </div>
             </div>
           </div>
@@ -630,6 +757,6 @@ export default function UserProfile() {
           </div>
         )}
       </div>
-    </div>
+    </div >
   );
 }
