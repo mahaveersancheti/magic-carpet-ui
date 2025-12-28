@@ -236,3 +236,31 @@ Import traces:
 [22:36:47.631] Server  LOG      ✓ Compiled in 43ms
 [22:36:58.787] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
 [30:47:29.735] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[30:48:10.485] Server  LOG      ✓ Compiled in 39ms
+[30:48:54.409] Server  LOG      ✓ Compiled in 38ms
+[30:53:16.515] Server  LOG      ✓ Compiled in 166ms
+[30:55:54.272] Server  LOG      ✓ Compiled in 100ms
+[30:59:52.234] Server  LOG      ✓ Compiled in 105ms
+[31:00:04.100] Server  LOG      ✓ Compiled in 48ms
+[31:02:50.457] Server  LOG      ✓ Compiled in 265ms
+[31:04:33.321] Server  LOG      ✓ Compiled in 70ms
+[31:04:37.613] Server  LOG      ✓ Compiled in 48ms
+[31:04:45.586] Server  LOG      ✓ Compiled in 48ms
+[31:04:52.042] Server  LOG      ✓ Compiled in 37ms
+[31:05:36.110] Server  LOG      ✓ Compiled in 40ms
+[31:05:36.518] Browser ERROR   The tag <%s> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter. path
+[31:05:36.518] Browser ERROR   The tag <%s> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter. text
+[31:05:44.406] Browser ERROR   The tag <%s> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter. path
+[31:05:44.406] Browser ERROR   The tag <%s> is unrecognized in this browser. If you meant to render a React component, start its name with an uppercase letter. text
+[31:05:55.058] Server  LOG      ✓ Compiled in 40ms
+[31:06:11.512] Server  LOG      ✓ Compiled in 48ms
+[31:06:20.179] Server  LOG      ✓ Compiled in 35ms
+[31:06:33.560] Server  LOG      ✓ Compiled in 42ms
+[31:06:45.840] Server  LOG      ✓ Compiled in 39ms
+[31:06:57.666] Server  LOG      ✓ Compiled in 42ms
+[31:07:12.809] Server  LOG      ✓ Compiled in 40ms
+[31:07:18.366] Server  LOG      ✓ Compiled in 76ms
+[31:07:26.512] Server  LOG      ✓ Compiled in 61ms
+[31:07:31.422] Server  LOG      ✓ Compiled in 49ms
+[31:07:37.108] Server  LOG      ✓ Compiled in 50ms
+[31:08:33.434] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior

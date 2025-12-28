@@ -10,55 +10,68 @@ import { fetchProfileById, clearSelectedProfile } from "../../redux/slices/Profi
 
 const ScoreGauge = ({ score, size = 100, title, showPercentage = false }: { score: number; size?: number; title?: string; showPercentage?: boolean }) => {
     const [animatedScore, setAnimatedScore] = useState(0);
-    const radius = 40;
-    const circumference = Math.PI * radius; // Semi-circle
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setAnimatedScore(score);
-        }, 100);
+        }, 300);
         return () => clearTimeout(timer);
     }, [score]);
 
-    const strokeDashoffset = circumference - (Math.min(100, Math.max(0, animatedScore)) / 100) * circumference;
-
-    const getColor = (s: number) => {
-        if (s < 40) return "#ef4444"; // Red
-        if (s < 75) return "#f59e0b"; // Amber
-        return "#10b981"; // Emerald
-    };
-
-    const color = getColor(score);
+    // Needle rotation: 0 = -90deg, 100 = 90deg
+    const rotation = (Math.min(100, Math.max(0, animatedScore)) / 100) * 180 - 90;
 
     return (
         <div className="relative flex flex-col items-center" style={{ width: size }}>
-            <svg width={size} height={size * 0.6} viewBox="0 0 100 60" className="transform overflow-visible">
-                {/* Background Track */}
-                <path
-                    d="M 10,50 A 40,40 0 0,1 90,50"
-                    fill="none"
-                    stroke="#f1f5f9"
-                    strokeWidth="10"
-                    strokeLinecap="round"
-                />
-                {/* Progress Path */}
-                <path
-                    d="M 10,50 A 40,40 0 0,1 90,50"
-                    fill="none"
-                    stroke={color}
-                    strokeWidth="10"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={strokeDashoffset}
-                    strokeLinecap="round"
-                    className="transition-all duration-1000 cubic-bezier(0.34, 1.56, 0.64, 1)"
-                />
+            <svg width={size} height={size * 0.8} viewBox="0 0 200 160" className="overflow-visible">
+                {/* Defs for gradients or shadow if needed */}
+
+                {/* Gauge Segments - Shifted Y+30 (Center 100,130) */}
+                {/* Segment 1: Red (0-25) */}
+                <path d="M20,130 A80,80 0 0,1 46,76" fill="none" stroke="#ef4444" strokeWidth="25" />
+                {/* Segment 2: Orange (25-50) */}
+                <path d="M48,74 A80,80 0 0,1 100,50" fill="none" stroke="#f97316" strokeWidth="25" />
+                {/* Segment 3: Yellow (50-75) */}
+                <path d="M100,50 A80,80 0 0,1 152,74" fill="none" stroke="#eab308" strokeWidth="25" />
+                {/* Segment 4: Teal (75-100) */}
+                <path d="M154,76 A80,80 0 0,1 180,130" fill="none" stroke="#10b981" strokeWidth="25" />
+
+                {/* Percentage Labels - Moved outward (Radius ~125) and shifted Y+30 */}
+                <text x="10" y="145" fontSize="12" fontWeight="600" fill="#4b5563" textAnchor="middle">0%</text>
+                <text x="25" y="55" fontSize="12" fontWeight="600" fill="#4b5563" textAnchor="middle">25%</text>
+                <text x="100" y="35" fontSize="12" fontWeight="600" fill="#4b5563" textAnchor="middle">50%</text>
+                <text x="175" y="55" fontSize="12" fontWeight="600" fill="#4b5563" textAnchor="middle">75%</text>
+                <text x="190" y="145" fontSize="12" fontWeight="600" fill="#4b5563" textAnchor="middle">100%</text>
+
+                {/* Needle Group - Origin (100, 130) */}
+                <g className="transition-all duration-1000 cubic-bezier(0.4, 0, 0.2, 1)" style={{ transform: `rotate(${rotation}deg)`, transformOrigin: '100px 130px' }}>
+                    {/* Needle Line */}
+                    <line x1="100" y1="130" x2="100" y2="55" stroke="#1f2937" strokeWidth="4" strokeLinecap="round" />
+                    {/* Needle Pivot */}
+                    <circle cx="100" cy="130" r="8" fill="#1f2937" />
+                </g>
+
+                {/* Center Score Text (Semi-circle cover) - Only for small inline version */}
+                {showPercentage && (
+                    <>
+                        <path d="M70,130 A30,30 0 0,1 130,130" fill="#f3f4f6" />
+                        <text x="100" y="125" fontSize="16" fontWeight="bold" fill="#1f2937" textAnchor="middle">{Math.round(animatedScore)}%</text>
+                    </>
+                )}
             </svg>
-            <div className="absolute top-[45%] flex flex-col items-center">
-                <span className="text-xl font-black text-gray-900 leading-none">
-                    {animatedScore}{showPercentage && "%"}
-                </span>
-                {title && <span className="text-[8px] font-black text-gray-400 uppercase tracking-widest mt-1 text-center">{title}</span>}
-            </div>
+            {!showPercentage && (
+                <div className="absolute top-[55%] flex flex-col items-center">
+                    <span className="text-lg font-black text-gray-900 leading-none">
+                        {Math.round(animatedScore)}
+                    </span>
+                    {title && <span className="mt-6 text-[11px] font-bold text-gray-500 uppercase tracking-widest mt-1 text-center">{title}</span>}
+                </div>
+            )}
+            {showPercentage && title && (
+                <div className="absolute top-[85%] flex flex-col items-center">
+                    <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1 text-center">{title}</span>
+                </div>
+            )}
         </div>
     );
 };
@@ -371,7 +384,7 @@ function ReportContent() {
                                     title="Warm Call Score"
                                 />
                             </div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 mt-4">
                                 <div className="p-2 rounded-xl bg-orange-50 border border-orange-100 flex items-center gap-2">
                                     <span className="text-[10px] font-black text-orange-900 px-1">MEETINGS: -</span>
                                 </div>

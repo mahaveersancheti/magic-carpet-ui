@@ -296,7 +296,7 @@ export default function DashboardPage() {
               <button
                 id="new-request-btn"
                 onClick={() => setIsAddRequestModalOpen(true)}
-                className="h-11 px-5 flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm transition-all shadow-lg shadow-blue-500/20 active:scale-95"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-lg active:scale-95 text-xs"
               >
                 <span className="material-symbols-outlined text-lg">add</span>
                 <span>New Request</span>
