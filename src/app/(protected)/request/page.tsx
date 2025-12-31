@@ -582,7 +582,15 @@ function ReportContent() {
                                                             {REPORT_JSON.profileSummary.productFitAnalysis?.valueProps && Object.keys(REPORT_JSON.profileSummary.productFitAnalysis.valueProps).length > 0 ? Object.entries(REPORT_JSON.profileSummary.productFitAnalysis.valueProps).map(([k, v]) => (
                                                                 <div key={k} className="p-2.5 rounded-xl bg-gray-50 border border-gray-100 flex flex-col gap-1">
                                                                     <span className="text-[8px] font-black text-blue-600 uppercase tracking-tighter">{k} Impact</span>
-                                                                    <span className="text-[10px] font-bold text-gray-800 leading-tight">{v as string || 'TBD'}</span>
+                                                                    <span className="text-[10px] font-bold text-gray-800 leading-tight">
+                                                                        {(v as string || 'TBD').split(/(\d+%?)/g).map((part, idx) =>
+                                                                            /\d+%?/.test(part) ? (
+                                                                                <span key={idx} className="font-black text-blue-600">{part}</span>
+                                                                            ) : (
+                                                                                <span key={idx}>{part}</span>
+                                                                            )
+                                                                        )}
+                                                                    </span>
                                                                 </div>
                                                             )) : (
                                                                 <div className="p-4 rounded-xl bg-gray-50 border border-dashed border-gray-200 text-center">
@@ -721,17 +729,26 @@ function ReportContent() {
                                         <div className="text-xs text-gray-700 leading-relaxed font-bold">{REPORT_JSON.profileSummary.recentPost}</div>
                                     </div>
 
-                                    <div className="space-y-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {REPORT_JSON.recentNews.length > 0 ? REPORT_JSON.recentNews.map((n: any, i: number) => (
-                                            <div key={i} className="group cursor-default border-b border-gray-100 last:border-0 pb-4 last:pb-0">
-                                                <div className="flex justify-between items-start gap-4 mb-2">
-                                                    <div className="text-sm font-black text-gray-900 group-hover:text-blue-600 transition-colors leading-tight">{n.title}</div>
-                                                    <div className="text-[10px] font-black text-gray-400 shrink-0 uppercase tracking-tighter">{n.date}</div>
+                                            <div key={i} className="p-4 rounded-3xl border border-blue-50 bg-blue-50/20 hover:border-blue-200 transition-all group/news">
+                                                <div className="flex justify-between items-start gap-2 mb-3">
+                                                    <div className="flex items-center gap-1.5">
+                                                        <span className="material-symbols-outlined text-sm text-blue-600">article</span>
+                                                        <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">News</span>
+                                                    </div>
+                                                    <span className="px-1.5 py-0.5 rounded-lg bg-blue-100 text-blue-700 text-[9px] font-black border border-blue-200 uppercase tracking-tighter">{n.date}</span>
                                                 </div>
-                                                <div className="text-[11px] text-gray-500 leading-relaxed font-bold line-clamp-2 group-hover:line-clamp-none transition-all">{n.summary}</div>
+                                                <div className="text-sm font-black text-gray-900 mb-2 group-hover/news:text-blue-700 transition-colors leading-tight">{n.title}</div>
+                                                <p className="text-[10px] text-gray-500 leading-relaxed font-bold">
+                                                    {n.summary}
+                                                </p>
                                             </div>
                                         )) : (
-                                            <div className="text-xs text-gray-400 italic py-10 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-200">No specific news items detected in the last scan.</div>
+                                            <div className="col-span-2 flex flex-col items-center justify-center py-12 bg-gray-50/50 rounded-3xl border border-dashed border-gray-200 opacity-60">
+                                                <span className="material-symbols-outlined text-gray-400 text-4xl mb-2">newspaper</span>
+                                                <span className="text-xs font-black text-gray-400 uppercase tracking-widest">No specific news items detected in the last scan.</span>
+                                            </div>
                                         )}
                                     </div>
                                 </div>
@@ -885,11 +902,11 @@ function ReportContent() {
                     </div>
 
                     {/* Row 5: Objection Handling (Full Width) */}
-                    <div className="bg-slate-900 text-white rounded-3xl border-0 shadow-xl p-8 relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/20 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-blue-600/30 transition-all duration-700" />
+                    <div className="bg-white text-gray-900 rounded-3xl border border-gray-200 shadow-sm p-8 relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-red-50 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-red-100 transition-all duration-700 opacity-50" />
                         <div className="flex items-center justify-between mb-8 relative z-10">
-                            <h3 className="font-black flex items-center gap-2 text-[12px] uppercase tracking-widest text-blue-400">
-                                <span className="material-symbols-outlined">gavel</span>
+                            <h3 className="font-black flex items-center gap-2 text-[12px] uppercase tracking-widest text-gray-900">
+                                <span className="material-symbols-outlined text-red-600">gavel</span>
                                 Objection Handling / Role Play
                             </h3>
                             <button
@@ -897,37 +914,37 @@ function ReportContent() {
                                     const textToSpeak = REPORT_JSON.objections.map(o => `Objection: ${o.objection}. Strategy: ${o.counter}`).join('. ');
                                     handleSpeak(textToSpeak || "No objections predicted.", 'objections', 'Objection Handling');
                                 }}
-                                className={`p-2 rounded-xl transition-all active:scale-95 ${speakingSection === 'objections' ? 'bg-red-500 text-white shadow-lg' : 'bg-white/10 text-blue-400 border border-white/10 hover:bg-white/20'}`}
+                                className={`p-2 rounded-xl transition-all active:scale-95 ${speakingSection === 'objections' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-400 border border-gray-100 hover:text-red-600 hover:bg-red-50'}`}
                             >
                                 {speakingSection === 'objections' ? <Square className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
                             </button>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
                             {REPORT_JSON.objections.length > 0 ? REPORT_JSON.objections.map((item: any, i: number) => (
-                                <div key={i} className="p-6 rounded-2xl bg-white/5 border border-white/10 flex flex-col gap-4 hover:bg-white/10 transition-all border-l-4 border-l-red-500/50 hover:border-l-red-500">
+                                <div key={i} className="p-6 rounded-2xl bg-gray-50 border border-gray-100 flex flex-col gap-4 hover:bg-white hover:shadow-md transition-all border-l-4 border-l-red-500">
                                     <div>
-                                        <div className="text-[10px] font-black text-red-400 uppercase tracking-widest mb-1 shadow-sm flex items-center gap-1.5">
+                                        <div className="text-[10px] font-black text-red-500 uppercase tracking-widest mb-1 shadow-sm flex items-center gap-1.5">
                                             <span className="material-symbols-outlined text-xs">report_problem</span>
                                             Predicted Objection
                                         </div>
-                                        <div className="text-base font-bold text-gray-100">{item.objection}</div>
+                                        <div className="text-base font-bold text-gray-900">{item.objection}</div>
                                     </div>
-                                    <div className="pt-4 border-t border-white/10">
-                                        <div className="text-[10px] font-black text-green-400 uppercase tracking-widest mb-1 shadow-sm flex items-center gap-1.5">
+                                    <div className="pt-4 border-t border-gray-200">
+                                        <div className="text-[10px] font-black text-green-600 uppercase tracking-widest mb-1 shadow-sm flex items-center gap-1.5">
                                             <span className="material-symbols-outlined text-xs">auto_fix_high</span>
                                             Recommended Counter
                                         </div>
-                                        <div className="text-sm italic font-bold leading-relaxed text-blue-50/90">"{item.counter}"</div>
+                                        <div className="text-sm italic font-bold leading-relaxed text-gray-700">"{item.counter}"</div>
                                         {item.matchingDescription && (
-                                            <div className="mt-2 text-[9px] text-gray-400 font-bold uppercase tracking-tighter">Strateguy: {item.matchingDescription}</div>
+                                            <div className="mt-2 text-[9px] text-gray-400 font-bold uppercase tracking-tighter">Strategy: {item.matchingDescription}</div>
                                         )}
                                     </div>
                                 </div>
                             )) : (
                                 <div className="col-span-2 flex flex-col items-center justify-center py-16 opacity-40">
-                                    <span className="material-symbols-outlined text-5xl mb-2">shield_check</span>
-                                    <h4 className="text-sm font-black uppercase tracking-widest">No major objections predicted</h4>
-                                    <p className="text-[10px] mt-1">Profile appears clear for direct outreach strategy.</p>
+                                    <span className="material-symbols-outlined text-gray-300 text-5xl mb-2">shield_check</span>
+                                    <h4 className="text-sm font-black text-gray-400 uppercase tracking-widest">No major objections predicted</h4>
+                                    <p className="text-[10px] mt-1 text-gray-400">Profile appears clear for direct outreach strategy.</p>
                                 </div>
                             )}
                         </div>
@@ -937,22 +954,50 @@ function ReportContent() {
                     <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group">
                         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-white/10 transition-colors duration-700" />
                         <div className="relative z-10">
-                            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-                                <div className="flex-1 space-y-4 text-center md:text-left">
-                                    <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-black border border-white/20 uppercase tracking-widest">
-                                        AI Action Recommendation
+                            <div className="space-y-6">
+                                <div className="flex flex-col md:flex-row items-start justify-between gap-6">
+                                    <div className="flex-1 space-y-4 text-center md:text-left">
+                                        <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-black border border-white/20 uppercase tracking-widest">
+                                            AI Action Recommendation
+                                        </div>
+                                        <h3 className="text-lg font-black leading-tight max-w-2xl">{REPORT_JSON.recommendationBody}</h3>
                                     </div>
-                                    <h3 className="text-lg font-black leading-tight max-w-2xl">{REPORT_JSON.recommendationBody}</h3>
-                                </div>
-                                <div className="flex gap-4 shrink-0 items-center">
                                     <button
                                         onClick={() => handleSpeak(REPORT_JSON.recommendationBody, 'recommendation', 'AI Recommendation')}
-                                        className={`h-12 w-12 flex items-center justify-center rounded-xl transition-all active:scale-95 border border-white/20 backdrop-blur-sm ${speakingSection === 'recommendation' ? 'bg-red-500 text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}
+                                        className={`h-12 w-12 flex items-center justify-center rounded-xl transition-all active:scale-95 border border-white/20 backdrop-blur-sm shrink-0 ${speakingSection === 'recommendation' ? 'bg-red-500 text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}
                                     >
                                         {speakingSection === 'recommendation' ? <Square className="w-4 h-4" /> : <Volume2 className="w-5 h-5" />}
                                     </button>
-                                    <button className="h-12 px-6 bg-white text-blue-700 font-bold rounded-xl hover:bg-blue-50 transition-all shadow-lg active:scale-95 text-xs uppercase tracking-widest">Schedule Outreach</button>
-                                    <button className="h-12 px-6 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-xs uppercase tracking-widest">Tactical Map</button>
+                                </div>
+                                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                                    <button className="h-11 px-4 bg-white text-blue-700 font-bold rounded-xl hover:bg-blue-50 transition-all shadow-lg active:scale-95 text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
+                                        <span className="material-symbols-outlined text-sm">calendar_month</span>
+                                        Schedule Meeting
+                                    </button>
+                                    <button className="h-11 px-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
+                                        <span className="material-symbols-outlined text-sm">description</span>
+                                        Create Proposal
+                                    </button>
+                                    <button className="h-11 px-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
+                                        <span className="material-symbols-outlined text-sm">mail</span>
+                                        Send Email
+                                    </button>
+                                    <button className="h-11 px-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
+                                        <span className="material-symbols-outlined text-sm">chat</span>
+                                        WhatsApp
+                                    </button>
+                                    <button className="h-11 px-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
+                                        <span className="material-symbols-outlined text-sm">tag</span>
+                                        Slack
+                                    </button>
+                                    <button className="h-11 px-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
+                                        <span className="material-symbols-outlined text-sm">send</span>
+                                        Telegram
+                                    </button>
+                                    <button className="h-11 px-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
+                                        <span className="material-symbols-outlined text-sm">analytics</span>
+                                        Update CRM
+                                    </button>
                                 </div>
                             </div>
                         </div>
