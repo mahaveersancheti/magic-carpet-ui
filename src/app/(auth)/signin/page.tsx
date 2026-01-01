@@ -125,7 +125,7 @@ function SignInContent() {
               </div>
             </div>
 
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-red-500 text-sm">{error.split(':')[1]}</p>}
 
             {/* SIGN IN BUTTON */}
             <button

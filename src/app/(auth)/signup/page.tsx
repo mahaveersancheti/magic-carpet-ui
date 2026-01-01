@@ -25,12 +25,7 @@ export default function SignUp() {
 
   const [validationError, setValidationError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (token) {
-      toast.success("Account created successfully!");
-      router.push('/home');
-    }
-  }, [token, router]);
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -69,7 +64,8 @@ export default function SignUp() {
     }));
 
     if (registerUser.fulfilled.match(resultAction)) {
-      // Success handled by useEffect
+      toast.success("Registration successful! Please sign in.");
+      router.push('/signin');
     } else {
       toast.error("Registration failed. Please try again.");
     }
@@ -202,7 +198,9 @@ export default function SignUp() {
             </div>
 
             {(error || validationError) && (
-              <p className="text-red-500 text-sm">{validationError || error}</p>
+              <p className="text-red-500 text-sm">
+                {validationError || `${error?.split(':')[1]}`}
+              </p>
             )}
 
             {/* Submit Button */}

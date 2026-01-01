@@ -44,26 +44,38 @@ axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error) => {
     const status = error?.response?.status;
+    const data = error?.response?.data;
+
+    let message = 'Request failed';
+
+    if (data) {
+      if (typeof data === 'string') {
+        message = data;
+      } else if (data.message) {
+        message = data.message;
+      } else if (data.error) {
+        message = data.error;
+      } else if (data.detail) {
+        message = data.detail;
+      }
+    } else if (error.message) {
+      message = error.message;
+    }
 
     if (status === 400) {
-      const message = error?.response?.data?.message || error.message || 'Bad Request';
+      toast.error(message);
+    } else if (status === 401) {
+      // Clear auth state and navigate to login
+      if (typeof window !== 'undefined') {
+        const current = window.location.pathname || '';
+        if (!current.includes('/landing') && !current.includes('/signin') && !current.includes('/signup')) {
+          // window.location.href = '/landing';
+        }
+      }
+    } else {
       toast.error(message);
     }
 
-    if (status === 401) {
-      // Clear auth state and navigate to login
-      // try { removeItem('token'); } catch {}
-      if (typeof window !== 'undefined') {
-        const current = window.location.pathname || '';
-        if (!current.includes('/landing')) {
-          // window.location.href = '/landing'; // Commented out to prevent loop during testing if needed
-        }
-      }
-    }
-    const message = error?.response?.data?.message || error.message || 'Request failed';
-    if (status !== 400) { // Avoid double toast for 400
-      toast.error(message);
-    }
     return Promise.reject(new Error(message));
   }
 );
