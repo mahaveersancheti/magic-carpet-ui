@@ -547,9 +547,10 @@ function ReportContent() {
                                                         showPercentage={true}
                                                     />
                                                 </div>
-                                                <div>
-                                                    <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-0.5">Evaluation Result</div>
-                                                    <div className="text-lg font-black text-gray-900 leading-tight">{REPORT_JSON.profileSummary.productFitAnalysis?.rating || 'Analysis Pending'}</div>
+                                                <div className="flex-1">
+                                                    <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-0.5">Product Overview</div>
+                                                    <div className="text-lg font-black text-gray-900 leading-tight mb-2">{(REPORT_JSON as any).productName || REPORT_JSON.profileSummary.productFitAnalysis?.rating || 'Product Analysis'}</div>
+                                                    <div className="text-[11px] text-gray-600 leading-relaxed font-bold">{(REPORT_JSON as any).productDescription || 'Evaluation results for the current strategic fit.'}</div>
                                                 </div>
                                             </div>
 

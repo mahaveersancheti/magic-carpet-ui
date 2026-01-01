@@ -56,60 +56,28 @@ export const createProduct = createAsyncThunk(
     'products/createProduct',
     async ({ userId, payload }: { userId: string; payload: CreateProductPayload }, { rejectWithValue }) => {
         try {
-            let data: any = payload;
-            const headers: Record<string, string> = { 'Skip-Auth': 'true' };
+            // Build query parameters for name and description
+            const params = new URLSearchParams({
+                name: payload.name,
+                description: payload.description
+            });
 
+            // Combine with existing userId parameter
+            const endpoint = `${endpoints.createProduct(userId)}&${params.toString()}`;
+
+            // Create FormData only for image
+            const formData = new FormData();
             if (payload.image) {
-                const formData = new FormData();
-                formData.append('name', payload.name);
-                formData.append('description', payload.description);
-                formData.append('file', payload.image);
-                data = formData;
-                headers['Content-Type'] = 'multipart/form-data';
+                formData.append('image', payload.image);
             }
 
-            const response = await api.post<Product>(endpoints.createProduct(userId), data, headers);
+            const response = await api.post<Product>(endpoint, formData, {
+                'Skip-Auth': 'true',
+                'Content-Type': 'multipart/form-data'
+            });
             return response;
         } catch (error: any) {
             return rejectWithValue(error.message || 'Failed to create product');
-        }
-    }
-);
-
-export const uploadProductFiles = createAsyncThunk(
-    'products/uploadProductFiles',
-    async ({ productId, userId, files }: { productId: string; userId: string; files: File[] }, { rejectWithValue }) => {
-        try {
-            const filePromises = files.map(file => {
-                return new Promise<string>((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        const base64String = reader.result as string;
-                        // Extract just the base64 part if needed, but usually APIs want the full data URI or just the content.
-                        // The user said "string". Often APIs taking "string" for file want just the base64 content without the prefix.
-                        // But I'll send the full string first or try to strip.
-                        // Let's strip the prefix "data:application/pdf;base64," etc if we assume it's raw base64.
-                        // But "string" often implies just the string.
-                        // Let's send the full data URL first? Or just the content?
-                        // If the API expects "string" inside a JSON array, it's ambiguous.
-                        // safest is usually sending the component after the comma.
-                        const base64Content = base64String.split(',')[1];
-                        resolve(base64Content);
-                    };
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-            });
-
-            const base64Files = await Promise.all(filePromises);
-
-            await api.post(endpoints.uploadProductFiles(productId, userId), {
-                files: base64Files
-            }, { 'Skip-Auth': 'true' });
-
-            return productId;
-        } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to upload files');
         }
     }
 );
@@ -118,10 +86,53 @@ export const updateProduct = createAsyncThunk(
     'products/updateProduct',
     async ({ productId, userId, payload }: { productId: string; userId: string; payload: UpdateProductPayload }, { rejectWithValue }) => {
         try {
-            const response = await api.put<Product>(endpoints.updateProduct(productId, userId), payload, { 'Skip-Auth': 'true' });
+            // Build query parameters for name and description
+            const params = new URLSearchParams({
+                name: payload.name,
+                description: payload.description
+            });
+
+            // Combine with existing productId and userId parameters
+            const endpoint = `${endpoints.updateProduct(productId, userId)}&${params.toString()}`;
+
+            // Create FormData only for image
+            const formData = new FormData();
+            if (payload.image) {
+                formData.append('image', payload.image);
+            }
+
+            const response = await api.put<Product>(endpoint, formData, {
+                'Skip-Auth': 'true',
+                'Content-Type': 'multipart/form-data'
+            });
             return response;
         } catch (error: any) {
             return rejectWithValue(error.message || 'Failed to update product');
+        }
+    }
+);
+
+export const uploadProductFiles = createAsyncThunk(
+    'products/uploadProductFiles',
+    async ({ productId, userId, files }: { productId: string; userId: string; files: File[] }, { rejectWithValue }) => {
+        try {
+            // Upload each file separately with FormData
+            const uploadPromises = files.map(async (file) => {
+                const formData = new FormData();
+                formData.append('productId', productId);
+                formData.append('userId', userId);
+                formData.append('file', file);
+
+                return await api.post(endpoints.uploadProductFiles, formData, {
+                    'Skip-Auth': 'true',
+                    'Content-Type': 'multipart/form-data'
+                });
+            });
+
+            await Promise.all(uploadPromises);
+            return productId;
+        } catch (error: any) {
+            return rejectWithValue(error.message || 'Failed to upload files');
         }
     }
 );

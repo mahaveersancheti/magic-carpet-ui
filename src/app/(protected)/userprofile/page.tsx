@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
-import { fetchProductsByUserId, createProduct, updateProduct, deleteProduct, uploadProductFiles, CreateProductPayload, Product } from "../../redux/slices/ProductSlice";
+import { fetchProductsByUserId, createProduct, updateProduct, deleteProduct, uploadProductFiles, CreateProductPayload, UpdateProductPayload, Product } from "../../redux/slices/ProductSlice";
 import { getBaseUrl, api } from "../../services/apiService";
 import { endpoints } from "../../lib/endpoints";
 import toast from 'react-hot-toast';
@@ -188,10 +188,15 @@ export default function UserProfile() {
     if (!userId) return;
 
     try {
+      const payload: UpdateProductPayload = {
+        ...productForm,
+        image: productImage || undefined
+      };
+
       await dispatch(updateProduct({
         productId: editingProduct.id,
         userId,
-        payload: productForm
+        payload
       })).unwrap();
       toast.success('Product updated successfully!');
       setShowAddProductModal(false);

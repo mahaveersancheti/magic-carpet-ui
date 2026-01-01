@@ -9,7 +9,7 @@ export const endpoints = {
     createProduct: (userId: string) => `products?userId=${userId}`,
     updateProduct: (productId: string, userId: string) => `products/${productId}?userId=${userId}`,
     deleteProduct: (productId: string, userId: string) => `products/${productId}?userId=${userId}`,
-    uploadProductFiles: (productId: string, userId: string) => `products/${productId}/files?userId=${userId}`,
+    uploadProductFiles: 'products/products/files',
     downloadProductTemplate: 'profiles/download/product-template',
     googleLogin: 'https://magic-carpet.data-magnum.com/v1/oauth2/authorization/google'
 }
