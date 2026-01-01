@@ -7,9 +7,10 @@ export const endpoints = {
     createProfile: 'profiles',
     getProductsByUserId: (userId: string) => `products/user/${userId}`,
     createProduct: (userId: string) => `products?userId=${userId}`,
-    updateProduct: (productId: string, userId: string) => `products/${productId}?userId=${userId}`,
+    updateProduct: 'products',
     deleteProduct: (productId: string, userId: string) => `products/${productId}?userId=${userId}`,
     uploadProductFiles: 'products/products/files',
     downloadProductTemplate: 'profiles/download/product-template',
+    downloadProductTemplate1: 'profiles/download/product-template1',
     googleLogin: 'https://magic-carpet.data-magnum.com/v1/oauth2/authorization/google'
 }

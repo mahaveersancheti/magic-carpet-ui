@@ -7,6 +7,8 @@ export interface Product {
     name: string;
     description: string;
     userId: string;
+    status: string | null;
+    imagePath: string | null;
     filePaths: string[];
 }
 
@@ -86,14 +88,16 @@ export const updateProduct = createAsyncThunk(
     'products/updateProduct',
     async ({ productId, userId, payload }: { productId: string; userId: string; payload: UpdateProductPayload }, { rejectWithValue }) => {
         try {
-            // Build query parameters for name and description
+            // Build query parameters including productId
             const params = new URLSearchParams({
+                productId: productId,
                 name: payload.name,
-                description: payload.description
+                description: payload.description,
+                userId: userId
             });
 
-            // Combine with existing productId and userId parameters
-            const endpoint = `${endpoints.updateProduct(productId, userId)}&${params.toString()}`;
+            // Build the final endpoint URL
+            const endpoint = `${endpoints.updateProduct}?${params.toString()}`;
 
             // Create FormData only for image
             const formData = new FormData();

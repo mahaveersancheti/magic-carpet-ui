@@ -31,6 +31,7 @@ import {
   Upload,
   Slack,
   MessageCircle,
+  FileText,
 } from "lucide-react";
 
 export default function UserProfile() {
@@ -117,7 +118,7 @@ export default function UserProfile() {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'product_template.xlsx');
+      link.setAttribute('download', 'product_template.txt');
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -174,6 +175,8 @@ export default function UserProfile() {
       name: product.name,
       description: product.description
     });
+    setProductImage(null);
+    setProductDocs([]);
     setFormErrors({});
     setShowAddProductModal(true);
   };
@@ -198,6 +201,15 @@ export default function UserProfile() {
         userId,
         payload
       })).unwrap();
+
+      if (productDocs.length > 0) {
+        await dispatch(uploadProductFiles({
+          productId: editingProduct.id,
+          userId,
+          files: productDocs
+        })).unwrap();
+      }
+
       toast.success('Product updated successfully!');
       setShowAddProductModal(false);
       setEditingProduct(null);
@@ -205,6 +217,8 @@ export default function UserProfile() {
       setProductImage(null);
       setProductDocs([]);
       setFormErrors({});
+      // Refresh products list
+      dispatch(fetchProductsByUserId(userId));
     } catch (error: any) {
       toast.error(error || 'Failed to update product');
     }
@@ -434,9 +448,11 @@ export default function UserProfile() {
               ) : (
                 <div className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 gap-6" : "space-y-4"}>
                   {products.map((product) => {
-                    const imageUrl = product.filePaths && product.filePaths.length > 0
-                      ? `${getBaseUrl().replace('/api/', '')}${product.filePaths[0]}`
-                      : '/Image-not-found.png';
+                    const imageUrl = product.imagePath
+                      ? `${getBaseUrl().replace('/api/', '')}${product.imagePath}`
+                      : (product.filePaths && product.filePaths.length > 0
+                        ? `${getBaseUrl().replace('/api/', '')}${product.filePaths[0]}`
+                        : '/Image-not-found.png');
 
                     if (viewMode === 'list') {
                       return (
@@ -475,6 +491,12 @@ export default function UserProfile() {
                             <p className="text-gray-600 text-sm line-clamp-2 leading-relaxed mt-1">
                               {product.description}
                             </p>
+                            {product.filePaths && product.filePaths.length > 0 && (
+                              <div className="flex items-center gap-1.5 mt-2 text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg w-fit">
+                                <FileText className="w-3 h-3" />
+                                {product.filePaths.length} Document{product.filePaths.length > 1 ? 's' : ''}
+                              </div>
+                            )}
                           </div>
                         </div>
                       );
@@ -517,6 +539,12 @@ export default function UserProfile() {
                           <p className="text-gray-600 text-xs line-clamp-2 leading-relaxed flex-1">
                             {product.description}
                           </p>
+                          {product.filePaths && product.filePaths.length > 0 && (
+                            <div className="flex items-center gap-1.5 mt-3 text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg w-fit">
+                              <FileText className="w-3 h-3" />
+                              {product.filePaths.length} Document{product.filePaths.length > 1 ? 's' : ''}
+                            </div>
+                          )}
                         </div>
                       </div>
                     );
@@ -638,7 +666,7 @@ export default function UserProfile() {
                       >
                         <Upload className="w-5 h-5 text-gray-400" />
                         <span className="text-gray-500 text-sm font-medium">
-                          {productImage ? productImage.name : "Click to upload image"}
+                          {productImage ? productImage.name : (editingProduct?.imagePath ? editingProduct.imagePath.split('/').pop() : "Click to upload image")}
                         </span>
                       </label>
                       {productImage && (
@@ -678,21 +706,36 @@ export default function UserProfile() {
                       >
                         <Upload className="w-5 h-5 text-gray-400" />
                         <span className="text-gray-500 text-sm font-medium">
-                          {productDocs.length > 0 ? `${productDocs.length} files selected` : "Click to upload documents"}
+                          {productDocs.length > 0
+                            ? `${productDocs.length} new files selected`
+                            : (editingProduct?.filePaths && editingProduct.filePaths.length > 0
+                              ? `${editingProduct.filePaths.length} existing documents found`
+                              : "Click to upload documents")}
                         </span>
                       </label>
                     </div>
-                    {productDocs.length > 0 && (
+                    {(productDocs.length > 0 || (editingProduct?.filePaths && editingProduct.filePaths.length > 0)) && (
                       <div className="space-y-2 mt-4 max-h-48 overflow-y-auto pr-2 custom-scrollbar border-t border-gray-100 pt-4">
+                        {/* New Documents */}
                         {productDocs.map((file, index) => (
-                          <div key={index} className="flex justify-between items-center p-2 bg-gray-50 rounded-lg border border-gray-100 text-sm">
-                            <span className="truncate text-gray-600">{file.name}</span>
+                          <div key={`new-${index}`} className="flex justify-between items-center p-2 bg-blue-50/30 rounded-lg border border-blue-100 text-sm">
+                            <div className="flex items-center gap-2 truncate">
+                              <span className="text-[10px] font-bold text-blue-600 uppercase">NEW</span>
+                              <span className="truncate text-gray-600">{file.name}</span>
+                            </div>
                             <button
                               onClick={() => setProductDocs(prev => prev.filter((_, i) => i !== index))}
                               className="text-gray-400 hover:text-red-500 shrink-0 ml-2"
                             >
                               <X className="w-4 h-4" />
                             </button>
+                          </div>
+                        ))}
+                        {/* Existing Documents */}
+                        {editingProduct?.filePaths?.map((path, index) => (
+                          <div key={`existing-${index}`} className="flex justify-between items-center p-2 bg-gray-50 rounded-lg border border-gray-100 text-sm">
+                            <span className="truncate text-gray-400">{path.split('/').pop()}</span>
+                            <span className="text-[8px] font-bold text-gray-300 uppercase shrink-0">Existing</span>
                           </div>
                         ))}
                       </div>
