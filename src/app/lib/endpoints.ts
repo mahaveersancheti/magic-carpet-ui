@@ -5,7 +5,7 @@ export const endpoints = {
     getProfileById: (id: string) => `profiles/${id}`,
     getProfileByIdPopulateDummy: (id: string) => `profiles/${id}/populate-dummy`,
     createProfile: 'profiles',
-    getProductsByUserId: (userId: string) => `products/user/${userId}`,
+    getProductsByUserId: (userId: string) => `product/user/${userId}`,
     createProduct: (userId: string) => `products?userId=${userId}`,
     updateProduct: 'products',
     deleteProduct: (productId: string, userId: string) => `products/${productId}?userId=${userId}`,
