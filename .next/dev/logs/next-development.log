@@ -9,3 +9,48 @@
 [00:13:14.295] Server  LOG      ✓ Compiled in 42ms
 [00:15:20.147] Server  LOG      ✓ Compiled in 49ms
 [00:15:27.774] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:20:51.462] Server  LOG      ✓ Compiled in 144ms
+[00:21:46.707] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:22:57.286] Server  LOG      ✓ Compiled in 42ms
+[00:23:18.347] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:29:00.937] Server  LOG      ✓ Compiled in 52ms
+[00:34:12.024] Server  LOG      ✓ Compiled in 100ms
+[00:34:41.905] Server  LOG      ✓ Compiled in 50ms
+[00:34:42.570] Browser ERROR   Error loading authenticated image: {}
+[00:34:43.044] Browser ERROR   Error loading authenticated image: {}
+[00:34:54.049] Server  LOG      ✓ Compiled in 34ms
+[00:34:54.900] Browser ERROR   Error loading authenticated image: {}
+[00:35:27.829] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:35:29.613] Browser ERROR   Error loading authenticated image: {}
+[00:35:30.347] Browser ERROR   Error loading authenticated image: {}
+[00:35:34.114] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:35:35.869] Browser ERROR   Error loading authenticated image: {}
+[00:35:36.614] Browser ERROR   Error loading authenticated image: {}
+[00:36:59.628] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:37:02.070] Browser ERROR   Error loading authenticated image: {}
+[00:37:02.818] Browser ERROR   Error loading authenticated image: {}
+[00:37:55.799] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:37:57.511] Browser ERROR   Error loading authenticated image: {}
+[00:37:58.260] Browser ERROR   Error loading authenticated image: {}
+[00:38:02.619] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:38:04.352] Browser ERROR   Error loading authenticated image: {}
+[00:38:05.101] Browser ERROR   Error loading authenticated image: {}
+[00:38:10.194] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:38:44.704] Browser ERROR   Error loading authenticated image: {}
+[00:38:46.211] Browser ERROR   Error loading authenticated image: {}
+[00:38:47.100] Browser ERROR   Error loading authenticated image: {}
+[00:38:47.863] Browser ERROR   Error loading authenticated image: {}
+[00:39:24.266] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:39:26.103] Browser ERROR   Error loading authenticated image: {}
+[00:39:26.860] Browser ERROR   Error loading authenticated image: {}
+[00:44:01.641] Server  LOG      ✓ Compiled in 65ms
+[00:44:04.375] Browser ERROR   Error loading authenticated image: {}
+[00:44:05.127] Browser ERROR   Error loading authenticated image: {}
+[00:44:11.194] Server  LOG      ✓ Compiled in 87ms
+[00:44:12.049] Browser ERROR   Error loading authenticated image: {}
+[00:44:52.956] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:44:54.777] Browser ERROR   Error loading authenticated image: {}
+[00:44:55.576] Browser ERROR   Error loading authenticated image: {}
+[00:45:42.716] Server  LOG      ✓ Compiled in 31ms
+[00:46:01.179] Server  LOG      ✓ Compiled in 44ms
+[00:46:27.317] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold

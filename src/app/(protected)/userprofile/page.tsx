@@ -32,7 +32,9 @@ import {
   Slack,
   MessageCircle,
   FileText,
+  Eye,
 } from "lucide-react";
+import { AuthenticatedImage } from "../../components/AuthenticatedImage";
 
 export default function UserProfile() {
   const dispatch = useDispatch<AppDispatch>();
@@ -73,6 +75,59 @@ export default function UserProfile() {
 
   const [formErrors, setFormErrors] = useState<{ name?: string; description?: string; image?: string }>({});
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
+
+  const getPublicImageUrl = (path: string | null, productId?: string) => {
+    if (!path) return '/Image-not-found.png';
+
+    const fileName = path.split(/[\/\\]/).pop();
+    if (productId && fileName) {
+      return `${getBaseUrl()}${endpoints.getProductFile(productId, fileName)}`;
+    }
+
+    // Fallback for paths that don't have productId context or are already absolute
+    if (path.startsWith('http')) return path;
+
+    const cleanPath = path.toString().replace('C://work/', '');
+    const baseUrl = getBaseUrl().replace('/api/', '');
+    const separator = (baseUrl.endsWith('/') && cleanPath.startsWith('/'))
+      ? ''
+      : (!baseUrl.endsWith('/') && !cleanPath.startsWith('/'))
+        ? '/'
+        : '';
+    return `${baseUrl}${separator}${cleanPath}`;
+  };
+
+  const getProductImageUrl = (productId: string) => {
+    return `${getBaseUrl()}${endpoints.getProductImage(productId)}`;
+  };
+
+  const handleViewDoc = async (path: string, productId: string) => {
+    const fileName = path.split(/[\/\\]/).pop();
+    if (!fileName) return;
+
+    try {
+      const fullUrl = `${getBaseUrl()}${endpoints.getProductFile(productId, fileName)}`;
+      const response = await fetch(fullUrl, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+
+      if (response.status === 404) {
+        toast.error('Document not found');
+        return;
+      }
+
+      if (!response.ok) throw new Error('Failed to fetch document');
+
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      window.open(objectUrl, '_blank', 'noopener,noreferrer');
+    } catch (error) {
+      console.error('Error viewing document:', error);
+      toast.error('Failed to open document');
+    }
+  };
 
   // Get products from Redux store
   const { products, loading: productsLoading, createLoading, updateLoading, deleteLoading, uploadLoading, error: productsError } = useSelector(
@@ -448,11 +503,6 @@ export default function UserProfile() {
               ) : (
                 <div className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 gap-6" : "space-y-4"}>
                   {products.map((product) => {
-                    const imageUrl = product.imagePath
-                      ? `${getBaseUrl().replace('/api/', '')}${product.imagePath}`
-                      : (product.filePaths && product.filePaths.length > 0
-                        ? `${getBaseUrl().replace('/api/', '')}${product.filePaths[0]}`
-                        : '/Image-not-found.png');
 
                     if (viewMode === 'list') {
                       return (
@@ -461,8 +511,8 @@ export default function UserProfile() {
                           className="group bg-white border border-gray-100 rounded-2xl overflow-hidden hover:border-blue-200 hover:shadow-lg transition-all duration-300 flex items-center p-4"
                         >
                           <div className="relative w-32 h-32 rounded-xl overflow-hidden bg-gray-50 shrink-0">
-                            <img
-                              src={imageUrl}
+                            <AuthenticatedImage
+                              src={getProductImageUrl(product.id)}
                               alt={product.name}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             />
@@ -508,8 +558,8 @@ export default function UserProfile() {
                         className="group bg-white border border-gray-100 rounded-2xl overflow-hidden hover:border-blue-200 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 flex flex-col"
                       >
                         <div className="relative h-48 overflow-hidden bg-gray-50">
-                          <img
-                            src={imageUrl}
+                          <AuthenticatedImage
+                            src={getProductImageUrl(product.id)}
                             alt={product.name}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
@@ -734,8 +784,17 @@ export default function UserProfile() {
                         {/* Existing Documents */}
                         {editingProduct?.filePaths?.map((path, index) => (
                           <div key={`existing-${index}`} className="flex justify-between items-center p-2 bg-gray-50 rounded-lg border border-gray-100 text-sm">
-                            <span className="truncate text-gray-400">{path.split('/').pop()}</span>
-                            <span className="text-[8px] font-bold text-gray-300 uppercase shrink-0">Existing</span>
+                            <div className="flex items-center gap-2 truncate">
+                              <span className="truncate text-gray-400">{path.split('/').pop()}</span>
+                              <span className="text-[8px] font-bold text-gray-300 uppercase shrink-0">Existing</span>
+                            </div>
+                            <button
+                              onClick={() => handleViewDoc(path, editingProduct.id)}
+                              className="p-1.5 rounded-lg hover:bg-gray-200 text-gray-400 hover:text-blue-600 transition-all"
+                              title="View Document"
+                            >
+                              <Eye className="w-4 h-4" />
+                            </button>
                           </div>
                         ))}
                       </div>
