@@ -12,7 +12,7 @@ export const endpoints = {
     getProductFile: (productId: string, fileName: string) => `product/${productId}/files/${fileName}`,
     getProductImage: (productId: string) => `product/${productId}/image`,
     uploadProductFiles: 'product/files',
-    downloadProductTemplate: 'profiles/download/product-template',
-    downloadProductTemplate1: 'profiles/download/product-template1',
+    downloadProductTemplate: 'product/download/product-template',
+    downloadProductTemplate1: 'product/download/product-template1',
     googleLogin: 'https://magic-carpet.data-magnum.com/v1/oauth2/authorization/google'
 }

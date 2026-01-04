@@ -4,5 +4,6 @@
   "/(protected)/request/page": "app/(protected)/request/page.js",
   "/(protected)/userprofile/page": "app/(protected)/userprofile/page.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js",
   "/page": "app/page.js"
 }

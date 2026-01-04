@@ -54,3 +54,23 @@
 [00:45:42.716] Server  LOG      ✓ Compiled in 31ms
 [00:46:01.179] Server  LOG      ✓ Compiled in 44ms
 [00:46:27.317] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[20:50:08.842] Server  LOG      ✓ Compiled in 160ms
+[20:50:09.616] Server  ERROR    ⨯ Error: export const dynamic = "force-static"/export const revalidate not configured on route "/manifest.webmanifest" with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+[20:50:15.981] Server  ERROR    ⨯ Error: export const dynamic = "force-static"/export const revalidate not configured on route "/manifest.webmanifest" with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+[20:52:17.561] Server  ERROR    ⨯ Error: export const dynamic = "force-static"/export const revalidate not configured on route "/manifest.webmanifest" with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+[20:52:19.371] Server  ERROR    ⨯ Error: export const dynamic = "force-static"/export const revalidate not configured on route "/manifest.webmanifest" with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+[20:52:22.072] Server  ERROR    ⨯ Error: export const dynamic = "force-static"/export const revalidate not configured on route "/manifest.webmanifest" with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+[20:52:22.198] Server  ERROR    ⨯ Error: export const dynamic = "force-static"/export const revalidate not configured on route "/manifest.webmanifest" with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+[20:52:22.209] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[20:57:08.701] Server  ERROR    ⨯ Error: export const dynamic = "force-static"/export const revalidate not configured on route "/manifest.webmanifest" with "output: export". See more info here: https://nextjs.org/docs/advanced-features/static-html-export
+[20:57:33.064] Server  LOG      ✓ Compiled in 210ms
+[20:59:14.435] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[21:00:20.798] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[21:20:39.309] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[21:20:45.476] Server  LOG      ✓ Compiled in 81ms
+[21:21:19.523] Browser ERROR   {}
+[21:21:29.224] Browser ERROR   {}
+[21:22:06.825] Server  LOG      ✓ Compiled in 82ms
+[21:22:10.258] Server  LOG      ✓ Compiled in 34ms
+[21:22:46.395] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[21:25:45.272] Server  LOG      ✓ Compiled in 81ms
