@@ -176,10 +176,10 @@ export default function DashboardPage() {
     ];
 
     const socialLinks = [
-      { icon: Linkedin, color: "text-[#0A66C2]", label: "LinkedIn", url: `https://linkedin.com/in/${row.name.toLowerCase().replace(" ", "-")}` },
-      { icon: Instagram, color: "text-pink-600", label: "Instagram", url: `https://instagram.com/${row.name.toLowerCase().replace(" ", ".")}` },
-      { icon: Twitter, color: "text-black", label: "X (Twitter)", url: `https://x.com/${row.name.toLowerCase().replace(" ", "")}` },
-      { icon: Globe, color: "text-purple-600", label: "Website", url: `https://facebook.com/${row.name.toLowerCase().replace(" ", ".")}` },
+      { icon: Linkedin, color: "text-[#0A66C2]", label: "LinkedIn", url: `https://linkedin.com/in/${row?.name?.toLowerCase().replace(" ", "-")}` },
+      { icon: Instagram, color: "text-pink-600", label: "Instagram", url: `https://instagram.com/${row?.name?.toLowerCase().replace(" ", ".")}` },
+      { icon: Twitter, color: "text-black", label: "X (Twitter)", url: `https://x.com/${row?.name?.toLowerCase().replace(" ", "")}` },
+      { icon: Globe, color: "text-purple-600", label: "Website", url: `https://facebook.com/${row?.name?.toLowerCase().replace(" ", ".")}` },
     ];
 
     const toggleSocial = (e: React.MouseEvent) => {
