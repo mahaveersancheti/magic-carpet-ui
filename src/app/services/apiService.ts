@@ -64,12 +64,21 @@ axiosInstance.interceptors.response.use(
 
     if (status === 400) {
       toast.error(message);
-    } else if (status === 401) {
+    } else if (status === 401 || status === 403) {
       // Clear auth state and navigate to login
       if (typeof window !== 'undefined') {
         const current = window.location.pathname || '';
         if (!current.includes('/landing') && !current.includes('/signin') && !current.includes('/signup')) {
-          // window.location.href = '/landing';
+          localStorage.removeItem('token');
+          const errorMsg = status === 403 
+            ? 'Access Denied: You do not have permission to perform this action.' 
+            : 'Session Expired: Please login again to continue.';
+          toast.error(errorMsg);
+          
+          // Small delay to allow the user to see the toast message
+          setTimeout(() => {
+            window.location.href = '/signin';
+          }, 2000);
         }
       }
     } else {

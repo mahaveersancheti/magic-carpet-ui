@@ -1,9 +1,54 @@
-[00:00:00.878] Server  LOG      ✓ Ready in 657ms
-[00:00:18.247] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:00:59.113] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:01:01.127] Browser ERROR   uncaughtError: TypeError: Cannot read properties of null (reading 'toLowerCase')
-[00:01:33.760] Browser ERROR   uncaughtError: TypeError: Cannot read properties of null (reading 'toLowerCase')
-[00:02:56.026] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:02:56.121] Server  LOG      ✓ Compiled in 54ms
-[00:03:23.904] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:37:46.731] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:00:00.930] Server  LOG      ✓ Ready in 697ms
+[00:00:37.177] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:02:34.615] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:02:34.806] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:03:31.542] Browser ERROR   Failed to decode token {}
+[00:03:36.318] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:03:36.543] Browser ERROR   Failed to decode token {}
+[00:03:36.543] Browser ERROR   Failed to decode token {}
+[00:03:50.598] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:03:50.767] Browser ERROR   Failed to decode token {}
+[00:03:50.768] Browser ERROR   Failed to decode token {}
+[00:08:32.511] Server  LOG      ✓ Compiled in 74ms
+[00:08:36.464] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:08:45.358] Server  LOG      ✓ Compiled in 77ms
+[00:08:54.378] Server  LOG      ✓ Compiled in 119ms
+[00:09:15.195] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:09:15.431] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:09:33.700] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:09:33.871] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:10:46.466] Browser ERROR   unhandledRejection: Error: Server error occurred: No static resource api/simulate-403.
+[00:10:47.071] Browser ERROR   unhandledRejection: Error: Server error occurred: No static resource api/simulate-403.
+[00:10:47.646] Browser ERROR   unhandledRejection: Error: Server error occurred: No static resource api/simulate-403.
+[00:10:48.175] Browser ERROR   unhandledRejection: Error: Server error occurred: No static resource api/simulate-403.
+[00:10:48.748] Browser ERROR   unhandledRejection: Error: Server error occurred: No static resource api/simulate-403.
+[00:10:49.293] Browser ERROR   unhandledRejection: Error: Server error occurred: No static resource api/simulate-403.
+[00:10:49.820] Browser ERROR   unhandledRejection: Error: Server error occurred: No static resource api/simulate-403.
+[00:10:52.895] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:22.188] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:23.894] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:26.361] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:11:34.429] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:12:30.638] Server  LOG      ✓ Compiled in 59ms
+[00:12:34.043] Server  LOG      ✓ Compiled in 86ms
+[00:13:54.290] Server  LOG      ✓ Compiled in 47ms
+[00:14:05.672] Server  LOG      ✓ Compiled in 49ms
+[00:14:31.207] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:14:58.187] Browser ERROR   Failed to decode token {}
+[00:15:00.428] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:15:00.566] Browser ERROR   Failed to decode token {}
+[00:15:00.566] Browser ERROR   Failed to decode token {}
+[00:15:01.843] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:16:21.768] Server  LOG      ✓ Compiled in 104ms
+[00:17:10.416] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:17:10.558] Browser ERROR   Failed to decode token {}
+[00:17:10.558] Browser ERROR   Failed to decode token {}
+[00:17:13.669] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:17:19.027] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:17:52.490] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:17:52.655] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:19:14.508] Browser ERROR   uncaughtError: TypeError: Cannot read properties of null (reading 'toLowerCase')
+[00:19:49.500] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:19:49.618] Server  LOG      ✓ Compiled in 48ms
+[00:19:49.925] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:20:08.168] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior

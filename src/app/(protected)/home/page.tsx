@@ -136,9 +136,9 @@ export default function DashboardPage() {
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(row =>
-        row.name.toLowerCase().includes(term) ||
-        row.company.toLowerCase().includes(term) ||
-        row.status.toLowerCase().includes(term)
+        row?.name?.toLowerCase()?.includes(term) ||
+        row?.company?.toLowerCase()?.includes(term) ||
+        row?.status?.toLowerCase()?.includes(term)
       );
     }
 
