@@ -97,7 +97,7 @@ export default function DashboardPage() {
   // Sorting & Filtering State
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
-  const [sortKey, setSortKey] = useState<keyof TableRow>("id");
+  const [sortKey, setSortKey] = useState<keyof TableRow | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   const viewDetails = (action: string, id: string) => {
@@ -145,6 +145,8 @@ export default function DashboardPage() {
     if (statusFilter !== "all") {
       filtered = filtered.filter(row => row.status === statusFilter);
     }
+
+    if (!sortKey) return filtered;
 
     return [...filtered].sort((a, b) => {
       const aVal = a[sortKey];
@@ -287,9 +289,10 @@ export default function DashboardPage() {
                   className="h-10 px-4 rounded-lg border border-gray-300 bg-white text-sm text-gray-700 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 >
                   <option value="all">All Status</option>
-                  <option value="Complete">Complete</option>
+                  <option value="COMPLETED">Completed</option>
                   <option value="Pending">Pending</option>
                   <option value="Failed">Failed</option>
+                  <option value="PROFILE_EXTRACTED">Profile Extracted</option>
                 </select>
               </div>
 
