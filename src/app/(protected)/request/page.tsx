@@ -1,6 +1,6 @@
 // components/MagicCarpetReport.tsx
 "use client";
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import { Volume2, Loader2, AlertCircle, Square, Play, Pause, RotateCcw, RotateCw, X, FastForward, Rewind, HelpCircle } from "lucide-react";
 import { UserGuide, GuideStep } from "@/app/components/UserGuide";
 import { useSearchParams } from "next/navigation";
@@ -92,6 +92,23 @@ function ReportContent() {
 
     // User Guide State
     const [showGuide, setShowGuide] = useState(false);
+
+    // Dynamic Dropdown State
+    const [dropdownDirection, setDropdownDirection] = useState<'up' | 'down'>('down');
+    const connectButtonRef = useRef<HTMLDivElement>(null);
+
+    const calculateDropdownPosition = () => {
+        if (connectButtonRef.current) {
+            const rect = connectButtonRef.current.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - rect.bottom;
+            // If space below is less than 300px, open upwards
+            if (spaceBelow < 250) {
+                setDropdownDirection('up');
+            } else {
+                setDropdownDirection('down');
+            }
+        }
+    };
 
     useEffect(() => {
         const hasSeenGuide = localStorage.getItem('hasSeenReportGuide_v1');
@@ -342,63 +359,6 @@ function ReportContent() {
                             <HelpCircle className="w-5 h-5" />
                         </button>
 
-                        <div className="relative group/connect">
-                            <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 rounded-xl text-sm font-bold text-white hover:bg-blue-700 shadow-md shadow-blue-500/20 transition">
-                                <span className="material-symbols-outlined text-lg">contact_mail</span>
-                                Connect
-                            </button>
-
-                            {/* Hover Dropdown */}
-                            <div className="absolute right-0 top-full pt-2 opacity-0 invisible group-hover/connect:opacity-100 group-hover/connect:visible transition-all duration-300 z-50">
-                                <div className="bg-white border border-gray-100 rounded-2xl shadow-xl p-2 flex flex-col gap-1 min-w-[190px]">
-                                    <div className="px-3 py-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-50 mb-1">
-                                        Quick Connect
-                                    </div>
-                                    <a
-                                        href={`mailto:${selectedProfile?.email || ''}?subject=${encodeURIComponent(`Following up from Magic Carpet: ${selectedProfile?.name || ''}`)}&body=${encodeURIComponent(`Hi ${selectedProfile?.name || ''},\n\nI was just reviewing some AI-generated insights regarding ${selectedProfile?.currentCompanyName || 'your company'} on Magic Carpet and thought it would be great to connect.\n\nLooking forward to hearing from you!`)}`}
-                                        className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50 text-gray-700 hover:text-blue-600 transition group/item"
-                                    >
-                                        <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center group-hover/item:bg-blue-100 transition">
-                                            <span className="material-symbols-outlined text-xl text-blue-600">mail</span>
-                                        </div>
-                                        <span className="text-sm font-bold">Email Prospect</span>
-                                    </a>
-                                    <a
-                                        href="https://meet.google.com/new"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-green-50 text-gray-700 hover:text-green-600 transition group/item"
-                                    >
-                                        <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center group-hover/item:bg-green-100 transition">
-                                            <span className="material-symbols-outlined text-xl text-green-600">video_call</span>
-                                        </div>
-                                        <span className="text-sm font-bold">Google Meet</span>
-                                    </a>
-                                    <a
-                                        href="https://teams.microsoft.com/l/meeting/new"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-indigo-50 text-gray-700 hover:text-indigo-600 transition group/item"
-                                    >
-                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center group-hover/item:bg-indigo-100 transition">
-                                            <span className="material-symbols-outlined text-xl text-indigo-600">groups</span>
-                                        </div>
-                                        <span className="text-sm font-bold">MS Teams</span>
-                                    </a>
-                                    <a
-                                        href="https://zoom.us/start/videomeeting"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-sky-50 text-gray-700 hover:text-sky-600 transition group/item"
-                                    >
-                                        <div className="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center group-hover/item:bg-sky-100 transition">
-                                            <span className="material-symbols-outlined text-xl text-sky-600">videocam</span>
-                                        </div>
-                                        <span className="text-sm font-bold">Zoom Meeting</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
 
                         <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-blue-600 shadow-sm transition">
                             <span className="material-symbols-outlined text-lg">ios_share</span>
@@ -1011,7 +971,7 @@ function ReportContent() {
                     </div>
 
                     {/* AI Recommendation Banner */}
-                    <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group">
+                    <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative group">
                         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-white/10 transition-colors duration-700" />
                         <div className="relative z-10">
                             <div className="space-y-6">
@@ -1030,34 +990,63 @@ function ReportContent() {
                                     </button>
                                 </div>
                                 <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                                    <button className="h-11 px-4 bg-white text-blue-700 font-bold rounded-xl hover:bg-blue-50 transition-all shadow-lg active:scale-95 text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
-                                        <span className="material-symbols-outlined text-sm">calendar_month</span>
-                                        Schedule Meeting
-                                    </button>
-                                    <button className="h-11 px-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
-                                        <span className="material-symbols-outlined text-sm">description</span>
-                                        Create Proposal
-                                    </button>
-                                    <button className="h-11 px-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
-                                        <span className="material-symbols-outlined text-sm">mail</span>
-                                        Send Email
-                                    </button>
-                                    <button className="h-11 px-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
-                                        <span className="material-symbols-outlined text-sm">chat</span>
-                                        WhatsApp
-                                    </button>
-                                    <button className="h-11 px-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
-                                        <span className="material-symbols-outlined text-sm">tag</span>
-                                        Slack
-                                    </button>
-                                    <button className="h-11 px-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
-                                        <span className="material-symbols-outlined text-sm">send</span>
-                                        Telegram
-                                    </button>
-                                    <button className="h-11 px-4 bg-white/10 text-white font-bold rounded-xl border border-white/20 hover:bg-white/20 transition-all active:scale-95 backdrop-blur-sm text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
-                                        <span className="material-symbols-outlined text-sm">analytics</span>
-                                        Update CRM
-                                    </button>
+                                    <div className="relative group/connect" ref={connectButtonRef} onMouseEnter={calculateDropdownPosition}>
+                                        <button className="flex items-center gap-2 px-6 h-11 bg-white rounded-xl text-xs font-black text-blue-700 hover:bg-blue-50 shadow-xl transition active:scale-95 uppercase tracking-widest">
+                                            <span className="material-symbols-outlined text-lg">contact_mail</span>
+                                            Connect
+                                        </button>
+
+                                        {/* Hover Dropdown */}
+                                        <div className={`absolute left-0 ${dropdownDirection === 'up' ? 'bottom-full mb-2' : 'top-full pt-2'} opacity-0 invisible group-hover/connect:opacity-100 group-hover/connect:visible transition-all duration-300 z-50`}>
+                                            <div className="bg-white border border-gray-100 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 min-w-[220px]">
+                                                <div className="px-3 py-2 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-50 mb-1">
+                                                    Quick Connect
+                                                </div>
+                                                <a
+                                                    href={`mailto:${selectedProfile?.email || ''}?subject=${encodeURIComponent(`Following up from Magic Carpet: ${selectedProfile?.name || ''}`)}&body=${encodeURIComponent(`Hi ${selectedProfile?.name || ''},\n\nI was just reviewing some AI-generated insights regarding ${selectedProfile?.currentCompanyName || 'your company'} on Magic Carpet and thought it would be great to connect.\n\nLooking forward to hearing from you!`)}`}
+                                                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50 text-gray-700 hover:text-blue-600 transition group/item"
+                                                >
+                                                    <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center group-hover/item:bg-blue-100 transition">
+                                                        <span className="material-symbols-outlined text-xl text-blue-600">mail</span>
+                                                    </div>
+                                                    <span className="text-xs font-black uppercase tracking-tight">Email Prospect</span>
+                                                </a>
+                                                <a
+                                                    href="https://meet.google.com/new"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-green-50 text-gray-700 hover:text-green-600 transition group/item"
+                                                >
+                                                    <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center group-hover/item:bg-green-100 transition">
+                                                        <span className="material-symbols-outlined text-xl text-green-600">video_call</span>
+                                                    </div>
+                                                    <span className="text-xs font-black uppercase tracking-tight">Google Meet</span>
+                                                </a>
+                                                <a
+                                                    href="https://teams.microsoft.com/l/meeting/new"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-indigo-50 text-gray-700 hover:text-indigo-600 transition group/item"
+                                                >
+                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center group-hover/item:bg-indigo-100 transition">
+                                                        <span className="material-symbols-outlined text-xl text-indigo-600">groups</span>
+                                                    </div>
+                                                    <span className="text-xs font-black uppercase tracking-tight">MS Teams</span>
+                                                </a>
+                                                <a
+                                                    href="https://zoom.us/start/videomeeting"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-sky-50 text-gray-700 hover:text-sky-600 transition group/item"
+                                                >
+                                                    <div className="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center group-hover/item:bg-sky-100 transition">
+                                                        <span className="material-symbols-outlined text-xl text-sky-600">videocam</span>
+                                                    </div>
+                                                    <span className="text-xs font-black uppercase tracking-tight">Zoom Meeting</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
