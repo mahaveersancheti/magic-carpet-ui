@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchProfileById, clearSelectedProfile } from "../../redux/slices/ProfileSlice";
+import { api } from "../../services/apiService";
 import toast from 'react-hot-toast';
 
 const ScoreGauge = ({ score, size = 100, title, showPercentage = false }: { score: number; size?: number; title?: string; showPercentage?: boolean }) => {
@@ -440,25 +441,14 @@ function ReportContent() {
         if (!note.trim() || !id) return;
 
         try {
-            const response = await fetch(`http://magic-carpet.data-magnum.com:8080/api/profiles/${id}/notes`, {
-                method: 'POST',
-                headers: {
-                    'accept': '*/*',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    text: note,
-                    date: new Date().toISOString()
-                })
+            await api.post(`profiles/${id}/notes`, {
+                text: note,
+                date: new Date().toISOString()
             });
 
-            if (response.ok) {
-                setObservations([...observations, { text: note, time: new Date().toLocaleTimeString() }]);
-                setNote("");
-                toast.success("Note saved successfully!");
-            } else {
-                throw new Error('Failed to save note');
-            }
+            setObservations([...observations, { text: note, time: new Date().toLocaleTimeString() }]);
+            setNote("");
+            toast.success("Note saved successfully!");
         } catch (error) {
             console.error('Error saving note:', error);
             toast.error("Failed to save note. Please try again.");

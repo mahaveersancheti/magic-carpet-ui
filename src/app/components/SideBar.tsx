@@ -15,6 +15,8 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     useEffect(() => {
         if (pathname?.includes("/userprofile")) {
             setSelectedMenu("User Profile");
+        } else if (pathname?.includes("/products")) {
+            setSelectedMenu("Products");
         } else if (pathname?.includes("/linkedin-action")) {
             setSelectedMenu("LinkedIn Action");
         } else {
@@ -30,6 +32,9 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         }
         if (label === "User Profile") {
             router.push("/userprofile");
+        }
+        if (label === "Products") {
+            router.push("/products");
         }
         if (label === "LinkedIn Action") {
             router.push("/linkedin-action");
@@ -50,6 +55,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
 
     const menuItems = [
         ["person", "User Profile"],
+        ["inventory_2", "Products"],
     ];
 
     return (

@@ -1,6 +1,7 @@
 export const endpoints = {
     login: 'user/login',
     register: 'user/register',
+    updateUser: (userId: string) => `user/${userId}`,
     profiles: 'profiles',
     getProfileById: (id: string) => `profiles/${id}`,
     getProfileByIdPopulateDummy: (id: string) => `profiles/${id}/populate-dummy`,

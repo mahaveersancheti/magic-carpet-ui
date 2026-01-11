@@ -301,6 +301,7 @@
     --color-white: #fff;
     --spacing: .25rem;
     --container-xs: 20rem;
+    --container-sm: 24rem;
     --container-md: 28rem;
     --container-lg: 32rem;
     --container-xl: 36rem;
@@ -1398,6 +1399,10 @@
 
   .max-w-md {
     max-width: var(--container-md);
+  }
+
+  .max-w-sm {
+    max-width: var(--container-sm);
   }
 
   .max-w-xl {
@@ -2998,6 +3003,22 @@
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
 
+  .shadow-blue-200 {
+    --tw-shadow-color: #bedbff;
+  }
+
+  @supports (color: lab(0% 0 0)) {
+    .shadow-blue-200 {
+      --tw-shadow-color: lab(86.15% -4.04379 -21.0797);
+    }
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .shadow-blue-200 {
+      --tw-shadow-color: color-mix(in oklab, var(--color-blue-200) var(--tw-shadow-alpha), transparent);
+    }
+  }
+
   .shadow-blue-500\/10 {
     --tw-shadow-color: #3080ff1a;
   }
@@ -3035,6 +3056,22 @@
   @supports (color: color-mix(in lab, red, red)) {
     .shadow-green-600\/20 {
       --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-green-600) 20%, transparent) var(--tw-shadow-alpha), transparent);
+    }
+  }
+
+  .shadow-red-200 {
+    --tw-shadow-color: #ffcaca;
+  }
+
+  @supports (color: lab(0% 0 0)) {
+    .shadow-red-200 {
+      --tw-shadow-color: lab(86.017% 19.8815 7.75869);
+    }
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .shadow-red-200 {
+      --tw-shadow-color: color-mix(in oklab, var(--color-red-200) var(--tw-shadow-alpha), transparent);
     }
   }
 
