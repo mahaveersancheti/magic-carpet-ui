@@ -1,12 +1,13 @@
 // components/MagicCarpetReport.tsx
 "use client";
 import React, { useState, useEffect, useRef, Suspense } from "react";
-import { Volume2, Loader2, AlertCircle, Square, Play, Pause, RotateCcw, RotateCw, X, FastForward, Rewind, HelpCircle } from "lucide-react";
+import { Volume2, Loader2, AlertCircle, Square, Play, Pause, RotateCcw, RotateCw, X, FastForward, Rewind, HelpCircle, Mic, MicOff } from "lucide-react";
 import { UserGuide, GuideStep } from "@/app/components/UserGuide";
 import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchProfileById, clearSelectedProfile } from "../../redux/slices/ProfileSlice";
+import toast from 'react-hot-toast';
 
 const ScoreGauge = ({ score, size = 100, title, showPercentage = false }: { score: number; size?: number; title?: string; showPercentage?: boolean }) => {
     const [animatedScore, setAnimatedScore] = useState(0);
@@ -97,6 +98,56 @@ function ReportContent() {
     const [dropdownDirection, setDropdownDirection] = useState<'up' | 'down'>('down');
     const connectButtonRef = useRef<HTMLDivElement>(null);
 
+    // Play All State
+    const [playAllIndex, setPlayAllIndex] = useState<number | null>(null);
+
+    // Voice Dictation State
+    const [isListening, setIsListening] = useState(false);
+    const recognitionRef = useRef<any>(null);
+
+    const startVoiceDictation = () => {
+        if (isListening) {
+            recognitionRef.current?.stop();
+            setIsListening(false);
+            return;
+        }
+
+        const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            toast.error("Voice dictation not supported in this browser.");
+            return;
+        }
+
+        const recognition = new SpeechRecognition();
+        recognitionRef.current = recognition;
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        recognition.onstart = () => {
+            setIsListening(true);
+            toast.success("Listening...");
+        };
+
+        recognition.onresult = (event: any) => {
+            const transcript = event.results[0][0].transcript;
+            setNote(prev => prev ? `${prev} ${transcript}` : transcript);
+            toast.success(`Captured: "${transcript}"`);
+        };
+
+        recognition.onerror = (event: any) => {
+            console.error("Speech recognition error", event.error);
+            toast.error("Error identifying speech. Please try again.");
+            setIsListening(false);
+        };
+
+        recognition.onend = () => {
+            setIsListening(false);
+        };
+
+        recognition.start();
+    };
+
     const calculateDropdownPosition = () => {
         if (connectButtonRef.current) {
             const rect = connectButtonRef.current.getBoundingClientRect();
@@ -109,7 +160,6 @@ function ReportContent() {
             }
         }
     };
-
     useEffect(() => {
         const hasSeenGuide = localStorage.getItem('hasSeenReportGuide_v1');
         if (!hasSeenGuide && !loading && selectedProfile) {
@@ -150,6 +200,15 @@ function ReportContent() {
     ];
 
     useEffect(() => {
+        if ((selectedProfile as any)?.notes) {
+            setObservations((selectedProfile as any).notes.map((note: any) => ({
+                text: note.text,
+                time: new Date(note.date).toLocaleDateString() + ' ' + new Date(note.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            })));
+        }
+    }, [selectedProfile]);
+
+    useEffect(() => {
         if (id) {
             dispatch(fetchProfileById(id));
         }
@@ -158,38 +217,14 @@ function ReportContent() {
         };
     }, [dispatch, id]);
 
-    if (loading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-background-light">
-                <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
-            </div>
-        );
-    }
 
-    if (error) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-background-light p-4">
-                <div className="bg-red-50 border border-red-200 p-6 rounded-2xl flex flex-col items-center gap-3 text-red-700">
-                    <AlertCircle className="w-10 h-10" />
-                    <h3 className="text-lg font-bold">Failed to load report</h3>
-                    <p>{error}</p>
-                </div>
-            </div>
-        );
-    }
-
-    if (!selectedProfile) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-background-light">
-                <div className="text-gray-500">No profile data found.</div>
-            </div>
-        );
-    }
 
     // Helper to safely parse or use data
     const safeList = (list: any[]) => Array.isArray(list) ? list : [];
 
-    const REPORT_JSON = {
+    const REPORT_JSON = React.useMemo(() => {
+        if (!selectedProfile) return null;
+        return {
         prospect: {
             initials: selectedProfile.name ? selectedProfile.name.split(' ').map((n: string) => n[0]).join('').substring(0, 2).toUpperCase() : "NA",
             name: selectedProfile.name || "Unknown",
@@ -239,6 +274,112 @@ function ReportContent() {
         timing: (selectedProfile as any).timing || {},
         recommendationBody: (selectedProfile as any).actionRecommendation || "No specific recommendation generated."
     };
+    }, [selectedProfile]);
+
+    const PLAYLIST = React.useMemo(() => {
+
+        if (!selectedProfile || !REPORT_JSON) return [];
+        return [
+            {
+                id: 'profileOverview',
+                title: 'Profile Overview',
+                getText: () => {
+                    const skills = ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills || []).join(', ');
+                    return `Summary: ${selectedProfile.about || "No detailed summary available"}. Core Competencies: ${skills}`;
+                }
+            },
+            {
+                id: 'financialSnapshot',
+                title: 'Financial Snapshot',
+                getText: () => {
+                    const text = REPORT_JSON.financialSnapshot.map((item: any) => {
+                        const parts: string[] = [];
+                        const labelMap: any = {
+                            revenue: 'Revenue', profit: 'Profit', growth: 'Growth',
+                            debt: 'Debt', marketCap: 'Market Cap', profitMargin: 'Profit Margin',
+                            roe: 'ROE', roce: 'ROCE', peRatio: 'PE Ratio', budget: 'Budget'
+                        };
+                        Object.entries(item).forEach(([k, v]) => {
+                            if (v && v !== 'N/A' && labelMap[k]) {
+                                parts.push(`${labelMap[k]}: ${v}`);
+                            }
+                        });
+                        return parts.join(', ');
+                    }).join('. ');
+                    return text || "No financial data available.";
+                }
+            },
+            {
+                id: 'productFit',
+                title: 'Strategic Product Fit',
+                getText: () => {
+                   if (!REPORT_JSON.profileSummary.productFitAnalysis) return "No evaluation data available.";
+                    const analysis = REPORT_JSON.profileSummary.productFitAnalysis;
+                    const rating = analysis?.rating || 'Strong Fit';
+                    const score = analysis?.score || 0;
+                    const features = safeList(analysis?.features).join(', ');
+                    const valueProp = analysis?.valueProps?.time || 'Strategic efficiency';
+                    const differentiators = safeList(analysis?.differentiators).join(', ');
+                    return `Fit Rating: ${rating} with a score of ${score}%. Features: ${features}. Key Value Prop: ${valueProp}. Differentiators: ${differentiators}`;
+                }
+            },
+            {
+                id: 'competencies',
+                title: 'Core Competencies',
+                getText: () => {
+                     const skills = ((selectedProfile as any).allSkills || (selectedProfile as any).topSkills || []).join(', ');
+                     return skills || "No skills detected.";
+                }
+            },
+            {
+                id: 'recentNews',
+                title: 'Recent News',
+                getText: () => {
+                    const text = REPORT_JSON.recentNews.map(n => `${n.title}. ${n.summary}`).join('. ');
+                    return text || "No recent news found.";
+                }
+            },
+            {
+                id: 'industryOutlook',
+                title: 'Industry Outlook',
+                getText: () => {
+                    const text = REPORT_JSON.industryOutlook.map((item: any) =>
+                        `${item.title || ''}. ${item.description || (typeof item === 'string' ? item : '')}`
+                    ).join('. ');
+                    return text || "No outlook data available.";
+                }
+            },
+            {
+                id: 'conversations',
+                title: 'Conversation Starters',
+                getText: () => {
+                    const text = REPORT_JSON.conversations.map((item: any) => `${item.question}`).join('. ');
+                    return text || "No openers available.";
+                }
+            },
+             {
+                id: 'psychologyApproach',
+                title: 'Psychology Approach',
+                getText: () => {
+                    const text = safeList((selectedProfile as any).psychologyApproach?.dos).map((item: string) => `Do: ${item}`).concat(safeList((selectedProfile as any).psychologyApproach?.donts).map((item: string) => `Don't: ${item}`)).join('. ');
+                    return text || "No strategy data available.";
+                }
+            },
+            {
+                id: 'objections',
+                title: 'Objection Handling',
+                getText: () => {
+                    const text = REPORT_JSON.objections.map(o => `Objection: ${o.objection}. Strategy: ${o.counter}`).join('. ');
+                    return text || "No objections predicted.";
+                }
+            },
+            {
+                id: 'recommendation',
+                title: 'AI Recommendation',
+                getText: () => REPORT_JSON.recommendationBody
+            }
+        ];
+    }, [selectedProfile, REPORT_JSON]);
 
     // Text-to-speech helpers
     const startSpeechFromIndex = (text: string, index: number, sectionId: string) => {
@@ -257,9 +398,81 @@ function ReportContent() {
         setIsPaused(false);
     };
 
-    const handleSpeak = (text: string, sectionId: string, sectionTitle: string) => {
+    useEffect(() => {
+        if (playAllIndex !== null && playAllIndex < PLAYLIST.length) {
+            const item = PLAYLIST[playAllIndex];
+            handleSpeak(item.getText(), item.id, item.title, true);
+        } else if (playAllIndex !== null && playAllIndex >= PLAYLIST.length) {
+            setPlayAllIndex(null);
+        }
+    }, [playAllIndex, PLAYLIST]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-background-light">
+                <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-background-light p-4">
+                <div className="bg-red-50 border border-red-200 p-6 rounded-2xl flex flex-col items-center gap-3 text-red-700">
+                    <AlertCircle className="w-10 h-10" />
+                    <h3 className="text-lg font-bold">Failed to load report</h3>
+                    <p>{error}</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!selectedProfile || !REPORT_JSON) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-background-light">
+                <div className="text-gray-500">No profile data found.</div>
+            </div>
+        );
+    }
+
+
+    const handleSaveNote = async () => {
+        if (!note.trim() || !id) return;
+
+        try {
+            const response = await fetch(`http://magic-carpet.data-magnum.com:8080/api/profiles/${id}/notes`, {
+                method: 'POST',
+                headers: {
+                    'accept': '*/*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    text: note,
+                    date: new Date().toISOString()
+                })
+            });
+
+            if (response.ok) {
+                setObservations([...observations, { text: note, time: new Date().toLocaleTimeString() }]);
+                setNote("");
+                toast.success("Note saved successfully!");
+            } else {
+                throw new Error('Failed to save note');
+            }
+        } catch (error) {
+            console.error('Error saving note:', error);
+            toast.error("Failed to save note. Please try again.");
+        }
+    };
+
+    const handleSpeak = (text: string, sectionId: string, sectionTitle: string, isAutoPlay = false) => {
         if ('speechSynthesis' in window) {
-            if (speakingSection === sectionId) {
+            // If manually clicked while playing all, stop sequence unless it's the auto-trigger
+            if (!isAutoPlay && playAllIndex !== null) {
+                setPlayAllIndex(null);
+            }
+
+            if (speakingSection === sectionId && !isAutoPlay) {
                 window.speechSynthesis.cancel();
                 setSpeakingSection(null);
                 setCurrentText("");
@@ -281,12 +494,19 @@ function ReportContent() {
                     setSpeakingSection(null);
                     setCurrentText("");
                     setCurrentCharIndex(0);
+                    if (isAutoPlay) {
+                        setPlayAllIndex(prev => prev !== null ? prev + 1 : null);
+                    }
                 };
                 window.speechSynthesis.speak(utterance);
             }
         } else {
             console.warn("Text-to-speech not supported.");
         }
+    };
+
+    const handleExportPDF = () => {
+        window.print();
     };
 
     const handlePauseToggle = () => {
@@ -352,15 +572,121 @@ function ReportContent() {
                     </button>
                     <div id="action-bar" className="flex items-center gap-3">
                         <button
+                            onClick={startVoiceDictation}
+                            className={`w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 shadow-sm transition ${isListening ? 'text-red-500 border-red-200 animate-pulse' : 'text-gray-400 hover:text-blue-600 hover:border-blue-200'}`}
+                            title="Voice Note"
+                        >
+                            {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+                        </button>
+
+                        <button
+                            onClick={() => {
+                                if (id) {
+                                    dispatch(fetchProfileById(id));
+                                }
+                            }}
+                            className="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-blue-600 hover:border-blue-200 shadow-sm transition"
+                            title="Refresh Data"
+                        >
+                            <RotateCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
+                        </button>
+
+                        <button
                             onClick={() => setShowGuide(true)}
                             className="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-blue-600 hover:border-blue-200 shadow-sm transition"
                             title="Help / Tour"
                         >
                             <HelpCircle className="w-5 h-5" />
                         </button>
+                        
+                        <button
+                            onClick={() => {
+                                if (playAllIndex !== null) {
+                                    setPlayAllIndex(null);
+                                    window.speechSynthesis.cancel();
+                                    setSpeakingSection(null);
+                                } else {
+                                    setPlayAllIndex(0);
+                                }
+                            }}
+                            className={`flex items-center gap-2 px-4 py-2 ${playAllIndex !== null ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-blue-600'} border rounded-xl text-sm font-bold shadow-sm transition`}
+                        >
+                            {playAllIndex !== null ? (
+                                <>
+                                    <Square className="w-4 h-4 fill-current" />
+                                    <span>Stop Playing</span>
+                                </>
+                            ) : (
+                                <>
+                                    <Play className="w-4 h-4 fill-current" />
+                                    <span>Play Report</span>
+                                </>
+                            )}
+                        </button>
 
 
-                        <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-blue-600 shadow-sm transition">
+                        <div className="relative group/connect" ref={connectButtonRef} onMouseEnter={calculateDropdownPosition}>
+                            <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-blue-600 shadow-sm transition">
+                                <span className="material-symbols-outlined text-lg">contact_mail</span>
+                                Connect
+                            </button>
+
+                            {/* Hover Dropdown */}
+                            <div className={`absolute right-0 w-[220px] ${dropdownDirection === 'up' ? 'bottom-full mb-2' : 'top-full pt-2'} opacity-0 invisible group-hover/connect:opacity-100 group-hover/connect:visible transition-all duration-300 z-50`}>
+                                <div className="bg-white border border-gray-100 rounded-2xl shadow-xl p-2 flex flex-col gap-1">
+                                    <div className="px-3 py-2 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-50 mb-1">
+                                        Quick Connect
+                                    </div>
+                                    <a
+                                        href={`mailto:${selectedProfile?.email || ''}?subject=${encodeURIComponent(`Following up from Magic Carpet: ${selectedProfile?.name || ''}`)}&body=${encodeURIComponent(`Hi ${selectedProfile?.name || ''},\n\nI was just reviewing some AI-generated insights regarding ${selectedProfile?.currentCompanyName || 'your company'} on Magic Carpet and thought it would be great to connect.\n\nLooking forward to hearing from you!`)}`}
+                                        className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50 text-gray-700 hover:text-blue-600 transition group/item"
+                                    >
+                                        <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center group-hover/item:bg-blue-100 transition">
+                                            <span className="material-symbols-outlined text-xl text-blue-600">mail</span>
+                                        </div>
+                                        <span className="text-xs font-black uppercase tracking-tight">Email Prospect</span>
+                                    </a>
+                                    <a
+                                        href="https://meet.google.com/new"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-green-50 text-gray-700 hover:text-green-600 transition group/item"
+                                    >
+                                        <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center group-hover/item:bg-green-100 transition">
+                                            <span className="material-symbols-outlined text-xl text-green-600">video_call</span>
+                                        </div>
+                                        <span className="text-xs font-black uppercase tracking-tight">Google Meet</span>
+                                    </a>
+                                    <a
+                                        href="https://teams.microsoft.com/l/meeting/new"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-indigo-50 text-gray-700 hover:text-indigo-600 transition group/item"
+                                    >
+                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center group-hover/item:bg-indigo-100 transition">
+                                            <span className="material-symbols-outlined text-xl text-indigo-600">groups</span>
+                                        </div>
+                                        <span className="text-xs font-black uppercase tracking-tight">MS Teams</span>
+                                    </a>
+                                    <a
+                                        href="https://zoom.us/start/videomeeting"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-sky-50 text-gray-700 hover:text-sky-600 transition group/item"
+                                    >
+                                        <div className="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center group-hover/item:bg-sky-100 transition">
+                                            <span className="material-symbols-outlined text-xl text-sky-600">videocam</span>
+                                        </div>
+                                        <span className="text-xs font-black uppercase tracking-tight">Zoom Meeting</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button
+                            onClick={handleExportPDF}
+                            className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-blue-600 shadow-sm transition no-print"
+                        >
                             <span className="material-symbols-outlined text-lg">ios_share</span>
                             Export PDF
                         </button>
@@ -403,14 +729,14 @@ function ReportContent() {
                                     title="Warm Call Score"
                                 />
                             </div>
-                            <div className="flex gap-2 mt-4">
+                            {/* <div className="flex gap-2 mt-4">
                                 <div className="p-2 rounded-xl bg-orange-50 border border-orange-100 flex items-center gap-2">
                                     <span className="text-[10px] font-black text-orange-900 px-1">MEETINGS: -</span>
                                 </div>
                                 <div className="p-2 rounded-xl bg-blue-50 border border-blue-100 flex items-center gap-2">
                                     <span className="text-[10px] font-black text-blue-900 px-1">CONTACTS: -</span>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
@@ -971,82 +1297,60 @@ function ReportContent() {
                     </div>
 
                     {/* AI Recommendation Banner */}
-                    <section className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white rounded-[2rem] p-8 shadow-xl relative group">
-                        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-white/10 transition-colors duration-700" />
+                    {/* AI Recommendation Banner */}
+                    <section className="bg-white text-gray-900 rounded-[2rem] p-8 border border-gray-200 shadow-sm relative group">
+                        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-50 rounded-full -mr-48 -mt-48 blur-3xl group-hover:bg-blue-100 transition-colors duration-700 opacity-50" />
                         <div className="relative z-10">
                             <div className="space-y-6">
                                 <div className="flex flex-col md:flex-row items-start justify-between gap-6">
                                     <div className="flex-1 space-y-4 text-center md:text-left">
-                                        <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-black border border-white/20 uppercase tracking-widest">
+                                        <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 text-[10px] font-black border border-blue-100 uppercase tracking-widest">
                                             AI Action Recommendation
                                         </div>
-                                        <h3 className="text-lg font-black leading-tight max-w-2xl">{REPORT_JSON.recommendationBody}</h3>
+                                        <h3 className="text-lg font-black leading-tight max-w-2xl text-gray-900">{REPORT_JSON.recommendationBody}</h3>
                                     </div>
                                     <button
                                         onClick={() => handleSpeak(REPORT_JSON.recommendationBody, 'recommendation', 'AI Recommendation')}
-                                        className={`h-12 w-12 flex items-center justify-center rounded-xl transition-all active:scale-95 border border-white/20 backdrop-blur-sm shrink-0 ${speakingSection === 'recommendation' ? 'bg-red-500 text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}
+                                        className={`h-12 w-12 flex items-center justify-center rounded-xl transition-all active:scale-95 border border-gray-100 shrink-0 ${speakingSection === 'recommendation' ? 'bg-red-500 text-white' : 'bg-white text-gray-400 hover:text-blue-600 hover:bg-blue-50 shadow-sm'}`}
                                     >
                                         {speakingSection === 'recommendation' ? <Square className="w-4 h-4" /> : <Volume2 className="w-5 h-5" />}
                                     </button>
                                 </div>
                                 <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                                    <div className="relative group/connect" ref={connectButtonRef} onMouseEnter={calculateDropdownPosition}>
-                                        <button className="flex items-center gap-2 px-6 h-11 bg-white rounded-xl text-xs font-black text-blue-700 hover:bg-blue-50 shadow-xl transition active:scale-95 uppercase tracking-widest">
-                                            <span className="material-symbols-outlined text-lg">contact_mail</span>
-                                            Connect
-                                        </button>
-
-                                        {/* Hover Dropdown */}
-                                        <div className={`absolute left-0 ${dropdownDirection === 'up' ? 'bottom-full mb-2' : 'top-full pt-2'} opacity-0 invisible group-hover/connect:opacity-100 group-hover/connect:visible transition-all duration-300 z-50`}>
-                                            <div className="bg-white border border-gray-100 rounded-2xl shadow-2xl p-2 flex flex-col gap-1 min-w-[220px]">
-                                                <div className="px-3 py-2 text-[10px] font-black text-gray-400 uppercase tracking-widest border-b border-gray-50 mb-1">
-                                                    Quick Connect
-                                                </div>
-                                                <a
-                                                    href={`mailto:${selectedProfile?.email || ''}?subject=${encodeURIComponent(`Following up from Magic Carpet: ${selectedProfile?.name || ''}`)}&body=${encodeURIComponent(`Hi ${selectedProfile?.name || ''},\n\nI was just reviewing some AI-generated insights regarding ${selectedProfile?.currentCompanyName || 'your company'} on Magic Carpet and thought it would be great to connect.\n\nLooking forward to hearing from you!`)}`}
-                                                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50 text-gray-700 hover:text-blue-600 transition group/item"
-                                                >
-                                                    <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center group-hover/item:bg-blue-100 transition">
-                                                        <span className="material-symbols-outlined text-xl text-blue-600">mail</span>
-                                                    </div>
-                                                    <span className="text-xs font-black uppercase tracking-tight">Email Prospect</span>
-                                                </a>
-                                                <a
-                                                    href="https://meet.google.com/new"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-green-50 text-gray-700 hover:text-green-600 transition group/item"
-                                                >
-                                                    <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center group-hover/item:bg-green-100 transition">
-                                                        <span className="material-symbols-outlined text-xl text-green-600">video_call</span>
-                                                    </div>
-                                                    <span className="text-xs font-black uppercase tracking-tight">Google Meet</span>
-                                                </a>
-                                                <a
-                                                    href="https://teams.microsoft.com/l/meeting/new"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-indigo-50 text-gray-700 hover:text-indigo-600 transition group/item"
-                                                >
-                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center group-hover/item:bg-indigo-100 transition">
-                                                        <span className="material-symbols-outlined text-xl text-indigo-600">groups</span>
-                                                    </div>
-                                                    <span className="text-xs font-black uppercase tracking-tight">MS Teams</span>
-                                                </a>
-                                                <a
-                                                    href="https://zoom.us/start/videomeeting"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-sky-50 text-gray-700 hover:text-sky-600 transition group/item"
-                                                >
-                                                    <div className="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center group-hover/item:bg-sky-100 transition">
-                                                        <span className="material-symbols-outlined text-xl text-sky-600">videocam</span>
-                                                    </div>
-                                                    <span className="text-xs font-black uppercase tracking-tight">Zoom Meeting</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <a
+                                        href={`mailto:${selectedProfile?.email || ''}?subject=${encodeURIComponent(`Following up from Magic Carpet: ${selectedProfile?.name || ''}`)}&body=${encodeURIComponent(`Hi ${selectedProfile?.name || ''},\n\nI was just reviewing some AI-generated insights regarding ${selectedProfile?.currentCompanyName || 'your company'} on Magic Carpet and thought it would be great to connect.\n\nLooking forward to hearing from you!`)}`}
+                                        className="flex items-center gap-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-xs font-black transition active:scale-95 uppercase tracking-widest border border-blue-100"
+                                    >
+                                        <span className="material-symbols-outlined text-lg">mail</span>
+                                        Email
+                                    </a>
+                                    <a
+                                        href="https://meet.google.com/new"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-2 px-4 py-2 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl text-xs font-black transition active:scale-95 uppercase tracking-widest border border-green-100"
+                                    >
+                                        <span className="material-symbols-outlined text-lg">video_call</span>
+                                        Meet
+                                    </a>
+                                    <a
+                                        href="https://teams.microsoft.com/l/meeting/new"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-2 px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-black transition active:scale-95 uppercase tracking-widest border border-indigo-100"
+                                    >
+                                        <span className="material-symbols-outlined text-lg">groups</span>
+                                        Teams
+                                    </a>
+                                    <a
+                                        href="https://zoom.us/start/videomeeting"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-center gap-2 px-4 py-2 bg-sky-50 hover:bg-sky-100 text-sky-700 rounded-xl text-xs font-black transition active:scale-95 uppercase tracking-widest border border-sky-100"
+                                    >
+                                        <span className="material-symbols-outlined text-lg">videocam</span>
+                                        Zoom
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -1060,13 +1364,31 @@ function ReportContent() {
                                 Strategic Notes
                             </h3>
                             <button
-                                onClick={() => alert("PDF Exporting...")}
-                                className="h-10 px-4 flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-black rounded-xl text-[10px] transition-all shadow-lg shadow-green-600/20 active:scale-95 uppercase tracking-widest"
+                                onClick={handleExportPDF}
+                                className="h-10 px-4 flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-black rounded-xl text-[10px] transition-all shadow-lg shadow-green-600/20 active:scale-95 uppercase tracking-widest no-print"
                             >
                                 <span className="material-symbols-outlined text-base">picture_as_pdf</span>
                                 EXPORT REPORT
                             </button>
                         </div>
+
+
+                        {observations.length > 0 ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                                {observations.map((o: any, i) => (
+                                    <div key={i} className="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:border-blue-300 hover:shadow-md transition-all group/note relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-full -mr-12 -mt-12 opacity-0 group-hover/note:opacity-50 transition-all" />
+                                        <div className="text-[9px] font-black text-blue-500 uppercase tracking-widest mb-2 relative z-10">{o.time}</div>
+                                        <div className="text-xs font-bold text-gray-700 leading-relaxed relative z-10">{o.text}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="mb-8 text-center py-10 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-100">
+                                <span className="material-symbols-outlined text-4xl text-gray-200 mb-2">note_stack</span>
+                                <p className="text-gray-400 text-sm font-medium">No strategic notes available yet.</p>
+                            </div>
+                        )}
 
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                             <div className="lg:col-span-12 relative overflow-hidden rounded-3xl bg-gray-50 border-2 border-transparent focus-within:border-blue-500 transition-all">
@@ -1079,12 +1401,7 @@ function ReportContent() {
                                 <div className="absolute bottom-4 right-4 flex items-center gap-2">
                                     <span className="text-[10px] text-gray-300 font-bold">Press Send to archive</span>
                                     <button
-                                        onClick={() => {
-                                            if (note.trim()) {
-                                                setObservations([...observations, { text: note, time: new Date().toLocaleTimeString() }]);
-                                                setNote("");
-                                            }
-                                        }}
+                                        onClick={handleSaveNote}
                                         className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg shadow-blue-500/20 active:scale-95"
                                     >
                                         <span className="material-symbols-outlined text-xl">send</span>
@@ -1092,18 +1409,6 @@ function ReportContent() {
                                 </div>
                             </div>
                         </div>
-
-                        {observations.length > 0 && (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-                                {observations.map((o: any, i) => (
-                                    <div key={i} className="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:border-blue-300 hover:shadow-md transition-all group/note relative overflow-hidden">
-                                        <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-full -mr-12 -mt-12 opacity-0 group-hover/note:opacity-50 transition-all" />
-                                        <div className="text-[9px] font-black text-blue-500 uppercase tracking-widest mb-2 relative z-10">{o.time}</div>
-                                        <div className="text-xs font-bold text-gray-700 leading-relaxed relative z-10">{o.text}</div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
                     </div>
                 </div>
 

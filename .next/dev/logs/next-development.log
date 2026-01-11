@@ -44,3 +44,159 @@ It can also happen if the client has a browser extension installed which messes 
 [00:08:19.598] Server  LOG      ✓ Compiled in 168ms
 [00:10:19.548] Server  LOG      ✓ Compiled in 194ms
 [00:10:21.408] Server  LOG      ✓ Compiled in 81ms
+[13:18:18.336] Server  LOG      ✓ Compiled in 288ms
+[13:21:41.373] Server  LOG      ✓ Compiled in 98ms
+[13:22:22.409] Server  LOG      ✓ Compiled in 54ms
+[13:24:10.571] Server  LOG      ✓ Compiled in 178ms
+[13:24:10.678] Browser ERROR   ./src/app/(protected)/request/page.tsx:259:9
+Parsing ecmascript source code failed
+  257 |         timing: (selectedProfile as any).timing || {},
+  258 |         recommendationBody: (selectedProfile as any).actionRecommendation || "No specific recommendation generated."
+> 259 |         recommendationBody: (selectedProfile as any).actionRecommendation || "No specific recommendation generated."
+      |         ^^^^^^^^^^^^^^^^^^
+  260 |     };
+  261 |
+  262 |     const PLAYLIST = React.useMemo(() => {
+
+Expected ',', got 'recommendationBody'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[13:25:31.129] Server  LOG      ✓ Compiled in 68ms
+[13:25:31.232] Browser ERROR   ./src/app/(protected)/request/page.tsx:1412:1
+Parsing ecmascript source code failed
+  1410 | }
+  1411 |
+> 1412 | export default function MagicCarpetReportPage() {
+       | ^^^^^^
+  1413 |     return (
+  1414 |         <Suspense fallback={
+  1415 |             <div className="min-h-screen flex items-center justify-center bg-gray-50">
+
+'import', and 'export' cannot be used outside of module code
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[13:27:39.985] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[13:27:43.594] Browser ERROR   React has detected a change in the order of Hooks called by %s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of-hooks
+
+   Previous render            Next render
+   ------------------------------------------------------
+%s   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ ReportContent 1. useContext                 useContext
+2. useMemo                    useMemo
+3. useContext                 useContext
+4. useContext                 useContext
+5. useRef                     useRef
+6. useCallback                useCallback
+7. useRef                     useRef
+8. useMemo                    useMemo
+9. useSyncExternalStore       useSyncExternalStore
+10. useEffect                 useEffect
+11. useDebugValue             useDebugValue
+12. useDebugValue             useDebugValue
+13. useState                  useState
+14. useState                  useState
+15. useState                  useState
+16. useState                  useState
+17. useState                  useState
+18. useState                  useState
+19. useState                  useState
+20. useState                  useState
+21. useState                  useState
+22. useRef                    useRef
+23. useState                  useState
+24. useEffect                 useEffect
+25. useEffect                 useEffect
+26. undefined                 useMemo
+
+[13:27:43.594] Browser ERROR   uncaughtError: Error: Rendered more hooks than during the previous render.
+[13:28:16.899] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[13:28:18.315] Browser ERROR   React has detected a change in the order of Hooks called by %s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of-hooks
+
+   Previous render            Next render
+   ------------------------------------------------------
+%s   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ ReportContent 1. useContext                 useContext
+2. useMemo                    useMemo
+3. useContext                 useContext
+4. useContext                 useContext
+5. useRef                     useRef
+6. useCallback                useCallback
+7. useRef                     useRef
+8. useMemo                    useMemo
+9. useSyncExternalStore       useSyncExternalStore
+10. useEffect                 useEffect
+11. useDebugValue             useDebugValue
+12. useDebugValue             useDebugValue
+13. useState                  useState
+14. useState                  useState
+15. useState                  useState
+16. useState                  useState
+17. useState                  useState
+18. useState                  useState
+19. useState                  useState
+20. useState                  useState
+21. useState                  useState
+22. useRef                    useRef
+23. useState                  useState
+24. useEffect                 useEffect
+25. useEffect                 useEffect
+26. undefined                 useMemo
+
+[13:28:18.315] Browser ERROR   uncaughtError: Error: Rendered more hooks than during the previous render.
+[13:30:17.784] Server  LOG      ✓ Compiled in 91ms
+[13:30:17.893] Browser ERROR   ./src/app/(protected)/request/page.tsx:1403:1
+Parsing ecmascript source code failed
+  1401 | }
+  1402 |
+> 1403 | export default function MagicCarpetReportPage() {
+       | ^^^^^^
+  1404 |     return (
+  1405 |         <Suspense fallback={
+  1406 |             <div className="min-h-screen flex items-center justify-center bg-gray-50">
+
+Expected ',', got 'export'
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/request/page.tsx [Client Component Browser]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/request/page.tsx [Client Component SSR]
+    ./src/app/(protected)/request/page.tsx [Server Component]
+[13:30:57.663] Server  LOG      ✓ Compiled in 63ms
+[13:30:57.860] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[13:30:58.087] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[18:06:36.701] Server  LOG      ✓ Compiled in 352ms
+[18:09:39.540] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[18:14:42.259] Server  LOG      ✓ Compiled in 59ms
+[18:18:00.193] Browser ERROR   Error saving note: {}
+[18:20:15.855] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[18:20:33.824] Browser ERROR   Error saving note: {}
+[18:21:51.609] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[18:22:04.978] Server  LOG      ✓ Compiled in 61ms
+[18:24:03.544] Browser ERROR   Error saving note: {}
+[18:24:19.925] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[18:24:42.151] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[18:29:22.165] Server  LOG      ✓ Compiled in 240ms
+[18:33:03.065] Server  LOG      ✓ Compiled in 129ms
+[18:38:57.268] Server  LOG      ✓ Compiled in 165ms
+[18:43:34.697] Server  LOG      ✓ Compiled in 79ms
+[18:49:50.129] Server  LOG      ✓ Compiled in 125ms
+[18:53:28.990] Server  LOG      ✓ Compiled in 67ms
+[18:54:17.179] Server  LOG      ✓ Compiled in 41ms
+[18:58:54.740] Server  LOG      ✓ Compiled in 107ms

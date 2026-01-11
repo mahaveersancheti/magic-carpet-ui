@@ -108,6 +108,7 @@
     --color-sky-50: #f0f9ff;
     --color-sky-100: #dff2fe;
     --color-sky-600: #0084cc;
+    --color-sky-700: #0069a4;
     --color-blue-50: #eff6ff;
     --color-blue-100: #dbeafe;
     --color-blue-200: #bedbff;
@@ -122,6 +123,7 @@
     --color-indigo-100: #e0e7ff;
     --color-indigo-500: #625fff;
     --color-indigo-600: #4f39f6;
+    --color-indigo-700: #432dd7;
     --color-indigo-800: #372aac;
     --color-violet-50: #f5f3ff;
     --color-violet-600: #7f22fe;
@@ -244,6 +246,7 @@
       --color-sky-50: lab(97.3623% -2.33802 -4.13098);
       --color-sky-100: lab(94.3709% -4.56053 -8.23453);
       --color-sky-600: lab(51.7754% -11.4712 -49.8349);
+      --color-sky-700: lab(41.6013% -9.10804 -42.5647);
       --color-blue-50: lab(96.492% -1.14644 -5.11479);
       --color-blue-100: lab(92.0301% -2.24757 -11.6453);
       --color-blue-200: lab(86.15% -4.04379 -21.0797);
@@ -258,6 +261,7 @@
       --color-indigo-100: lab(91.6577% 1.04591 -12.7199);
       --color-indigo-500: lab(48.295% 38.3129 -81.9673);
       --color-indigo-600: lab(38.4009% 52.6132 -92.3857);
+      --color-indigo-700: lab(32.4486% 49.2217 -84.6695);
       --color-indigo-800: lab(26.6645% 37.9804 -68.6402);
       --color-violet-50: lab(96.2416% 2.28849 -5.51657);
       --color-violet-600: lab(41.088% 68.9966 -91.995);
@@ -1198,6 +1202,10 @@
     width: calc(var(--spacing) * 96);
   }
 
+  .w-\[220px\] {
+    width: 220px;
+  }
+
   .w-\[400px\] {
     width: 400px;
   }
@@ -1264,10 +1272,6 @@
 
   .min-w-\[190px\] {
     min-width: 190px;
-  }
-
-  .min-w-\[220px\] {
-    min-width: 220px;
   }
 
   .min-w-\[700px\] {
@@ -1698,6 +1702,10 @@
     border-color: var(--color-gray-300);
   }
 
+  .border-green-100 {
+    border-color: var(--color-green-100);
+  }
+
   .border-green-200 {
     border-color: var(--color-green-200);
   }
@@ -1716,6 +1724,10 @@
 
   .border-red-500 {
     border-color: var(--color-red-500);
+  }
+
+  .border-sky-100 {
+    border-color: var(--color-sky-100);
   }
 
   .border-slate-100 {
@@ -2604,6 +2616,10 @@
     color: var(--color-emerald-600);
   }
 
+  .text-gray-200 {
+    color: var(--color-gray-200);
+  }
+
   .text-gray-300 {
     color: var(--color-gray-300);
   }
@@ -2648,6 +2664,10 @@
     color: var(--color-indigo-600);
   }
 
+  .text-indigo-700 {
+    color: var(--color-indigo-700);
+  }
+
   .text-orange-600 {
     color: var(--color-orange-600);
   }
@@ -2678,6 +2698,10 @@
 
   .text-sky-600 {
     color: var(--color-sky-600);
+  }
+
+  .text-sky-700 {
+    color: var(--color-sky-700);
   }
 
   .text-slate-400 {
@@ -3301,6 +3325,12 @@
   }
 
   @media (hover: hover) {
+    .hover\:bg-blue-100:hover {
+      background-color: var(--color-blue-100);
+    }
+  }
+
+  @media (hover: hover) {
     .hover\:bg-blue-500:hover {
       background-color: var(--color-blue-500);
     }
@@ -3337,6 +3367,12 @@
   }
 
   @media (hover: hover) {
+    .hover\:bg-green-100:hover {
+      background-color: var(--color-green-100);
+    }
+  }
+
+  @media (hover: hover) {
     .hover\:bg-green-700:hover {
       background-color: var(--color-green-700);
     }
@@ -3345,6 +3381,12 @@
   @media (hover: hover) {
     .hover\:bg-indigo-50:hover {
       background-color: var(--color-indigo-50);
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:bg-indigo-100:hover {
+      background-color: var(--color-indigo-100);
     }
   }
 
@@ -3369,6 +3411,12 @@
   @media (hover: hover) {
     .hover\:bg-sky-50:hover {
       background-color: var(--color-sky-50);
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:bg-sky-100:hover {
+      background-color: var(--color-sky-100);
     }
   }
 
@@ -4112,6 +4160,38 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@media print {
+  @page {
+    margin: 20mm;
+    size: auto;
+  }
+
+  html, body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+  }
+
+  .max-w-7xl, main {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  #action-bar, #report-header button, .no-print, .fixed, .group\/connect {
+    display: none !important;
+  }
+
+  * {
+    word-wrap: break-word;
+  }
 }
 
 @property --tw-translate-x {
