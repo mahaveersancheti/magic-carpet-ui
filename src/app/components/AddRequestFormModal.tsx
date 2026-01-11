@@ -121,7 +121,19 @@ export function AddRequestModal({
 
         // New mandatory fields
         if (!(formData.country || "").trim()) newErrors.country = "Country is required";
-        if (!(formData.linkedinProfileLink || "").trim()) newErrors.linkedinProfileLink = "LinkedIn Profile is required";
+        
+        // LinkedIn URL validation
+        if (!(formData.linkedinProfileLink || "").trim()) {
+            newErrors.linkedinProfileLink = "LinkedIn Profile is required";
+        } else {
+            const linkedinUrl = (formData.linkedinProfileLink || "").trim();
+            // Check if it's a valid LinkedIn profile URL
+            const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|pub|profile)\/[a-zA-Z0-9_-]+\/?$/i;
+            
+            if (!linkedinRegex.test(linkedinUrl)) {
+                newErrors.linkedinProfileLink = "Please enter a valid LinkedIn profile URL (e.g., https://linkedin.com/in/username)";
+            }
+        }
 
         // Validate products
         if (selectedProducts.length === 0) {

@@ -20,6 +20,7 @@ interface TableRow {
   phone: string;
   status: string; // Relaxed type for mapping
   date: string;
+  warmCallScore: number;
 }
 
 // const RAW_TABLE_ROWS: TableRow[] = [
@@ -129,6 +130,7 @@ export default function DashboardPage() {
       phone: p.phone || "N/A",
       status: (p.status === "NEW" ? "Pending" : p.status) || "Pending",
       date: p.createdAt ? p.createdAt.substring(0, 10) : "N/A",
+      warmCallScore: parseInt((p as any).warmCallScore || "0", 10),
     }));
 
     let filtered = mappedRows;
@@ -161,6 +163,22 @@ export default function DashboardPage() {
       return sortOrder === "asc" ? (aVal < bVal ? -1 : 1) : (aVal > bVal ? -1 : 1);
     });
   }, [profiles, searchTerm, statusFilter, sortKey, sortOrder]);
+
+  // Calculate statistics for dashboard cards
+  const stats = useMemo(() => {
+    const total = filteredAndSortedRows.length;
+    const red = filteredAndSortedRows.filter(r => r.warmCallScore >= 0 && r.warmCallScore <= 25).length;
+    const orange = filteredAndSortedRows.filter(r => r.warmCallScore > 25 && r.warmCallScore <= 50).length;
+    const yellow = filteredAndSortedRows.filter(r => r.warmCallScore > 50 && r.warmCallScore <= 75).length;
+    const green = filteredAndSortedRows.filter(r => r.warmCallScore > 75 && r.warmCallScore <= 100).length;
+
+    return [
+      { label: "Critical", range: "0-25", count: red, color: "red", bg: "bg-red-50", text: "text-red-700", border: "border-red-200", icon: "🔴" },
+      { label: "Below Avg", range: "26-50", count: orange, color: "orange", bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200", icon: "🟠" },
+      { label: "Average", range: "51-75", count: yellow, color: "yellow", bg: "bg-yellow-50", text: "text-yellow-700", border: "border-yellow-200", icon: "🟡" },
+      { label: "Optimal", range: "76-100", count: green, color: "green", bg: "bg-green-50", text: "text-green-700", border: "border-green-200", icon: "🟢" },
+    ];
+  }, [filteredAndSortedRows]);
 
 
   // Sort Icon Component
@@ -318,6 +336,45 @@ export default function DashboardPage() {
             </div>
           </header>
 
+          {/* Dashboard Stats Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {stats.map((stat, index) => (
+              <div
+                key={stat.label}
+                className={`${stat.bg} ${stat.border} border rounded-xl p-3 transition-all duration-300 hover:shadow-lg hover:scale-105 hover:-translate-y-1 cursor-pointer`}
+                style={{
+                  animation: `fadeInUp 0.5s ease-out ${index * 0.1}s both`
+                }}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-xl">{stat.icon}</span>
+                  <span className={`text-[10px] font-bold ${stat.text} bg-white px-1.5 py-0.5 rounded-full`}>
+                    {stat.range}
+                  </span>
+                </div>
+                <div className={`text-xl md:text-2xl font-black ${stat.text} mb-0.5`}>
+                  {stat.count}
+                </div>
+                <div className="text-[10px] font-bold text-gray-600 uppercase tracking-wide">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <style jsx>{`
+            @keyframes fadeInUp {
+              from {
+                opacity: 0;
+                transform: translateY(20px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+          `}</style>
+
           {/* Table Section */}
           <section id="requests-table" className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200">
@@ -327,7 +384,7 @@ export default function DashboardPage() {
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left min-w-[700px]">
+              <table className="w-full text-left">
                 <thead>
                   <tr className="bg-gray-50 border-b border-gray-200">
                     <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
@@ -338,24 +395,29 @@ export default function DashboardPage() {
                         Name <SortIcon column="name" />
                       </button>
                     </th>
-                    <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">
+                    <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden sm:table-cell">
                       <button onClick={() => handleSort("company")} className="flex items-center gap-1 hover:text-gray-700">
                         Company <SortIcon column="company" />
                       </button>
                     </th>
-                    <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden xl:table-cell">
+                    <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">
                       <button onClick={() => handleSort("email")} className="flex items-center gap-1 hover:text-gray-700">
                         Contact <SortIcon column="email" />
                       </button>
                     </th>
-                    <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">
                       <button onClick={() => handleSort("status")} className="flex items-center gap-1 hover:text-gray-700">
                         Status <SortIcon column="status" />
                       </button>
                     </th>
-                    <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">
+                    <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden xl:table-cell">
                       <button onClick={() => handleSort("date")} className="flex items-center gap-1 hover:text-gray-700">
                         Date <SortIcon column="date" />
+                      </button>
+                    </th>
+                    <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">
+                      <button onClick={() => handleSort("warmCallScore")} className="flex items-center gap-1 hover:text-gray-700">
+                        Score <SortIcon column="warmCallScore" />
                       </button>
                     </th>
                     <th className="py-3 px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Actions</th>
@@ -386,9 +448,13 @@ export default function DashboardPage() {
                           >
                             {row.name}
                           </button>
+                          {/* Mobile: Show company below name */}
+                          <div className="sm:hidden text-xs text-gray-500 mt-1">
+                            {row.company}
+                          </div>
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 hidden lg:table-cell">{row.company}</td>
-                        <td className="px-4 py-4 text-sm text-gray-500 hidden xl:table-cell">
+                        <td className="px-4 py-4 text-sm text-gray-500 hidden sm:table-cell">{row.company}</td>
+                        <td className="px-4 py-4 text-sm text-gray-500 hidden lg:table-cell">
                           <div className="flex flex-col">
                             <a href={`mailto:${row.email}`} className="text-gray-900 hover:text-blue-600 transition">
                               {row.email}
@@ -400,8 +466,15 @@ export default function DashboardPage() {
                         </td>
                         <td className="px-4 py-4">
                           <StatusPill status={row.status} />
+                          {/* Mobile: Show score below status */}
+                          <div className="md:hidden mt-2">
+                            <WarmCallScoreBadge score={row.warmCallScore} />
+                          </div>
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-500 hidden md:table-cell">{row.date}</td>
+                        <td className="px-4 py-4 hidden md:table-cell">
+                          <WarmCallScoreBadge score={row.warmCallScore} />
+                        </td>
                         <td className="px-4 py-4 text-right">
                           <div className="flex justify-end">
                             <ActionButtons row={row} />
@@ -475,5 +548,48 @@ function StatusPill({ status }: { status: string }) {
     <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium border ${map[status] || "bg-gray-100 text-gray-700 border-gray-200"}`}>
       {status}
     </span>
+  );
+}
+
+function WarmCallScoreBadge({ score }: { score: number }) {
+  const getScoreColor = (score: number): { bg: string; text: string; border: string; dot: string } => {
+    if (score >= 0 && score <= 25) {
+      return {
+        bg: "bg-red-50",
+        text: "text-red-700",
+        border: "border-red-200",
+        dot: "bg-red-500"
+      };
+    } else if (score > 25 && score <= 50) {
+      return {
+        bg: "bg-orange-50",
+        text: "text-orange-700",
+        border: "border-orange-200",
+        dot: "bg-orange-500"
+      };
+    } else if (score > 50 && score <= 75) {
+      return {
+        bg: "bg-yellow-50",
+        text: "text-yellow-700",
+        border: "border-yellow-200",
+        dot: "bg-yellow-500"
+      };
+    } else {
+      return {
+        bg: "bg-green-50",
+        text: "text-green-700",
+        border: "border-green-200",
+        dot: "bg-green-500"
+      };
+    }
+  };
+
+  const colors = getScoreColor(score);
+
+  return (
+    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold border ${colors.bg} ${colors.text} ${colors.border}`}>
+      <div className={`w-2 h-2 rounded-full ${colors.dot}`} />
+      <span>{score}</span>
+    </div>
   );
 }

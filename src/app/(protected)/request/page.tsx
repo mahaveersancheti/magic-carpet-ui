@@ -552,21 +552,22 @@ function ReportContent() {
         <div className="min-h-screen bg-transparent p-4 md:p-6 lg:p-8 pt-20 lg:pt-8 font-sans">
             <main className="max-w-7xl mx-auto space-y-6">
                 {/* Navigation & Actions */}
-                <div id="report-header" className="flex items-center justify-between pb-2">
+                <div id="report-header" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 pb-2">
                     <button
                         onClick={() => window.history.back()}
                         className="flex items-center gap-2 text-gray-500 hover:text-blue-600 transition"
                     >
                         <span className="material-symbols-outlined">arrow_back</span>
-                        <span className="font-medium">Back to Dashboard</span>
+                        <span className="font-medium hidden sm:inline">Back to Dashboard</span>
+                        <span className="font-medium sm:hidden">Back</span>
                     </button>
-                    <div id="action-bar" className="flex items-center gap-3">
+                    <div id="action-bar" className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                         <button
                             onClick={startVoiceDictation}
-                            className={`w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 shadow-sm transition ${isListening ? 'text-red-500 border-red-200 animate-pulse' : 'text-gray-400 hover:text-blue-600 hover:border-blue-200'}`}
+                            className={`w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 shadow-sm transition ${isListening ? 'text-red-500 border-red-200 animate-pulse' : 'text-gray-400 hover:text-blue-600 hover:border-blue-200'}`}
                             title="Voice Note"
                         >
-                            {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+                            {isListening ? <MicOff className="w-4 h-4 sm:w-5 sm:h-5" /> : <Mic className="w-4 h-4 sm:w-5 sm:h-5" />}
                         </button>
 
                         <button
@@ -575,18 +576,18 @@ function ReportContent() {
                                     dispatch(fetchProfileById(id));
                                 }
                             }}
-                            className="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-blue-600 hover:border-blue-200 shadow-sm transition"
+                            className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-blue-600 hover:border-blue-200 shadow-sm transition"
                             title="Refresh Data"
                         >
-                            <RotateCw className={`w-5 h-5 ${loading ? 'animate-spin' : ''}`} />
+                            <RotateCw className={`w-4 h-4 sm:w-5 sm:h-5 ${loading ? 'animate-spin' : ''}`} />
                         </button>
 
                         <button
                             onClick={() => setShowGuide(true)}
-                            className="w-10 h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-blue-600 hover:border-blue-200 shadow-sm transition"
+                            className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-blue-600 hover:border-blue-200 shadow-sm transition"
                             title="Help / Tour"
                         >
-                            <HelpCircle className="w-5 h-5" />
+                            <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                         </button>
                         
                         <button
@@ -599,26 +600,28 @@ function ReportContent() {
                                     setPlayAllIndex(0);
                                 }
                             }}
-                            className={`flex items-center gap-2 px-4 py-2 ${playAllIndex !== null ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-blue-600'} border rounded-xl text-sm font-bold shadow-sm transition`}
+                            className={`h-9 sm:h-10 flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 ${playAllIndex !== null ? 'bg-blue-100 text-blue-700 border-blue-200' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:text-blue-600'} border rounded-xl text-xs sm:text-sm font-bold shadow-sm transition`}
                         >
                             {playAllIndex !== null ? (
                                 <>
-                                    <Square className="w-4 h-4 fill-current" />
-                                    <span>Stop Playing</span>
+                                    <Square className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
+                                    <span className="hidden sm:inline">Stop Playing</span>
+                                    <span className="sm:hidden">Stop</span>
                                 </>
                             ) : (
                                 <>
-                                    <Play className="w-4 h-4 fill-current" />
-                                    <span>Play Report</span>
+                                    <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
+                                    <span className="hidden sm:inline">Play Report</span>
+                                    <span className="sm:hidden">Play</span>
                                 </>
                             )}
                         </button>
 
 
                         <div className="relative group/connect" ref={connectButtonRef} onMouseEnter={calculateDropdownPosition}>
-                            <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-blue-600 shadow-sm transition">
-                                <span className="material-symbols-outlined text-lg">contact_mail</span>
-                                Connect
+                            <button className="h-9 sm:h-10 flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 bg-white border border-gray-200 rounded-xl text-xs sm:text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-blue-600 shadow-sm transition">
+                                <span className="material-symbols-outlined text-base sm:text-lg">contact_mail</span>
+                                <span className="hidden sm:inline">Connect</span>
                             </button>
 
                             {/* Hover Dropdown */}
@@ -632,7 +635,7 @@ function ReportContent() {
                                         className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50 text-gray-700 hover:text-blue-600 transition group/item"
                                     >
                                         <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center group-hover/item:bg-blue-100 transition">
-                                            <span className="material-symbols-outlined text-xl text-blue-600">mail</span>
+                                            <span className="material-symbols-outlined text-xl text-blue-600">email</span>
                                         </div>
                                         <span className="text-xs font-black uppercase tracking-tight">Email Prospect</span>
                                     </a>
@@ -675,10 +678,11 @@ function ReportContent() {
 
                         <button
                             onClick={handleExportPDF}
-                            className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-blue-600 shadow-sm transition no-print"
+                            className="h-9 sm:h-10 flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 bg-white border border-gray-200 rounded-xl text-xs sm:text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-blue-600 shadow-sm transition no-print"
                         >
-                            <span className="material-symbols-outlined text-lg">ios_share</span>
-                            Export PDF
+                            <span className="material-symbols-outlined text-base sm:text-lg">ios_share</span>
+                            <span className="hidden sm:inline">Export PDF</span>
+                            <span className="sm:hidden">PDF</span>
                         </button>
                     </div>
                 </div>
