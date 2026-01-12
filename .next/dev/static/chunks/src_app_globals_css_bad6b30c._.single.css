@@ -4322,8 +4322,8 @@ body {
 
 @media print {
   @page {
-    margin: 20mm;
-    size: auto;
+    margin: 15mm;
+    size: A4;
   }
 
   html, body {
@@ -4343,12 +4343,34 @@ body {
     overflow: visible !important;
   }
 
-  #action-bar, #report-header button, .no-print, .fixed, .group\/connect {
+  div.flex.min-h-screen.h-screen, div.flex-1.overflow-y-auto, div.min-h-screen.bg-transparent {
+    height: auto !important;
+    min-height: auto !important;
+    display: block !important;
+    position: static !important;
+    overflow: visible !important;
+  }
+
+  #action-bar, #report-header button, .no-print, .fixed, .group\/connect, aside, nav, button[className*="lg:hidden"] {
     display: none !important;
+  }
+
+  .bg-white.rounded-3xl {
+    -moz-column-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 2rem;
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  svg {
+    max-width: 100% !important;
+    height: auto !important;
   }
 
   * {
     word-wrap: break-word;
+    overflow: visible !important;
   }
 }
 

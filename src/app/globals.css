@@ -89,8 +89,8 @@ body {
 
 @media print {
   @page {
-    margin: 20mm;
-    size: auto;
+    margin: 15mm;
+    size: A4;
   }
 
   html,
@@ -113,17 +113,46 @@ body {
     overflow: visible !important;
   }
 
-  /* Hide UI elements */
+  /* Ensure all parent containers don't restrict height */
+  div.flex.min-h-screen.h-screen, /* ProtectedLayout container */
+  div.flex-1.overflow-y-auto,     /* ProtectedLayout content container */
+  div.min-h-screen.bg-transparent  /* request/page.tsx container */ {
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+    display: block !important;
+  }
+
+  /* Hide UI elements and sidebar */
   #action-bar,
   #report-header button,
   .no-print,
   .fixed,
-  .group\/connect {
+  .group\/connect,
+  aside,
+  nav,
+  button[className*="lg:hidden"] {
     display: none !important;
+  }
+
+  /* Adjust spacing for report sections */
+  .bg-white.rounded-3xl {
+    break-inside: avoid;
+    margin-bottom: 2rem;
+    border: 1px solid #e2e8f0 !important; /* Force border visibility */
+    box-shadow: none !important;
+  }
+
+  /* Ensure gauge and other graphics print clearly */
+  svg {
+    max-width: 100% !important;
+    height: auto !important;
   }
 
   /* Ensure text doesn't flow off page */
   * {
     word-wrap: break-word;
+    overflow: visible !important;
   }
 }
