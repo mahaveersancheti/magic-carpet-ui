@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchProfiles } from "../../redux/slices/ProfileSlice";
 import toast from "react-hot-toast";
+import { api } from "../../services/apiService";
+import { endpoints } from "../../lib/endpoints";
 
 type StatusType = "Complete" | "Pending" | "Failed";
 
@@ -40,6 +42,7 @@ export default function DashboardPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isAddRequestModalOpen, setIsAddRequestModalOpen] = useState(false);
   const [openSocialRowId, setOpenSocialRowId] = useState<string | null>(null);
+  const [notificationCount, setNotificationCount] = useState<number>(0);
 
   // User Guide State
   const [showGuide, setShowGuide] = useState(false);
@@ -87,6 +90,20 @@ export default function DashboardPage() {
 
   useEffect(() => {
     dispatch(fetchProfiles());
+    
+    // Fetch notifications count
+    const fetchNotifications = async () => {
+      try {
+        const response = await api.get<any[]>(endpoints.notifications);
+        if (Array.isArray(response)) {
+          setNotificationCount(response.length);
+        }
+      } catch (error) {
+        console.error("Failed to fetch notifications:", error);
+      }
+    };
+    
+    fetchNotifications();
   }, [dispatch]);
 
   useEffect(() => {
@@ -331,7 +348,7 @@ export default function DashboardPage() {
                 >
                   <HelpCircle className="w-5 h-5" />
                 </button>
-                <HeaderIcon icon="notifications" />
+                <HeaderIcon icon="notifications" count={notificationCount} />
               </div>
             </div>
           </header>
@@ -529,10 +546,15 @@ export default function DashboardPage() {
 }
 
 /* Small Components (updated) */
-function HeaderIcon({ icon }: { icon: string }) {
+function HeaderIcon({ icon, count }: { icon: string; count?: number }) {
   return (
-    <button className="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition">
+    <button className="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition relative">
       <span className="material-symbols-outlined text-xl">{icon}</span>
+      {count !== undefined && count > 0 && (
+        <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-white">
+          {count > 9 ? '9+' : count}
+        </span>
+      )}
     </button>
   );
 }
