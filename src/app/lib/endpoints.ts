@@ -6,6 +6,7 @@ export const endpoints = {
     getProfileById: (id: string) => `profiles/${id}`,
     getProfileByIdPopulateDummy: (id: string) => `profiles/${id}/populate-dummy`,
     createProfile: 'profiles',
+    getProfileSection: (id: string, text: string) => `profiles/${id}/section?text=${encodeURIComponent(text)}`,
     getProductsByUserId: (userId: string) => `product/user/${userId}`,
     createProduct: (userId: string) => `product?userId=${userId}`,
     updateProduct: 'product',

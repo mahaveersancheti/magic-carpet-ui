@@ -113,6 +113,18 @@ export const api = {
     }
     return response.data;
   },
+  getWithResponse: async (endpoint: string, headers?: Record<string, string>) => {
+    const response = await axiosInstance.get(endpoint, { 
+      responseType: 'blob',
+      headers: headers || {}
+    });
+    const contentType = response.headers['content-type'] || '';
+    return {
+      data: response.data,
+      contentType: contentType,
+      headers: response.headers
+    };
+  },
 };
 
 export type ApiClient = typeof api;

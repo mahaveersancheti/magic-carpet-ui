@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchProfileById, clearSelectedProfile } from "../../redux/slices/ProfileSlice";
 import { api } from "../../services/apiService";
+import { endpoints } from "../../lib/endpoints";
 import toast from 'react-hot-toast';
 
 const ScoreGauge = ({ score, size = 100, title, showPercentage = false }: { score: number; size?: number; title?: string; showPercentage?: boolean }) => {
@@ -143,61 +144,95 @@ function ReportContent() {
             if (id && transcript.trim()) {
                 setIsProcessingVoice(true);
                 try {
-                    const response = await fetch(
-                        `http://magic-carpet.data-magnum.com:8080/api/profiles/${id}/section?text=${encodeURIComponent(transcript)}`,
+                    const response = await api.getWithResponse(
+                        endpoints.getProfileSection(id, transcript),
                         {
-                            method: 'GET',
-                            headers: {
-                                'accept': '*/*',
-                                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6W10sImNvbXBhbnlOYW1lIjoiRGF0YSBNYWdudW0iLCJuYW1lIjoiTWFoYXZpciBTYW5jaGV0aSIsImRlc2lnbmF0aW9uIjoiVGVjaG5vbG9neSBMZWFkIiwidXNlcklkIjoiNjkzYTUwMDRlN2RiY2ZhZTQ3NDg3OWNkIiwiZW1haWwiOiJtYWhpQGdtYWlsLmNvbSIsInN1YiI6Im1haGlAZ21haWwuY29tIiwiaWF0IjoxNzY4MjI2MDg2LCJleHAiOjE3NjgzMTI0ODZ9.pkp74XcA1DVKRSZGyOHljuXjh91UPs4AVOKPOjOYIL8',
-                                'Referer': window.location.origin + '/',
-                                'User-Agent': navigator.userAgent,
-                                'Cookie': 'JSESSIONID=B2F17266FB716064A0BFE0B92CDFFBCB'
-                            }
+                            'accept': '*/*'
                         }
                     );
                     
-                    if (response.ok) {
-                        const contentType = response.headers.get('content-type');
+                    const contentType = response.contentType;
+                    
+                    // Check if response is audio
+                    if (contentType && contentType.includes('audio')) {
+                        const audioBlob = response.data;
+                        const audioUrl = URL.createObjectURL(audioBlob);
                         
-                        // Check if response is audio
-                        if (contentType && contentType.includes('audio')) {
-                            const audioBlob = await response.blob();
-                            const audioUrl = URL.createObjectURL(audioBlob);
-                            
-                            // Stop any currently playing audio
-                            if (audioRef.current) {
-                                audioRef.current.pause();
-                                audioRef.current = null;
-                            }
-                            
-                            // Play audio response
-                            const audio = new Audio(audioUrl);
-                            audioRef.current = audio;
-                            
-                            audio.onended = () => {
-                                URL.revokeObjectURL(audioUrl);
-                                setIsProcessingVoice(false);
-                                audioRef.current = null;
-                            };
-                            
-                            audio.onerror = () => {
-                                URL.revokeObjectURL(audioUrl);
-                                setIsProcessingVoice(false);
-                                audioRef.current = null;
-                                toast.error('Failed to play audio response');
-                            };
-                            
-                            await audio.play();
-                            toast.success('Playing AI response...');
-                        } else {
-                            // Handle text response
-                            const textResponse = await response.text();
-                            console.log('API Text Response:', textResponse);
-                            // toast.success(`Response: ${textResponse}`);
+                        // Stop any currently playing audio
+                        if (audioRef.current) {
+                            audioRef.current.pause();
+                            audioRef.current = null;
+                        }
+                        
+                        // Play audio response
+                        const audio = new Audio(audioUrl);
+                        audioRef.current = audio;
+                        
+                        audio.onended = () => {
+                            URL.revokeObjectURL(audioUrl);
                             setIsProcessingVoice(false);
+                            audioRef.current = null;
+                        };
+                        
+                        audio.onerror = () => {
+                            URL.revokeObjectURL(audioUrl);
+                            setIsProcessingVoice(false);
+                            audioRef.current = null;
+                            toast.error('Failed to play audio response');
+                        };
+                        
+                        await audio.play();
+                        toast.success('Playing AI response...');
+                    } else {
+                        // Handle text response - extract section name and play corresponding content
+                        const textBlob = response.data;
+                        const textResponse = await textBlob.text();
+                        console.log('API Text Response:', textResponse);
+                        
+                        // Try to parse as JSON first, otherwise treat as plain text
+                        let sectionName: string | null = null;
+                        try {
+                            const jsonResponse = JSON.parse(textResponse);
+                            sectionName = jsonResponse.section || jsonResponse.sectionName || jsonResponse.name || null;
+                        } catch {
+                            // If not JSON, use the text as the section name
+                            sectionName = textResponse.trim();
+                        }
+                        
+                        // Extract and play the content from the matching section
+                        if (sectionName) {
+                            // Use PLAYLIST to get the content (it will be available when this callback executes)
+                            const contentToPlay = getSectionContent(sectionName, PLAYLIST);
                             
-                            // If you want to use text-to-speech for the text response
+                            if (contentToPlay) {
+                                console.log(`Playing section: ${sectionName}`, contentToPlay);
+                                
+                                if ('speechSynthesis' in window) {
+                                    const utterance = new SpeechSynthesisUtterance(contentToPlay);
+                                    utterance.onend = () => {
+                                        setIsProcessingVoice(false);
+                                    };
+                                    window.speechSynthesis.speak(utterance);
+                                    toast.success(`Playing section: ${sectionName}`);
+                                } else {
+                                    setIsProcessingVoice(false);
+                                    toast.error('Text-to-speech not supported');
+                                }
+                            } else {
+                                // If no matching section found, play the text response as-is
+                                console.log('No matching section found, playing text response directly');
+                                setIsProcessingVoice(false);
+                                if (textResponse && 'speechSynthesis' in window) {
+                                    const utterance = new SpeechSynthesisUtterance(textResponse);
+                                    utterance.onend = () => {
+                                        setIsProcessingVoice(false);
+                                    };
+                                    window.speechSynthesis.speak(utterance);
+                                }
+                            }
+                        } else {
+                            // Fallback: play the text response directly
+                            setIsProcessingVoice(false);
                             if (textResponse && 'speechSynthesis' in window) {
                                 const utterance = new SpeechSynthesisUtterance(textResponse);
                                 utterance.onend = () => {
@@ -206,12 +241,10 @@ function ReportContent() {
                                 window.speechSynthesis.speak(utterance);
                             }
                         }
-                    } else {
-                        throw new Error(`API returned status ${response.status}`);
                     }
-                } catch (error) {
+                } catch (error: any) {
                     console.error('Error processing voice:', error);
-                    toast.error('Failed to process voice input');
+                    toast.error(error?.message || 'Failed to process voice input');
                     setIsProcessingVoice(false);
                 }
             }
@@ -357,6 +390,57 @@ function ReportContent() {
         recommendationBody: (selectedProfile as any).actionRecommendation || "No specific recommendation generated."
     };
     }, [selectedProfile]);
+
+    // Helper function to get section content by name using PLAYLIST
+    const getSectionContent = React.useCallback((sectionName: string, playlist: Array<{id: string; title: string; getText: () => string}>): string | null => {
+        if (!playlist || playlist.length === 0) return null;
+        
+        const normalizedSectionName = sectionName.toLowerCase().trim();
+        
+        // Map common section name variations to PLAYLIST IDs
+        const sectionNameMap: Record<string, string> = {
+            'recentnews': 'recentNews',
+            'recent news': 'recentNews',
+            'conversationstarters': 'conversations',
+            'conversation starters': 'conversations',
+            'conversations': 'conversations',
+            'financialsnapshot': 'financialSnapshot',
+            'financial snapshot': 'financialSnapshot',
+            'productfit': 'productFit',
+            'product fit': 'productFit',
+            'strategic product fit': 'productFit',
+            'industryoutlook': 'industryOutlook',
+            'industry outlook': 'industryOutlook',
+            'objections': 'objections',
+            'objection handling': 'objections',
+            'psychologyapproach': 'psychologyApproach',
+            'psychology approach': 'psychologyApproach',
+            'competencies': 'competencies',
+            'core competencies': 'competencies',
+            'skills': 'competencies',
+            'recommendation': 'recommendation',
+            'ai recommendation': 'recommendation',
+            'action recommendation': 'recommendation',
+            'profileoverview': 'profileOverview',
+            'profile overview': 'profileOverview',
+            'overview': 'profileOverview'
+        };
+        
+        // Check if the text matches any section name
+        let mappedSectionName = sectionNameMap[normalizedSectionName] || normalizedSectionName;
+        
+        // Find matching item
+        const matchingItem = playlist.find(item => 
+            item.id.toLowerCase() === mappedSectionName ||
+            item.id.toLowerCase().replace(/\s+/g, '') === mappedSectionName.replace(/\s+/g, '') ||
+            item.title.toLowerCase() === mappedSectionName ||
+            item.title.toLowerCase().includes(mappedSectionName) ||
+            mappedSectionName.includes(item.id.toLowerCase()) ||
+            mappedSectionName.includes(item.title.toLowerCase())
+        );
+        
+        return matchingItem ? matchingItem.getText() : null;
+    }, []);
 
     const PLAYLIST = React.useMemo(() => {
 
