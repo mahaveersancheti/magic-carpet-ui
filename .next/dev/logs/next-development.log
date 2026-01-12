@@ -1,249 +1,116 @@
-[00:00:00.939] Server  LOG      ✓ Ready in 714ms
-[00:00:28.101] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:01:00.088] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:00.216] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:00:00.952] Server  LOG      ✓ Ready in 724ms
+[00:00:10.236] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:00:44.770] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:02:04.633] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:21:53.932] Server  LOG      ✓ Compiled in 104ms
+[00:22:03.022] Server  LOG      ✓ Compiled in 61ms
+[00:22:05.058] Server  LOG      ✓ Compiled in 71ms
+[00:23:53.108] Browser ERROR   Error processing voice: {}
+[00:25:48.242] Browser ERROR   Error processing voice: {}
+[00:26:54.791] Browser ERROR   Error processing voice: {}
+[00:29:35.836] Server  LOG      ✓ Compiled in 55ms
+[00:31:33.418] Browser LOG     API Text Response: AI_ACTION_RECOMMENDATION
+[00:31:46.067] Browser LOG     API Text Response: CONVERSATION_STARTER
+[00:33:23.669] Server  LOG      ✓ Compiled in 48ms
+[00:33:31.341] Browser LOG     API Text Response: OBJECTION_HANDLING
+[00:40:37.510] Server  LOG      ✓ Compiled in 146ms
+[00:40:37.628] Browser ERROR   uncaughtError: ReferenceError: Cannot access 'handleSpeak' before initialization
+[00:41:15.651] Server  LOG      ✓ Compiled in 171ms
+[00:41:15.657] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:41:15.916] Browser ERROR   uncaughtError: ReferenceError: Cannot access 'handleSpeak' before initialization
+[00:41:16.363] Browser ERROR   uncaughtError: ReferenceError: Cannot access 'handleSpeak' before initialization
+[00:43:06.286] Server  LOG      ✓ Compiled in 116ms
+[00:43:06.294] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:43:06.941] Browser ERROR   uncaughtError: ReferenceError: handleSpeak is not defined
+[00:43:43.675] Server  LOG      ✓ Compiled in 162ms
+[00:43:43.685] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:44:05.038] Server  LOG      ✓ Compiled in 127ms
+[00:44:05.153] Browser ERROR   The final argument passed to %s changed size between renders. The order and size of this array must remain constant.
 
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-%s%s https://react.dev/link/hydration-mismatch 
-
-  ...
-    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
-      <AppDevOverlayErrorBoundary globalError={[...]}>
-        <ReplaySsrOnlyErrors>
-        <DevRootHTTPAccessFallbackBoundary>
-          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
-            <HTTPAccessFallbackErrorBoundary pathname="/home" notFound={<NotAllowedRootHTTPFallbackError>} ...>
-              <RedirectBoundary>
-                <RedirectErrorBoundary router={{...}}>
-                  <Head>
-                  <__next_root_layout_boundary__>
-                    <SegmentViewNode type="layout" pagePath="layout.tsx">
-                      <SegmentTrieNode>
-                      <link>
-                      <script>
-                      <script>
-                      <script>
-                      <RootLayout>
-                        <html
-                          lang="en"
--                         data-jetski-tab-id="962286295"
-                        >
-                  ...
-
-[00:01:09.635] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:20.882] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:04:18.548] Server  LOG      ✓ Compiled in 451ms
-[00:06:58.852] Server  LOG      ✓ Compiled in 238ms
-[00:08:19.598] Server  LOG      ✓ Compiled in 168ms
-[00:10:19.548] Server  LOG      ✓ Compiled in 194ms
-[00:10:21.408] Server  LOG      ✓ Compiled in 81ms
-[13:18:18.336] Server  LOG      ✓ Compiled in 288ms
-[13:21:41.373] Server  LOG      ✓ Compiled in 98ms
-[13:22:22.409] Server  LOG      ✓ Compiled in 54ms
-[13:24:10.571] Server  LOG      ✓ Compiled in 178ms
-[13:24:10.678] Browser ERROR   ./src/app/(protected)/request/page.tsx:259:9
-Parsing ecmascript source code failed
-  257 |         timing: (selectedProfile as any).timing || {},
-  258 |         recommendationBody: (selectedProfile as any).actionRecommendation || "No specific recommendation generated."
-> 259 |         recommendationBody: (selectedProfile as any).actionRecommendation || "No specific recommendation generated."
-      |         ^^^^^^^^^^^^^^^^^^
-  260 |     };
-  261 |
-  262 |     const PLAYLIST = React.useMemo(() => {
-
-Expected ',', got 'recommendationBody'
-
-Import traces:
-  Client Component Browser:
-    ./src/app/(protected)/request/page.tsx [Client Component Browser]
-    ./src/app/(protected)/request/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./src/app/(protected)/request/page.tsx [Client Component SSR]
-    ./src/app/(protected)/request/page.tsx [Server Component]
-[13:25:31.129] Server  LOG      ✓ Compiled in 68ms
-[13:25:31.232] Browser ERROR   ./src/app/(protected)/request/page.tsx:1412:1
-Parsing ecmascript source code failed
-  1410 | }
-  1411 |
-> 1412 | export default function MagicCarpetReportPage() {
-       | ^^^^^^
-  1413 |     return (
-  1414 |         <Suspense fallback={
-  1415 |             <div className="min-h-screen flex items-center justify-center bg-gray-50">
-
-'import', and 'export' cannot be used outside of module code
-
-Import traces:
-  Client Component Browser:
-    ./src/app/(protected)/request/page.tsx [Client Component Browser]
-    ./src/app/(protected)/request/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./src/app/(protected)/request/page.tsx [Client Component SSR]
-    ./src/app/(protected)/request/page.tsx [Server Component]
-[13:27:39.985] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[13:27:43.594] Browser ERROR   React has detected a change in the order of Hooks called by %s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of-hooks
-
-   Previous render            Next render
-   ------------------------------------------------------
-%s   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- ReportContent 1. useContext                 useContext
-2. useMemo                    useMemo
-3. useContext                 useContext
-4. useContext                 useContext
-5. useRef                     useRef
-6. useCallback                useCallback
-7. useRef                     useRef
-8. useMemo                    useMemo
-9. useSyncExternalStore       useSyncExternalStore
-10. useEffect                 useEffect
-11. useDebugValue             useDebugValue
-12. useDebugValue             useDebugValue
-13. useState                  useState
-14. useState                  useState
-15. useState                  useState
-16. useState                  useState
-17. useState                  useState
-18. useState                  useState
-19. useState                  useState
-20. useState                  useState
-21. useState                  useState
-22. useRef                    useRef
-23. useState                  useState
-24. useEffect                 useEffect
-25. useEffect                 useEffect
-26. undefined                 useMemo
-
-[13:27:43.594] Browser ERROR   uncaughtError: Error: Rendered more hooks than during the previous render.
-[13:28:16.899] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[13:28:18.315] Browser ERROR   React has detected a change in the order of Hooks called by %s. This will lead to bugs and errors if not fixed. For more information, read the Rules of Hooks: https://react.dev/link/rules-of-hooks
-
-   Previous render            Next render
-   ------------------------------------------------------
-%s   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- ReportContent 1. useContext                 useContext
-2. useMemo                    useMemo
-3. useContext                 useContext
-4. useContext                 useContext
-5. useRef                     useRef
-6. useCallback                useCallback
-7. useRef                     useRef
-8. useMemo                    useMemo
-9. useSyncExternalStore       useSyncExternalStore
-10. useEffect                 useEffect
-11. useDebugValue             useDebugValue
-12. useDebugValue             useDebugValue
-13. useState                  useState
-14. useState                  useState
-15. useState                  useState
-16. useState                  useState
-17. useState                  useState
-18. useState                  useState
-19. useState                  useState
-20. useState                  useState
-21. useState                  useState
-22. useRef                    useRef
-23. useState                  useState
-24. useEffect                 useEffect
-25. useEffect                 useEffect
-26. undefined                 useMemo
-
-[13:28:18.315] Browser ERROR   uncaughtError: Error: Rendered more hooks than during the previous render.
-[13:30:17.784] Server  LOG      ✓ Compiled in 91ms
-[13:30:17.893] Browser ERROR   ./src/app/(protected)/request/page.tsx:1403:1
-Parsing ecmascript source code failed
-  1401 | }
-  1402 |
-> 1403 | export default function MagicCarpetReportPage() {
-       | ^^^^^^
-  1404 |     return (
-  1405 |         <Suspense fallback={
-  1406 |             <div className="min-h-screen flex items-center justify-center bg-gray-50">
-
-Expected ',', got 'export'
-
-Import traces:
-  Client Component Browser:
-    ./src/app/(protected)/request/page.tsx [Client Component Browser]
-    ./src/app/(protected)/request/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./src/app/(protected)/request/page.tsx [Client Component SSR]
-    ./src/app/(protected)/request/page.tsx [Server Component]
-[13:30:57.663] Server  LOG      ✓ Compiled in 63ms
-[13:30:57.860] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[13:30:58.087] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[18:06:36.701] Server  LOG      ✓ Compiled in 352ms
-[18:09:39.540] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[18:14:42.259] Server  LOG      ✓ Compiled in 59ms
-[18:18:00.193] Browser ERROR   Error saving note: {}
-[18:20:15.855] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[18:20:33.824] Browser ERROR   Error saving note: {}
-[18:21:51.609] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[18:22:04.978] Server  LOG      ✓ Compiled in 61ms
-[18:24:03.544] Browser ERROR   Error saving note: {}
-[18:24:19.925] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[18:24:42.151] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[18:29:22.165] Server  LOG      ✓ Compiled in 240ms
-[18:33:03.065] Server  LOG      ✓ Compiled in 129ms
-[18:38:57.268] Server  LOG      ✓ Compiled in 165ms
-[18:43:34.697] Server  LOG      ✓ Compiled in 79ms
-[18:49:50.129] Server  LOG      ✓ Compiled in 125ms
-[18:53:28.990] Server  LOG      ✓ Compiled in 67ms
-[18:54:17.179] Server  LOG      ✓ Compiled in 41ms
-[18:58:54.740] Server  LOG      ✓ Compiled in 107ms
-[19:09:32.274] Server  LOG      ✓ Compiled in 114ms
-[19:15:54.985] Server  LOG      ✓ Compiled in 37ms
-[19:19:13.237] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[19:19:34.006] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[19:21:23.533] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[19:23:55.499] Browser ERROR   Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 69638e9aaa5f42616ca6c90b
-[19:24:05.312] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[19:25:43.854] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[19:34:58.851] Server  LOG      ✓ Compiled in 156ms
-[19:37:07.873] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[19:44:43.439] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[19:44:56.751] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[19:47:40.046] Server  LOG      ✓ Compiled in 61ms
-[19:54:15.035] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[19:55:48.678] Server  LOG      ✓ Compiled in 93ms
-[19:56:07.377] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[19:56:15.994] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[19:56:19.325] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[19:56:56.135] Server  LOG      ✓ Compiled in 74ms
-[22:04:40.136] Browser ERROR   Error saving note: {}
-[22:06:00.367] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[22:06:19.405] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[22:06:34.999] Browser ERROR   Error saving note: {}
-[22:06:36.234] Server  LOG      ✓ Compiled in 54ms
-[22:10:29.339] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[22:10:39.500] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[22:11:53.502] Server  LOG      ✓ Compiled in 72ms
-[22:12:00.962] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[22:12:04.946] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[22:13:13.498] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[22:13:47.150] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[22:14:24.079] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[22:23:52.187] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[22:23:57.555] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[22:24:48.440] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[22:24:53.627] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[22:28:24.063] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[22:30:51.283] Server  LOG      ✓ Compiled in 137ms
-[22:31:42.587] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[22:36:34.879] Server  LOG      ✓ Compiled in 179ms
-[22:38:34.756] Server  LOG      ✓ Compiled in 166ms
-[22:39:57.534] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[22:40:36.401] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[22:44:49.519] Server  LOG      ✓ Compiled in 126ms
-[22:47:55.169] Server  LOG      ✓ Compiled in 67ms
-[22:51:33.889] Server  LOG      ✓ Compiled in 80ms
-[22:52:00.058] Server  LOG      ✓ Compiled in 35ms
+Previous: %s
+Incoming: %s useEffect [, [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object], (text, sectionId, sectionTitle, isAutoPlay = false)=>{
+            if ('speechSynthesis' in window) {
+                // If manually clicked while playing all, stop sequence unless it's the auto-trigger
+                if (!isAutoPlay && playAllIndex !== null) {
+                    setPlayAllIndex(null);
+                }
+                if (speakingSection === sectionId && !isAutoPlay) {
+                    window.speechSynthesis.cancel();
+                    setSpeakingSection(null);
+                    setCurrentText("");
+                    setCurrentCharIndex(0);
+                    setIsPaused(false);
+                } else {
+                    window.speechSynthesis.cancel();
+                    setCurrentText(text);
+                    setSpeakingSection(sectionId);
+                    setSpeakingSectionTitle(sectionTitle);
+                    setCurrentCharIndex(0);
+                    setIsPaused(false);
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.onboundary = ({
+                        "ReportContent.useCallback[handleSpeak]": (event)=>{
+                            setCurrentCharIndex(event.charIndex);
+                        }
+                    })["ReportContent.useCallback[handleSpeak]"];
+                    utterance.onend = ({
+                        "ReportContent.useCallback[handleSpeak]": ()=>{
+                            setSpeakingSection(null);
+                            setCurrentText("");
+                            setCurrentCharIndex(0);
+                            if (isAutoPlay) {
+                                setPlayAllIndex({
+                                    "ReportContent.useCallback[handleSpeak]": (prev)=>prev !== null ? prev + 1 : null
+                                }["ReportContent.useCallback[handleSpeak]"]);
+                            }
+                        }
+                    })["ReportContent.useCallback[handleSpeak]"];
+                    window.speechSynthesis.speak(utterance);
+                }
+            } else {
+                console.warn("Text-to-speech not supported.");
+            }
+        }] [, [object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object], (text, sectionId, sectionTitle, isAutoPlay = false)=>{
+            if ('speechSynthesis' in window) {
+                // If manually clicked while playing all, stop sequence unless it's the auto-trigger
+                if (!isAutoPlay && playAllIndex !== null) {
+                    setPlayAllIndex(null);
+                }
+                if (speakingSection === sectionId && !isAutoPlay) {
+                    window.speechSynthesis.cancel();
+                    setSpeakingSection(null);
+                    setCurrentText("");
+                    setCurrentCharIndex(0);
+                    setIsPaused(false);
+                } else {
+                    window.speechSynthesis.cancel();
+                    setCurrentText(text);
+                    setSpeakingSection(sectionId);
+                    setSpeakingSectionTitle(sectionTitle);
+                    setCurrentCharIndex(0);
+                    setIsPaused(false);
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.onboundary = ({
+                        "ReportContent.useCallback[handleSpeak]": (event)=>{
+                            setCurrentCharIndex(event.charIndex);
+                        }
+                    })["ReportContent.useCallback[handleSpeak]"];
+                    utterance.onend = ({
+                        "ReportContent.useCallback[handleSpeak]": ()=>{
+                            setSpeakingSection(null);
+                            setCurrentText("");
+                            setCurrentCharIndex(0);
+                            if (isAutoPlay) {
+                                setPlayAllIndex({
+                                    "ReportContent.useCallback[handleSpeak]": (prev)=>prev !== null ? prev + 1 : null
+                                }["ReportContent.useCallback[handleSpeak]"]);
+                            }
+                        }
+                    })["ReportContent.useCallback[handleSpeak]"];
+                    window.speechSynthesis.speak(utterance);
+                }
+            } else {
+                console.warn("Text-to-speech not supported.");
+            }
+        }, ]
+[00:45:16.190] Server  LOG      ✓ Compiled in 192ms

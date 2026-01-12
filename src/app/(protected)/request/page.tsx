@@ -105,6 +105,10 @@ function ReportContent() {
     // Voice Dictation State
     const [isListening, setIsListening] = useState(false);
     const recognitionRef = useRef<any>(null);
+    
+    // Voice API Response State
+    const [isProcessingVoice, setIsProcessingVoice] = useState(false);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
 
     const startVoiceDictation = () => {
         if (isListening) {
@@ -130,10 +134,87 @@ function ReportContent() {
             toast.success("Listening...");
         };
 
-        recognition.onresult = (event: any) => {
+        recognition.onresult = async (event: any) => {
             const transcript = event.results[0][0].transcript;
             setNote(prev => prev ? `${prev} ${transcript}` : transcript);
             toast.success(`Captured: "${transcript}"`);
+            
+            // Call API with transcribed text
+            if (id && transcript.trim()) {
+                setIsProcessingVoice(true);
+                try {
+                    const response = await fetch(
+                        `http://magic-carpet.data-magnum.com:8080/api/profiles/${id}/section?text=${encodeURIComponent(transcript)}`,
+                        {
+                            method: 'GET',
+                            headers: {
+                                'accept': '*/*',
+                                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6W10sImNvbXBhbnlOYW1lIjoiRGF0YSBNYWdudW0iLCJuYW1lIjoiTWFoYXZpciBTYW5jaGV0aSIsImRlc2lnbmF0aW9uIjoiVGVjaG5vbG9neSBMZWFkIiwidXNlcklkIjoiNjkzYTUwMDRlN2RiY2ZhZTQ3NDg3OWNkIiwiZW1haWwiOiJtYWhpQGdtYWlsLmNvbSIsInN1YiI6Im1haGlAZ21haWwuY29tIiwiaWF0IjoxNzY4MjI2MDg2LCJleHAiOjE3NjgzMTI0ODZ9.pkp74XcA1DVKRSZGyOHljuXjh91UPs4AVOKPOjOYIL8',
+                                'Referer': window.location.origin + '/',
+                                'User-Agent': navigator.userAgent,
+                                'Cookie': 'JSESSIONID=B2F17266FB716064A0BFE0B92CDFFBCB'
+                            }
+                        }
+                    );
+                    
+                    if (response.ok) {
+                        const contentType = response.headers.get('content-type');
+                        
+                        // Check if response is audio
+                        if (contentType && contentType.includes('audio')) {
+                            const audioBlob = await response.blob();
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            
+                            // Stop any currently playing audio
+                            if (audioRef.current) {
+                                audioRef.current.pause();
+                                audioRef.current = null;
+                            }
+                            
+                            // Play audio response
+                            const audio = new Audio(audioUrl);
+                            audioRef.current = audio;
+                            
+                            audio.onended = () => {
+                                URL.revokeObjectURL(audioUrl);
+                                setIsProcessingVoice(false);
+                                audioRef.current = null;
+                            };
+                            
+                            audio.onerror = () => {
+                                URL.revokeObjectURL(audioUrl);
+                                setIsProcessingVoice(false);
+                                audioRef.current = null;
+                                toast.error('Failed to play audio response');
+                            };
+                            
+                            await audio.play();
+                            toast.success('Playing AI response...');
+                        } else {
+                            // Handle text response
+                            const textResponse = await response.text();
+                            console.log('API Text Response:', textResponse);
+                            // toast.success(`Response: ${textResponse}`);
+                            setIsProcessingVoice(false);
+                            
+                            // If you want to use text-to-speech for the text response
+                            if (textResponse && 'speechSynthesis' in window) {
+                                const utterance = new SpeechSynthesisUtterance(textResponse);
+                                utterance.onend = () => {
+                                    setIsProcessingVoice(false);
+                                };
+                                window.speechSynthesis.speak(utterance);
+                            }
+                        }
+                    } else {
+                        throw new Error(`API returned status ${response.status}`);
+                    }
+                } catch (error) {
+                    console.error('Error processing voice:', error);
+                    toast.error('Failed to process voice input');
+                    setIsProcessingVoice(false);
+                }
+            }
         };
 
         recognition.onerror = (event: any) => {
@@ -564,10 +645,23 @@ function ReportContent() {
                     <div id="action-bar" className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                         <button
                             onClick={startVoiceDictation}
-                            className={`w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 shadow-sm transition ${isListening ? 'text-red-500 border-red-200 animate-pulse' : 'text-gray-400 hover:text-blue-600 hover:border-blue-200'}`}
-                            title="Voice Note"
+                            disabled={isProcessingVoice}
+                            className={`w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 shadow-sm transition ${
+                                isProcessingVoice 
+                                    ? 'text-blue-500 border-blue-200 cursor-wait' 
+                                    : isListening 
+                                        ? 'text-red-500 border-red-200 animate-pulse' 
+                                        : 'text-gray-400 hover:text-blue-600 hover:border-blue-200'
+                            }`}
+                            title={isProcessingVoice ? "Processing..." : "Voice Note"}
                         >
-                            {isListening ? <MicOff className="w-4 h-4 sm:w-5 sm:h-5" /> : <Mic className="w-4 h-4 sm:w-5 sm:h-5" />}
+                            {isProcessingVoice ? (
+                                <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
+                            ) : isListening ? (
+                                <MicOff className="w-4 h-4 sm:w-5 sm:h-5" />
+                            ) : (
+                                <Mic className="w-4 h-4 sm:w-5 sm:h-5" />
+                            )}
                         </button>
 
                         <button

@@ -1390,6 +1390,10 @@
     cursor: text;
   }
 
+  .cursor-wait {
+    cursor: wait;
+  }
+
   .resize {
     resize: both;
   }
@@ -3350,12 +3354,6 @@
   }
 
   @media (hover: hover) {
-    .hover\:border-gray-200:hover {
-      border-color: var(--color-gray-200);
-    }
-  }
-
-  @media (hover: hover) {
     .hover\:border-gray-300:hover {
       border-color: var(--color-gray-300);
     }
@@ -3944,18 +3942,6 @@
   @media (min-width: 48rem) {
     .md\:justify-start {
       justify-content: flex-start;
-    }
-  }
-
-  @media (min-width: 48rem) {
-    .md\:gap-4 {
-      gap: calc(var(--spacing) * 4);
-    }
-  }
-
-  @media (min-width: 48rem) {
-    .md\:p-5 {
-      padding: calc(var(--spacing) * 5);
     }
   }
 
