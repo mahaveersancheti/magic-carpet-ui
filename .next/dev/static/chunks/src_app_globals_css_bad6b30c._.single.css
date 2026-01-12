@@ -1104,6 +1104,10 @@
     max-height: 90vh;
   }
 
+  .max-h-\[320px\] {
+    max-height: 320px;
+  }
+
   .min-h-\[2\.75rem\] {
     min-height: 2.75rem;
   }
@@ -3290,6 +3294,18 @@
   }
 
   @media (hover: hover) {
+    .group-hover\/notify\:visible:is(:where(.group\/notify):hover *) {
+      visibility: visible;
+    }
+  }
+
+  @media (hover: hover) {
+    .group-hover\/notify\:opacity-100:is(:where(.group\/notify):hover *) {
+      opacity: 1;
+    }
+  }
+
+  @media (hover: hover) {
     .group-hover\/starter\:text-blue-700:is(:where(.group\/starter):hover *) {
       color: var(--color-blue-700);
     }
@@ -3301,6 +3317,11 @@
 
   .placeholder\:text-gray-500::placeholder {
     color: var(--color-gray-500);
+  }
+
+  .last\:border-0:last-child {
+    border-style: var(--tw-border-style);
+    border-width: 0;
   }
 
   .focus-within\:border-blue-500:focus-within {

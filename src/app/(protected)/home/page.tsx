@@ -25,6 +25,15 @@ interface TableRow {
   warmCallScore: number;
 }
 
+interface Notification {
+  id: string;
+  title: string;
+  description: string;
+  type: string;
+  status: string;
+  createdAt: string;
+}
+
 // const RAW_TABLE_ROWS: TableRow[] = [
 //   { id: 1, name: "John Doe", company: "Innovate Inc.", email: "john@innovate.com", phone: "+1 555-0101", status: "Complete", date: "2023-10-26" },
 //   { id: 2, name: "Jane Smith", company: "Tech Solutions", email: "jane@techsol.com", phone: "+1 555-0102", status: "Pending", date: "2023-10-25" },
@@ -42,7 +51,7 @@ export default function DashboardPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isAddRequestModalOpen, setIsAddRequestModalOpen] = useState(false);
   const [openSocialRowId, setOpenSocialRowId] = useState<string | null>(null);
-  const [notificationCount, setNotificationCount] = useState<number>(0);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   // User Guide State
   const [showGuide, setShowGuide] = useState(false);
@@ -94,9 +103,9 @@ export default function DashboardPage() {
     // Fetch notifications count
     const fetchNotifications = async () => {
       try {
-        const response = await api.get<any[]>(endpoints.notifications);
+        const response = await api.get<Notification[]>(endpoints.notifications);
         if (Array.isArray(response)) {
-          setNotificationCount(response.length);
+          setNotifications(response);
         }
       } catch (error) {
         console.error("Failed to fetch notifications:", error);
@@ -348,7 +357,7 @@ export default function DashboardPage() {
                 >
                   <HelpCircle className="w-5 h-5" />
                 </button>
-                <HeaderIcon icon="notifications" count={notificationCount} />
+                <HeaderIcon icon="notifications" notifications={notifications} />
               </div>
             </div>
           </header>
@@ -546,16 +555,65 @@ export default function DashboardPage() {
 }
 
 /* Small Components (updated) */
-function HeaderIcon({ icon, count }: { icon: string; count?: number }) {
+function HeaderIcon({ icon, notifications }: { icon: string; notifications: Notification[] }) {
+  const count = notifications.length;
   return (
-    <button className="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition relative">
-      <span className="material-symbols-outlined text-xl">{icon}</span>
-      {count !== undefined && count > 0 && (
-        <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-white">
-          {count > 9 ? '9+' : count}
-        </span>
-      )}
-    </button>
+    <div className="relative group/notify">
+      <button className="w-9 h-9 flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition relative">
+        <span className="material-symbols-outlined text-xl">{icon}</span>
+        {count > 0 && (
+          <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-white">
+            {count > 9 ? '9+' : count}
+          </span>
+        )}
+      </button>
+
+      {/* Notification Dropdown */}
+      <div className="absolute right-0 top-full pt-2 opacity-0 invisible group-hover/notify:opacity-100 group-hover/notify:visible transition-all duration-300 z-50 w-80">
+        <div className="bg-white border border-gray-100 rounded-2xl shadow-xl overflow-hidden flex flex-col">
+          <div className="px-4 py-3 border-b border-gray-50 bg-gray-50/50 flex items-center justify-between">
+            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Notifications</span>
+            {count > 0 && <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">{count} New</span>}
+          </div>
+          
+          <div className="max-h-[320px] overflow-y-auto custom-scrollbar">
+            {notifications.length > 0 ? (
+              notifications.map((notif) => (
+                <div key={notif.id} className="p-4 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0 group/item">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center shrink-0 group-hover/item:bg-blue-100 transition-colors">
+                      <span className="material-symbols-outlined text-lg text-blue-600">
+                        {notif.type === 'alert' ? 'warning' : 'info'}
+                      </span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2 mb-0.5">
+                        <p className="text-xs font-black text-gray-900 truncate uppercase tracking-tight">{notif.title}</p>
+                        <span className="text-[9px] font-bold text-gray-400 shrink-0">
+                          {new Date(notif.createdAt).toLocaleDateString([], { month: 'short', day: 'numeric' })}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-gray-500 leading-relaxed font-medium line-clamp-2">
+                        {notif.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="py-12 flex flex-col items-center justify-center text-gray-400">
+                <span className="material-symbols-outlined text-3xl opacity-20 mb-2">notifications_off</span>
+                <p className="text-[10px] font-bold uppercase tracking-widest">No notifications yet</p>
+              </div>
+            )}
+          </div>
+          
+          <button className="px-4 py-3 text-[10px] font-black text-blue-600 uppercase tracking-widest bg-gray-50/50 hover:bg-blue-50 transition-colors text-center border-t border-gray-50">
+            View All Notifications
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
 
