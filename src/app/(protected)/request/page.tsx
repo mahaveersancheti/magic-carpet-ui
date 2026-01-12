@@ -138,7 +138,7 @@ function ReportContent() {
         recognition.onresult = async (event: any) => {
             const transcript = event.results[0][0].transcript;
             setNote(prev => prev ? `${prev} ${transcript}` : transcript);
-            toast.success(`Captured: "${transcript}"`);
+            // toast.success(`Captured: "${transcript}"`);
             
             // Call API with transcribed text
             if (id && transcript.trim()) {
@@ -499,7 +499,7 @@ function ReportContent() {
             },
             {
                 id: 'recentNews',
-                title: 'Recent News',
+                title: 'Recent Company News',
                 getText: () => {
                     const text = REPORT_JSON.recentNews.map(n => `${n.title}. ${n.summary}`).join('. ');
                     return text || "No recent news found.";
@@ -533,7 +533,7 @@ function ReportContent() {
             },
             {
                 id: 'objections',
-                title: 'Objection Handling',
+                title: 'Objection Handling / Role Play',
                 getText: () => {
                     const text = REPORT_JSON.objections.map(o => `Objection: ${o.objection}. Strategy: ${o.counter}`).join('. ');
                     return text || "No objections predicted.";
@@ -541,7 +541,7 @@ function ReportContent() {
             },
             {
                 id: 'recommendation',
-                title: 'AI Recommendation',
+                title: 'AI Action Recommendation',
                 getText: () => REPORT_JSON.recommendationBody
             }
         ];
@@ -1234,7 +1234,7 @@ function ReportContent() {
                                     <button
                                         onClick={() => {
                                             const textToSpeak = REPORT_JSON.recentNews.map(n => `${n.title}. ${n.summary}`).join('. ');
-                                            handleSpeak(textToSpeak || "No recent news found.", 'recentNews', 'Recent News');
+                                            handleSpeak(textToSpeak || "No recent news found.", 'recentNews', 'Recent Company News');
                                         }}
                                         className={`p-2 rounded-xl transition-all active:scale-95 ${speakingSection === 'recentNews' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-600 border border-gray-100 hover:text-blue-600 hover:bg-blue-50'}`}
                                     >
@@ -1430,7 +1430,7 @@ function ReportContent() {
                             <button
                                 onClick={() => {
                                     const textToSpeak = REPORT_JSON.objections.map(o => `Objection: ${o.objection}. Strategy: ${o.counter}`).join('. ');
-                                    handleSpeak(textToSpeak || "No objections predicted.", 'objections', 'Objection Handling');
+                                    handleSpeak(textToSpeak || "No objections predicted.", 'objections', 'Objection Handling / Role Play');
                                 }}
                                 className={`p-2 rounded-xl transition-all active:scale-95 ${speakingSection === 'objections' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-400 border border-gray-100 hover:text-red-600 hover:bg-red-50'}`}
                             >
@@ -1482,7 +1482,7 @@ function ReportContent() {
                                         <h3 className="text-lg font-black leading-tight max-w-2xl text-gray-900">{REPORT_JSON.recommendationBody}</h3>
                                     </div>
                                     <button
-                                        onClick={() => handleSpeak(REPORT_JSON.recommendationBody, 'recommendation', 'AI Recommendation')}
+                                        onClick={() => handleSpeak(REPORT_JSON.recommendationBody, 'recommendation', 'AI Action Recommendation')}
                                         className={`h-12 w-12 flex items-center justify-center rounded-xl transition-all active:scale-95 border border-gray-100 shrink-0 ${speakingSection === 'recommendation' ? 'bg-red-500 text-white' : 'bg-white text-gray-400 hover:text-blue-600 hover:bg-blue-50 shadow-sm'}`}
                                     >
                                         {speakingSection === 'recommendation' ? <Square className="w-4 h-4" /> : <Volume2 className="w-5 h-5" />}
@@ -1602,6 +1602,7 @@ function ReportContent() {
                                     onClick={() => {
                                         window.speechSynthesis.cancel();
                                         setSpeakingSection(null);
+                                        setPlayAllIndex(null);
                                     }}
                                     className="p-2 rounded-xl hover:bg-gray-100 text-gray-400 transition-colors"
                                 >
