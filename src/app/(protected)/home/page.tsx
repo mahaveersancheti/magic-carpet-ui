@@ -7,7 +7,7 @@ import { AddRequestModal } from "@/app/components/AddRequestFormModal";
 import { UserGuide, GuideStep } from "@/app/components/UserGuide";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
-import { fetchProfiles } from "../../redux/slices/ProfileSlice";
+import { fetchNotifications, fetchProfiles } from "../../redux/slices/ProfileSlice";
 import toast from "react-hot-toast";
 import { api } from "../../services/apiService";
 import { endpoints } from "../../lib/endpoints";
@@ -45,7 +45,7 @@ interface Notification {
 export default function DashboardPage() {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const { profiles, loading, error } = useSelector((state: RootState) => state.profiles);
+  const { profiles,notificationsData, loading, error } = useSelector((state: RootState) => state.profiles);
 
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -55,6 +55,10 @@ export default function DashboardPage() {
 
   // User Guide State
   const [showGuide, setShowGuide] = useState(false);
+
+  useEffect(() => {
+    setNotifications(notificationsData);
+  }, [notificationsData]);
 
   useEffect(() => {
     // Check if user has seen the guide
@@ -97,22 +101,24 @@ export default function DashboardPage() {
     }
   ];
 
+
   useEffect(() => {
     dispatch(fetchProfiles());
+    dispatch(fetchNotifications());
     
     // Fetch notifications count
-    const fetchNotifications = async () => {
-      try {
-        const response = await api.get<Notification[]>(endpoints.notifications);
-        if (Array.isArray(response)) {
-          setNotifications(response);
-        }
-      } catch (error) {
-        console.error("Failed to fetch notifications:", error);
-      }
-    };
+    // const fetchNotifications = async () => {
+    //   try {
+    //     const response = await api.get<Notification[]>(endpoints.notifications);
+    //     if (Array.isArray(response)) {
+    //       setNotifications(response);
+    //     }
+    //   } catch (error) {
+    //     console.error("Failed to fetch notifications:", error);
+    //   }
+    // };
     
-    fetchNotifications();
+    // fetchNotifications();
   }, [dispatch]);
 
   useEffect(() => {
