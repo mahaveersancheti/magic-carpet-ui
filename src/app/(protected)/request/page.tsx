@@ -10,6 +10,8 @@ import { fetchProfileById, clearSelectedProfile } from "../../redux/slices/Profi
 import { api } from "../../services/apiService";
 import { endpoints } from "../../lib/endpoints";
 import toast from 'react-hot-toast';
+import TutorialComponent from "@/app/components/TutorialComponent";
+
 
 const ScoreGauge = ({ score, size = 100, title, showPercentage = false }: { score: number; size?: number; title?: string; showPercentage?: boolean }) => {
     const [animatedScore, setAnimatedScore] = useState(0);
@@ -110,6 +112,9 @@ function ReportContent() {
     // Voice API Response State
     const [isProcessingVoice, setIsProcessingVoice] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
+    useEffect(() => {
+        console.log("selectedProfile", selectedProfile?.status);
+    }, [selectedProfile]);
 
     const startVoiceDictation = () => {
         if (isListening) {
@@ -593,12 +598,25 @@ function ReportContent() {
         );
     }
 
+    // Handle initial state before fetch starts to avoid flicker
+    if (!selectedProfile && !loading && id) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-background-light">
+                <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
+            </div>
+        );
+    }
+
     if (!selectedProfile || !REPORT_JSON) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-background-light">
                 <div className="text-gray-500">No profile data found.</div>
             </div>
         );
+    }
+
+    if (selectedProfile?.status === 'NEW') {
+        return <TutorialComponent />;
     }
 
 

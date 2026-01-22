@@ -39,6 +39,11 @@ export default function ProductsPage() {
   const [formErrors, setFormErrors] = useState<{ name?: string; description?: string; image?: string }>({});
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
 
+  // State for missing documents prompt after adding product
+  const [showUploadPrompt, setShowUploadPrompt] = useState(false);
+  const [uploadPromptProductId, setUploadPromptProductId] = useState<string | null>(null);
+  const [uploadPromptDocs, setUploadPromptDocs] = useState<File[]>([]);
+
   const getProductImageUrl = (productId: string) => {
     return `${getBaseUrl()}${endpoints.getProductImage(productId)}`;
   };
@@ -152,6 +157,15 @@ export default function ProductsPage() {
 
       toast.success('Product added successfully!');
       setShowAddProductModal(false);
+      
+      const newProductId = newProduct.id;
+      
+      // If no documents were uploaded, show the prompt
+      if (productDocs.length === 0) {
+        setUploadPromptProductId(newProductId);
+        setShowUploadPrompt(true);
+      }
+
       setProductForm({ name: '', description: '' });
       setProductImage(null);
       setProductDocs([]);
@@ -237,6 +251,35 @@ export default function ProductsPage() {
       setDeletingProductId(null);
     } catch (error: any) {
       toast.error(error || 'Failed to delete product');
+    }
+  };
+  // Handle prompt skip
+  const handlePromptSkip = () => {
+    setShowUploadPrompt(false);
+    setUploadPromptProductId(null);
+    setUploadPromptDocs([]);
+  };
+
+  // Handle prompt upload
+  const handlePromptUpload = async () => {
+    if (!uploadPromptProductId || uploadPromptDocs.length === 0) return;
+
+    const userId = user?.userId;
+    if (!userId) return;
+
+    try {
+      await dispatch(uploadProductFiles({
+        productId: uploadPromptProductId,
+        userId,
+        files: uploadPromptDocs
+      })).unwrap();
+
+      toast.success('Documents uploaded successfully!');
+      handlePromptSkip();
+      // Refresh products list to show new document count
+      dispatch(fetchProductsByUserId(userId));
+    } catch (error: any) {
+      toast.error(error || 'Failed to upload documents');
     }
   };
 
@@ -356,10 +399,15 @@ export default function ProductsPage() {
                         <p className="text-gray-600 text-sm line-clamp-2 leading-relaxed mt-1">
                           {product.description}
                         </p>
-                        {product.filePaths && product.filePaths.length > 0 && (
+                        {product.filePaths && product.filePaths.length > 0 ? (
                           <div className="flex items-center gap-1.5 mt-2 text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg w-fit">
                             <FileText className="w-3 h-3" />
                             {product.filePaths.length} Document{product.filePaths.length > 1 ? 's' : ''}
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-1.5 mt-2 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg w-fit border border-amber-100">
+                            <FileText className="w-3 h-3 text-amber-400" />
+                            No documents uploaded
                           </div>
                         )}
                       </div>
@@ -404,10 +452,15 @@ export default function ProductsPage() {
                       <p className="text-gray-600 text-xs line-clamp-2 leading-relaxed flex-1">
                         {product.description}
                       </p>
-                      {product.filePaths && product.filePaths.length > 0 && (
+                      {product.filePaths && product.filePaths.length > 0 ? (
                         <div className="flex items-center gap-1.5 mt-3 text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded-lg w-fit">
                           <FileText className="w-3 h-3" />
                           {product.filePaths.length} Document{product.filePaths.length > 1 ? 's' : ''}
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1.5 mt-3 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg w-fit border border-amber-100">
+                          <FileText className="w-3 h-3 text-amber-400" />
+                          No documents uploaded
                         </div>
                       )}
                     </div>
@@ -675,6 +728,83 @@ export default function ProductsPage() {
                   )}
                   Delete
                 </button>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* Product Document Upload Prompt Modal */}
+        {showUploadPrompt && (
+          <div className="fixed inset-0 bg-gray-900/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+            <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative overflow-hidden flex flex-col">
+              <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <FileText className="w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2 text-center">Product Created!</h3>
+              <p className="text-gray-500 text-sm mb-6 text-center">
+                Your product has been added successfully. Would you like to upload any supporting documents now?
+              </p>
+
+              <div className="space-y-4">
+                <div className="relative">
+                  <input
+                    type="file"
+                    multiple
+                    onChange={(e) => {
+                      if (e.target.files) {
+                        setUploadPromptDocs(Array.from(e.target.files));
+                      }
+                    }}
+                    className="hidden"
+                    id="prompt-docs-upload"
+                  />
+                  <label
+                    htmlFor="prompt-docs-upload"
+                    className="flex items-center gap-3 w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl cursor-pointer hover:bg-gray-100 transition-all border-dashed"
+                  >
+                    <Upload className="w-5 h-5 text-gray-400" />
+                    <span className="text-gray-500 text-sm font-medium">
+                      {uploadPromptDocs.length > 0
+                        ? `${uploadPromptDocs.length} files selected`
+                        : "Click to select documents"}
+                    </span>
+                  </label>
+                </div>
+
+                {uploadPromptDocs.length > 0 && (
+                  <div className="max-h-32 overflow-y-auto space-y-2 pr-1 custom-scrollbar">
+                    {uploadPromptDocs.map((file, index) => (
+                      <div key={index} className="flex justify-between items-center p-2 bg-blue-50/30 rounded-lg border border-blue-100 text-xs">
+                        <span className="truncate text-gray-600">{file.name}</span>
+                        <button
+                          onClick={() => setUploadPromptDocs(prev => prev.filter((_, i) => i !== index))}
+                          className="text-gray-400 hover:text-red-500"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <div className="flex gap-3 pt-4">
+                  <button
+                    onClick={handlePromptSkip}
+                    className="flex-1 py-3 rounded-xl border border-gray-200 text-gray-600 font-bold hover:bg-gray-50 transition-all"
+                    disabled={uploadLoading}
+                  >
+                    Skip for now
+                  </button>
+                  <button
+                    onClick={handlePromptUpload}
+                    disabled={uploadLoading || uploadPromptDocs.length === 0}
+                    className="flex-1 py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {uploadLoading && (
+                      <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    )}
+                    Upload
+                  </button>
+                </div>
               </div>
             </div>
           </div>
