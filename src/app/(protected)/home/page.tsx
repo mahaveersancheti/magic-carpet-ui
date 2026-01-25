@@ -2,7 +2,7 @@
 import { UploadModal } from "@/app/components/UploadModal";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect, useMemo } from "react";
-import { ArrowUpDown, ArrowUp, ArrowDown, Linkedin, Instagram, Twitter, Globe, Plus, Loader2, HelpCircle } from "lucide-react";
+import { ArrowUpDown, ArrowUp, ArrowDown, Linkedin, Instagram, Twitter, Globe, Plus, Loader2, HelpCircle, Copy, Check } from "lucide-react";
 import { AddRequestModal } from "@/app/components/AddRequestFormModal";
 import { UserGuide, GuideStep } from "@/app/components/UserGuide";
 import { useDispatch, useSelector } from "react-redux";
@@ -305,6 +305,49 @@ export default function DashboardPage() {
     );
   }
 
+  function TooltipText({ text, className = "" }: { text: string; className?: string }) {
+    if (!text || text === "N/A") return <span className="text-gray-400">N/A</span>;
+    
+    return (
+      <div className="group relative inline-block max-w-full">
+        <div className={`truncate ${className}`}>
+          {text}
+        </div>
+        <div className="absolute bottom-full left-0 mb-2 px-3 py-1.5 bg-gray-900 text-white text-[11px] font-medium rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-[100] shadow-xl pointer-events-none border border-gray-800">
+          {text}
+          <div className="absolute top-full left-4 -translate-y-[1px] border-4 border-transparent border-t-gray-900" />
+        </div>
+      </div>
+    );
+  }
+
+  function CopyButton({ text }: { text: string }) {
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = (e: React.MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      navigator.clipboard.writeText(text);
+      setCopied(true);
+      toast.success("Copied to clipboard!");
+      setTimeout(() => setCopied(false), 2000);
+    };
+
+    return (
+      <button
+        onClick={handleCopy}
+        className="ml-2 p-1 hover:bg-blue-50 rounded-md transition-all text-gray-400 hover:text-blue-600 active:scale-90"
+        title="Copy to clipboard"
+      >
+        {copied ? (
+          <Check className="w-3.5 h-3.5 text-green-500 animate-in fade-in zoom-in duration-200" />
+        ) : (
+          <Copy className="w-3.5 h-3.5" />
+        )}
+      </button>
+    );
+  }
+
   return (
     <div className="flex w-full min-h-screen bg-transparent">
       <main className="flex-1 p-6 md:p-8 w-full pt-20 lg:pt-8 bg-transparent">
@@ -476,24 +519,32 @@ export default function DashboardPage() {
                         <td className="px-4 py-4 text-sm font-medium text-gray-900">
                           <button
                             onClick={() => viewDetails("visibility", row.id)}
-                            className="hover:text-blue-600 transition-colors text-left"
+                            className="hover:text-blue-600 transition-colors text-left block w-full"
                           >
-                            {row.name}
+                            <TooltipText text={row.name} className="max-w-[120px] md:max-w-[180px]" />
                           </button>
                           {/* Mobile: Show company below name */}
                           <div className="sm:hidden text-xs text-gray-500 mt-1">
                             {row.company}
                           </div>
                         </td>
-                        <td className="px-4 py-4 text-sm text-gray-500 hidden sm:table-cell">{row.company}</td>
+                        <td className="px-4 py-4 text-sm text-gray-500 hidden sm:table-cell">
+                          <TooltipText text={row.company} className="max-w-[120px] lg:max-w-[150px]" />
+                        </td>
                         <td className="px-4 py-4 text-sm text-gray-500 hidden lg:table-cell">
                           <div className="flex flex-col">
-                            <a href={`mailto:${row.email}`} className="text-gray-900 hover:text-blue-600 transition">
-                              {row.email}
-                            </a>
-                            <a href={`tel:${row.phone}`} className="text-gray-500 text-xs mt-0.5">
-                              {row.phone}
-                            </a>
+                            <div className="flex items-center group/email">
+                              <a href={`mailto:${row.email}`} className="text-gray-900 hover:text-blue-600 transition truncate max-w-[140px] xl:max-w-[180px]" title={row.email}>
+                                {row.email}
+                              </a>
+                              <CopyButton text={row.email} />
+                            </div>
+                            <div className="flex items-center gap-1.5 mt-0.5">
+                              <span className="text-gray-500 text-xs truncate max-w-[120px]">
+                                {row.phone}
+                              </span>
+                              {row.phone !== "N/A" && <CopyButton text={row.phone} />}
+                            </div>
                           </div>
                         </td>
                         <td className="px-4 py-4">

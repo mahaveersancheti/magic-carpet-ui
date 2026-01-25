@@ -10,14 +10,14 @@ const steps = [
       { label: "Password", value: "your logged in password" }
     ],
     footer: "Pro tip: Bookmark https://magic-carpet.data-magnum.com/signin for quick access.",
-    image: "/Users/apple/.gemini/antigravity/brain/05d3a877-d25a-4bdf-97ef-77562134c8d3/magic_carpet_login_tutorial_1769014185090.png",
+    image: "/tutorial_images/login.png",
     icon: <LogIn className="w-6 h-6" />
   },
   {
     title: "Create a Search Request",
     description: "Once logged in, you can start tracking new profiles. Click the prominent PLUS icon on your dashboard to add a new prospect.",
     highlights: ["Ensure the LinkedIn URL is accurate", "Proper identification is key for AI analysis"],
-    image: "/Users/apple/.gemini/antigravity/brain/05d3a877-d25a-4bdf-97ef-77562134c8d3/magic_carpet_add_request_tutorial_v2v31415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679_1769014322592.png",
+    image: "/tutorial_images/add_lead.png",
     icon: <PlusCircle className="w-6 h-6" />
   },
   {
@@ -29,14 +29,14 @@ const steps = [
       "Click 'Load unpacked' and select the extension directory",
       "Visit any LinkedIn profile and click 'Clip Full Page'"
     ],
-    image: "/Users/apple/.gemini/antigravity/brain/05d3a877-d25a-4bdf-97ef-77562134c8d3/magic_carpet_extension_clipping_tutorial_v24_1769014236014.png",
+    image: "/tutorial_images/select_extension.png",
     icon: <Chrome className="w-6 h-6" />
   },
   {
     title: "Unlock Deep Insights",
     description: "Once clipping is complete, your results are ready. Dive into comprehensive personality reports and strategic sales recommendations.",
     highlights: ["AI-generated summary", "Strategic sales frameworks", "Psychology-based approaches"],
-    image: "/Users/apple/.gemini/antigravity/brain/05d3a877-d25a-4bdf-97ef-77562134c8d3/magic_carpet_results_view_tutorial_1769014266100.png",
+    image: "/tutorial_images/final.png",
     icon: <Eye className="w-6 h-6" />
   }
 ];
@@ -67,10 +67,10 @@ const TutorialComponent: React.FC = () => {
       <div className="relative z-10 max-w-6xl w-full">
         {/* Header Area */}
         <div className="text-center mb-8 md:mb-12">
-          <h1 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">
+          <h1 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tight mb-4">
             Welcome to <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Magic Carpet</span>
           </h1>
-          <p className="text-slate-600 text-lg md:text-xl font-medium max-w-2xl mx-auto">
+          <p className="text-slate-600 text-md md:text-lg font-medium max-w-2xl mx-auto">
             Master the art of AI-driven prospecting in four simple steps.
           </p>
         </div>
@@ -100,7 +100,7 @@ const TutorialComponent: React.FC = () => {
         {/* Step Card */}
         <div className="bg-white/80 backdrop-blur-xl border border-white rounded-[2.5rem] shadow-2xl shadow-slate-200/50 overflow-hidden min-h-[500px] flex flex-col md:flex-row transform transition-all duration-500">
           {/* Content Side */}
-          <div className="flex-1 p-8 md:p-12 flex flex-col justify-between">
+          <div className="flex-1 p-4 md:p-6 flex flex-col justify-between">
             <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-50 text-indigo-700 text-sm font-bold mb-6">
                 {steps[currentStep].icon}

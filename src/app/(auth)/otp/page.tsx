@@ -1,16 +1,20 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { ArrowLeft, RefreshCw, ShieldCheck } from 'lucide-react';
 import { Suspense } from 'react';
+import { api } from '../../services/apiService';
+import { endpoints } from '../../lib/endpoints';
 
 function OtpContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get('email') || '';
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [loading, setLoading] = useState(false);
-  const [timer, setTimer] = useState(30);
+  const [timer, setTimer] = useState(600); // 10 minutes
   const [canResend, setCanResend] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -55,15 +59,11 @@ function OtpContent() {
 
     setLoading(true);
     try {
-      // Placeholder for API call
-      console.log('Verifying OTP:', otpValue);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      
-      toast.success('OTP Verified Successfully!');
-      router.push('/home');
+      await api.post(endpoints.verifyOtp, { email, otp: otpValue });
+      toast.success('Email verified successfully. You can now login.');
+      router.push('/signin');
     } catch (error: any) {
-      toast.error('Invalid OTP. Please try again.');
+      // Error is handled by api interceptor
     } finally {
       setLoading(false);
     }
@@ -74,17 +74,14 @@ function OtpContent() {
 
     setLoading(true);
     try {
-      // Placeholder for Resend API call
-      console.log('Resending OTP...');
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
+      await api.post(endpoints.resendOtp, { email });
       toast.success('OTP Resent Successfully!');
-      setTimer(30);
+      setTimer(600);
       setCanResend(false);
       setOtp(['', '', '', '', '', '']);
       inputRefs.current[0]?.focus();
     } catch (error: any) {
-      toast.error('Failed to resend OTP');
+      // Error handled by api interceptor
     } finally {
       setLoading(false);
     }
@@ -167,7 +164,7 @@ function OtpContent() {
                   : 'text-gray-400 cursor-not-allowed'
               }`}
             >
-              {canResend ? 'Resend Code' : `Resend in ${timer}s`}
+            {canResend ? 'Resend Code' : `Resend in ${Math.floor(timer / 60)}:${(timer % 60).toString().padStart(2, '0')}`}
             </button>
           </div>
         </div>

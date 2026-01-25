@@ -64,8 +64,8 @@ export default function SignUp() {
     }));
 
     if (registerUser.fulfilled.match(resultAction)) {
-      toast.success("Registration successful! Please sign in.");
-      router.push('/signin');
+      toast.success("Registration successful! Please verify OTP.");
+      router.push(`/otp?email=${encodeURIComponent(formData.email)}`);
     } else {
       toast.error("Registration failed. Please try again.");
     }
@@ -81,7 +81,7 @@ export default function SignUp() {
       <main className="z-10 flex w-full max-w-md flex-col items-center">
 
         {/* Glassy Card */}
-        <div className="w-full rounded-3xl bg-white/80 p-8 shadow-neo-light-convex backdrop-blur-2xl border border-gray-200">
+        <div className="w-full rounded-3xl bg-white/80 p-10 shadow-neo-light-convex backdrop-blur-2xl border border-gray-200">
 
           {/* Heading */}
           <div className="mb-6 text-center">
@@ -104,13 +104,13 @@ export default function SignUp() {
               >
                 Username
               </label>
-              <div className="relative flex items-center">
-                <span className="material-symbols-outlined absolute left-4 text-gray-500">person</span>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">person</span>
                 <input
                   id="username"
                   type="text"
                   placeholder="Enter your username"
-                  className="form-input w-full rounded-lg border-none bg-white/50 py-3 pl-12 pr-4 text-foreground placeholder:text-gray-500 shadow-neomorph-light-pressed transition-shadow duration-300 focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-xl bg-white/50 border border-gray-300 py-3 pl-12 pr-4 text-foreground placeholder-gray-500 focus:ring-2 focus:ring-blue-500 outline-none backdrop-blur-xl"
                   autoComplete="username"
                   value={formData.username}
                   onChange={handleChange}
@@ -124,13 +124,13 @@ export default function SignUp() {
               <label htmlFor="email" className="mb-2 text-sm font-medium text-gray-700">
                 Email Address
               </label>
-              <div className="relative flex items-center">
-                <span className="material-symbols-outlined absolute left-4 text-gray-500">mail</span>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">mail</span>
                 <input
                   id="email"
                   type="email"
                   placeholder="Enter your email address"
-                  className="form-input w-full rounded-lg border-none bg-white/50 py-3 pl-12 pr-4 text-foreground placeholder:text-gray-500 shadow-neomorph-light-pressed transition-shadow duration-300 focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-xl bg-white/50 border border-gray-300 py-3 pl-12 pr-4 text-foreground placeholder-gray-500 focus:ring-2 focus:ring-blue-500 outline-none backdrop-blur-xl"
                   autoComplete="email"
                   value={formData.email}
                   onChange={handleChange}
@@ -144,13 +144,13 @@ export default function SignUp() {
               <label htmlFor="password" className="mb-2 text-sm font-medium text-gray-700">
                 Password
               </label>
-              <div className="relative flex items-center">
-                <span className="material-symbols-outlined absolute left-4 text-gray-500">lock</span>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">lock</span>
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
-                  className="form-input w-full rounded-lg border-none bg-white/50 py-3 pl-12 pr-10 text-foreground placeholder:text-gray-500 shadow-neomorph-light-pressed transition-shadow duration-300 focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-xl bg-white/50 border border-gray-300 py-3 pl-12 pr-12 text-foreground placeholder-gray-500 focus:ring-2 focus:ring-blue-500 outline-none backdrop-blur-xl"
                   autoComplete="new-password"
                   value={formData.password}
                   onChange={handleChange}
@@ -159,9 +159,9 @@ export default function SignUp() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 text-gray-500 hover:text-gray-300"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
                 >
-                  <span className="material-symbols-outlined text-xl">
+                  <span className="material-symbols-outlined text-[20px]">
                     {showPassword ? 'visibility' : 'visibility_off'}
                   </span>
                 </button>
@@ -173,13 +173,13 @@ export default function SignUp() {
               <label htmlFor="confirmPassword" className="mb-2 text-sm font-medium text-gray-700">
                 Confirm Password
               </label>
-              <div className="relative flex items-center">
-                <span className="material-symbols-outlined absolute left-4 text-gray-500">lock</span>
+              <div className="relative">
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">lock</span>
                 <input
                   id="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="Confirm your password"
-                  className="form-input w-full rounded-lg border-none bg-white/50 py-3 pl-12 pr-4 text-foreground placeholder:text-gray-500 shadow-neomorph-light-pressed transition-shadow duration-300 focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-xl bg-white/50 border border-gray-300 py-3 pl-12 pr-12 text-foreground placeholder-gray-500 focus:ring-2 focus:ring-blue-500 outline-none backdrop-blur-xl"
                   autoComplete="new-password"
                   value={formData.confirmPassword}
                   onChange={handleChange}
@@ -188,9 +188,9 @@ export default function SignUp() {
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 text-gray-500 hover:text-gray-300"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300"
                 >
-                  <span className="material-symbols-outlined text-xl">
+                  <span className="material-symbols-outlined text-[20px]">
                     {showConfirmPassword ? 'visibility' : 'visibility_off'}
                   </span>
                 </button>
@@ -206,7 +206,7 @@ export default function SignUp() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="mt-4 flex w-full items-center justify-center rounded-lg bg-blue-600 py-3 text-base font-bold text-white hover:bg-blue-500 transition-all disabled:bg-blue-400"
+              className="mt-4 w-full rounded-xl bg-blue-600 py-3 font-semibold text-white hover:bg-blue-500 transition-all duration-200 disabled:bg-blue-400"
               disabled={loading}
             >
               {loading ? 'Creating Account...' : 'Sign Up'}

@@ -1,13 +1,124 @@
-[00:00:01.020] Server  LOG      ✓ Ready in 794ms
-[00:01:28.322] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:01:43.459] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:01:58.910] Browser LOG     selectedProfile undefined
-[00:01:58.911] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
-[00:02:00.203] Browser LOG     selectedProfile NEW
-[00:02:00.990] Browser LOG     selectedProfile NEW
-[00:02:48.050] Server  LOG      ✓ Compiled in 69ms
-[00:06:16.481] Server  LOG      ✓ Compiled in 128ms
-[00:06:32.132] Server  LOG      ✓ Compiled in 68ms
-[00:06:58.947] Server  LOG      ✓ Compiled in 41ms
-[00:14:35.521] Server  LOG      ✓ Compiled in 0ms
-[00:17:10.565] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:00:00.894] Server  LOG      ✓ Ready in 667ms
+[00:06:47.984] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:08:35.800] Browser LOG     selectedProfile undefined
+[00:08:35.800] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:08:36.797] Browser LOG     selectedProfile NEW
+[00:08:37.509] Browser LOG     selectedProfile NEW
+[00:11:01.444] Server  LOG      ✓ Compiled in 56ms
+[00:11:04.846] Browser LOG     selectedProfile undefined
+[00:11:04.846] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:11:06.176] Browser LOG     selectedProfile NEW
+[00:11:06.826] Browser LOG     selectedProfile NEW
+[00:11:19.427] Server  LOG      ✓ Compiled in 59ms
+[00:11:55.836] Server  LOG      ✓ Compiled in 81ms
+[00:53:12.006] Server  LOG      ✓ Compiled in 76ms
+[00:53:30.098] Server  LOG      ✓ Compiled in 32ms
+[00:53:39.805] Browser LOG     selectedProfile undefined
+[00:53:39.805] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:53:41.396] Browser LOG     selectedProfile NEW
+[00:53:42.101] Browser LOG     selectedProfile NEW
+[00:54:10.081] Server  LOG      ✓ Compiled in 49ms
+[00:54:18.128] Server  LOG      ✓ Compiled in 55ms
+[00:54:36.287] Server  LOG      ✓ Compiled in 32ms
+[00:54:41.610] Server  LOG      ✓ Compiled in 95ms
+[00:55:13.275] Server  LOG      ✓ Compiled in 65ms
+[00:55:21.144] Server  LOG      ✓ Compiled in 53ms
+[00:59:29.286] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:11:33.169] Server  LOG      ✓ Compiled in 214ms
+[01:17:03.239] Browser LOG     selectedProfile undefined
+[01:17:03.239] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[01:17:05.101] Browser LOG     selectedProfile COMPLETED
+[01:17:06.024] Browser LOG     selectedProfile COMPLETED
+[01:22:30.125] Browser LOG     API Text Response: conversationStarters
+[01:22:30.125] Browser LOG     Playing section: conversationStarters Mahavir, saw Mahindra Susten just commissioned 560 MWp solar across Gujarat and Rajasthan – massive scale. How are you handling the team ramp-up for these utility projects?. With that kind of expansion plus Tech Mahindra's margin push, are manual onboarding and payroll processes creating bottlenecks for your tech team right now?
+[01:22:31.224] Browser LOG     API Text Response: objections
+[01:22:31.224] Browser LOG     Playing section: objections Objection: We already have an HR system in place.. Strategy: I hear you, Mahavir – others in Mahindra group felt the same until they saw how GrokHR cut their payroll errors by 40% while integrating seamlessly with existing tools. What specific gaps are you seeing in your current setup?. Objection: Budget is tight with our expansion focus.. Strategy: Totally get the growth priorities – a manufacturing client in similar scale saved $45k annually on admin alone in year one. Curious, what's your biggest HR cost leak right now?
+[01:25:54.154] Server  LOG      ✓ Compiled in 100ms
+[01:27:04.942] Browser LOG     API Text Response: psychologyApproach
+[01:27:04.942] Browser LOG     No matching section found, playing text response directly
+[01:27:15.442] Browser LOG     API Text Response: about
+[01:27:15.442] Browser LOG     No matching section found, playing text response directly
+[01:27:21.389] Browser LOG     API Text Response: industryOutlook
+[01:27:21.389] Browser LOG     No matching section found, playing text response directly
+[01:27:28.317] Browser LOG     API Text Response: financialSnapshot
+[01:27:28.317] Browser LOG     No matching section found, playing text response directly
+[01:27:41.481] Server  LOG      ✓ Compiled in 92ms
+[01:27:48.505] Browser LOG     API Text Response: psychologyApproach
+[01:27:48.505] Browser LOG     No matching section found, playing text response directly
+[01:27:58.956] Browser LOG     selectedProfile undefined
+[01:27:58.956] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[01:28:00.667] Browser LOG     selectedProfile COMPLETED
+[01:28:01.665] Browser LOG     selectedProfile COMPLETED
+[01:28:08.201] Browser LOG     API Text Response: allSkills
+[01:28:08.201] Browser LOG     No matching section found, playing text response directly
+[01:28:46.135] Browser LOG     API Text Response: about
+[01:28:46.135] Browser LOG     No matching section found, playing text response directly
+[01:29:02.809] Browser LOG     API Text Response: recentNews
+[01:29:02.809] Browser LOG     No matching section found, playing text response directly
+[01:29:52.095] Browser LOG     selectedProfile undefined
+[01:29:52.095] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[01:29:53.865] Browser LOG     selectedProfile COMPLETED
+[01:29:54.785] Browser LOG     selectedProfile COMPLETED
+[01:29:58.631] Browser LOG     selectedProfile undefined
+[01:29:58.631] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[01:30:00.308] Browser LOG     selectedProfile COMPLETED
+[01:30:01.313] Browser LOG     selectedProfile COMPLETED
+[01:30:14.604] Browser LOG     API Text Response: financialSnapshot
+[01:30:14.605] Browser LOG     No matching section found, playing text response directly
+[01:30:46.972] Browser LOG     selectedProfile undefined
+[01:30:46.972] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[01:30:48.620] Browser LOG     selectedProfile COMPLETED
+[01:30:49.638] Browser LOG     selectedProfile COMPLETED
+[01:30:56.009] Browser LOG     API Text Response: psychologyApproach
+[01:30:56.009] Browser LOG     No matching section found, playing text response directly
+[01:34:45.968] Server  LOG      ✓ Compiled in 204ms
+[01:34:46.186] Browser LOG     selectedProfile COMPLETED
+[01:34:46.186] Browser LOG     selectedProfile undefined
+[01:34:47.833] Browser LOG     selectedProfile COMPLETED
+[01:35:55.424] Browser LOG     API Text Response: recentNews
+[01:35:55.424] Browser LOG     Playing section: recentNews [{"title":"Mahindra Susten Commissions 560 MWp Solar Projects in 2025","description":"Mahindra Susten successfully commissioned 560 MWp of solar capacity in 2025, comprising a 280 MWp plant in Gujarat and a 280 MWp facility in Rajasthan, marking the first major additions after selling 1.54 GWp of assets to Sustainable Energy Infra Trust in 2024[1][2].","date":"2025-12-29","source":"Solar Quarter","url":"https://solarquarter.com/2025/12/30/mahindra-susten-commissions-560-mwp-solar-projects-in-2025-strengthening-its-leadership-in-utility-scale-renewables/"},{"title":"Mahindra Susten Expands Renewable Energy Pipeline Across Multiple States","description":"Mahindra Susten is developing large-scale projects in Maharashtra, Punjab, Rajasthan, and Karnataka, with a diversified portfolio spanning utility-scale PPAs, hybrid wind-solar projects, and group-captive open access developments[2].","date":"2025-12-29","source":"EQ Mag Pro","url":"https://www.eqmagpro.com/mahindra-susten-commissions-560-mwp-solar-power-projects-in-cy-2025-reinforcing-leadership-in-utility-scale-renewable-energy-eq/"},{"title":"Mahindra & Mahindra Achieves 22.5% SUV Revenue Market Share in FY25","description":"Mahindra & Mahindra increased SUV revenue market share to 22.5% in FY25, representing a 210 basis points increase year-over-year, driven by the launch of Electric Origin SUVs[3].","date":"2025-12-30","source":"Mahindra Integrated Annual Report 2024-25","url":"https://www.mahindra.com/annual-report-FY2025/index.html"},{"title":"Tech Mahindra Achieves 9.7% EBIT Margin with 360 bps Improvement","description":"Tech Mahindra strengthened client relationships and improved operational margins, achieving a 9.7% EBIT margin with a 360 basis points increase year-over-year in FY25[3].","date":"2025-12-30","source":"Mahindra Integrated Annual Report 2024-25","url":"https://www.mahindra.com/annual-report-FY2025/index.html"},{"title":"Mahindra Financial Services AUM Grows 17% to ₹1,19,673 Crore","description":"Mahindra Financial Services increased its Assets Under Management (AUM) to ₹1,19,673 crore, representing a 17% year-over-year growth in FY25[3].","date":"2025-12-30","source":"Mahindra Integrated Annual Report 2024-25","url":"https://www.mahindra.com/annual-report-FY2025/index.html"},{"title":"M&M Financial Services Transfers 21,022 Equity Shares Under ESOP Scheme","description":"Mahindra & Mahindra Financial Services transferred 21,022 equity shares to 10 eligible employees on December 29, 2025, under its Employee Stock Option Scheme 2010 and Restricted Stock Units Plan 2023[6].","date":"2025-12-28","source":"ScanX","url":"https://scanx.trade/stock-market-news/corporate-actions/m-m-financial-services-transfers-21-022-equity-shares-to-employees-under-esop-scheme/28558063"}]
+[01:36:15.517] Browser LOG     API Text Response: industryOutlook
+[01:36:15.517] Browser LOG     Playing section: industryOutlook [{"title":"Renewable Energy Expansion and Capital-Light Model","description":"Mahindra Susten is positioned to capitalize on India's evolving energy landscape with a diversified pipeline spanning utility-scale PPAs, hybrid wind-solar projects, and group-captive open access developments across Maharashtra, Punjab, Rajasthan, and Karnataka[2]."},{"title":"Electric Vehicle Market Leadership","description":"Mahindra is set to scale up EV manufacturing operations with a stacked launch pipeline till 2030, following the successful launch of Electric Origin SUVs in FY25, with strong market demand and rapid customer acceptance[3]."},{"title":"Financial Services Growth Trajectory","description":"Mahindra Financial Services demonstrated strong momentum with 17% AUM growth and 33% profit growth in FY25, positioning the company well for continued expansion in the lending and financial services sector[3]."},{"title":"Tech Mahindra Transformation and Margin Improvement","description":"Tech Mahindra is undergoing a transformation phase with focus on better execution and improving margins, achieving 360 bps EBIT margin improvement in FY25, with strategic partnerships in retirement services modernization and Gen AI capabilities[3][7]."}]
+[01:36:32.450] Browser LOG     API Text Response: industryOutlook
+[01:36:32.450] Browser LOG     Playing section: industryOutlook [{"title":"Renewable Energy Expansion and Capital-Light Model","description":"Mahindra Susten is positioned to capitalize on India's evolving energy landscape with a diversified pipeline spanning utility-scale PPAs, hybrid wind-solar projects, and group-captive open access developments across Maharashtra, Punjab, Rajasthan, and Karnataka[2]."},{"title":"Electric Vehicle Market Leadership","description":"Mahindra is set to scale up EV manufacturing operations with a stacked launch pipeline till 2030, following the successful launch of Electric Origin SUVs in FY25, with strong market demand and rapid customer acceptance[3]."},{"title":"Financial Services Growth Trajectory","description":"Mahindra Financial Services demonstrated strong momentum with 17% AUM growth and 33% profit growth in FY25, positioning the company well for continued expansion in the lending and financial services sector[3]."},{"title":"Tech Mahindra Transformation and Margin Improvement","description":"Tech Mahindra is undergoing a transformation phase with focus on better execution and improving margins, achieving 360 bps EBIT margin improvement in FY25, with strategic partnerships in retirement services modernization and Gen AI capabilities[3][7]."}]
+[01:39:52.755] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[01:40:28.816] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="layout.tsx">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en">
+                          <head>
+                          <body
+                            className="manrope_b7d5735e-module__suUhcW__variable poppins_1287db64-module__xlnYIG__vari..."
+-                           data-new-gr-c-s-check-loaded="14.1270.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+
+[01:40:48.666] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior

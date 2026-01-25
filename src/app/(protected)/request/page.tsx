@@ -111,12 +111,29 @@ function ReportContent() {
     
     // Voice API Response State
     const [isProcessingVoice, setIsProcessingVoice] = useState(false);
+    const [isPlayingVoice, setIsPlayingVoice] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     useEffect(() => {
         console.log("selectedProfile", selectedProfile?.status);
     }, [selectedProfile]);
 
     const startVoiceDictation = () => {
+        if (isProcessingVoice || isPlayingVoice) {
+            // Stop TTS
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            // Stop Audio
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current = null;
+            }
+            setIsProcessingVoice(false);
+            setIsPlayingVoice(false);
+            toast.success("Stopped playing");
+            return;
+        }
+
         if (isListening) {
             recognitionRef.current?.stop();
             setIsListening(false);
@@ -172,16 +189,18 @@ function ReportContent() {
                         // Play audio response
                         const audio = new Audio(audioUrl);
                         audioRef.current = audio;
+                        setIsPlayingVoice(true);
+                        setIsProcessingVoice(false);
                         
                         audio.onended = () => {
                             URL.revokeObjectURL(audioUrl);
-                            setIsProcessingVoice(false);
+                            setIsPlayingVoice(false);
                             audioRef.current = null;
                         };
                         
                         audio.onerror = () => {
                             URL.revokeObjectURL(audioUrl);
-                            setIsProcessingVoice(false);
+                            setIsPlayingVoice(false);
                             audioRef.current = null;
                             toast.error('Failed to play audio response');
                         };
@@ -206,16 +225,33 @@ function ReportContent() {
                         
                         // Extract and play the content from the matching section
                         if (sectionName) {
-                            // Use PLAYLIST to get the content (it will be available when this callback executes)
-                            const contentToPlay = getSectionContent(sectionName, PLAYLIST);
+                            // First priority: get from PLAYLIST
+                            let contentToPlay = getSectionContent(sectionName, PLAYLIST);
+                            
+                            // Second priority: check if it's a property in selectedProfile
+                            if (!contentToPlay && selectedProfile) {
+                                // Try direct property lookup (case-insensitive)
+                                const propName = Object.keys(selectedProfile).find(k => k.toLowerCase() === sectionName?.toLowerCase());
+                                if (propName) {
+                                    contentToPlay = (selectedProfile as any)[propName];
+                                    if (typeof contentToPlay !== 'string') {
+                                        contentToPlay = JSON.stringify(contentToPlay);
+                                    }
+                                }
+                            }
                             
                             if (contentToPlay) {
                                 console.log(`Playing section: ${sectionName}`, contentToPlay);
                                 
                                 if ('speechSynthesis' in window) {
                                     const utterance = new SpeechSynthesisUtterance(contentToPlay);
+                                    setIsPlayingVoice(true);
+                                    setIsProcessingVoice(false);
                                     utterance.onend = () => {
-                                        setIsProcessingVoice(false);
+                                        setIsPlayingVoice(false);
+                                    };
+                                    utterance.onerror = () => {
+                                        setIsPlayingVoice(false);
                                     };
                                     window.speechSynthesis.speak(utterance);
                                     toast.success(`Playing section: ${sectionName}`);
@@ -226,24 +262,30 @@ function ReportContent() {
                             } else {
                                 // If no matching section found, play the text response as-is
                                 console.log('No matching section found, playing text response directly');
-                                setIsProcessingVoice(false);
                                 if (textResponse && 'speechSynthesis' in window) {
                                     const utterance = new SpeechSynthesisUtterance(textResponse);
+                                    setIsPlayingVoice(true);
+                                    setIsProcessingVoice(false);
                                     utterance.onend = () => {
-                                        setIsProcessingVoice(false);
+                                        setIsPlayingVoice(false);
                                     };
                                     window.speechSynthesis.speak(utterance);
+                                } else {
+                                    setIsProcessingVoice(false);
                                 }
                             }
                         } else {
                             // Fallback: play the text response directly
-                            setIsProcessingVoice(false);
                             if (textResponse && 'speechSynthesis' in window) {
                                 const utterance = new SpeechSynthesisUtterance(textResponse);
+                                setIsPlayingVoice(true);
+                                setIsProcessingVoice(false);
                                 utterance.onend = () => {
-                                    setIsProcessingVoice(false);
+                                    setIsPlayingVoice(false);
                                 };
                                 window.speechSynthesis.speak(utterance);
+                            } else {
+                                setIsProcessingVoice(false);
                             }
                         }
                     }
@@ -747,17 +789,18 @@ function ReportContent() {
                     <div id="action-bar" className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
                         <button
                             onClick={startVoiceDictation}
-                            disabled={isProcessingVoice}
                             className={`w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 shadow-sm transition ${
-                                isProcessingVoice 
-                                    ? 'text-blue-500 border-blue-200 cursor-wait' 
+                                isProcessingVoice || isPlayingVoice
+                                    ? 'text-red-500 border-red-200 hover:bg-red-50' 
                                     : isListening 
                                         ? 'text-red-500 border-red-200 animate-pulse' 
                                         : 'text-gray-400 hover:text-blue-600 hover:border-blue-200'
                             }`}
-                            title={isProcessingVoice ? "Processing..." : "Voice Note"}
+                            title={isPlayingVoice ? "Stop Playing" : isProcessingVoice ? "Processing..." : isListening ? "Stop Listening" : "Voice Note"}
                         >
-                            {isProcessingVoice ? (
+                            {isPlayingVoice ? (
+                                <Square className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+                            ) : isProcessingVoice ? (
                                 <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
                             ) : isListening ? (
                                 <MicOff className="w-4 h-4 sm:w-5 sm:h-5" />

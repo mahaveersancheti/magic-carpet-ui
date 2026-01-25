@@ -17,5 +17,7 @@ export const endpoints = {
     downloadProductTemplate: 'product/download/product-template',
     downloadProductTemplate1: 'product/download/product-template1',
     googleLogin: 'https://magic-carpet.data-magnum.com/v1/oauth2/authorization/google',
-    notifications: '/notification'
+    notifications: '/notification',
+    verifyOtp: 'user/verify-otp',
+    resendOtp: 'user/resend-otp'
 }

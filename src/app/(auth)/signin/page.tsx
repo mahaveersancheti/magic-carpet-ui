@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from '../../redux/store/store';
 import { loginUser, clearError } from '../../redux/slices/LoginSlice';
 import toast from 'react-hot-toast';
 import { endpoints } from '@/app/lib/endpoints';
+import { api } from '../../services/apiService';
 
 
 import { Suspense } from 'react';
@@ -42,7 +43,18 @@ function SignInContent() {
       if (loginUser.fulfilled.match(resultAction)) {
         // toast.success("Login Successful"); // Handled by useEffect effect or here
       } else {
-        toast.error("Login failed. Please check your credentials.");
+        const errorMsg = resultAction.payload as string;
+        if (errorMsg && errorMsg.includes("User not found or inactive")) {
+          try {
+            await api.post(endpoints.resendOtp, { email: username });
+            toast.success("Account inactive. A new OTP has been sent to your email.");
+            router.push(`/otp?email=${encodeURIComponent(username)}`);
+          } catch (resendError) {
+            // Error handled by api interceptor
+          }
+        } else {
+          toast.error("Login failed. Please check your credentials.");
+        }
       }
     } else {
       toast.error("Please enter both username and password.");
