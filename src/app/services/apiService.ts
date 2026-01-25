@@ -3,15 +3,10 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 // import { toastManager } from '../utils/toast-manager';
 
 
+export const BASE_DOMAIN = "https://magic-carpet.data-magnum.com/v1";
+
 export const getBaseUrl = () => {
-  return "https://magic-carpet.data-magnum.com/v1/api/";
-  // if (typeof window !== 'undefined') {
-  //   const URL = window.location.origin;
-  //   return URL.includes('localhost')
-  //     ? 'https://mitcapex.mahindra.com/api'
-  //     : URL + '/api';
-  // }
-  //  return 'https://mitcapex-uat.m-devsecops.com/api'; 
+  return `${BASE_DOMAIN}/api/`;
 }
 
 const axiosInstance: AxiosInstance = axios.create({

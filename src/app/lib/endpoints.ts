@@ -1,3 +1,5 @@
+import { BASE_DOMAIN } from "../services/apiService";
+
 export const endpoints = {
     login: 'user/login',
     register: 'user/register',
@@ -7,6 +9,7 @@ export const endpoints = {
     getProfileByIdPopulateDummy: (id: string) => `profiles/${id}/populate-dummy`,
     createProfile: 'profiles',
     getProfileSection: (id: string, text: string) => `profiles/${id}/section?text=${encodeURIComponent(text)}`,
+    getProfileSectionRaw: (id: string, text: string) => `profiles/${id}/section?text=${text}`,
     getProductsByUserId: (userId: string) => `product/user/${userId}`,
     createProduct: (userId: string) => `product?userId=${userId}`,
     updateProduct: 'product',
@@ -16,7 +19,7 @@ export const endpoints = {
     uploadProductFiles: 'product/files',
     downloadProductTemplate: 'product/download/product-template',
     downloadProductTemplate1: 'product/download/product-template1',
-    googleLogin: 'https://magic-carpet.data-magnum.com/v1/oauth2/authorization/google',
+    googleLogin: `${BASE_DOMAIN}/oauth2/authorization/google`,
     notifications: '/notification',
     verifyOtp: 'user/verify-otp',
     resendOtp: 'user/resend-otp'
