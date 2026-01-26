@@ -44,7 +44,8 @@ function SignInContent() {
         // toast.success("Login Successful"); // Handled by useEffect effect or here
       } else {
         const errorMsg = resultAction.payload as string;
-        if (errorMsg && errorMsg.includes("User not found or inactive")) {
+        console.log("errorMsg",errorMsg);
+        if (errorMsg && errorMsg.includes("Account not verified")) {
           try {
             await api.post(endpoints.resendOtp, { email: username });
             toast.success("Account inactive. A new OTP has been sent to your email.");
@@ -53,7 +54,7 @@ function SignInContent() {
             // Error handled by api interceptor
           }
         } else {
-          toast.error("Login failed. Please check your credentials.");
+          toast.error(errorMsg ||"Login failed. Please check your credentials.");
         }
       }
     } else {

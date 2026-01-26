@@ -1,4 +1,4 @@
-import { BASE_DOMAIN } from "../services/apiService";
+import { getBaseUrl } from "../services/apiService";
 
 export const endpoints = {
     login: 'user/login',
@@ -19,7 +19,7 @@ export const endpoints = {
     uploadProductFiles: 'product/files',
     downloadProductTemplate: 'product/download/product-template',
     downloadProductTemplate1: 'product/download/product-template1',
-    googleLogin: `${BASE_DOMAIN}/oauth2/authorization/google`,
+    googleLogin: `${getBaseUrl()}/oauth2/authorization/google`,
     notifications: '/notification',
     verifyOtp: 'user/verify-otp',
     resendOtp: 'user/resend-otp'

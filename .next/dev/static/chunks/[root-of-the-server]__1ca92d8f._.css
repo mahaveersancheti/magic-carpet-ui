@@ -1631,10 +1631,6 @@
     cursor: text;
   }
 
-  .cursor-wait {
-    cursor: wait;
-  }
-
   .resize {
     resize: both;
   }
@@ -4559,13 +4555,6 @@
   }
 
   @media (min-width: 48rem) {
-    .md\:text-5xl {
-      font-size: var(--text-5xl);
-      line-height: var(--tw-leading, var(--text-5xl--line-height));
-    }
-  }
-
-  @media (min-width: 48rem) {
     .md\:text-6xl {
       font-size: var(--text-6xl);
       line-height: var(--tw-leading, var(--text-6xl--line-height));
@@ -4576,13 +4565,6 @@
     .md\:text-lg {
       font-size: var(--text-lg);
       line-height: var(--tw-leading, var(--text-lg--line-height));
-    }
-  }
-
-  @media (min-width: 48rem) {
-    .md\:text-xl {
-      font-size: var(--text-xl);
-      line-height: var(--tw-leading, var(--text-xl--line-height));
     }
   }
 

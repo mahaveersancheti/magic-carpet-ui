@@ -3,10 +3,21 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 // import { toastManager } from '../utils/toast-manager';
 
 
-export const BASE_DOMAIN = "https://magic-carpet.data-magnum.com/v1";
+export const BASE_DOMAIN_magnun = "https://magic-carpet.data-magnum.com/v1/api/";
+export const BASE_URL_Digital = "https://magiccarpet.digital/v1/api/";
 
 export const getBaseUrl = () => {
-  return `${BASE_DOMAIN}/api/`;
+  if (typeof window !== 'undefined') {
+    const URL = window.location.origin;
+    if(URL.includes('localhost')){
+      return BASE_DOMAIN_magnun;
+    }else if(URL.includes('magiccarpet.digital')){
+      return BASE_URL_Digital;
+    }else{
+      return BASE_DOMAIN_magnun;
+    }
+  }
+  return BASE_DOMAIN_magnun;
 }
 
 const axiosInstance: AxiosInstance = axios.create({

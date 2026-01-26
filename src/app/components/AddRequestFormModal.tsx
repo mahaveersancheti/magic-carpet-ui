@@ -148,8 +148,8 @@ export function AddRequestModal({
         try {
             const payload = {
                 ...formData,
-                // productIds: selectedProducts.map(p => p.id)
-                productId: selectedProducts.map(p => p.id)[0]
+                productIds: selectedProducts.map(p => p.id)
+                // productId: selectedProducts.map(p => p.id)[0]
             };
             await dispatch(createProfile(payload)).unwrap();
             toast.success("Profile created successfully!");
