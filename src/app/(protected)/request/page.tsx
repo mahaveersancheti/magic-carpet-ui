@@ -113,6 +113,10 @@ function ReportContent() {
     const [isProcessingVoice, setIsProcessingVoice] = useState(false);
     const [isPlayingVoice, setIsPlayingVoice] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
+    
+    // Product Selection State
+    const [selectedProductIndex, setSelectedProductIndex] = useState(0);
+    
     useEffect(() => {
         console.log("selectedProfile", selectedProfile?.status);
     }, [selectedProfile]);
@@ -405,6 +409,7 @@ function ReportContent() {
         profileSummary: {
             currentRole: `${selectedProfile.designation || 'Role N/A'} @ ${selectedProfile.currentCompanyName || 'Company N/A'}`,
             tenure: "N/A",
+            productFit: safeList((selectedProfile as any).productFit),
             productFitAnalysis: (selectedProfile as any).productFitAnalysis || null,
             quickMetrics: {
                 meetingsLast30Days: 0,
@@ -526,14 +531,21 @@ function ReportContent() {
                 id: 'productFit',
                 title: 'Strategic Product Fit',
                 getText: () => {
-                   if (!REPORT_JSON.profileSummary.productFitAnalysis) return "No evaluation data available.";
-                    const analysis = REPORT_JSON.profileSummary.productFitAnalysis;
+                    // Use productFit array if available, otherwise fall back to productFitAnalysis
+                    const productFitArray = REPORT_JSON.profileSummary.productFit;
+                    const analysis = (productFitArray && productFitArray.length > 0) 
+                        ? productFitArray[selectedProductIndex] 
+                        : REPORT_JSON.profileSummary.productFitAnalysis;
+                    
+                    if (!analysis) return "No evaluation data available.";
+                    
+                    const productName = analysis?.productName || '';
                     const rating = analysis?.rating || 'Strong Fit';
                     const score = analysis?.score || 0;
                     const features = safeList(analysis?.features).join(', ');
                     const valueProp = analysis?.valueProps?.time || 'Strategic efficiency';
                     const differentiators = safeList(analysis?.differentiators).join(', ');
-                    return `Fit Rating: ${rating} with a score of ${score}%. Features: ${features}. Key Value Prop: ${valueProp}. Differentiators: ${differentiators}`;
+                    return `${productName ? `Product: ${productName}. ` : ''}Fit Rating: ${rating} with a score of ${score}%. Features: ${features}. Key Value Prop: ${valueProp}. Differentiators: ${differentiators}`;
                 }
             },
             {
@@ -1094,18 +1106,24 @@ function ReportContent() {
                                     </h4>
                                     <button
                                         onClick={() => {
-                                            if (!REPORT_JSON.profileSummary.productFitAnalysis) {
+                                            const productFitArray = REPORT_JSON.profileSummary.productFit;
+                                            const analysis = (productFitArray && productFitArray.length > 0) 
+                                                ? productFitArray[selectedProductIndex] 
+                                                : REPORT_JSON.profileSummary.productFitAnalysis;
+                                            
+                                            if (!analysis) {
                                                 handleSpeak("No evaluation data available.", 'productFit', 'Strategic Product Fit');
                                                 return;
                                             }
-                                            const analysis = REPORT_JSON.profileSummary.productFitAnalysis;
+                                            
+                                            const productName = analysis?.productName || '';
                                             const rating = analysis?.rating || 'Strong Fit';
                                             const score = analysis?.score || 0;
                                             const features = safeList(analysis?.features).join(', ');
                                             const valueProp = analysis?.valueProps?.time || 'Strategic efficiency';
                                             const differentiators = safeList(analysis?.differentiators).join(', ');
 
-                                            const textToSpeak = `Fit Rating: ${rating} with a score of ${score}%. Features: ${features}. Key Value Prop: ${valueProp}. Differentiators: ${differentiators}`;
+                                            const textToSpeak = `${productName ? `Product: ${productName}. ` : ''}Fit Rating: ${rating} with a score of ${score}%. Features: ${features}. Key Value Prop: ${valueProp}. Differentiators: ${differentiators}`;
                                             handleSpeak(textToSpeak, 'productFit', 'Strategic Product Fit');
                                         }}
                                         className={`p-1.5 rounded-lg transition-all active:scale-95 ${speakingSection === 'productFit' ? 'bg-red-500 text-white shadow-lg' : 'bg-white text-gray-400 border border-gray-100 hover:text-blue-600 hover:bg-blue-50'}`}
@@ -1113,22 +1131,49 @@ function ReportContent() {
                                         {speakingSection === 'productFit' ? <Square className="w-3 h-3" /> : <Volume2 className="w-3 h-3" />}
                                     </button>
                                 </div>
+                                
+                                {/* Product Tabs - Only show if productFit array exists and has multiple products */}
+                                {REPORT_JSON.profileSummary.productFit && REPORT_JSON.profileSummary.productFit.length > 0 && (
+                                    <div className="mb-4 flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
+                                        {REPORT_JSON.profileSummary.productFit.map((product: any, index: number) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => setSelectedProductIndex(index)}
+                                                className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider whitespace-nowrap transition-all ${
+                                                    selectedProductIndex === index
+                                                        ? 'bg-blue-600 text-white shadow-md'
+                                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                                }`}
+                                            >
+                                                {product.productName || `Product ${index + 1}`}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                                
                                 <div className="flex-1 overflow-y-auto custom-scrollbar pr-1">
-                                    {REPORT_JSON.profileSummary.productFitAnalysis ? (
+                                    {(() => {
+                                        // Get the current product to display
+                                        const productFitArray = REPORT_JSON.profileSummary.productFit;
+                                        const currentProduct = (productFitArray && productFitArray.length > 0) 
+                                            ? productFitArray[selectedProductIndex] 
+                                            : REPORT_JSON.profileSummary.productFitAnalysis;
+                                        
+                                        return currentProduct ? (
                                         <div className="space-y-6">
                                             {/* Score and Rating */}
                                             <div className="flex items-center gap-4 bg-blue-50/50 p-4 rounded-2xl border border-blue-100/50">
                                                 <div className="shrink-0 flex items-center justify-center">
                                                     <ScoreGauge
-                                                        score={REPORT_JSON.profileSummary.productFitAnalysis?.score || 0}
+                                                        score={currentProduct?.score || 0}
                                                         size={100}
                                                         showPercentage={true}
                                                     />
                                                 </div>
                                                 <div className="flex-1">
                                                     <div className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-0.5">Product Overview</div>
-                                                    <div className="text-lg font-black text-gray-900 leading-tight mb-2">{(REPORT_JSON as any).productName || REPORT_JSON.profileSummary.productFitAnalysis?.rating || 'Product Analysis'}</div>
-                                                    <div className="text-[11px] text-gray-600 leading-relaxed font-bold">{(REPORT_JSON as any).productDescription || 'Evaluation results for the current strategic fit.'}</div>
+                                                    <div className="text-lg font-black text-gray-900 leading-tight mb-2">{currentProduct?.productName || currentProduct?.rating || 'Product Analysis'}</div>
+                                                    <div className="text-[11px] text-gray-600 leading-relaxed font-bold">{currentProduct?.rating || 'Evaluation results for the current strategic fit.'}</div>
                                                 </div>
                                             </div>
 
@@ -1141,7 +1186,7 @@ function ReportContent() {
                                                             Target Capabilities
                                                         </h5>
                                                         <div className="space-y-2">
-                                                            {safeList(REPORT_JSON.profileSummary.productFitAnalysis?.features).length > 0 ? safeList(REPORT_JSON.profileSummary.productFitAnalysis.features).map((f, i) => (
+                                                            {safeList(currentProduct?.features).length > 0 ? safeList(currentProduct.features).map((f, i) => (
                                                                 <div key={i} className="flex items-start gap-2 text-[11px] font-bold text-gray-700 leading-tight">
                                                                     <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />
                                                                     {f}
@@ -1158,7 +1203,7 @@ function ReportContent() {
                                                             Core Value Pillars
                                                         </h5>
                                                         <div className="grid grid-cols-1 gap-2">
-                                                            {REPORT_JSON.profileSummary.productFitAnalysis?.valueProps && Object.keys(REPORT_JSON.profileSummary.productFitAnalysis.valueProps).length > 0 ? Object.entries(REPORT_JSON.profileSummary.productFitAnalysis.valueProps).map(([k, v]) => (
+                                                            {currentProduct?.valueProps && Object.keys(currentProduct.valueProps).length > 0 ? Object.entries(currentProduct.valueProps).map(([k, v]) => (
                                                                 <div key={k} className="p-2.5 rounded-xl bg-gray-50 border border-gray-100 flex flex-col gap-1">
                                                                     <span className="text-[8px] font-black text-blue-600 uppercase tracking-tighter">{k} Impact</span>
                                                                     <span className="text-[10px] font-bold text-gray-800 leading-tight">
@@ -1188,7 +1233,7 @@ function ReportContent() {
                                                             Strategic Pains
                                                         </h5>
                                                         <div className="space-y-3">
-                                                            {safeList(REPORT_JSON.profileSummary.productFitAnalysis?.painPoints).length > 0 ? safeList(REPORT_JSON.profileSummary.productFitAnalysis.painPoints).map((p, i) => {
+                                                            {safeList(currentProduct?.painPoints).length > 0 ? safeList(currentProduct.painPoints).map((p, i) => {
                                                                 const [main, sub] = p.split(' (');
                                                                 return (
                                                                     <div key={i} className="flex flex-col gap-1">
@@ -1211,7 +1256,7 @@ function ReportContent() {
                                                             Evidence / proof
                                                         </h5>
                                                         <div className="space-y-2">
-                                                            {safeList(REPORT_JSON.profileSummary.productFitAnalysis?.socialProof).length > 0 ? safeList(REPORT_JSON.profileSummary.productFitAnalysis.socialProof).map((s, i) => (
+                                                            {safeList(currentProduct?.socialProof).length > 0 ? safeList(currentProduct.socialProof).map((s, i) => (
                                                                 <div key={i} className="p-2.5 rounded-xl bg-indigo-50/30 border border-indigo-100 flex items-start gap-2">
                                                                     <span className="material-symbols-outlined text-indigo-500 text-xs mt-0.5">verified</span>
                                                                     <span className="text-[10px] font-bold text-gray-700 italic leading-tight">{s}</span>
@@ -1225,9 +1270,9 @@ function ReportContent() {
                                             </div>
 
                                             {/* Differentiators Footer */}
-                                            {safeList(REPORT_JSON.profileSummary.productFitAnalysis?.differentiators).length > 0 && (
+                                            {safeList(currentProduct?.differentiators).length > 0 && (
                                                 <div className="pt-4 border-t border-gray-100 flex flex-wrap gap-2">
-                                                    {safeList(REPORT_JSON.profileSummary.productFitAnalysis.differentiators).map((d, i) => (
+                                                    {safeList(currentProduct.differentiators).map((d, i) => (
                                                         <span key={i} className="px-2.5 py-1 rounded-full bg-blue-600 text-white text-[9px] font-black uppercase tracking-widest flex items-center gap-1.5">
                                                             <span className="material-symbols-outlined text-[12px]">verified</span>
                                                             {d}
@@ -1241,7 +1286,8 @@ function ReportContent() {
                                             <span className="material-symbols-outlined text-gray-400 text-3xl mb-1">query_stats</span>
                                             <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Awaiting Analysis...</span>
                                         </div>
-                                    )}
+                                    );
+                                    })()}
                                 </div>
                             </div>
                         </div>
