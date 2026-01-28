@@ -2,7 +2,7 @@
 "use client";
 import React, { useState, useEffect, useRef, Suspense } from "react";
 import { Volume2, Loader2, AlertCircle, Square, Play, Pause, RotateCcw, RotateCw, X, FastForward, Rewind, HelpCircle, Mic, MicOff } from "lucide-react";
-import { UserGuide, GuideStep } from "@/app/components/UserGuide";
+// import { UserGuide, GuideStep } from "@/app/components/UserGuide";
 import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
@@ -338,32 +338,32 @@ function ReportContent() {
         setShowGuide(false);
     };
 
-    const GUIDE_STEPS: GuideStep[] = [
-        {
-            targetId: 'report-header',
-            title: 'Profile Overview',
-            description: 'This is the comprehensive AI report for your prospect. It contains key insights, scores, and strategies.',
-            placement: 'bottom'
-        },
-        {
-            targetId: 'warm-call-score',
-            title: 'Warm Call Score',
-            description: 'A quick metric to gauge how receptive this prospect likely is. Higher scores indicate better timing.',
-            placement: 'left'
-        },
-        {
-            targetId: 'listen-button',
-            title: 'Audio Insights',
-            description: 'Prefer listening? Click the speaker icon to hear an AI-generated summary of this section.',
-            placement: 'bottom'
-        },
-        {
-            targetId: 'action-bar',
-            title: 'Take Action',
-            description: 'Export this report to PDF or share it with your team directly from here.',
-            placement: 'bottom'
-        }
-    ];
+    // const GUIDE_STEPS: GuideStep[] = [
+    //     {
+    //         targetId: 'report-header',
+    //         title: 'Profile Overview',
+    //         description: 'This is the comprehensive AI report for your prospect. It contains key insights, scores, and strategies.',
+    //         placement: 'bottom'
+    //     },
+    //     {
+    //         targetId: 'warm-call-score',
+    //         title: 'Warm Call Score',
+    //         description: 'A quick metric to gauge how receptive this prospect likely is. Higher scores indicate better timing.',
+    //         placement: 'left'
+    //     },
+    //     {
+    //         targetId: 'listen-button',
+    //         title: 'Audio Insights',
+    //         description: 'Prefer listening? Click the speaker icon to hear an AI-generated summary of this section.',
+    //         placement: 'bottom'
+    //     },
+    //     {
+    //         targetId: 'action-bar',
+    //         title: 'Take Action',
+    //         description: 'Export this report to PDF or share it with your team directly from here.',
+    //         placement: 'bottom'
+    //     }
+    // ];
 
     useEffect(() => {
         if ((selectedProfile as any)?.notes) {
@@ -1769,12 +1769,12 @@ function ReportContent() {
                 )}
             </main>
 
-            <UserGuide
+            {/* <UserGuide
                 steps={GUIDE_STEPS}
                 isOpen={showGuide}
                 onClose={() => setShowGuide(false)}
                 onComplete={handleGuideComplete}
-            />
+            /> */}
 
             <style jsx global>{`
                 .custom-scrollbar::-webkit-scrollbar {

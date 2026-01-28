@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useState, useEffect, useMemo } from "react";
 import { ArrowUpDown, ArrowUp, ArrowDown, Linkedin, Instagram, Twitter, Globe, Plus, Loader2, HelpCircle, Copy, Check } from "lucide-react";
 import { AddRequestModal } from "@/app/components/AddRequestFormModal";
-import { UserGuide, GuideStep } from "@/app/components/UserGuide";
+// import { UserGuide, GuideStep } from "@/app/components/UserGuide";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchNotifications, fetchProfiles } from "../../redux/slices/ProfileSlice";
@@ -74,32 +74,32 @@ export default function DashboardPage() {
     setShowGuide(false);
   };
 
-  const GUIDE_STEPS: GuideStep[] = [
-    {
-      targetId: 'dashboard-header',
-      title: 'Welcome to your Dashboard',
-      description: 'This is your mission control center. Here you can track all your lead generation requests and view their status at a glance.',
-      placement: 'bottom'
-    },
-    {
-      targetId: 'search-filter-bar',
-      title: 'Find What You Need',
-      description: 'Use the robust search and filter tools to quickly locate specific profiles or check the status of pending requests.',
-      placement: 'bottom'
-    },
-    {
-      targetId: 'new-request-btn',
-      title: 'Launch a New Request',
-      description: 'Ready to find new leads? Click here to start a new search request. You can specify industry, role, and other criteria.',
-      placement: 'bottom'
-    },
-    {
-      targetId: 'requests-table',
-      title: 'Monitor Progress',
-      description: 'View real-time updates on your requests. Click on any name to dive deep into the generated profile report.',
-      placement: 'left'
-    }
-  ];
+  // const GUIDE_STEPS: GuideStep[] = [
+  //   {
+  //     targetId: 'dashboard-header',
+  //     title: 'Welcome to your Dashboard',
+  //     description: 'This is your mission control center. Here you can track all your lead generation requests and view their status at a glance.',
+  //     placement: 'bottom'
+  //   },
+  //   {
+  //     targetId: 'search-filter-bar',
+  //     title: 'Find What You Need',
+  //     description: 'Use the robust search and filter tools to quickly locate specific profiles or check the status of pending requests.',
+  //     placement: 'bottom'
+  //   },
+  //   {
+  //     targetId: 'new-request-btn',
+  //     title: 'Launch a New Request',
+  //     description: 'Ready to find new leads? Click here to start a new search request. You can specify industry, role, and other criteria.',
+  //     placement: 'bottom'
+  //   },
+  //   {
+  //     targetId: 'requests-table',
+  //     title: 'Monitor Progress',
+  //     description: 'View real-time updates on your requests. Click on any name to dive deep into the generated profile report.',
+  //     placement: 'left'
+  //   }
+  // ];
 
 
   useEffect(() => {
@@ -601,12 +601,12 @@ export default function DashboardPage() {
         onSuccess={() => dispatch(fetchProfiles())}
       />
 
-      <UserGuide
+      {/* <UserGuide
         steps={GUIDE_STEPS}
         isOpen={showGuide}
         onClose={() => setShowGuide(false)}
         onComplete={handleGuideComplete}
-      />
+      /> */}
     </div>
   );
 }

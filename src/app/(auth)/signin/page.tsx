@@ -88,7 +88,7 @@ function SignInContent() {
           <form className="mt-8 space-y-6" onSubmit={handleSignIn}>
             {/* EMAIL */}
             <div className="flex flex-col">
-              <label className="mb-2 text-sm font-medium text-gray-700">Email / Username</label>
+              <label className="mb-2 text-sm font-medium text-gray-700">Email</label>
               <div className="relative">
                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
                   person

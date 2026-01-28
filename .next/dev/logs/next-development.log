@@ -1,7 +1,12 @@
-[00:00:00.632] Server  LOG      ✓ Ready in 491ms
-[00:00:32.236] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:01:04.683] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:01:11.134] Browser LOG     selectedProfile undefined
-[00:01:11.134] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
-[00:01:12.711] Browser LOG     selectedProfile COMPLETED
-[00:01:14.035] Browser LOG     selectedProfile COMPLETED
+[00:00:00.978] Server  LOG      ✓ Ready in 734ms
+[00:00:28.541] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:01:10.396] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:01:58.376] Server  LOG      ✓ Compiled in 58ms
+[00:01:58.498] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'placement')
+[00:02:43.675] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'title')
+[00:03:51.095] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:03:51.155] Server  LOG      ✓ Compiled in 54ms
+[00:05:59.241] Server  LOG      ✓ Compiled in 49ms
+[00:06:33.350] Server  LOG      ✓ Compiled in 49ms
+[00:06:36.562] Server  LOG      ✓ Compiled in 67ms
+[00:08:39.198] Server  LOG      ✓ Compiled in 49ms

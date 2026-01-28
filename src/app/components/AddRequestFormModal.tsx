@@ -111,16 +111,11 @@ export function AddRequestModal({
 
         if (!formData.name.trim()) newErrors.name = "Name is required";
         if (!formData.currentCompanyName.trim()) newErrors.currentCompanyName = "Company Name is required";
-        if (!formData.email.trim()) {
-            newErrors.email = "Email is required";
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        // Email is optional, but if provided, validate format
+        if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
             newErrors.email = "Please enter a valid email address";
         }
         if (!formData.industryName.trim()) newErrors.industryName = "Industry Name is required";
-        if (!formData.city.trim()) newErrors.city = "City is required";
-
-        // New mandatory fields
-        if (!(formData.country || "").trim()) newErrors.country = "Country is required";
         
         // LinkedIn URL validation
         if (!(formData.linkedinProfileLink || "").trim()) {
@@ -178,7 +173,7 @@ export function AddRequestModal({
                     <div className="flex items-center justify-between mb-8">
                         <div>
                             <h2 className="text-xl font-black text-gray-900 uppercase tracking-tight">
-                                New Search Request
+                                Add New Lead
                             </h2>
                             <p className="text-[10px] font-medium text-gray-400 mt-1 uppercase tracking-widest">Strategic Intelligence Gathering</p>
                         </div>
@@ -219,7 +214,6 @@ export function AddRequestModal({
                             label="Email"
                             placeholder="e.g., abc@gmail.com"
                             field="email"
-                            required
                             value={formData.email}
                             onChange={handleInputChange}
                             disabled={createLoading}
@@ -239,7 +233,6 @@ export function AddRequestModal({
                             label="City"
                             placeholder="e.g., San Francisco"
                             field="city"
-                            required
                             value={formData.city}
                             onChange={handleInputChange}
                             disabled={createLoading}
@@ -249,7 +242,6 @@ export function AddRequestModal({
                             label="Country"
                             placeholder="e.g., USA"
                             field="country"
-                            required
                             value={formData.country || ""}
                             onChange={handleInputChange}
                             disabled={createLoading}
@@ -299,12 +291,12 @@ export function AddRequestModal({
                                 {createLoading ? (
                                     <>
                                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                        Submitting...
+                                        Adding Lead...
                                     </>
                                 ) : (
                                     <>
                                         <span className="material-symbols-outlined">send</span>
-                                        Submit Request
+                                        Add Lead
                                     </>
                                 )}
                             </button>
