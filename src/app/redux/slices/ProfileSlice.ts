@@ -51,6 +51,7 @@ interface ProfileState {
     loading: boolean;
     error: string | null;
     createLoading: boolean;
+    notificationsData: any[];
 }
 
 const initialState: ProfileState = {
@@ -59,6 +60,7 @@ const initialState: ProfileState = {
     loading: false,
     error: null,
     createLoading: false,
+    notificationsData: [],
 };
 
 export const fetchProfiles = createAsyncThunk(
@@ -98,6 +100,24 @@ export const createProfile = createAsyncThunk(
         }
     }
 );
+
+export const fetchNotifications = createAsyncThunk(
+    'profiles/fetchNotifications',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await api.get<any>(
+                endpoints.notifications,
+                { 'Skip-Auth': 'true' }
+            );
+            return response;
+        } catch (error: any) {
+            return rejectWithValue(
+                error.message || 'Failed to fetch notifications'
+            );
+        }
+    }
+);
+
 
 const profileSlice = createSlice({
     name: 'profiles',
@@ -146,6 +166,19 @@ const profileSlice = createSlice({
             })
             .addCase(createProfile.rejected, (state, action) => {
                 state.createLoading = false;
+                state.error = action.payload as string;
+            })
+
+            .addCase(fetchNotifications.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchNotifications.fulfilled, (state, action) => {
+                state.loading = false;
+                state.notificationsData = action.payload;
+            })
+            .addCase(fetchNotifications.rejected, (state, action) => {
+                state.loading = false;
                 state.error = action.payload as string;
             });
     },

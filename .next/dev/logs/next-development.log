@@ -1,57 +1,12 @@
-[00:00:00.854] Server  LOG      ✓ Ready in 636ms
-[00:09:06.541] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:12:24.684] Server  LOG      ✓ Compiled in 118ms
-[00:13:21.344] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:14:52.334] Server  LOG      ✓ Compiled in 36ms
-[00:14:52.446] Browser ERROR   ./src/app/(protected)/request/page.tsx:163:31
-Parsing ecmascript source code failed
-  161 |                                 {REPORT_JSON.warmCallScore.recommendation}
-  162 |                             </div>
-> 163 |                         </div>
-      |                               ^
-> 164 |
-      | ^
-> 165 |                         <div className="mt-6 bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-      | ^^^^^^^^^^^^^^^^^^^^^^^^^
-  166 |                             <div className="text-xs uppercase font-semibold text-gray-500 text-center mb-4">
-  167 |                                 Quick Metrics
-  168 |                             </div>
-
-Expected '</', got 'jsx text (
-
-                        )'
-
-Import traces:
-  Client Component Browser:
-    ./src/app/(protected)/request/page.tsx [Client Component Browser]
-    ./src/app/(protected)/request/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./src/app/(protected)/request/page.tsx [Client Component SSR]
-    ./src/app/(protected)/request/page.tsx [Server Component]
-[00:14:52.557] Browser ERROR   ./src/app/(protected)/request/page.tsx:163:31
-Parsing ecmascript source code failed
-  161 |                                 {REPORT_JSON.warmCallScore.recommendation}
-  162 |                             </div>
-> 163 |                         </div>
-      |                               ^
-> 164 |
-      | ^
-> 165 |                         <div className="mt-6 bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-      | ^^^^^^^^^^^^^^^^^^^^^^^^^
-  166 |                             <div className="text-xs uppercase font-semibold text-gray-500 text-center mb-4">
-  167 |                                 Quick Metrics
-  168 |                             </div>
-
-Expected '</', got 'jsx text (
-
-                        )'
-
-Import traces:
-  Client Component Browser:
-    ./src/app/(protected)/request/page.tsx [Client Component Browser]
-    ./src/app/(protected)/request/page.tsx [Server Component]
-
-  Client Component SSR:
-    ./src/app/(protected)/request/page.tsx [Client Component SSR]
-    ./src/app/(protected)/request/page.tsx [Server Component]
+[00:00:00.978] Server  LOG      ✓ Ready in 734ms
+[00:00:28.541] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:01:10.396] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:01:58.376] Server  LOG      ✓ Compiled in 58ms
+[00:01:58.498] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'placement')
+[00:02:43.675] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'title')
+[00:03:51.095] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:03:51.155] Server  LOG      ✓ Compiled in 54ms
+[00:05:59.241] Server  LOG      ✓ Compiled in 49ms
+[00:06:33.350] Server  LOG      ✓ Compiled in 49ms
+[00:06:36.562] Server  LOG      ✓ Compiled in 67ms
+[00:08:39.198] Server  LOG      ✓ Compiled in 49ms

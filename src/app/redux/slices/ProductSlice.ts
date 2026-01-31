@@ -7,12 +7,15 @@ export interface Product {
     name: string;
     description: string;
     userId: string;
+    status: string | null;
+    imagePath: string | null;
     filePaths: string[];
 }
 
 export interface CreateProductPayload {
     name: string;
     description: string;
+    image?: File;
 }
 
 export type UpdateProductPayload = CreateProductPayload;
@@ -23,6 +26,7 @@ interface ProductState {
     createLoading: boolean;
     updateLoading: boolean;
     deleteLoading: boolean;
+    uploadLoading: boolean;
     error: string | null;
 }
 
@@ -32,6 +36,7 @@ const initialState: ProductState = {
     createLoading: false,
     updateLoading: false,
     deleteLoading: false,
+    uploadLoading: false,
     error: null,
 };
 
@@ -53,7 +58,25 @@ export const createProduct = createAsyncThunk(
     'products/createProduct',
     async ({ userId, payload }: { userId: string; payload: CreateProductPayload }, { rejectWithValue }) => {
         try {
-            const response = await api.post<Product>(endpoints.createProduct(userId), payload, { 'Skip-Auth': 'true' });
+            // Build query parameters for name and description
+            const params = new URLSearchParams({
+                name: payload.name,
+                description: payload.description
+            });
+
+            // Combine with existing userId parameter
+            const endpoint = `${endpoints.createProduct(userId)}&${params.toString()}`;
+
+            // Create FormData only for image
+            const formData = new FormData();
+            if (payload.image) {
+                formData.append('image', payload.image);
+            }
+
+            const response = await api.post<Product>(endpoint, formData, {
+                'Skip-Auth': 'true',
+                'Content-Type': 'multipart/form-data'
+            });
             return response;
         } catch (error: any) {
             return rejectWithValue(error.message || 'Failed to create product');
@@ -65,10 +88,55 @@ export const updateProduct = createAsyncThunk(
     'products/updateProduct',
     async ({ productId, userId, payload }: { productId: string; userId: string; payload: UpdateProductPayload }, { rejectWithValue }) => {
         try {
-            const response = await api.put<Product>(endpoints.updateProduct(productId, userId), payload, { 'Skip-Auth': 'true' });
+            // Build query parameters including productId
+            const params = new URLSearchParams({
+                productId: productId,
+                name: payload.name,
+                description: payload.description,
+                userId: userId
+            });
+
+            // Build the final endpoint URL
+            const endpoint = `${endpoints.updateProduct}?${params.toString()}`;
+
+            // Create FormData only for image
+            const formData = new FormData();
+            if (payload.image) {
+                formData.append('image', payload.image);
+            }
+
+            const response = await api.put<Product>(endpoint, formData, {
+                'Skip-Auth': 'true',
+                'Content-Type': 'multipart/form-data'
+            });
             return response;
         } catch (error: any) {
             return rejectWithValue(error.message || 'Failed to update product');
+        }
+    }
+);
+
+export const uploadProductFiles = createAsyncThunk(
+    'products/uploadProductFiles',
+    async ({ productId, userId, files }: { productId: string; userId: string; files: File[] }, { rejectWithValue }) => {
+        try {
+            // Upload each file separately with FormData
+            const uploadPromises = files.map(async (file) => {
+                const formData = new FormData();
+                formData.append('productId', productId);
+                formData.append('userId', userId);
+                formData.append('file', file);
+
+                return await api.post(endpoints.uploadProductFiles, formData, {
+                    'Skip-Auth': 'true',
+                    'Content-Type': 'multipart/form-data'
+                });
+            });
+
+            await Promise.all(uploadPromises);
+            return productId;
+        } catch (error: any) {
+            return rejectWithValue(error.message || 'Failed to upload files');
         }
     }
 );
@@ -147,6 +215,17 @@ const productSlice = createSlice({
             })
             .addCase(deleteProduct.rejected, (state, action) => {
                 state.deleteLoading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(uploadProductFiles.pending, (state) => {
+                state.uploadLoading = true;
+                state.error = null;
+            })
+            .addCase(uploadProductFiles.fulfilled, (state) => {
+                state.uploadLoading = false;
+            })
+            .addCase(uploadProductFiles.rejected, (state, action) => {
+                state.uploadLoading = false;
                 state.error = action.payload as string;
             });
     },

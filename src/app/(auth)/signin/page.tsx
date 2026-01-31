@@ -1,20 +1,25 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store/store';
 import { loginUser, clearError } from '../../redux/slices/LoginSlice';
 import toast from 'react-hot-toast';
 import { endpoints } from '@/app/lib/endpoints';
+import { api } from '../../services/apiService';
 
 
-export default function SignIn() {
+import { Suspense } from 'react';
+
+function SignInContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
   const { loading, error, token } = useSelector((state: RootState) => state.auth);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const tokenFromUrl = searchParams.get('token');
 
   useEffect(() => {
     if (token) {
@@ -22,6 +27,13 @@ export default function SignIn() {
       router.push('/home');
     }
   }, [token, router]);
+
+  useEffect(() => {
+    if (tokenFromUrl) {
+      localStorage.setItem('token', tokenFromUrl);
+      router.push('/home');
+    }
+  }, [tokenFromUrl, router]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +43,19 @@ export default function SignIn() {
       if (loginUser.fulfilled.match(resultAction)) {
         // toast.success("Login Successful"); // Handled by useEffect effect or here
       } else {
-        toast.error("Login failed. Please check your credentials.");
+        const errorMsg = resultAction.payload as string;
+        console.log("errorMsg",errorMsg);
+        if (errorMsg && errorMsg.includes("Account not verified")) {
+          try {
+            await api.post(endpoints.resendOtp, { email: username });
+            toast.success("Account inactive. A new OTP has been sent to your email.");
+            router.push(`/otp?email=${encodeURIComponent(username)}`);
+          } catch (resendError) {
+            // Error handled by api interceptor
+          }
+        } else {
+          toast.error(errorMsg ||"Login failed. Please check your credentials.");
+        }
       }
     } else {
       toast.error("Please enter both username and password.");
@@ -64,7 +88,7 @@ export default function SignIn() {
           <form className="mt-8 space-y-6" onSubmit={handleSignIn}>
             {/* EMAIL */}
             <div className="flex flex-col">
-              <label className="mb-2 text-sm font-medium text-gray-700">Email / Username</label>
+              <label className="mb-2 text-sm font-medium text-gray-700">Email</label>
               <div className="relative">
                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">
                   person
@@ -114,7 +138,7 @@ export default function SignIn() {
               </div>
             </div>
 
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-red-500 text-sm">{error.split(':')[1]}</p>}
 
             {/* SIGN IN BUTTON */}
             <button
@@ -156,5 +180,13 @@ export default function SignIn() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function SignIn() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SignInContent />
+    </Suspense>
   );
 }
