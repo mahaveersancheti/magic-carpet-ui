@@ -1,8 +1,12 @@
 {
+  "/(auth)/otp/page": "/otp",
   "/(auth)/signin/page": "/signin",
   "/(auth)/signup/page": "/signup",
+  "/(protected)/add-lead/page": "/add-lead",
+  "/(protected)/add-product/page": "/add-product",
   "/(protected)/home/page": "/home",
   "/(protected)/linkedin-action/page": "/linkedin-action",
+  "/(protected)/products/page": "/products",
   "/(protected)/request/page": "/request",
   "/(protected)/userprofile/page": "/userprofile",
   "/_global-error/page": "/_global-error",

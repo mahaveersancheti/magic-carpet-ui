@@ -40,6 +40,18 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
+      "page": "/add-lead",
+      "regex": "^/add\\-lead(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/add\\-lead(?:/)?$"
+    },
+    {
+      "page": "/add-product",
+      "regex": "^/add\\-product(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/add\\-product(?:/)?$"
+    },
+    {
       "page": "/favicon.ico",
       "regex": "^/favicon\\.ico(?:/)?$",
       "routeKeys": {},
@@ -56,6 +68,18 @@
       "regex": "^/linkedin\\-action(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/linkedin\\-action(?:/)?$"
+    },
+    {
+      "page": "/otp",
+      "regex": "^/otp(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/otp(?:/)?$"
+    },
+    {
+      "page": "/products",
+      "regex": "^/products(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/products(?:/)?$"
     },
     {
       "page": "/request",

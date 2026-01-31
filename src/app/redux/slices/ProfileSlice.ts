@@ -32,6 +32,9 @@ export interface Profile {
     psychologyApproach?: any;
     allSkills?: string[];
     topSkills?: string[];
+    instagramProfileLink?: string;
+    twitterProfileLink?: string;
+    personalWebsiteLink?: string;
 }
 
 export interface CreateProfilePayload {
@@ -42,15 +45,19 @@ export interface CreateProfilePayload {
     country?: string;
     industryName: string;
     linkedinProfileLink?: string;
+    instagramProfileLink?: string;
+    twitterProfileLink?: string;
+    personalWebsiteLink?: string;
     productIds?: string[];
 }
 
 interface ProfileState {
     profiles: Profile[];
-    selectedProfile: Profile | null;
+    selectedProfile: Profile | any;
     loading: boolean;
     error: string | null;
     createLoading: boolean;
+    updateLoading: boolean;
     notificationsData: any[];
 }
 
@@ -60,6 +67,7 @@ const initialState: ProfileState = {
     loading: false,
     error: null,
     createLoading: false,
+    updateLoading: false,
     notificationsData: [],
 };
 
@@ -114,6 +122,30 @@ export const fetchNotifications = createAsyncThunk(
             return rejectWithValue(
                 error.message || 'Failed to fetch notifications'
             );
+        }
+    }
+);
+
+export const deleteProfile = createAsyncThunk(
+    'profiles/deleteProfile',
+    async (id: string, { rejectWithValue }) => {
+        try {
+            await api.delete(endpoints.deleteProfile(id), { 'Skip-Auth': 'true' });
+            return id;
+        } catch (error: any) {
+            return rejectWithValue(error.message || 'Failed to delete profile');
+        }
+    }
+);
+
+export const updateProfile = createAsyncThunk(
+    'profiles/updateProfile',
+    async ({ id, payload }: { id: string; payload: Partial<CreateProfilePayload> }, { rejectWithValue }) => {
+        try {
+            const response = await api.put<Profile>(endpoints.updateProfile(id), payload, { 'Skip-Auth': 'true' });
+            return response;
+        } catch (error: any) {
+            return rejectWithValue(error.message || 'Failed to update profile');
         }
     }
 );
@@ -179,6 +211,33 @@ const profileSlice = createSlice({
             })
             .addCase(fetchNotifications.rejected, (state, action) => {
                 state.loading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(deleteProfile.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(deleteProfile.fulfilled, (state, action) => {
+                state.loading = false;
+                state.profiles = state.profiles.filter(p => p.id !== action.payload);
+            })
+            .addCase(deleteProfile.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+            .addCase(updateProfile.pending, (state) => {
+                state.updateLoading = true;
+                state.error = null;
+            })
+            .addCase(updateProfile.fulfilled, (state, action) => {
+                state.updateLoading = false;
+                const index = state.profiles.findIndex(p => p.id === action.payload.id);
+                if (index !== -1) {
+                    state.profiles[index] = action.payload;
+                }
+            })
+            .addCase(updateProfile.rejected, (state, action) => {
+                state.updateLoading = false;
                 state.error = action.payload as string;
             });
     },

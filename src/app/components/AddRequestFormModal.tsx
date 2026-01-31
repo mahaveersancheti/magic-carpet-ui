@@ -57,7 +57,7 @@ export function AddRequestModal({
     onSuccess?: () => void;
 }) {
     const dispatch = useDispatch<AppDispatch>();
-    const { createLoading } = useSelector((state: RootState) => state.profiles);
+    const { createLoading, updateLoading } = useSelector((state: RootState) => state.profiles);
     const { products } = useSelector((state: RootState) => state.products);
     const { user } = useUser();
 
@@ -164,7 +164,7 @@ export function AddRequestModal({
             {/* Backdrop */}
             <div
                 className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-                onClick={createLoading ? undefined : onClose}
+                onClick={(createLoading || updateLoading) ? undefined : onClose}
             />
 
             {/* Modal */}
@@ -179,7 +179,7 @@ export function AddRequestModal({
                         </div>
                         <button
                             onClick={onClose}
-                            disabled={createLoading}
+                            disabled={createLoading || updateLoading}
                             className="w-12 h-12 rounded-2xl hover:bg-gray-50 text-gray-400 hover:text-gray-900 flex items-center justify-center transition-all disabled:opacity-50"
                         >
                             <span className="material-symbols-outlined text-2xl">close</span>
@@ -278,17 +278,17 @@ export function AddRequestModal({
                             <button
                                 type="button"
                                 onClick={onClose}
-                                disabled={createLoading}
+                                disabled={createLoading || updateLoading}
                                 className="h-12 px-6 rounded-xl border border-gray-200 text-gray-600 font-bold hover:bg-gray-50 hover:border-gray-300 transition-all active:scale-[0.98] disabled:opacity-50 text-sm"
                             >
                                 Cancel
                             </button>
                             <button
                                 type="submit"
-                                disabled={createLoading}
+                                disabled={createLoading || updateLoading}
                                 className="h-12 px-8 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all active:scale-[0.98] disabled:opacity-50 flex items-center gap-2 text-sm"
                             >
-                                {createLoading ? (
+                                {(createLoading || updateLoading) ? (
                                     <>
                                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                         Adding Lead...

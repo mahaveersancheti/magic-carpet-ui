@@ -8,6 +8,8 @@ export const endpoints = {
     getProfileById: (id: string) => `profiles/${id}`,
     getProfileByIdPopulateDummy: (id: string) => `profiles/${id}/populate-dummy`,
     createProfile: 'profiles',
+    updateProfile: (id: string) => `profiles/request/${id}`,
+    deleteProfile: (id: string) => `profiles/${id}`,
     getProfileSection: (id: string, text: string) => `profiles/${id}/section?text=${encodeURIComponent(text)}`,
     getProfileSectionRaw: (id: string, text: string) => `profiles/${id}/section?text=${text}`,
     getProductsByUserId: (userId: string) => `product/user/${userId}`,
