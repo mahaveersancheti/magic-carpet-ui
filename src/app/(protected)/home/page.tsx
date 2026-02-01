@@ -8,6 +8,8 @@ import { Linkedin, Instagram, Twitter, Globe, Loader2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchNotifications, fetchProfiles, deleteProfile } from "../../redux/slices/ProfileSlice";
+import { fetchProductsByUserId } from "../../redux/slices/ProductSlice";
+import { useUser } from "../../hooks/useUser";
 import toast from "react-hot-toast";
 import { api } from "../../services/apiService";
 import { endpoints } from "../../lib/endpoints";
@@ -41,7 +43,9 @@ interface Notification {
 export default function DashboardPage() {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
+  const { user } = useUser();
   const { profiles, notificationsData, loading, error } = useSelector((state: RootState) => state.profiles);
+  const { products, loading: productsLoading } = useSelector((state: RootState) => state.products);
 
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -85,7 +89,10 @@ export default function DashboardPage() {
   useEffect(() => {
     dispatch(fetchProfiles());
     dispatch(fetchNotifications());
-  }, [dispatch]);
+    if (user?.userId) {
+        dispatch(fetchProductsByUserId(user.userId));
+    }
+  }, [dispatch, user?.userId]);
 
   useEffect(() => {
     if (error) {
@@ -230,7 +237,10 @@ export default function DashboardPage() {
             {/* <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">LeadPulse</h1> */}
           </div>
           <div className="flex items-center gap-3">
-            <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400">
+            <button 
+              onClick={() => router.push('/tutorial')}
+              className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400"
+            >
               <span className="material-symbols-outlined text-xl">help</span>
             </button>
             <div className="relative group/notify">
@@ -295,7 +305,45 @@ export default function DashboardPage() {
         </header>
 
         <div className="flex-1 flex flex-col min-h-0 w-full p-4 gap-4 overflow-hidden">
-          {/* Stats Summary Card */}
+          
+          {/* Warnings Section */}
+          <div className="flex flex-col gap-2 shrink-0">
+             {/* Product Warning */}
+             {!productsLoading && products.length === 0 && (
+              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-xl p-3 flex items-start gap-3 shadow-sm animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="bg-orange-100 dark:bg-orange-900/40 p-1.5 rounded-lg shrink-0 text-orange-600 dark:text-orange-400">
+                  <span className="material-symbols-outlined text-lg">inventory_2</span>
+                </div>
+                <div className="flex-1 pt-0.5">
+                   <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-0.5">Products Missing</h3>
+                   <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                     You haven't added any products yet. Adding products helps us tailor the experience for you. 
+                     <button onClick={() => router.push('/products')} className="text-blue-600 dark:text-blue-400 font-bold hover:underline ml-1">
+                       Add Products
+                     </button>
+                   </p>
+                </div>
+              </div>
+            )}
+
+            {/* Leads Warning */}
+            {!loading && profiles.length === 0 && (
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-3 flex items-start gap-3 shadow-sm animate-in fade-in slide-in-from-top-2 duration-300 delay-100">
+                <div className="bg-blue-100 dark:bg-blue-900/40 p-1.5 rounded-lg shrink-0 text-blue-600 dark:text-blue-400">
+                  <span className="material-symbols-outlined text-lg">group_add</span>
+                </div>
+                 <div className="flex-1 pt-0.5">
+                   <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-0.5">No Leads Found</h3>
+                   <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                     You haven't added any leads yet. Start building your pipeline now.
+                     <button onClick={() => router.push('/add-lead')} className="text-blue-600 dark:text-blue-400 font-bold hover:underline ml-1">
+                       Add Lead
+                     </button>
+                   </p>
+                </div>
+              </div>
+            )}
+           </div>          {/* Stats Summary Card */}
           <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 shrink-0">
             <div className="flex-1 min-w-0">
               <h2 className="text-xl font-bold text-slate-900 dark:text-white">Lead Management</h2>

@@ -236,6 +236,34 @@ export default function AddLeadPage() {
             }
         }
 
+        if (formData.instagramProfileLink?.trim()) {
+            const instagramUrl = formData.instagramProfileLink.trim();
+            const instagramRegex = /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9_.]+\/?$/i;
+
+            if (!instagramRegex.test(instagramUrl)) {
+                newErrors.instagramProfileLink = "Please enter a valid Instagram profile URL";
+            }
+        }
+
+        if (formData.twitterProfileLink?.trim()) {
+            const twitterUrl = formData.twitterProfileLink.trim();
+            const twitterRegex = /^(https?:\/\/)?(www\.)?(twitter\.com|x\.com)\/[a-zA-Z0-9_]+\/?$/i;
+
+            if (!twitterRegex.test(twitterUrl)) {
+                newErrors.twitterProfileLink = "Please enter a valid Twitter (X) profile URL";
+            }
+        }
+
+        if (formData.personalWebsiteLink?.trim()) {
+            const websiteUrl = formData.personalWebsiteLink.trim();
+            // Basic URL validation
+            const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/i;
+
+            if (!urlRegex.test(websiteUrl)) {
+                newErrors.personalWebsiteLink = "Please enter a valid Website URL";
+            }
+        }
+
         if (selectedProducts.length === 0) {
             newErrors.products = "At least one product must be selected";
         }
@@ -475,11 +503,12 @@ export default function AddLeadPage() {
                                         value={formData.instagramProfileLink || ""}
                                         onChange={(e) => handleInputChange("instagramProfileLink", e.target.value)}
                                         disabled={createLoading || updateLoading}
-                                        className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]"
+                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.instagramProfileLink ? 'border-red-500' : 'border-gray-200 dark:border-white/10'} dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
                                         placeholder="instagram.com/username"
                                         type="url"
                                     />
                                 </div>
+                                {errors.instagramProfileLink && <span className="text-red-500 text-[10px]">{errors.instagramProfileLink}</span>}
                             </label>
 
                             {/* Twitter */}
@@ -491,11 +520,12 @@ export default function AddLeadPage() {
                                         value={formData.twitterProfileLink || ""}
                                         onChange={(e) => handleInputChange("twitterProfileLink", e.target.value)}
                                         disabled={createLoading || updateLoading}
-                                        className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]"
+                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.twitterProfileLink ? 'border-red-500' : 'border-gray-200 dark:border-white/10'} dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
                                         placeholder="twitter.com/username"
                                         type="url"
                                     />
                                 </div>
+                                {errors.twitterProfileLink && <span className="text-red-500 text-[10px]">{errors.twitterProfileLink}</span>}
                             </label>
 
                             {/* Personal Website */}
@@ -507,11 +537,12 @@ export default function AddLeadPage() {
                                         value={formData.personalWebsiteLink || ""}
                                         onChange={(e) => handleInputChange("personalWebsiteLink", e.target.value)}
                                         disabled={createLoading || updateLoading}
-                                        className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]"
+                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.personalWebsiteLink ? 'border-red-500' : 'border-gray-200 dark:border-white/10'} dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
                                         placeholder="your-website.com"
                                         type="url"
                                     />
                                 </div>
+                                {errors.personalWebsiteLink && <span className="text-red-500 text-[10px]">{errors.personalWebsiteLink}</span>}
                             </label>
 
                             {/* Products Autocomplete */}
