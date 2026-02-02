@@ -1,4 +1,6 @@
 {
-  "/(protected)/add-lead/page": "app/(protected)/add-lead/page.js",
-  "/(protected)/tutorial/page": "app/(protected)/tutorial/page.js"
+  "/(auth)/signin/page": "app/(auth)/signin/page.js",
+  "/(protected)/home/page": "app/(protected)/home/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js"
 }

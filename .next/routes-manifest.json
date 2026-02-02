@@ -100,6 +100,12 @@
       "namedRegex": "^/signup(?:/)?$"
     },
     {
+      "page": "/tutorial",
+      "regex": "^/tutorial(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/tutorial(?:/)?$"
+    },
+    {
       "page": "/userprofile",
       "regex": "^/userprofile(?:/)?$",
       "routeKeys": {},

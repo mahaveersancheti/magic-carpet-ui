@@ -8,6 +8,7 @@
   "/(protected)/linkedin-action/page": "/linkedin-action",
   "/(protected)/products/page": "/products",
   "/(protected)/request/page": "/request",
+  "/(protected)/tutorial/page": "/tutorial",
   "/(protected)/userprofile/page": "/userprofile",
   "/_global-error/page": "/_global-error",
   "/_not-found/page": "/_not-found",

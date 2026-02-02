@@ -21,7 +21,7 @@ export const endpoints = {
     uploadProductFiles: 'product/files',
     downloadProductTemplate: 'product/download/product-template',
     downloadProductTemplate1: 'product/download/product-template1',
-    googleLogin: `${getBaseUrl()}/oauth2/authorization/google`,
+    googleLogin: `${getBaseUrl().replace('/v1/api/', '')}/oauth2/authorization/google`,
     notifications: '/notification',
     verifyOtp: 'user/verify-otp',
     resendOtp: 'user/resend-otp'
