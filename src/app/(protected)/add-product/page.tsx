@@ -290,7 +290,7 @@ function AddProductContent() {
                         {(createLoading || updateLoading || uploadLoading) && (
                              <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         )}
-                        {productId ? 'Update Product' : 'Add Product'}
+                        {productId ? 'Update Product' : 'Save Product'}
                     </button>
                 </div>
             </div>

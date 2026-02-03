@@ -61,10 +61,7 @@ function Sidebar({ isOpen = true, onClose }) {
         window.location.href = '/';
     };
     const menuItems = [
-        [
-            "person",
-            "User Profile"
-        ],
+        // ["person", "User Profile"],
         [
             "inventory_2",
             "Products"
@@ -180,7 +177,7 @@ function Sidebar({ isOpen = true, onClose }) {
                                                 }, this),
                                                 !isCollapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: "text-sm font-semibold truncate animate-in fade-in duration-300",
-                                                    children: "Home"
+                                                    children: "Leads"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/components/SideBar.tsx",
                                                     lineNumber: 125,

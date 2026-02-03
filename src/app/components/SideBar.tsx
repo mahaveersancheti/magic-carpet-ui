@@ -55,7 +55,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     };
 
     const menuItems = [
-        ["person", "User Profile"],
+        // ["person", "User Profile"],
         ["inventory_2", "Products"],
         // ["share", "LinkedIn Action"],
     ];
@@ -122,7 +122,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                 `}
                             >
                                 <span className={`material-symbols-outlined ${selectedMenu === "Home" ? "fill-1" : ""}`}>home</span>
-                                {!isCollapsed && <span className="text-sm font-semibold truncate animate-in fade-in duration-300">Home</span>}
+                                {!isCollapsed && <span className="text-sm font-semibold truncate animate-in fade-in duration-300">Leads</span>}
                             </button>
                             {isCollapsed && (
                                 <div className="cursor-pointer absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 flex items-center gap-2">

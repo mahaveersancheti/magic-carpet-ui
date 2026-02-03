@@ -7,7 +7,7 @@ import { createProfile, CreateProfilePayload, fetchProfileById, fetchProfiles, u
 import { fetchProductsByUserId, Product } from "../../redux/slices/ProductSlice";
 import { useUser } from "../../hooks/useUser";
 import toast from "react-hot-toast";
-import { ArrowLeft, Instagram, Twitter, Linkedin, Globe } from "lucide-react";
+import { ArrowLeft, Instagram, Twitter, Linkedin, Globe, Facebook } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { ConfirmationDialog } from "../../components/ConfirmationDialog";
 
@@ -38,7 +38,8 @@ export default function AddLeadPage() {
         linkedinProfileLink: "",
         instagramProfileLink: "",
         twitterProfileLink: "",
-        personalProfileLink: ""
+        personalProfileLink: "",
+        facebookProfileLink:""
     });
 
     const [errors, setErrors] = useState<Partial<Record<keyof CreateProfilePayload | 'products', string>>>({});
@@ -75,7 +76,8 @@ export default function AddLeadPage() {
                     linkedinProfileLink: profile.linkedinUrl || "",
                     instagramProfileLink: profile.instagramUrl || "",
                     twitterProfileLink: profile.twitterUrl || "",
-                    personalProfileLink: profile.personalProfileLink || ""
+                    personalProfileLink: profile.personalUrl || "",
+                    facebookProfileLink: profile.facebookUrl || "",
                 });
                 
                 // Bind products if they exist in the profile
@@ -258,6 +260,15 @@ export default function AddLeadPage() {
 
             if (!twitterRegex.test(twitterUrl)) {
                 newErrors.twitterProfileLink = "Please enter a valid Twitter (X) profile URL";
+            }
+        }
+
+        if (formData.facebookProfileLink?.trim()) {
+            const facebookUrl = formData.facebookProfileLink.trim();
+            const facebookRegex = /^(https?:\/\/)?(www\.)?(facebook\.com)\/[a-zA-Z0-9_]+\/?$/i;
+
+            if (!facebookRegex.test(facebookUrl)) {
+                newErrors.facebookProfileLink = "Please enter a valid Facebook profile URL";
             }
         }
 
@@ -535,8 +546,25 @@ export default function AddLeadPage() {
                                 {errors.twitterProfileLink && <span className="text-red-500 text-[10px]">{errors.twitterProfileLink}</span>}
                             </label>
 
+                             {/* Facebook */}
+                            <label className="flex flex-col gap-1.5 md:col-span-1">
+                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">Facebook</span>
+                                <div className="relative">
+                                    <Facebook className="absolute left-3 top-1/2 -translate-y-1/2 text-primary w-4 h-4" />
+                                    <input
+                                        value={formData.facebookProfileLink || ""}
+                                        onChange={(e) => handleInputChange("facebookProfileLink", e.target.value)}
+                                        disabled={createLoading || updateLoading}
+                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.facebookProfileLink ? 'border-red-500' : 'border-gray-200'} focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
+                                        placeholder="facebook.com/username"
+                                        type="url"
+                                    />
+                                </div>
+                                {errors.facebookProfileLink && <span className="text-red-500 text-[10px]">{errors.facebookProfileLink}</span>}
+                            </label>
+
                             {/* Personal Website */}
-                            <label className="flex flex-col gap-1.5 md:col-span-2">
+                            <label className="flex flex-col gap-1.5 md:col-span-1">
                                 <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">Personal Website</span>
                                 <div className="relative">
                                     <Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-primary w-4 h-4" />

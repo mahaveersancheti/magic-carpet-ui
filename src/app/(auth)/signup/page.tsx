@@ -88,9 +88,9 @@ export default function SignUp() {
             <p className="text-2xl font-black tracking-tight text-foreground">
               Create an Account
             </p>
-            <p className="mt-2 text-sm text-gray-600">
+            {/* <p className="mt-2 text-sm text-gray-600">
               Join us to manage visitor requests seamlessly.
-            </p>
+            </p> */}
           </div>
 
           {/* FORM */}
@@ -102,14 +102,14 @@ export default function SignUp() {
                 htmlFor="username"
                 className="mb-2 text-sm font-medium text-gray-700"
               >
-                Username
+                Full Name
               </label>
               <div className="relative">
                 <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">person</span>
                 <input
                   id="username"
                   type="text"
-                  placeholder="Enter your username"
+                  placeholder="Enter your full name"
                   className="w-full rounded-xl bg-white/50 border border-gray-300 py-3 pl-12 pr-4 text-foreground placeholder-gray-500 focus:ring-2 focus:ring-blue-500 outline-none backdrop-blur-xl"
                   autoComplete="username"
                   value={formData.username}

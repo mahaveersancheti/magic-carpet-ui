@@ -47,6 +47,7 @@ export interface CreateProfilePayload {
     linkedinProfileLink?: string;
     instagramProfileLink?: string;
     twitterProfileLink?: string;
+    facebookProfileLink?: string;
     personalProfileLink?: string;
     productIds?: string[];
 }
