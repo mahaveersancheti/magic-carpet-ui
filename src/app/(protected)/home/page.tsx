@@ -239,15 +239,15 @@ export default function DashboardPage() {
           <div className="flex items-center gap-3">
             <button 
               onClick={() => router.push('/tutorial')}
-              className="p-1.5 hover:bg-slate-100 rounded-full text-slate-500"
+              className="cursor-pointer p-1.5 hover:bg-slate-100 rounded-full text-slate-500"
             >
               <span className="material-symbols-outlined text-xl">help</span>
             </button>
             <div className="relative group/notify">
-              <button className="p-1.5 hover:bg-slate-100 rounded-full text-slate-500 relative">
+              <button className="cursor-pointer p-1.5 hover:bg-slate-100 rounded-full text-slate-500 relative">
                 <span className="material-symbols-outlined text-xl">notifications</span>
                 {notifications.length > 0 && (
-                  <span className="absolute top-0.5 right-0.5 bg-red-500 text-white text-[9px] font-bold px-1 rounded-full border border-white">
+                  <span className="cursor-pointer absolute top-0.5 right-0.5 bg-red-500 text-white text-[9px] font-bold px-1 rounded-full border border-white">
                     {notifications.length > 9 ? '9+' : notifications.length}
                   </span>
                 )}
@@ -290,7 +290,7 @@ export default function DashboardPage() {
               </div>
             </div>
             <div className="h-6 w-px bg-slate-200"></div>
-            <div className="flex items-center gap-2 ml-1">
+            <div className="flex items-center gap-2 ml-1 cursor-pointer" onClick={() => router.push('/userprofile')}>
               <div className="w-7 h-7 rounded-full bg-slate-200 overflow-hidden ring-1 ring-slate-100">
                 <img alt="Admin Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTARnqqcH5HFBuJBIYfcK2R7b0uCXIkVN7CTaCzZ0C7ID_aqoR42PlArasOTtQC1OlfcuzyLG5bR6j6SMRZpltlJxmDHQ02kKB6GoYtKy1MoOWzLLth06dsIX-9v7QXHINF1axEp7ZbkXiOdIIBrTK-viXWs-6n8rwlQSIIYNB-yzA_YEx7qU-YjlM4OfeLAutX1cLMhGtZSZykH1ytteZPP9xgMU0JfOJmiVG3iT-wPCBB1YI8K7bKyIrSrYoXaE3NH4gohQy24RU"/>
               </div>
@@ -330,7 +330,7 @@ export default function DashboardPage() {
                    <h3 className="text-sm font-bold text-slate-900 mb-0.5">No Leads Found</h3>
                    <p className="text-xs text-slate-600 leading-relaxed">
                      You haven't added any leads yet. Start building your pipeline now.
-                     <button onClick={() => router.push('/add-lead')} className="text-blue-600 font-bold hover:underline ml-1">
+                     <button onClick={() => router.push('/add-lead')} className="cursor-pointer text-blue-600 font-bold hover:underline ml-1">
                        Add Lead
                      </button>
                    </p>
@@ -393,14 +393,14 @@ export default function DashboardPage() {
                 </select>
                 <button 
                   onClick={() => router.push('/add-lead')}
-                  className="flex items-center gap-1.5 bg-blue-700 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] shadow-md shadow-primary/10"
+                  className="cursor-pointer flex items-center gap-1.5 bg-blue-700 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] shadow-md shadow-primary/10"
                 >
                   <span className="material-symbols-outlined text-base">add</span>
                   New Lead
                 </button>
                 <button 
                   onClick={() => dispatch(fetchProfiles())}
-                  className="p-1.5 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition-all active:rotate-180 duration-500"
+                  className="cursor-pointer p-1.5 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition-all active:rotate-180 duration-500"
                 >
                   <span className="material-symbols-outlined text-lg">refresh</span>
                 </button>
@@ -484,21 +484,21 @@ export default function DashboardPage() {
                           <div className="flex items-center justify-center gap-0.5">
                             <button 
                               onClick={() => viewDetails("visibility", row.id)}
-                              className="p-1 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all active:scale-95"
+                              className="cursor-pointer p-1 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all active:scale-95"
                               title="View Details"
                             >
                               <span className="material-symbols-outlined text-lg">visibility</span>
                             </button>
                             <button 
                               onClick={() => router.push(`/add-lead?id=${row.id}`)}
-                              className="p-1 text-slate-400 hover:text-green-500 hover:bg-green-500/10 rounded-lg transition-all active:scale-95"
+                              className="cursor-pointer p-1 text-slate-400 hover:text-green-500 hover:bg-green-500/10 rounded-lg transition-all active:scale-95"
                               title="Edit Lead"
                             >
                               <span className="material-symbols-outlined text-lg">edit</span>
                             </button>
                             <button 
                               onClick={() => setDeleteConfirmation({ isOpen: true, id: row.id, name: row.name, isLoading: false })}
-                              className="p-1 text-slate-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all active:scale-95"
+                              className="cursor-pointer p-1 text-slate-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all active:scale-95"
                               title="Delete Lead"
                             >
                               <span className="material-symbols-outlined text-lg">delete</span>
@@ -523,7 +523,7 @@ export default function DashboardPage() {
                 <button 
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
-                  className="flex items-center px-3 py-1 text-[10px] font-bold text-slate-500 disabled:text-slate-300 disabled:cursor-not-allowed group transition-all hover:text-primary"
+                  className="cursor-pointer flex items-center px-3 py-1 text-[10px] font-bold text-slate-500 disabled:text-slate-300 disabled:cursor-not-allowed group transition-all hover:text-primary"
                 >
                   <span className="material-symbols-outlined text-base mr-1 group-hover:-translate-x-1 transition-transform">chevron_left</span>
                   Prev
@@ -542,7 +542,7 @@ export default function DashboardPage() {
                 <button 
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages || totalPages === 0}
-                  className="flex items-center px-3 py-1 text-[10px] font-bold text-slate-500 disabled:text-slate-300 disabled:cursor-not-allowed group transition-all hover:text-primary"
+                  className="cursor-pointer flex items-center px-3 py-1 text-[10px] font-bold text-slate-500 disabled:text-slate-300 disabled:cursor-not-allowed group transition-all hover:text-primary"
                 >
                   Next
                   <span className="material-symbols-outlined text-base ml-1 group-hover:translate-x-1 transition-transform">chevron_right</span>

@@ -113,7 +113,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                         <div className="relative group">
                             <button
                                 onClick={() => handleNavigation("Home")}
-                                className={`flex items-center w-full transition-all duration-200 rounded-xl
+                                className={`cursor-pointer flex items-center w-full transition-all duration-200 rounded-xl
                                     ${isCollapsed ? 'h-12 justify-center' : 'gap-3 px-3 py-2.5'}
                                     ${selectedMenu === "Home"
                                         ? "bg-blue-50 text-[#258cf4]"
@@ -125,7 +125,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                 {!isCollapsed && <span className="text-sm font-semibold truncate animate-in fade-in duration-300">Home</span>}
                             </button>
                             {isCollapsed && (
-                                <div className="absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 flex items-center gap-2">
+                                <div className="cursor-pointer absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 flex items-center gap-2">
                                     <div className="w-1 h-1 rounded-full bg-blue-500"></div>
                                     Home
                                 </div>
@@ -137,7 +137,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                             <div key={label} className="relative group">
                                 <button
                                     onClick={() => handleNavigation(label)}
-                                    className={`flex items-center w-full transition-all duration-200 rounded-xl
+                                    className={`cursor-pointer flex items-center w-full transition-all duration-200 rounded-xl
                                         ${isCollapsed ? 'h-12 justify-center' : 'gap-3 px-3 py-2.5'}
                                         ${selectedMenu === label
                                             ? "bg-blue-50 text-[#258cf4]"
@@ -166,7 +166,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                         <div className="relative group">
                             <button
                                 onClick={() => setIsCollapsed(!isCollapsed)}
-                                className="hidden lg:flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 h-10 text-[#0d141c] text-xs font-bold hover:bg-slate-200 transition-colors"
+                                className="cursor-pointer hidden lg:flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 h-10 text-[#0d141c] text-xs font-bold hover:bg-slate-200 transition-colors"
                             >
                                 <span className={`material-symbols-outlined text-sm transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`}>
                                     keyboard_double_arrow_left
@@ -185,7 +185,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                             {/* Logout */}
                             <button
                                 onClick={handleLogout}
-                                className={`flex items-center justify-center rounded-xl bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all ${isCollapsed ? 'w-10 h-10' : 'flex-1 h-10'}`}
+                                className={`cursor-pointer flex items-center justify-center rounded-xl bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all ${isCollapsed ? 'w-10 h-10' : 'flex-1 h-10'}`}
                             >
                                 <span className="material-symbols-outlined text-lg">logout</span>
                             </button>
@@ -193,7 +193,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
 
                         {/* Upgrade to Pro */}
                         <div className="relative group">
-                            <button className={`
+                            <button className={`cursor-pointer
                                 w-full bg-[#258cf4] text-white rounded-xl shadow-lg shadow-blue-500/20 hover:brightness-110 transition-all flex items-center justify-center
                                 ${isCollapsed ? 'h-12' : 'p-4 flex-col gap-2'}
                             `}>

@@ -7,10 +7,14 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-    // Bypass API requests to avoid issues with redirects and mixed content
-    if (event.request.url.includes('/api/')) {
+    const url = new URL(event.request.url);
+    
+    // Bypass all requests that are not on the same origin (like API calls)
+    // or requests specifically meant for the API
+    if (url.origin !== self.location.origin || url.pathname.includes('/api/')) {
         return;
     }
+    
     // Required for PWA installability, but we don't need to cache everything in dev
     event.respondWith(fetch(event.request));
 });

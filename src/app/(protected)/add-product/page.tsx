@@ -265,7 +265,7 @@ function AddProductContent() {
                 <div className="flex items-center gap-4">
                     <button 
                         onClick={handleBack}
-                        className="p-2 hover:bg-slate-100 rounded-full transition-colors"
+                        className="cursor-pointer p-2 hover:bg-slate-100 rounded-full transition-colors"
                     >
                         <ArrowLeft className="w-5 h-5 text-slate-600" />
                     </button>
@@ -285,12 +285,12 @@ function AddProductContent() {
                     <button 
                         onClick={handleHandleAction}
                         disabled={createLoading || updateLoading || uploadLoading}
-                        className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow-sm shadow-blue-500/20 transition-all flex items-center gap-2"
+                        className="cursor-pointer px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow-sm shadow-blue-500/20 transition-all flex items-center gap-2"
                     >
                         {(createLoading || updateLoading || uploadLoading) && (
                              <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         )}
-                        {productId ? 'Update Product' : 'Publish Product'}
+                        {productId ? 'Update Product' : 'Add Product'}
                     </button>
                 </div>
             </div>
@@ -365,7 +365,7 @@ function AddProductContent() {
                                                     textarea.setSelectionRange(start + 2, end + 2);
                                                 }, 0);
                                             }}
-                                            className="p-1.5 hover:bg-slate-100 rounded text-slate-500 hover:text-slate-700 transition-colors"
+                                            className="cursor-pointer p-1.5 hover:bg-slate-100 rounded text-slate-500 hover:text-slate-700 transition-colors"
                                             title="Bold"
                                         >
                                             <span className="material-symbols-outlined text-sm font-bold">format_bold</span>
@@ -391,7 +391,7 @@ function AddProductContent() {
                                                     textarea.setSelectionRange(start + 1, end + 1);
                                                 }, 0);
                                             }}
-                                            className="p-1.5 hover:bg-slate-100 rounded text-slate-500 hover:text-slate-700 transition-colors"
+                                            className="cursor-pointer p-1.5 hover:bg-slate-100 rounded text-slate-500 hover:text-slate-700 transition-colors"
                                             title="Italic"
                                         >
                                             <span className="material-symbols-outlined text-sm font-bold">format_italic</span>
@@ -416,7 +416,7 @@ function AddProductContent() {
                                                     textarea.setSelectionRange(start + 3, start + 3);
                                                 }, 0);
                                             }}
-                                            className="p-1.5 hover:bg-slate-100 rounded text-slate-500 hover:text-slate-700 transition-colors"
+                                            className="cursor-pointer p-1.5 hover:bg-slate-100 rounded text-slate-500 hover:text-slate-700 transition-colors"
                                             title="Bullet List"
                                         >
                                             <span className="material-symbols-outlined text-sm font-bold">format_list_bulleted</span>
@@ -444,7 +444,7 @@ function AddProductContent() {
                                                     textarea.setSelectionRange(linkStart, linkStart + 3);
                                                 }, 0);
                                             }}
-                                            className="p-1.5 hover:bg-slate-100 rounded text-slate-500 hover:text-slate-700 transition-colors"
+                                            className="cursor-pointer p-1.5 hover:bg-slate-100 rounded text-slate-500 hover:text-slate-700 transition-colors"
                                             title="Insert Link"
                                         >
                                             <span className="material-symbols-outlined text-sm font-bold">link</span>
@@ -532,7 +532,7 @@ function AddProductContent() {
                                                 setProductImage(null);
                                                 setExistingImagePath(null);
                                             }}
-                                            className="absolute top-2 right-2 p-1 bg-white rounded-full shadow-sm hover:text-red-500 z-10 hover:bg-slate-100 transition-colors"
+                                            className="cursor-pointer absolute top-2 right-2 p-1 bg-white rounded-full shadow-sm hover:text-red-500 z-10 hover:bg-slate-100 transition-colors"
                                             title="Remove Image"
                                             type="button"
                                         >
@@ -586,7 +586,7 @@ function AddProductContent() {
                                             </div>
                                             <button 
                                                 onClick={() => setProductDocs(prev => prev.filter((_, i) => i !== index))}
-                                                className="p-1 text-slate-400 hover:text-red-500 transition-colors"
+                                                className="cursor-pointer p-1 text-slate-400 hover:text-red-500 transition-colors"
                                             >
                                                 <X className="w-4 h-4" />
                                             </button>
@@ -619,7 +619,7 @@ function AddProductContent() {
         <div className="fixed bottom-6 right-6 lg:hidden">
             <button 
                 onClick={handleHandleAction}
-                className="w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg shadow-blue-500/40 flex items-center justify-center hover:bg-blue-700 transition-colors"
+                className="cursor-pointer w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg shadow-blue-500/40 flex items-center justify-center hover:bg-blue-700 transition-colors"
             >
                 {/* <Check className="w-6 h-6" /> */}
                 <span className="material-icons-outlined">check</span>
@@ -671,7 +671,7 @@ function AddProductContent() {
                         <span className="truncate text-gray-600">{file.name}</span>
                         <button
                           onClick={() => setUploadPromptDocs(prev => prev.filter((_, i) => i !== index))}
-                          className="text-gray-400 hover:text-red-500"
+                          className="cursor-pointer text-gray-400 hover:text-red-500"
                         >
                           <X className="w-3 h-3" />
                         </button>
@@ -686,7 +686,7 @@ function AddProductContent() {
                         setShowUploadPrompt(false);
                         router.push('/products');
                     }}
-                    className="flex-1 py-3 rounded-xl border border-gray-200 text-gray-600 font-bold hover:bg-gray-50 transition-all"
+                    className="cursor-pointer flex-1 py-3 rounded-xl border border-gray-200 text-gray-600 font-bold hover:bg-gray-50 transition-all"
                     disabled={uploadLoading}
                   >
                     Skip for now
@@ -712,7 +712,7 @@ function AddProductContent() {
                          }
                     }}
                     disabled={uploadLoading || uploadPromptDocs.length === 0}
-                    className="flex-1 py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="cursor-pointer flex-1 py-3 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     Upload Docs
                   </button>

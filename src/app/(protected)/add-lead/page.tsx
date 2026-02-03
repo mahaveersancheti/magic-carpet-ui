@@ -38,7 +38,7 @@ export default function AddLeadPage() {
         linkedinProfileLink: "",
         instagramProfileLink: "",
         twitterProfileLink: "",
-        personalWebsiteLink: ""
+        personalProfileLink: ""
     });
 
     const [errors, setErrors] = useState<Partial<Record<keyof CreateProfilePayload | 'products', string>>>({});
@@ -73,19 +73,26 @@ export default function AddLeadPage() {
                     country: profile.country || (profile.location?.split(',')[1]?.trim() || ""),
                     industryName: profile.industryType || (profile.industryOutlook?.[0]?.industry || ""),
                     linkedinProfileLink: profile.linkedinUrl || "",
-                    instagramProfileLink: profile.instagramProfileLink || "",
-                    twitterProfileLink: profile.twitterProfileLink || "",
-                    personalWebsiteLink: profile.personalWebsiteLink || ""
+                    instagramProfileLink: profile.instagramUrl || "",
+                    twitterProfileLink: profile.twitterUrl || "",
+                    personalProfileLink: profile.personalProfileLink || ""
                 });
                 
                 // Bind products if they exist in the profile
                 let matchedProducts: Product[] = [];
-                if (profile.productFit && products.length > 0) {
-                    console.log("Binding products. Profile Fit:", profile.productFit, "Available Products:", products);
+                console.log("Binding products. Profile:", profile, "Available Products:", products);
+
+                if (profile.productIds && Array.isArray(profile.productIds) && profile.productIds.length > 0) {
+                     matchedProducts = products.filter(p => profile.productIds.includes(p.id));
+                } else if (profile.productFit && products.length > 0) {
+                     // Fallback to name matching if productIds logic fails or is missing
                     matchedProducts = products.filter(p => 
                         profile.productFit?.some((pf: any) => pf.productName === p.name)
                     );
-                    setSelectedProducts(matchedProducts);
+                }
+                
+                if (matchedProducts.length > 0) {
+                     setSelectedProducts(matchedProducts);
                 }
 
                 const initialData = {
@@ -98,7 +105,7 @@ export default function AddLeadPage() {
                     linkedinProfileLink: profile.linkedinUrl || "",
                     instagramProfileLink: profile.instagramProfileLink || "",
                     twitterProfileLink: profile.twitterProfileLink || "",
-                    personalWebsiteLink: profile.personalWebsiteLink || ""
+                    personalProfileLink: profile.personalProfileLink || ""
                 };
                 setInitialFormData(initialData);
                 setInitialProducts(matchedProducts);
@@ -116,7 +123,7 @@ export default function AddLeadPage() {
         formData.linkedinProfileLink !== initialFormData.linkedinProfileLink ||
         formData.instagramProfileLink !== initialFormData.instagramProfileLink ||
         formData.twitterProfileLink !== initialFormData.twitterProfileLink ||
-        formData.personalWebsiteLink !== initialFormData.personalWebsiteLink ||
+        formData.personalProfileLink !== initialFormData.personalProfileLink ||
         selectedProducts.length !== initialProducts.length ||
         selectedProducts.some(p => !initialProducts.some(ip => ip.id === p.id))
     ) : (
@@ -129,7 +136,7 @@ export default function AddLeadPage() {
         formData.linkedinProfileLink !== "" ||
         formData.instagramProfileLink !== "" ||
         formData.twitterProfileLink !== "" ||
-        formData.personalWebsiteLink !== "" ||
+        formData.personalProfileLink !== "" ||
         selectedProducts.length !== 0
     );
 
@@ -208,7 +215,7 @@ export default function AddLeadPage() {
             linkedinProfileLink: "",
             instagramProfileLink: "",
             twitterProfileLink: "",
-            personalWebsiteLink: ""
+            personalProfileLink: ""
         });
         setSelectedProducts([]);
         setErrors({});
@@ -254,13 +261,13 @@ export default function AddLeadPage() {
             }
         }
 
-        if (formData.personalWebsiteLink?.trim()) {
-            const websiteUrl = formData.personalWebsiteLink.trim();
+        if (formData.personalProfileLink?.trim()) {
+            const websiteUrl = formData.personalProfileLink.trim();
             // Basic URL validation
             const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/i;
 
             if (!urlRegex.test(websiteUrl)) {
-                newErrors.personalWebsiteLink = "Please enter a valid Website URL";
+                newErrors.personalProfileLink = "Please enter a valid Website URL";
             }
         }
 
@@ -534,15 +541,15 @@ export default function AddLeadPage() {
                                 <div className="relative">
                                     <Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-primary w-4 h-4" />
                                     <input
-                                        value={formData.personalWebsiteLink || ""}
-                                        onChange={(e) => handleInputChange("personalWebsiteLink", e.target.value)}
+                                        value={formData.personalProfileLink || ""}
+                                        onChange={(e) => handleInputChange("personalProfileLink", e.target.value)}
                                         disabled={createLoading || updateLoading}
-                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.personalWebsiteLink ? 'border-red-500' : 'border-gray-200'} focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
+                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.personalProfileLink ? 'border-red-500' : 'border-gray-200'} focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
                                         placeholder="your-website.com"
                                         type="url"
                                     />
                                 </div>
-                                {errors.personalWebsiteLink && <span className="text-red-500 text-[10px]">{errors.personalWebsiteLink}</span>}
+                                {errors.personalProfileLink && <span className="text-red-500 text-[10px]">{errors.personalProfileLink}</span>}
                             </label>
 
                             {/* Products Autocomplete */}

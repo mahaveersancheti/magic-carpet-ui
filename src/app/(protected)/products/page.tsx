@@ -137,14 +137,14 @@ export default function ProductsPage() {
             <div className="flex items-center gap-2">
               <button
                 onClick={handleDownloadTemplate}
-                className="px-3 py-1.5 rounded-lg border border-gray-300 font-bold text-xs hover:bg-gray-50 transition-all disabled:opacity-50 inline-flex items-center justify-center"
+                className="cursor-pointer px-3 py-1.5 rounded-lg border border-gray-300 font-bold text-xs hover:bg-gray-50 transition-all disabled:opacity-50 inline-flex items-center justify-center"
                 title="Download Template"
               >
                 <span className="material-symbols-outlined text-[20px]">file_download</span>
               </button>
               <button
                 onClick={handleAddProductClick}
-                className="bg-[#0d59f2] text-white px-3 lg:px-4 py-1.5 rounded-lg text-xs font-bold shadow-lg shadow-[#0d59f2]/20 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap flex items-center justify-center gap-2"
+                className="cursor-pointer bg-[#0d59f2] text-white px-3 lg:px-4 py-1.5 rounded-lg text-xs font-bold shadow-lg shadow-[#0d59f2]/20 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap flex items-center justify-center gap-2"
               >
                 <span className="material-symbols-outlined text-[20px]">add</span>
                 Add Product
@@ -231,13 +231,13 @@ export default function ProductsPage() {
                         <div className="flex justify-end gap-1">
                           <button
                             onClick={() => handleEditClick(product.id)}
-                            className="p-2 text-slate-400 hover:text-primary transition-colors"
+                            className="cursor-pointer p-2 text-slate-400 hover:text-primary transition-colors"
                           >
                             <span className="material-symbols-outlined text-[20px]">edit</span>
                           </button>
                           <button
                             onClick={() => handleDeleteClick(product.id)}
-                            className="p-2 text-slate-400 hover:text-red-500 transition-colors"
+                            className="cursor-pointer p-2 text-slate-400 hover:text-red-500 transition-colors"
                           >
                             <span className="material-symbols-outlined text-[20px]">delete</span>
                           </button>
@@ -262,7 +262,7 @@ export default function ProductsPage() {
               <button
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="inline-flex items-center px-3 py-1.5 text-xs font-bold rounded-lg border border-gray-300 bg-white text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+                className="cursor-pointer inline-flex items-center px-3 py-1.5 text-xs font-bold rounded-lg border border-gray-300 bg-white text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
               >
                 <span className="material-symbols-outlined text-[18px] mr-1">chevron_left</span>
                 Previous
@@ -272,7 +272,7 @@ export default function ProductsPage() {
                   <button
                     key={i + 1}
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`w-8 h-8 flex items-center justify-center text-xs font-bold rounded-lg transition-all ${
+                    className={`cursor-pointer w-8 h-8 flex items-center justify-center text-xs font-bold rounded-lg transition-all ${
                       currentPage === i + 1
                         ? 'bg-[#0d59f2] text-white shadow-lg shadow-[#0d59f2]/20'
                         : 'border border-transparent text-[#606e8a] hover:bg-gray-50'
@@ -285,7 +285,7 @@ export default function ProductsPage() {
               <button
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages || totalPages === 0}
-                className="inline-flex items-center px-3 py-1.5 text-xs font-bold rounded-lg border border-gray-300 bg-white text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm ml-1"
+                className="cursor-pointer inline-flex items-center px-3 py-1.5 text-xs font-bold rounded-lg border border-gray-300 bg-white text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm ml-1"
               >
                 Next
                 <span className="material-symbols-outlined text-[18px] ml-1">chevron_right</span>
@@ -309,7 +309,7 @@ export default function ProductsPage() {
             <div className="flex gap-3">
               <button
                 onClick={() => setDeletingProductId(null)}
-                className="flex-1 py-1.5 rounded-lg border border-gray-300 font-bold text-xs hover:bg-gray-50 transition-all disabled:opacity-50"
+                className="cursor-pointer flex-1 py-1.5 rounded-lg border border-gray-300 font-bold text-xs hover:bg-gray-50 transition-all disabled:opacity-50"
                 disabled={deleteLoading}
               >
                 Cancel
@@ -317,7 +317,7 @@ export default function ProductsPage() {
               <button
                 onClick={handleDeleteConfirm}
                 disabled={deleteLoading}
-                className="flex-1 bg-red-500 text-white px-3 lg:px-4 py-1.5 rounded-lg text-xs font-bold shadow-lg shadow-red-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap flex items-center justify-center gap-2"
+                className="cursor-pointer flex-1 bg-red-500 text-white px-3 lg:px-4 py-1.5 rounded-lg text-xs font-bold shadow-lg shadow-red-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap flex items-center justify-center gap-2"
               >
                 {deleteLoading && (
                   <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

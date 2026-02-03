@@ -34,7 +34,7 @@ export interface Profile {
     topSkills?: string[];
     instagramProfileLink?: string;
     twitterProfileLink?: string;
-    personalWebsiteLink?: string;
+    personalProfileLink?: string;
 }
 
 export interface CreateProfilePayload {
@@ -47,7 +47,7 @@ export interface CreateProfilePayload {
     linkedinProfileLink?: string;
     instagramProfileLink?: string;
     twitterProfileLink?: string;
-    personalWebsiteLink?: string;
+    personalProfileLink?: string;
     productIds?: string[];
 }
 
