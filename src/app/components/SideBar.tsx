@@ -72,7 +72,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
 
             <aside className={`
                 h-screen fixed lg:sticky top-0 left-0 z-[70]
-                flex flex-col bg-white dark:bg-[#1a2530] border-r border-slate-200 dark:border-slate-800 shadow-xl
+                flex flex-col bg-white border-r border-slate-200 shadow-xl
                 transition-all duration-300 ease-in-out
                 ${isCollapsed ? 'w-18' : 'w-64'}
                 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
@@ -81,7 +81,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                     {/* Mobile Close Button */}
                     <button
                         onClick={onClose}
-                        className="lg:hidden absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-500 transition"
+                        className="lg:hidden absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 text-gray-500 transition"
                     >
                         <span className="material-symbols-outlined text-xl">close</span>
                     </button>
@@ -96,7 +96,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                             />
                             {!isCollapsed && (
                                 <div className="flex flex-col animate-in fade-in slide-in-from-left-4 duration-500">
-                                    <h1 className="text-lg font-bold leading-none text-[#0d141c] dark:text-white truncate">
+                                    <h1 className="text-lg font-bold leading-none text-[#0d141c] truncate">
                                         Magic Carpet
                                     </h1>
                                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest truncate">
@@ -116,8 +116,8 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                 className={`flex items-center w-full transition-all duration-200 rounded-xl
                                     ${isCollapsed ? 'h-12 justify-center' : 'gap-3 px-3 py-2.5'}
                                     ${selectedMenu === "Home"
-                                        ? "bg-blue-50 dark:bg-primary/10 text-[#258cf4]"
-                                        : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                                        ? "bg-blue-50 text-[#258cf4]"
+                                        : "text-slate-600 hover:bg-slate-100"
                                     }
                                 `}
                             >
@@ -125,7 +125,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                 {!isCollapsed && <span className="text-sm font-semibold truncate animate-in fade-in duration-300">Home</span>}
                             </button>
                             {isCollapsed && (
-                                <div className="absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 dark:border-slate-600 flex items-center gap-2">
+                                <div className="absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 flex items-center gap-2">
                                     <div className="w-1 h-1 rounded-full bg-blue-500"></div>
                                     Home
                                 </div>
@@ -140,8 +140,8 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                     className={`flex items-center w-full transition-all duration-200 rounded-xl
                                         ${isCollapsed ? 'h-12 justify-center' : 'gap-3 px-3 py-2.5'}
                                         ${selectedMenu === label
-                                            ? "bg-blue-50 dark:bg-primary/10 text-[#258cf4]"
-                                            : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                                            ? "bg-blue-50 text-[#258cf4]"
+                                            : "text-slate-600 hover:bg-slate-100"
                                         }
                                     `}
                                 >
@@ -151,7 +151,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                     {!isCollapsed && <span className="text-sm font-semibold truncate animate-in fade-in duration-300">{label}</span>}
                                 </button>
                                 {isCollapsed && (
-                                    <div className="absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 dark:border-slate-600 flex items-center gap-2">
+                                    <div className="absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 flex items-center gap-2">
                                         <div className="w-1 h-1 rounded-full bg-blue-500"></div>
                                         {label}
                                     </div>
@@ -166,7 +166,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                         <div className="relative group">
                             <button
                                 onClick={() => setIsCollapsed(!isCollapsed)}
-                                className="hidden lg:flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 dark:bg-slate-800 h-10 text-[#0d141c] dark:text-slate-300 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                                className="hidden lg:flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 h-10 text-[#0d141c] text-xs font-bold hover:bg-slate-200 transition-colors"
                             >
                                 <span className={`material-symbols-outlined text-sm transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`}>
                                     keyboard_double_arrow_left
@@ -174,27 +174,18 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                 {!isCollapsed && <span className="animate-in fade-in duration-300">Collapse</span>}
                             </button>
                             {isCollapsed && (
-                                <div className="absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 dark:border-slate-600 flex items-center gap-2">
+                                <div className="absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 flex items-center gap-2">
                                     <div className="w-1 h-1 rounded-full bg-blue-500"></div>
                                     Expand
                                 </div>
                             )}
                         </div>
 
-                        {/* Theme Toggle & Logout Container */}
-                        <div className={`pt-4 border-t border-slate-100 dark:border-slate-800 flex ${isCollapsed ? 'flex-col items-center' : 'justify-between'} gap-4`}>
-                            {/* Dark Mode Toggle */}
-                            {/* <button
-                                onClick={() => document.documentElement.classList.toggle('dark')}
-                                className={`flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-[#258cf4] hover:bg-slate-200 dark:hover:bg-slate-700 transition-all ${isCollapsed ? 'w-10 h-10' : 'flex-1 h-10'}`}
-                            >
-                                <span className="material-symbols-outlined text-lg">dark_mode</span>
-                            </button> */}
-
+                        <div className={`pt-4 border-t border-slate-100 flex ${isCollapsed ? 'flex-col items-center' : 'justify-between'} gap-4`}>
                             {/* Logout */}
                             <button
                                 onClick={handleLogout}
-                                className={`flex items-center justify-center rounded-xl bg-red-50 dark:bg-red-950/20 text-red-500 hover:bg-red-500 hover:text-white transition-all ${isCollapsed ? 'w-10 h-10' : 'flex-1 h-10'}`}
+                                className={`flex items-center justify-center rounded-xl bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all ${isCollapsed ? 'w-10 h-10' : 'flex-1 h-10'}`}
                             >
                                 <span className="material-symbols-outlined text-lg">logout</span>
                             </button>
@@ -215,7 +206,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                                 )}
                             </button>
                             {isCollapsed && (
-                                <div className="absolute left-full bottom-0 ml-2 px-3 py-2 bg-slate-900 dark:bg-slate-800 text-white rounded-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 dark:border-slate-600 flex flex-col">
+                                <div className="absolute left-full bottom-0 ml-2 px-3 py-2 bg-slate-900 text-white rounded-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 flex flex-col">
                                     <p className="text-xs font-bold flex items-center gap-1.5">
                                         <span className="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
                                         Upgrade to Pro

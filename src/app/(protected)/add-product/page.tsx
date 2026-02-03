@@ -257,28 +257,28 @@ function AddProductContent() {
   const previewImage = getPreviewImageUrl();
 
   return (
-    <div className="min-h-screen bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <div className="min-h-screen bg-background-light text-slate-900 transition-colors duration-300">
         
         {/* Header - Matching add-lead style roughly but keeping the new HTML structure */}
-        <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
             <div className="max-w-[1280px] mx-auto px-6 h-16 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <button 
                         onClick={handleBack}
-                        className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+                        className="p-2 hover:bg-slate-100 rounded-full transition-colors"
                     >
-                        <ArrowLeft className="w-5 h-5 text-slate-600 dark:text-slate-400" />
+                        <ArrowLeft className="w-5 h-5 text-slate-600" />
                     </button>
-                    <div className="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
+                    <div className="h-6 w-px bg-slate-200"></div>
                     <div>
                         <h1 className="text-lg font-semibold">{productId ? 'Edit Product' : 'New Product Showcase'}</h1>
-                        <p className="text-xs text-slate-500 dark:text-slate-400">Drafting your strategic offering</p>
+                        <p className="text-xs text-slate-500">Drafting your strategic offering</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
                     {/* <button 
                         onClick={() => router.push('/products')}
-                        className="px-4 py-2 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-gray-300 dark:border-white/10"
+                        className="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-lg transition-colors border border-gray-300"
                     >
                         Discard Draft
                     </button> */}
@@ -301,13 +301,13 @@ function AddProductContent() {
                 <div className="space-y-8">
                     {/* Section 1: Product Details */}
                     <section>
-                        <h2 className="text-lg font-bold mb-6 flex items-center gap-2 text-[#111318] dark:text-white">
-                            <span className="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center text-xs font-bold">1</span>
+                        <h2 className="text-lg font-bold mb-6 flex items-center gap-2 text-[#111318]">
+                            <span className="w-7 h-7 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold">1</span>
                             Product Details
                         </h2>
-                        <div className="space-y-6 bg-white dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/10 shadow-sm">
+                        <div className="space-y-6 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <div className="space-y-1.5">
-                                <label className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">
+                                <label className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
                                     Product Name <span className="text-red-500">*</span>
                                 </label>
                                 <input 
@@ -317,32 +317,32 @@ function AddProductContent() {
                                         setProductForm({ ...productForm, name: e.target.value });
                                         if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
                                     }}
-                                    className={`w-full px-3 py-2 rounded-lg border ${formErrors.name ? 'border-red-500' : 'border-gray-200 dark:border-white/10'} bg-slate-50 dark:bg-background-dark focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none text-sm lg:text-[13px]`}
+                                    className={`w-full px-3 py-2 rounded-lg border ${formErrors.name ? 'border-red-500' : 'border-gray-200'} bg-slate-50 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none text-sm lg:text-[13px]`}
                                     placeholder="e.g. Strategic Growth Suite"
                                 />
                                 {formErrors.name && <p className="text-red-500 text-[10px] mt-1">{formErrors.name}</p>}
                             </div>
                             
                             {/* <div className="space-y-1.5">
-                                <label className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">
+                                <label className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
                                     Tagline <span className="text-red-500">*</span>
                                 </label>
                                 <input 
                                     type="text"
                                     value={tagline}
                                     onChange={(e) => setTagline(e.target.value)}
-                                    className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-background-dark focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none text-sm lg:text-[13px]"
+                                    className="w-full px-3 py-2 rounded-lg border border-gray-200 bg-slate-50 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none text-sm lg:text-[13px]"
                                     placeholder="A short, catchy one-liner"
                                 />
                             </div> */}
 
                             <div className="space-y-1.5">
-                                <label className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">
+                                <label className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
                                     Description <span className="text-red-500">*</span>
                                 </label>
-                                <div className="border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden bg-slate-50 dark:bg-background-dark">
+                                <div className="border border-gray-200 rounded-xl overflow-hidden bg-slate-50">
                                     {/* Simple Toolbar */}
-                                    <div className="flex items-center gap-1 p-1.5 border-b border-gray-200 dark:border-white/10 bg-white dark:bg-white/5">
+                                    <div className="flex items-center gap-1 p-1.5 border-b border-gray-200 bg-white">
                                         <button 
                                             type="button"
                                             onClick={() => {
@@ -365,7 +365,7 @@ function AddProductContent() {
                                                     textarea.setSelectionRange(start + 2, end + 2);
                                                 }, 0);
                                             }}
-                                            className="p-1.5 hover:bg-slate-100 dark:hover:bg-white/10 rounded text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
+                                            className="p-1.5 hover:bg-slate-100 rounded text-slate-500 hover:text-slate-700 transition-colors"
                                             title="Bold"
                                         >
                                             <span className="material-symbols-outlined text-sm font-bold">format_bold</span>
@@ -391,7 +391,7 @@ function AddProductContent() {
                                                     textarea.setSelectionRange(start + 1, end + 1);
                                                 }, 0);
                                             }}
-                                            className="p-1.5 hover:bg-slate-100 dark:hover:bg-white/10 rounded text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
+                                            className="p-1.5 hover:bg-slate-100 rounded text-slate-500 hover:text-slate-700 transition-colors"
                                             title="Italic"
                                         >
                                             <span className="material-symbols-outlined text-sm font-bold">format_italic</span>
@@ -416,7 +416,7 @@ function AddProductContent() {
                                                     textarea.setSelectionRange(start + 3, start + 3);
                                                 }, 0);
                                             }}
-                                            className="p-1.5 hover:bg-slate-100 dark:hover:bg-white/10 rounded text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
+                                            className="p-1.5 hover:bg-slate-100 rounded text-slate-500 hover:text-slate-700 transition-colors"
                                             title="Bullet List"
                                         >
                                             <span className="material-symbols-outlined text-sm font-bold">format_list_bulleted</span>
@@ -444,7 +444,7 @@ function AddProductContent() {
                                                     textarea.setSelectionRange(linkStart, linkStart + 3);
                                                 }, 0);
                                             }}
-                                            className="p-1.5 hover:bg-slate-100 dark:hover:bg-white/10 rounded text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
+                                            className="p-1.5 hover:bg-slate-100 rounded text-slate-500 hover:text-slate-700 transition-colors"
                                             title="Insert Link"
                                         >
                                             <span className="material-symbols-outlined text-sm font-bold">link</span>
@@ -471,20 +471,20 @@ function AddProductContent() {
                 <div className="space-y-8">
                     {/* Section 2: Assets & Media */}
                     <section>
-                        <h2 className="text-lg font-bold mb-6 flex items-center gap-2 text-[#111318] dark:text-white">
-                            <span className="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center text-xs font-bold">2</span>
+                        <h2 className="text-lg font-bold mb-6 flex items-center gap-2 text-[#111318]">
+                            <span className="w-7 h-7 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold">2</span>
                             Assets & Media
                         </h2>
-                        <div className="space-y-6 bg-white dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/10 shadow-sm">
+                        <div className="space-y-6 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <div className="space-y-1.5">
-                                <label className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">
+                                <label className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
                                     Product Image <span className="text-red-500">*</span>
                                 </label>
                                 <div 
                                     onDragOver={(e) => handleDragOver(e, 'image')}
                                     onDragLeave={() => handleDragLeave('image')}
                                     onDrop={(e) => handleDrop(e, 'image')}
-                                    className={`relative flex flex-col items-center justify-center w-full h-48 border-2 border-dashed ${formErrors.image ? 'border-red-300 bg-red-50/50' : isDraggingImage ? 'border-blue-500 bg-blue-50/50' : 'border-slate-200 dark:border-white/10 hover:border-blue-500/50 hover:bg-blue-50/30'} rounded-2xl transition-all cursor-pointer group`}
+                                    className={`relative flex flex-col items-center justify-center w-full h-48 border-2 border-dashed ${formErrors.image ? 'border-red-300 bg-red-50/50' : isDraggingImage ? 'border-blue-500 bg-blue-50/50' : 'border-slate-200 hover:border-blue-500/50 hover:bg-blue-50/30'} rounded-2xl transition-all cursor-pointer group`}
                                 >
                                     <div className="flex flex-col items-center pointer-events-none w-full h-full justify-center">
                                         {previewImage ? (
@@ -506,9 +506,9 @@ function AddProductContent() {
                                             </div>
                                         ) : (
                                             <>
-                                                <Cloud className="w-8 h-8 text-slate-400 dark:text-slate-600 mb-2 group-hover:scale-110 transition-transform" />
-                                                <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Click or drag image here</p>
-                                                <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">PNG, JPG or WEBP (Max 2MB)</p>
+                                                <Cloud className="w-8 h-8 text-slate-400 mb-2 group-hover:scale-110 transition-transform" />
+                                                <p className="text-sm font-medium text-slate-600">Click or drag image here</p>
+                                                <p className="text-[10px] text-slate-400 mt-1">PNG, JPG or WEBP (Max 2MB)</p>
                                             </>
                                         )}
                                     </div>
@@ -544,19 +544,19 @@ function AddProductContent() {
                             </div>
 
                             <div className="space-y-1.5">
-                                <label className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">
+                                <label className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
                                     Resource Documents
                                 </label>
                                 <div 
                                     onDragOver={(e) => handleDragOver(e, 'docs')}
                                     onDragLeave={() => handleDragLeave('docs')}
                                     onDrop={(e) => handleDrop(e, 'docs')}
-                                    className={`relative flex flex-col items-center justify-center w-full min-h-[10rem] border-2 border-dashed ${isDraggingDocs ? 'border-blue-500 bg-blue-50/50' : 'border-slate-200 dark:border-white/10 hover:border-blue-500/50 hover:bg-blue-50/30'} rounded-2xl transition-all cursor-pointer`}
+                                    className={`relative flex flex-col items-center justify-center w-full min-h-[10rem] border-2 border-dashed ${isDraggingDocs ? 'border-blue-500 bg-blue-50/50' : 'border-slate-200 hover:border-blue-500/50 hover:bg-blue-50/30'} rounded-2xl transition-all cursor-pointer`}
                                 >
                                     <div className="flex flex-col items-center pointer-events-none py-4">
-                                        <Upload className="w-8 h-8 text-slate-400 dark:text-slate-600 mb-2" />
-                                        <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Click or drag documents here</p>
-                                        <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">PDF, DOCX (Max 10MB)</p>
+                                        <Upload className="w-8 h-8 text-slate-400 mb-2" />
+                                        <p className="text-sm font-medium text-slate-600">Click or drag documents here</p>
+                                        <p className="text-[10px] text-slate-400 mt-1">PDF, DOCX (Max 10MB)</p>
                                     </div>
                                     <input 
                                         type="file" 
@@ -574,13 +574,13 @@ function AddProductContent() {
                                 <div className="space-y-2 mt-4 max-h-[200px] overflow-y-auto custom-scrollbar">
                                     {/* New Documents */}
                                     {productDocs.map((file, index) => (
-                                        <div key={`new-${index}`} className="flex justify-between items-center p-2 bg-blue-50/50 border border-blue-100 dark:border-blue-900/30 dark:bg-blue-900/10 rounded-lg">
+                                        <div key={`new-${index}`} className="flex justify-between items-center p-2 bg-blue-50/50 border border-blue-100 rounded-lg">
                                             <div className="flex items-center gap-3">
-                                                <div className="p-1.5 bg-white dark:bg-white/10 rounded-md">
+                                                <div className="p-1.5 bg-white rounded-md">
                                                     <FileText className="w-4 h-4 text-blue-500" />
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-xs font-medium text-slate-700 dark:text-slate-300 truncate max-w-[200px]">{file.name}</span>
+                                                    <span className="text-xs font-medium text-slate-700 truncate max-w-[200px]">{file.name}</span>
                                                     <span className="text-[9px] text-blue-500 font-bold uppercase">New Upload</span>
                                                 </div>
                                             </div>
@@ -595,13 +595,13 @@ function AddProductContent() {
                                     
                                     {/* Existing Documents */}
                                     {existingDocs.map((path, index) => (
-                                        <div key={`existing-${index}`} className="flex justify-between items-center p-2 bg-slate-50 border border-slate-100 dark:border-white/5 dark:bg-white/5 rounded-lg">
+                                        <div key={`existing-${index}`} className="flex justify-between items-center p-2 bg-slate-50 border border-slate-100 rounded-lg">
                                             <div className="flex items-center gap-3">
-                                                <div className="p-1.5 bg-white dark:bg-white/10 rounded-md">
+                                                <div className="p-1.5 bg-white rounded-md">
                                                      <FileText className="w-4 h-4 text-slate-500" />
                                                 </div>
                                                  <div className="flex flex-col">
-                                                    <span className="text-xs font-medium text-slate-700 dark:text-slate-300 truncate max-w-[200px]">{path.split('/').pop()}</span>
+                                                    <span className="text-xs font-medium text-slate-700 truncate max-w-[200px]">{path.split('/').pop()}</span>
                                                     <span className="text-[9px] text-slate-400 font-bold uppercase">Existing</span>
                                                 </div>
                                             </div>

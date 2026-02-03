@@ -4326,12 +4326,6 @@
   }
 
   @media (hover: hover) {
-    .hover\:text-\[\#258cf4\]:hover {
-      color: #258cf4;
-    }
-  }
-
-  @media (hover: hover) {
     .hover\:text-black:hover {
       color: var(--color-black);
     }

@@ -97,7 +97,7 @@ function Sidebar({ isOpen = true, onClose }) {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
                 className: `
                 h-screen fixed lg:sticky top-0 left-0 z-[70]
-                flex flex-col bg-white dark:bg-[#1a2530] border-r border-slate-200 dark:border-slate-800 shadow-xl
+                flex flex-col bg-white border-r border-slate-200 shadow-xl
                 transition-all duration-300 ease-in-out
                 ${isCollapsed ? 'w-18' : 'w-64'}
                 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
@@ -107,7 +107,7 @@ function Sidebar({ isOpen = true, onClose }) {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: onClose,
-                            className: "lg:hidden absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 text-gray-500 transition",
+                            className: "lg:hidden absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 text-gray-500 transition",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 className: "material-symbols-outlined text-xl",
                                 children: "close"
@@ -139,7 +139,7 @@ function Sidebar({ isOpen = true, onClose }) {
                                         className: "flex flex-col animate-in fade-in slide-in-from-left-4 duration-500",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                                className: "text-lg font-bold leading-none text-[#0d141c] dark:text-white truncate",
+                                                className: "text-lg font-bold leading-none text-[#0d141c] truncate",
                                                 children: "Magic Carpet"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/components/SideBar.tsx",
@@ -181,7 +181,7 @@ function Sidebar({ isOpen = true, onClose }) {
                                             onClick: ()=>handleNavigation("Home"),
                                             className: `flex items-center w-full transition-all duration-200 rounded-xl
                                     ${isCollapsed ? 'h-12 justify-center' : 'gap-3 px-3 py-2.5'}
-                                    ${selectedMenu === "Home" ? "bg-blue-50 dark:bg-primary/10 text-[#258cf4]" : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"}
+                                    ${selectedMenu === "Home" ? "bg-blue-50 text-[#258cf4]" : "text-slate-600 hover:bg-slate-100"}
                                 `,
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -207,7 +207,7 @@ function Sidebar({ isOpen = true, onClose }) {
                                             columnNumber: 29
                                         }, this),
                                         isCollapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 dark:border-slate-600 flex items-center gap-2",
+                                            className: "absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 flex items-center gap-2",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "w-1 h-1 rounded-full bg-blue-500"
@@ -236,7 +236,7 @@ function Sidebar({ isOpen = true, onClose }) {
                                                 onClick: ()=>handleNavigation(label),
                                                 className: `flex items-center w-full transition-all duration-200 rounded-xl
                                         ${isCollapsed ? 'h-12 justify-center' : 'gap-3 px-3 py-2.5'}
-                                        ${selectedMenu === label ? "bg-blue-50 dark:bg-primary/10 text-[#258cf4]" : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"}
+                                        ${selectedMenu === label ? "bg-blue-50 text-[#258cf4]" : "text-slate-600 hover:bg-slate-100"}
                                     `,
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -262,7 +262,7 @@ function Sidebar({ isOpen = true, onClose }) {
                                                 columnNumber: 33
                                             }, this),
                                             isCollapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 dark:border-slate-600 flex items-center gap-2",
+                                                className: "absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 flex items-center gap-2",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "w-1 h-1 rounded-full bg-blue-500"
@@ -298,7 +298,7 @@ function Sidebar({ isOpen = true, onClose }) {
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                             onClick: ()=>setIsCollapsed(!isCollapsed),
-                                            className: "hidden lg:flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 dark:bg-slate-800 h-10 text-[#0d141c] dark:text-slate-300 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors",
+                                            className: "hidden lg:flex w-full items-center justify-center gap-2 rounded-xl bg-slate-100 h-10 text-[#0d141c] text-xs font-bold hover:bg-slate-200 transition-colors",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                     className: `material-symbols-outlined text-sm transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`,
@@ -323,7 +323,7 @@ function Sidebar({ isOpen = true, onClose }) {
                                             columnNumber: 29
                                         }, this),
                                         isCollapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 dark:bg-slate-800 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 dark:border-slate-600 flex items-center gap-2",
+                                            className: "absolute left-full ml-2 px-2.5 py-1.5 bg-slate-900 text-white text-[11px] font-bold rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 flex items-center gap-2",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "w-1 h-1 rounded-full bg-blue-500"
@@ -346,26 +346,26 @@ function Sidebar({ isOpen = true, onClose }) {
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: `pt-4 border-t border-slate-100 dark:border-slate-800 flex ${isCollapsed ? 'flex-col items-center' : 'justify-between'} gap-4`,
+                                    className: `pt-4 border-t border-slate-100 flex ${isCollapsed ? 'flex-col items-center' : 'justify-between'} gap-4`,
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                         onClick: handleLogout,
-                                        className: `flex items-center justify-center rounded-xl bg-red-50 dark:bg-red-950/20 text-red-500 hover:bg-red-500 hover:text-white transition-all ${isCollapsed ? 'w-10 h-10' : 'flex-1 h-10'}`,
+                                        className: `flex items-center justify-center rounded-xl bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all ${isCollapsed ? 'w-10 h-10' : 'flex-1 h-10'}`,
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                             className: "material-symbols-outlined text-lg",
                                             children: "logout"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/components/SideBar.tsx",
-                                            lineNumber: 199,
+                                            lineNumber: 190,
                                             columnNumber: 33
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/components/SideBar.tsx",
-                                        lineNumber: 195,
+                                        lineNumber: 186,
                                         columnNumber: 29
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 185,
+                                    lineNumber: 184,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -382,7 +382,7 @@ function Sidebar({ isOpen = true, onClose }) {
                                                     children: "workspace_premium"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                                    lineNumber: 209,
+                                                    lineNumber: 200,
                                                     columnNumber: 33
                                                 }, this),
                                                 !isCollapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -393,7 +393,7 @@ function Sidebar({ isOpen = true, onClose }) {
                                                             children: "Upgrade to Pro"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/components/SideBar.tsx",
-                                                            lineNumber: 212,
+                                                            lineNumber: 203,
                                                             columnNumber: 41
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -401,23 +401,23 @@ function Sidebar({ isOpen = true, onClose }) {
                                                             children: "Unlock elite reports"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/components/SideBar.tsx",
-                                                            lineNumber: 213,
+                                                            lineNumber: 204,
                                                             columnNumber: 41
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                                    lineNumber: 211,
+                                                    lineNumber: 202,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/components/SideBar.tsx",
-                                            lineNumber: 205,
+                                            lineNumber: 196,
                                             columnNumber: 29
                                         }, this),
                                         isCollapsed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "absolute left-full bottom-0 ml-2 px-3 py-2 bg-slate-900 dark:bg-slate-800 text-white rounded-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 dark:border-slate-600 flex flex-col",
+                                            className: "absolute left-full bottom-0 ml-2 px-3 py-2 bg-slate-900 text-white rounded-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 flex flex-col",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                     className: "text-xs font-bold flex items-center gap-1.5",
@@ -426,14 +426,14 @@ function Sidebar({ isOpen = true, onClose }) {
                                                             className: "w-1.5 h-1.5 rounded-full bg-yellow-500"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/components/SideBar.tsx",
-                                                            lineNumber: 220,
+                                                            lineNumber: 211,
                                                             columnNumber: 41
                                                         }, this),
                                                         "Upgrade to Pro"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                                    lineNumber: 219,
+                                                    lineNumber: 210,
                                                     columnNumber: 37
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -441,19 +441,19 @@ function Sidebar({ isOpen = true, onClose }) {
                                                     children: "Unlock elite reports"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                                    lineNumber: 223,
+                                                    lineNumber: 214,
                                                     columnNumber: 37
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/components/SideBar.tsx",
-                                            lineNumber: 218,
+                                            lineNumber: 209,
                                             columnNumber: 33
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/components/SideBar.tsx",
-                                    lineNumber: 204,
+                                    lineNumber: 195,
                                     columnNumber: 25
                                 }, this)
                             ]

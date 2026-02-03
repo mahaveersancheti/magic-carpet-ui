@@ -330,34 +330,34 @@ export default function AddLeadPage() {
     };
 
     return (
-        <main className="max-w-[1280px] mx-auto px-6 py-8 bg-background-light dark:bg-background-dark min-h-screen">
+        <main className="max-w-[1280px] mx-auto px-6 py-8 bg-background-light min-h-screen">
             {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 mb-3 text-[10px] lg:text-xs font-medium text-[#606e8a] dark:text-gray-400">
+            <nav className="flex items-center gap-2 mb-3 text-[10px] lg:text-xs font-medium text-[#606e8a]">
                 <button onClick={handleBack} className="hover:text-primary transition-colors">
                     Leads
                 </button>
                 <span className="material-symbols-outlined text-[10px]">chevron_right</span>
-                <span className="text-[#111318] dark:text-white">{id ? "Edit Lead" : "New Lead Registration"}</span>
+                <span className="text-[#111318]">{id ? "Edit Lead" : "New Lead Registration"}</span>
             </nav>
 
             {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5 border-b border-gray-100 dark:border-white/5 pb-5">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-5 border-b border-gray-100 pb-5">
                 <div className="flex items-center gap-4">
                     <button 
                         onClick={handleBack}
-                        className="p-2 rounded-lg border border-gray-100 dark:border-white/10 text-[#606e8a] dark:text-gray-400 hover:text-primary dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
+                        className="p-2 rounded-lg border border-gray-100 text-[#606e8a] hover:text-primary hover:bg-gray-50 transition-all"
                     >
                         <ArrowLeft className="w-5 h-5 lg:w-6 lg:h-6" />
                     </button>
                     <div className="space-y-1">
-                        <h1 className="text-lg lg:text-xl font-bold tracking-tight text-[#111318] dark:text-white">{id ? "Edit Lead" : "Add New Lead"}</h1>
-                        <p className="text-[#606e8a] dark:text-gray-400 text-xs lg:text-sm">{id ? "Update professional details and company information for this lead." : "Enter professional details and company information to expand your pipeline."}</p>
+                        <h1 className="text-lg lg:text-xl font-bold tracking-tight text-[#111318]">{id ? "Edit Lead" : "Add New Lead"}</h1>
+                        <p className="text-[#606e8a] text-xs lg:text-sm">{id ? "Update professional details and company information for this lead." : "Enter professional details and company information to expand your pipeline."}</p>
                     </div>
                 </div>
                     {/* <button
                         onClick={() => router.push('/home')}
                         disabled={createLoading || updateLoading}
-                        className="px-4 py-1.5 rounded-lg border border-gray-300 dark:border-white/10 font-bold text-xs hover:bg-gray-50 dark:hover:bg-white/5 transition-all disabled:opacity-50"
+                        className="px-4 py-1.5 rounded-lg border border-gray-300 font-bold text-xs hover:bg-gray-50 transition-all disabled:opacity-50"
                     >
                         Discard Draft
                     </button> */}
@@ -381,22 +381,22 @@ export default function AddLeadPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 {/* Left Column - Form */}
                 <div className="lg:col-span-8 space-y-4">
-                    <div className="bg-white dark:bg-white/5 rounded-xl border border-gray-100 dark:border-white/10 shadow-sm p-5 lg:p-6">
-                        <div className="flex items-center gap-2 mb-5 border-b border-gray-50 dark:border-white/5 pb-3">
+                    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 lg:p-6">
+                        <div className="flex items-center gap-2 mb-5 border-b border-gray-50 pb-3">
                             <span className="material-symbols-outlined text-primary text-xl">contact_page</span>
                             <h3 className="text-base font-bold">Lead Details</h3>
                         </div>
                         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                             {/* Name */}
                             <label className="flex flex-col gap-1.5">
-                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">
+                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
                                     Name of Person <span className="text-red-500">*</span>
                                 </span>
                                 <input
                                     value={formData.name}
                                     onChange={(e) => handleInputChange("name", e.target.value)}
                                     disabled={createLoading || updateLoading}
-                                    className={`w-full px-3 py-2 rounded-lg border ${errors.name ? 'border-red-500' : 'border-gray-200 dark:border-white/10'} dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
+                                    className={`w-full px-3 py-2 rounded-lg border ${errors.name ? 'border-red-500' : 'border-gray-200'} focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
                                     placeholder="Full name"
                                     type="text"
                                 />
@@ -405,12 +405,12 @@ export default function AddLeadPage() {
 
                             {/* Email */}
                             <label className="flex flex-col gap-1.5">
-                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">Email Address</span>
+                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">Email Address</span>
                                 <input
                                     value={formData.email}
                                     onChange={(e) => handleInputChange("email", e.target.value)}
                                     disabled={createLoading || updateLoading}
-                                    className={`w-full px-3 py-2 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-200 dark:border-white/10'} dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
+                                    className={`w-full px-3 py-2 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-200'} focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
                                     placeholder="work@email.com"
                                     type="email"
                                 />
@@ -419,14 +419,14 @@ export default function AddLeadPage() {
 
                             {/* Company */}
                             <label className="flex flex-col gap-1.5">
-                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">
+                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
                                     Company Name <span className="text-red-500">*</span>
                                 </span>
                                 <input
                                     value={formData.currentCompanyName}
                                     onChange={(e) => handleInputChange("currentCompanyName", e.target.value)}
                                     disabled={createLoading || updateLoading}
-                                    className={`w-full px-3 py-2 rounded-lg border ${errors.currentCompanyName ? 'border-red-500' : 'border-gray-200 dark:border-white/10'} dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
+                                    className={`w-full px-3 py-2 rounded-lg border ${errors.currentCompanyName ? 'border-red-500' : 'border-gray-200'} focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
                                     placeholder="Organization name"
                                     type="text"
                                 />
@@ -435,14 +435,14 @@ export default function AddLeadPage() {
 
                             {/* Industry */}
                             <label className="flex flex-col gap-1.5">
-                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">
+                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
                                     Industry Name <span className="text-red-500">*</span>
                                 </span>
                                 <input
                                     value={formData.industryName}
                                     onChange={(e) => handleInputChange("industryName", e.target.value)}
                                     disabled={createLoading || updateLoading}
-                                    className={`w-full px-3 py-2 rounded-lg border ${errors.industryName ? 'border-red-500' : 'border-gray-200 dark:border-white/10'} dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
+                                    className={`w-full px-3 py-2 rounded-lg border ${errors.industryName ? 'border-red-500' : 'border-gray-200'} focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
                                     placeholder="e.g., Technology"
                                     type="text"
                                 />
@@ -451,12 +451,12 @@ export default function AddLeadPage() {
 
                             {/* City */}
                             <label className="flex flex-col gap-1.5">
-                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">City</span>
+                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">City</span>
                                 <input
                                     value={formData.city}
                                     onChange={(e) => handleInputChange("city", e.target.value)}
                                     disabled={createLoading || updateLoading}
-                                    className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]"
+                                    className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]"
                                     placeholder="e.g. San Francisco"
                                     type="text"
                                 />
@@ -464,12 +464,12 @@ export default function AddLeadPage() {
 
                             {/* Country */}
                             <label className="flex flex-col gap-1.5">
-                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">Country</span>
+                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">Country</span>
                                 <input
                                     value={formData.country || ""}
                                     onChange={(e) => handleInputChange("country", e.target.value)}
                                     disabled={createLoading || updateLoading}
-                                    className="w-full px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]"
+                                    className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]"
                                     placeholder="e.g. United States"
                                     type="text"
                                 />
@@ -477,7 +477,7 @@ export default function AddLeadPage() {
 
                             {/* LinkedIn */}
                             <label className="flex flex-col gap-1.5 md:col-span-2">
-                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">
+                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
                                     LinkedIn URL
                                 </span>
                                 <div className="relative">
@@ -486,7 +486,7 @@ export default function AddLeadPage() {
                                         value={formData.linkedinProfileLink || ""}
                                         onChange={(e) => handleInputChange("linkedinProfileLink", e.target.value)}
                                         disabled={createLoading || updateLoading}
-                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.linkedinProfileLink ? 'border-red-500' : 'border-gray-200 dark:border-white/10'} dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
+                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.linkedinProfileLink ? 'border-red-500' : 'border-gray-200'} focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
                                         placeholder="linkedin.com/in/username"
                                         type="url"
                                     />
@@ -496,14 +496,14 @@ export default function AddLeadPage() {
 
                             {/* Instagram */}
                             <label className="flex flex-col gap-1.5 md:col-span-1">
-                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">Instagram</span>
+                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">Instagram</span>
                                 <div className="relative">
                                     <Instagram className="absolute left-3 top-1/2 -translate-y-1/2 text-primary w-4 h-4" />
                                     <input
                                         value={formData.instagramProfileLink || ""}
                                         onChange={(e) => handleInputChange("instagramProfileLink", e.target.value)}
                                         disabled={createLoading || updateLoading}
-                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.instagramProfileLink ? 'border-red-500' : 'border-gray-200 dark:border-white/10'} dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
+                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.instagramProfileLink ? 'border-red-500' : 'border-gray-200'} focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
                                         placeholder="instagram.com/username"
                                         type="url"
                                     />
@@ -513,14 +513,14 @@ export default function AddLeadPage() {
 
                             {/* Twitter */}
                             <label className="flex flex-col gap-1.5 md:col-span-1">
-                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">Twitter (X)</span>
+                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">Twitter (X)</span>
                                 <div className="relative">
                                     <Twitter className="absolute left-3 top-1/2 -translate-y-1/2 text-primary w-4 h-4" />
                                     <input
                                         value={formData.twitterProfileLink || ""}
                                         onChange={(e) => handleInputChange("twitterProfileLink", e.target.value)}
                                         disabled={createLoading || updateLoading}
-                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.twitterProfileLink ? 'border-red-500' : 'border-gray-200 dark:border-white/10'} dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
+                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.twitterProfileLink ? 'border-red-500' : 'border-gray-200'} focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
                                         placeholder="twitter.com/username"
                                         type="url"
                                     />
@@ -530,14 +530,14 @@ export default function AddLeadPage() {
 
                             {/* Personal Website */}
                             <label className="flex flex-col gap-1.5 md:col-span-2">
-                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">Personal Website</span>
+                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">Personal Website</span>
                                 <div className="relative">
                                     <Globe className="absolute left-3 top-1/2 -translate-y-1/2 text-primary w-4 h-4" />
                                     <input
                                         value={formData.personalWebsiteLink || ""}
                                         onChange={(e) => handleInputChange("personalWebsiteLink", e.target.value)}
                                         disabled={createLoading || updateLoading}
-                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.personalWebsiteLink ? 'border-red-500' : 'border-gray-200 dark:border-white/10'} dark:bg-background-dark focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
+                                        className={`w-full pl-9 pr-3 py-2 rounded-lg border ${errors.personalWebsiteLink ? 'border-red-500' : 'border-gray-200'} focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
                                         placeholder="your-website.com"
                                         type="url"
                                     />
@@ -547,12 +547,12 @@ export default function AddLeadPage() {
 
                             {/* Products Autocomplete */}
                             <div className="flex flex-col gap-1.5 md:col-span-2 z-20">
-                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider">
+                                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
                                     Target Products <span className="text-red-500">*</span>
                                 </span>
                                 <div className="relative" ref={dropdownRef}>
                                     <div 
-                                        className={`w-full px-3 py-2 rounded-lg border ${errors.products ? 'border-red-500' : 'border-gray-200 dark:border-white/10'} dark:bg-background-dark focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/20 transition-all bg-white dark:bg-white/5 min-h-[42px] flex flex-wrap gap-2 items-center cursor-text`}
+                                        className={`w-full px-3 py-2 rounded-lg border ${errors.products ? 'border-red-500' : 'border-gray-200'} focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/20 transition-all bg-white min-h-[42px] flex flex-wrap gap-2 items-center cursor-text`}
                                         onClick={() => {
                                             // Focus the input when clicking anywhere in the container
                                             const input = dropdownRef.current?.querySelector('input');
@@ -604,7 +604,7 @@ export default function AddLeadPage() {
 
                                     {/* Dropdown Menu */}
                                     {isDropdownOpen && (
-                                        <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-[#1e293b] border border-gray-100 dark:border-white/10 rounded-lg shadow-xl max-h-60 overflow-y-auto custom-scrollbar z-50 animate-in fade-in slide-in-from-top-1 duration-100">
+                                        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-100 rounded-lg shadow-xl max-h-60 overflow-y-auto custom-scrollbar z-50 animate-in fade-in slide-in-from-top-1 duration-100">
                                             {filteredProducts.length > 0 ? (
                                                 filteredProducts.map(product => (
                                                     <div 
@@ -613,7 +613,7 @@ export default function AddLeadPage() {
                                                             e.preventDefault(); // Prevent input blur
                                                             toggleProductSelection(product);
                                                         }}
-                                                        className="px-3 py-2.5 hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer text-sm text-[#111318] dark:text-gray-200 flex items-center justify-between group transition-colors"
+                                                        className="px-3 py-2.5 hover:bg-gray-50 cursor-pointer text-sm text-[#111318] flex items-center justify-between group transition-colors"
                                                     >
                                                         <span>{product.name}</span>
                                                         <span className="material-symbols-outlined text-primary opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-sm">
@@ -638,7 +638,7 @@ export default function AddLeadPage() {
                 {/* Right Column - Preview & Tips */}
                 <div className="lg:col-span-4 space-y-4">
                     {/* Lead Preview Card */}
-                    <div className="bg-white dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-xl p-5 relative overflow-hidden shadow-sm">
+                    <div className="bg-white border border-gray-100 rounded-xl p-5 relative overflow-hidden shadow-sm">
                         <div className="absolute -top-4 -right-4 opacity-5">
                             <span className="material-symbols-outlined text-[100px] text-primary">account_circle</span>
                         </div>
@@ -648,16 +648,16 @@ export default function AddLeadPage() {
                                 <span className="material-symbols-outlined text-primary text-3xl">person</span>
                             </div>
                             <div>
-                                <h4 className="text-base font-bold leading-tight text-[#111318] dark:text-white">{formData.name || "Lead Name"}</h4>
+                                <h4 className="text-base font-bold leading-tight text-[#111318]">{formData.name || "Lead Name"}</h4>
                                 <p className="text-xs text-gray-500 font-medium">{formData.currentCompanyName || "Organization"}</p>
                             </div>
                         </div>
                         <div className="space-y-3">
-                            <div className="flex items-center justify-between py-1.5 border-b border-gray-50 dark:border-white/5">
+                            <div className="flex items-center justify-between py-1.5 border-b border-gray-50">
                                 <span className="text-[10px] font-bold text-[#606e8a] uppercase tracking-wider">Industry</span>
                                 <span className="text-xs font-bold">{formData.industryName || "—"}</span>
                             </div>
-                            <div className="flex items-center justify-between py-1.5 border-b border-gray-50 dark:border-white/5">
+                            <div className="flex items-center justify-between py-1.5 border-b border-gray-50">
                                 <span className="text-[10px] font-bold text-[#606e8a] uppercase tracking-wider">Location</span>
                                 <span className="text-xs font-bold">
                                     {formData.city && formData.country ? `${formData.city}, ${formData.country}` : 
@@ -667,7 +667,7 @@ export default function AddLeadPage() {
                             <div className="flex items-center justify-between py-1.5">
                                 <span className="text-[10px] font-bold text-[#606e8a] uppercase tracking-wider">LinkedIn</span>
                                 <span className={`text-[9px] px-1.5 py-0.5 rounded-md font-black ${
-                                    formData.linkedinProfileLink ? 'bg-green-100 dark:bg-green-900/30 text-green-600' : 'bg-gray-100 dark:bg-white/10 text-gray-400'
+                                    formData.linkedinProfileLink ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
                                 }`}>
                                     {formData.linkedinProfileLink ? "ADDED" : "PENDING"}
                                 </span>
@@ -676,7 +676,7 @@ export default function AddLeadPage() {
                     </div>
 
                     {/* Lead Enrichment Tips */}
-                    <div className="bg-white dark:bg-white/5 rounded-xl border border-gray-100 dark:border-white/10 p-5">
+                    <div className="bg-white rounded-xl border border-gray-100 p-5">
                         <div className="flex items-center gap-2 mb-5">
                             <span className="material-symbols-outlined text-amber-500 text-lg">auto_awesome</span>
                             <h4 className="font-bold text-sm">Lead Enrichment</h4>
@@ -684,20 +684,20 @@ export default function AddLeadPage() {
                         <ul className="space-y-3">
                             <li className="flex gap-2.5">
                                 <span className="material-symbols-outlined text-primary text-sm mt-0.5">info</span>
-                                <p className="text-xs text-[#606e8a] dark:text-gray-400 leading-relaxed">
-                                    Including <span className="font-bold text-[#111318] dark:text-white">Industry Name</span> helps in tailored marketing automation.
+                                <p className="text-xs text-[#606e8a] leading-relaxed">
+                                    Including <span className="font-bold text-[#111318]">Industry Name</span> helps in tailored marketing automation.
                                 </p>
                             </li>
                             <li className="flex gap-2.5">
                                 <span className="material-symbols-outlined text-primary text-sm mt-0.5">info</span>
-                                <p className="text-xs text-[#606e8a] dark:text-gray-400 leading-relaxed">
-                                    <span className="font-bold text-[#111318] dark:text-white">LinkedIn URLs</span> allow for one-click profile viewing from the list view.
+                                <p className="text-xs text-[#606e8a] leading-relaxed">
+                                    <span className="font-bold text-[#111318]">LinkedIn URLs</span> allow for one-click profile viewing from the list view.
                                 </p>
                             </li>
                             <li className="flex gap-2.5">
                                 <span className="material-symbols-outlined text-primary text-sm mt-0.5">info</span>
-                                <p className="text-xs text-[#606e8a] dark:text-gray-400 leading-relaxed">
-                                    Specifying <span className="font-bold text-[#111318] dark:text-white">Target Products</span> improves lead scoring accuracy.
+                                <p className="text-xs text-[#606e8a] leading-relaxed">
+                                    Specifying <span className="font-bold text-[#111318]">Target Products</span> improves lead scoring accuracy.
                                 </p>
                             </li>
                         </ul>

@@ -35,7 +35,7 @@ export default function ProtectedLayout({
                 {/* Mobile Menu Button */}
                 <button
                     onClick={() => setSidebarOpen(true)}
-                    className="lg:hidden fixed top-2 left-4 z-[60] w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-800"
+                    className="lg:hidden fixed top-2 left-4 z-[60] w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 transition-all border border-slate-200"
                 >
                     <span className="material-symbols-outlined">menu</span>
                 </button>

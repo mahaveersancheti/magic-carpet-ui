@@ -34,20 +34,20 @@ export const ConfirmationDialog = ({
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-md bg-white dark:bg-[#1a2130] rounded-2xl shadow-2xl p-6 transform transition-all scale-100 opacity-100">
+      <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 transform transition-all scale-100 opacity-100">
         <div className="flex flex-col items-center text-center">
           {/* Icon */}
-          <div className={`mb-4 p-3 rounded-full ${variant === 'danger' ? 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400' : 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'}`}>
+          <div className={`mb-4 p-3 rounded-full ${variant === 'danger' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}>
             <span className="material-symbols-outlined text-3xl">
               {variant === 'danger' ? 'warning' : 'info'}
             </span>
           </div>
 
-          <h3 className="text-xl font-bold text-[#111318] dark:text-white mb-2">
+          <h3 className="text-xl font-bold text-[#111318] mb-2">
             {title}
           </h3>
           
-          <p className="text-sm text-[#606e8a] dark:text-[#a0aec0] mb-6 leading-relaxed">
+          <p className="text-sm text-[#606e8a] mb-6 leading-relaxed">
             {description}
           </p>
 
@@ -55,7 +55,7 @@ export const ConfirmationDialog = ({
             <button
               onClick={onClose}
               disabled={isLoading}
-              className="flex-1 px-4 py-2.5 rounded-xl border border-[#e2e8f0] dark:border-[#2d3748] text-[#111318] dark:text-white font-medium hover:bg-[#f5f6f8] dark:hover:bg-[#101622] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-4 py-2.5 rounded-xl border border-[#e2e8f0] text-[#111318] font-medium hover:bg-[#f5f6f8] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {cancelLabel}
             </button>

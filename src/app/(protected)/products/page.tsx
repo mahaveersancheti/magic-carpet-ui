@@ -114,12 +114,12 @@ export default function ProductsPage() {
   }, [filteredProducts, currentPage]);
 
   return (
-    <div className="h-screen flex flex-col bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 transition-colors duration-200 overflow-hidden">
+    <div className="h-screen flex flex-col bg-background-light text-slate-900 transition-colors duration-200 overflow-hidden">
       <div className="flex-1 flex flex-col min-h-0 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 pt-20 lg:pt-8">
         <div className="shrink-0 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8 mt-14 lg:mt-0">
           <div className="space-y-1">
-            <h1 className="text-lg lg:text-xl font-bold tracking-tight text-[#111318] dark:text-white">Product Showcase</h1>
-            <p className="text-[#606e8a] dark:text-gray-400 text-xs lg:text-sm">Manage and display your strategic offerings</p>
+            <h1 className="text-lg lg:text-xl font-bold tracking-tight text-[#111318]">Product Showcase</h1>
+            <p className="text-[#606e8a] text-xs lg:text-sm">Manage and display your strategic offerings</p>
           </div>
           <div className="flex flex-1 max-w-2xl items-center gap-4">
             <div className="relative flex-1">
@@ -130,14 +130,14 @@ export default function ProductsPage() {
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="block w-full pl-10 pr-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg leading-5 bg-white dark:bg-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-all shadow-sm"
+                className="block w-full pl-10 pr-3 py-2 border border-slate-200 rounded-lg leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-all shadow-sm"
                 placeholder="Search products, taglines or documents..."
               />
             </div>
             <div className="flex items-center gap-2">
               <button
                 onClick={handleDownloadTemplate}
-                className="px-3 py-1.5 rounded-lg border border-gray-300 dark:border-white/10 font-bold text-xs hover:bg-gray-50 dark:hover:bg-white/5 transition-all disabled:opacity-50 inline-flex items-center justify-center"
+                className="px-3 py-1.5 rounded-lg border border-gray-300 font-bold text-xs hover:bg-gray-50 transition-all disabled:opacity-50 inline-flex items-center justify-center"
                 title="Download Template"
               >
                 <span className="material-symbols-outlined text-[20px]">file_download</span>
@@ -153,39 +153,39 @@ export default function ProductsPage() {
           </div>
         </div>
 
-        <div className="flex flex-col min-h-0 max-h-full bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
-          <div className="flex-1 overflow-auto min-h-0 scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800">
-            <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700 border-separate border-spacing-0">
-              <thead className="sticky top-0 z-30 bg-slate-50 dark:bg-slate-900/95 backdrop-blur-sm">
+        <div className="flex flex-col min-h-0 max-h-full bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="flex-1 overflow-auto min-h-0 scrollbar-thin scrollbar-thumb-slate-200">
+            <table className="min-w-full divide-y divide-slate-200 border-separate border-spacing-0">
+              <thead className="sticky top-0 z-30 bg-slate-50 backdrop-blur-sm">
                 <tr>
-                  <th className="px-6 py-4 text-left text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700" scope="col">Product</th>
-                  <th className="px-6 py-4 text-left text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700" scope="col">Description</th>
-                  <th className="px-6 py-4 text-center text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700" scope="col">Documents</th>
-                  <th className="px-6 py-4 text-right text-[10px] lg:text-[11px] font-bold text-[#606e8a] dark:text-gray-400 uppercase tracking-wider border-b border-slate-200 dark:border-slate-700" scope="col">Actions</th>
+                  <th className="px-6 py-4 text-left text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider border-b border-slate-200" scope="col">Product</th>
+                  <th className="px-6 py-4 text-left text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider border-b border-slate-200" scope="col">Description</th>
+                  <th className="px-6 py-4 text-center text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider border-b border-slate-200" scope="col">Documents</th>
+                  <th className="px-6 py-4 text-right text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider border-b border-slate-200" scope="col">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
+              <tbody className="divide-y divide-slate-200">
                 {productsLoading ? (
                   [1, 2, 3].map((i) => (
                     <tr key={i} className="animate-pulse">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-4">
-                          <div className="h-10 w-10 bg-slate-100 dark:bg-slate-700 rounded"></div>
+                          <div className="h-10 w-10 bg-slate-100 rounded"></div>
                           <div className="space-y-2">
-                            <div className="h-4 bg-slate-100 dark:bg-slate-700 w-24 rounded"></div>
-                            <div className="h-3 bg-slate-100 dark:bg-slate-700 w-32 rounded"></div>
+                            <div className="h-4 bg-slate-100 w-24 rounded"></div>
+                            <div className="h-3 bg-slate-100 w-32 rounded"></div>
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4"><div className="h-4 bg-slate-100 dark:bg-slate-700 w-full rounded"></div></td>
-                      <td className="px-6 py-4 text-center"><div className="h-6 bg-slate-100 dark:bg-slate-700 w-16 mx-auto rounded-full"></div></td>
-                      <td className="px-6 py-4 text-right"><div className="h-8 bg-slate-100 dark:bg-slate-700 w-16 ml-auto rounded"></div></td>
+                      <td className="px-6 py-4"><div className="h-4 bg-slate-100 w-full rounded"></div></td>
+                      <td className="px-6 py-4 text-center"><div className="h-6 bg-slate-100 w-16 mx-auto rounded-full"></div></td>
+                      <td className="px-6 py-4 text-right"><div className="h-8 bg-slate-100 w-16 ml-auto rounded"></div></td>
                     </tr>
                   ))
                 ) : paginatedProducts.length === 0 ? (
                   <tr>
                     <td colSpan={4} className="px-6 py-20 text-center">
-                      <div className="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600">
+                      <div className="flex flex-col items-center justify-center text-slate-400">
                         <span className="material-symbols-outlined text-5xl opacity-20 mb-3">inventory_2</span>
                         <p className="text-xs font-medium">{searchTerm ? 'No products matching your search' : 'No products found'}</p>
                       </div>
@@ -193,10 +193,10 @@ export default function ProductsPage() {
                   </tr>
                 ) : (
                   paginatedProducts.map((product) => (
-                    <tr key={product.id} className="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+                    <tr key={product.id} className="hover:bg-slate-50 transition-colors group">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                          <div className="h-10 w-10 flex-shrink-0 bg-slate-100 dark:bg-slate-700 rounded flex items-center justify-center overflow-hidden">
+                          <div className="h-10 w-10 flex-shrink-0 bg-slate-100 rounded flex items-center justify-center overflow-hidden">
                             <AuthenticatedImage
                               src={getProductImageUrl(product.id)}
                               alt={product.name}
@@ -204,15 +204,15 @@ export default function ProductsPage() {
                             />
                           </div>
                           <div className="ml-4">
-                            <div className="text-sm font-semibold text-slate-900 dark:text-white">{product.name}</div>
-                            <div className="text-[11px] text-[#606e8a] dark:text-gray-400 truncate max-w-[150px]">
+                            <div className="text-sm font-semibold text-slate-900">{product.name}</div>
+                            <div className="text-[11px] text-[#606e8a] truncate max-w-[150px]">
                               {product.description?.split('.')[0]}
                             </div>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <p className="text-sm text-slate-600 dark:text-slate-400 truncate-2-lines max-w-md">
+                        <p className="text-sm text-slate-600 truncate-2-lines max-w-md">
                           {product.description}
                         </p>
                       </td>
@@ -222,7 +222,7 @@ export default function ProductsPage() {
                             {product.filePaths.length} Doc{product.filePaths.length > 1 ? 's' : ''}
                           </span>
                         ) : (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300 border border-amber-200/50">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200/50">
                             No Docs
                           </span>
                         )}
@@ -231,7 +231,7 @@ export default function ProductsPage() {
                         <div className="flex justify-end gap-1">
                           <button
                             onClick={() => handleEditClick(product.id)}
-                            className="p-2 text-slate-400 hover:text-primary dark:hover:text-blue-400 transition-colors"
+                            className="p-2 text-slate-400 hover:text-primary transition-colors"
                           >
                             <span className="material-symbols-outlined text-[20px]">edit</span>
                           </button>
@@ -250,19 +250,19 @@ export default function ProductsPage() {
             </table>
           </div>
 
-          <div className="shrink-0 px-6 py-4 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-[11px] lg:text-xs font-medium text-[#606e8a] dark:text-gray-400 order-2 sm:order-1">
-              Showing <span className="font-bold text-[#111318] dark:text-white">
+          <div className="shrink-0 px-6 py-4 bg-white border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="text-[11px] lg:text-xs font-medium text-[#606e8a] order-2 sm:order-1">
+              Showing <span className="font-bold text-[#111318]">
                 {filteredProducts.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}
-              </span> to <span className="font-bold text-[#111318] dark:text-white">
+              </span> to <span className="font-bold text-[#111318]">
                 {Math.min(currentPage * itemsPerPage, filteredProducts.length)}
-              </span> of <span className="font-bold text-[#111318] dark:text-white">{filteredProducts.length}</span> entries
+              </span> of <span className="font-bold text-[#111318]">{filteredProducts.length}</span> entries
             </div>
             <nav aria-label="Pagination" className="flex items-center space-x-1 order-1 sm:order-2">
               <button
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className="inline-flex items-center px-3 py-1.5 text-xs font-bold rounded-lg border border-gray-300 dark:border-white/10 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
+                className="inline-flex items-center px-3 py-1.5 text-xs font-bold rounded-lg border border-gray-300 bg-white text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
               >
                 <span className="material-symbols-outlined text-[18px] mr-1">chevron_left</span>
                 Previous
@@ -275,7 +275,7 @@ export default function ProductsPage() {
                     className={`w-8 h-8 flex items-center justify-center text-xs font-bold rounded-lg transition-all ${
                       currentPage === i + 1
                         ? 'bg-[#0d59f2] text-white shadow-lg shadow-[#0d59f2]/20'
-                        : 'border border-transparent text-[#606e8a] dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5'
+                        : 'border border-transparent text-[#606e8a] hover:bg-gray-50'
                     }`}
                   >
                     {i + 1}
@@ -285,7 +285,7 @@ export default function ProductsPage() {
               <button
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages || totalPages === 0}
-                className="inline-flex items-center px-3 py-1.5 text-xs font-bold rounded-lg border border-gray-300 dark:border-white/10 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm ml-1"
+                className="inline-flex items-center px-3 py-1.5 text-xs font-bold rounded-lg border border-gray-300 bg-white text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm ml-1"
               >
                 Next
                 <span className="material-symbols-outlined text-[18px] ml-1">chevron_right</span>
@@ -298,18 +298,18 @@ export default function ProductsPage() {
       {/* Delete Confirmation Dialog */}
       {deletingProductId && (
         <div className="fixed inset-0 bg-gray-900/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-white dark:bg-[#1a2130] rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl scale-100 animate-in fade-in zoom-in duration-200">
-            <div className="w-16 h-16 bg-red-50 dark:bg-red-900/20 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl scale-100 animate-in fade-in zoom-in duration-200">
+            <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="material-symbols-outlined text-3xl">delete</span>
             </div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Delete Product?</h3>
-            <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Delete Product?</h3>
+            <p className="text-gray-500 text-sm mb-6">
               Are you sure you want to delete this product? This action cannot be undone.
             </p>
             <div className="flex gap-3">
               <button
                 onClick={() => setDeletingProductId(null)}
-                className="flex-1 py-1.5 rounded-lg border border-gray-300 dark:border-white/10 font-bold text-xs hover:bg-gray-50 dark:hover:bg-white/5 transition-all disabled:opacity-50"
+                className="flex-1 py-1.5 rounded-lg border border-gray-300 font-bold text-xs hover:bg-gray-50 transition-all disabled:opacity-50"
                 disabled={deleteLoading}
               >
                 Cancel

@@ -224,45 +224,45 @@ export default function DashboardPage() {
 
 
   return (
-    <div className="flex w-full h-screen overflow-hidden bg-background-light dark:bg-background-dark transition-colors duration-200">
+    <div className="flex w-full h-screen overflow-hidden bg-background-light transition-colors duration-200">
       <main className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         {/* Header */}
-        <header className="h-14 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-50 px-4 flex items-center justify-between shrink-0">
+        <header className="h-14 border-b border-slate-200 bg-white sticky top-0 z-50 px-4 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2">
             {/* Mobile Menu Button Placeholder */}
             <div className="w-10 lg:hidden shrink-0"></div>
             {/* <div className="w-7 h-7 bg-primary rounded-lg flex items-center justify-center text-white">
               <span className="material-symbols-outlined text-lg">leaderboard</span>
             </div> */}
-            {/* <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">LeadPulse</h1> */}
+            {/* <h1 className="text-lg font-bold tracking-tight text-slate-900">LeadPulse</h1> */}
           </div>
           <div className="flex items-center gap-3">
             <button 
               onClick={() => router.push('/tutorial')}
-              className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400"
+              className="p-1.5 hover:bg-slate-100 rounded-full text-slate-500"
             >
               <span className="material-symbols-outlined text-xl">help</span>
             </button>
             <div className="relative group/notify">
-              <button className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400 relative">
+              <button className="p-1.5 hover:bg-slate-100 rounded-full text-slate-500 relative">
                 <span className="material-symbols-outlined text-xl">notifications</span>
                 {notifications.length > 0 && (
-                  <span className="absolute top-0.5 right-0.5 bg-red-500 text-white text-[9px] font-bold px-1 rounded-full border border-white dark:border-slate-900">
+                  <span className="absolute top-0.5 right-0.5 bg-red-500 text-white text-[9px] font-bold px-1 rounded-full border border-white">
                     {notifications.length > 9 ? '9+' : notifications.length}
                   </span>
                 )}
               </button>
               {/* Notification Dropdown */}
               <div className="absolute right-0 top-full pt-1 opacity-0 invisible group-hover/notify:opacity-100 group-hover/notify:visible transition-all duration-300 z-50 w-72">
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl overflow-hidden flex flex-col">
-                  <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">
-                    <span className="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-wider">Notifications</span>
+                <div className="bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden flex flex-col">
+                  <div className="px-3 py-2 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-slate-900 uppercase tracking-wider">Notifications</span>
                     {notifications.length > 0 && <span className="text-[9px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded-full">{notifications.length} New</span>}
                   </div>
                   <div className="max-h-80 overflow-y-auto">
                     {notifications.length > 0 ? (
                       notifications.slice(0, 5).map((notif) => (
-                        <div key={notif.id} className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border-b border-slate-100 dark:border-slate-800 last:border-0">
+                        <div key={notif.id} className="p-3 hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0">
                           <div className="flex items-start gap-3">
                             <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                               <span className="material-symbols-outlined text-xs text-primary">
@@ -271,10 +271,10 @@ export default function DashboardPage() {
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between gap-1 mb-0.5">
-                                <p className="text-[11px] font-bold text-slate-900 dark:text-white truncate">{notif.title}</p>
+                                <p className="text-[11px] font-bold text-slate-900 truncate">{notif.title}</p>
                                 <span className="text-[9px] text-slate-500 shrink-0">{getRelativeTime(notif.createdAt)}</span>
                               </div>
-                              <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight font-medium line-clamp-2">{notif.description}</p>
+                              <p className="text-[10px] text-slate-500 leading-tight font-medium line-clamp-2">{notif.description}</p>
                             </div>
                           </div>
                         </div>
@@ -289,15 +289,9 @@ export default function DashboardPage() {
                 </div>
               </div>
             </div>
-            <div className="h-6 w-px bg-slate-200 dark:bg-slate-800"></div>
-            {/* <button 
-              className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400" 
-              onClick={() => document.documentElement.classList.toggle('dark')}
-            >
-              <span className="material-symbols-outlined text-xl">dark_mode</span>
-            </button> */}
+            <div className="h-6 w-px bg-slate-200"></div>
             <div className="flex items-center gap-2 ml-1">
-              <div className="w-7 h-7 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden ring-1 ring-slate-100 dark:ring-slate-800">
+              <div className="w-7 h-7 rounded-full bg-slate-200 overflow-hidden ring-1 ring-slate-100">
                 <img alt="Admin Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTARnqqcH5HFBuJBIYfcK2R7b0uCXIkVN7CTaCzZ0C7ID_aqoR42PlArasOTtQC1OlfcuzyLG5bR6j6SMRZpltlJxmDHQ02kKB6GoYtKy1MoOWzLLth06dsIX-9v7QXHINF1axEp7ZbkXiOdIIBrTK-viXWs-6n8rwlQSIIYNB-yzA_YEx7qU-YjlM4OfeLAutX1cLMhGtZSZykH1ytteZPP9xgMU0JfOJmiVG3iT-wPCBB1YI8K7bKyIrSrYoXaE3NH4gohQy24RU"/>
               </div>
             </div>
@@ -310,15 +304,15 @@ export default function DashboardPage() {
           <div className="flex flex-col gap-2 shrink-0">
              {/* Product Warning */}
              {!productsLoading && products.length === 0 && (
-              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-xl p-3 flex items-start gap-3 shadow-sm animate-in fade-in slide-in-from-top-2 duration-300">
-                <div className="bg-orange-100 dark:bg-orange-900/40 p-1.5 rounded-lg shrink-0 text-orange-600 dark:text-orange-400">
+              <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 flex items-start gap-3 shadow-sm animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="bg-orange-100 p-1.5 rounded-lg shrink-0 text-orange-600">
                   <span className="material-symbols-outlined text-lg">inventory_2</span>
                 </div>
                 <div className="flex-1 pt-0.5">
-                   <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-0.5">Products Missing</h3>
-                   <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                   <h3 className="text-sm font-bold text-slate-900 mb-0.5">Products Missing</h3>
+                   <p className="text-xs text-slate-600 leading-relaxed">
                      You haven't added any products yet. Adding products helps us tailor the experience for you. 
-                     <button onClick={() => router.push('/products')} className="text-blue-600 dark:text-blue-400 font-bold hover:underline ml-1">
+                     <button onClick={() => router.push('/products')} className="text-blue-600 font-bold hover:underline ml-1">
                        Add Products
                      </button>
                    </p>
@@ -328,33 +322,34 @@ export default function DashboardPage() {
 
             {/* Leads Warning */}
             {!loading && profiles.length === 0 && (
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-3 flex items-start gap-3 shadow-sm animate-in fade-in slide-in-from-top-2 duration-300 delay-100">
-                <div className="bg-blue-100 dark:bg-blue-900/40 p-1.5 rounded-lg shrink-0 text-blue-600 dark:text-blue-400">
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 flex items-start gap-3 shadow-sm animate-in fade-in slide-in-from-top-2 duration-300 delay-100">
+                <div className="bg-blue-100 p-1.5 rounded-lg shrink-0 text-blue-600">
                   <span className="material-symbols-outlined text-lg">group_add</span>
                 </div>
                  <div className="flex-1 pt-0.5">
-                   <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-0.5">No Leads Found</h3>
-                   <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                   <h3 className="text-sm font-bold text-slate-900 mb-0.5">No Leads Found</h3>
+                   <p className="text-xs text-slate-600 leading-relaxed">
                      You haven't added any leads yet. Start building your pipeline now.
-                     <button onClick={() => router.push('/add-lead')} className="text-blue-600 dark:text-blue-400 font-bold hover:underline ml-1">
+                     <button onClick={() => router.push('/add-lead')} className="text-blue-600 font-bold hover:underline ml-1">
                        Add Lead
                      </button>
                    </p>
                 </div>
               </div>
             )}
-           </div>          {/* Stats Summary Card */}
-          <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 shrink-0">
+           </div>
+          {/* Stats Summary Card */}
+          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 shrink-0">
             <div className="flex-1 min-w-0">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">Lead Management</h2>
-              <p className="text-slate-500 dark:text-slate-400 text-xs mt-0.5 truncate">Global performance metrics and lead distribution across categories.</p>
+              <h2 className="text-xl font-bold text-slate-900">Lead Management</h2>
+              <p className="text-slate-500 text-xs mt-0.5 truncate">Global performance metrics and lead distribution across categories.</p>
             </div>
             
-            <div className="flex items-center gap-6 bg-slate-50/50 dark:bg-slate-800/50 p-3 pr-6 rounded-xl border border-slate-100 dark:border-slate-800 shadow-inner">
+            <div className="flex items-center gap-6 bg-slate-50/50 p-3 pr-6 rounded-xl border border-slate-100 shadow-inner">
               <div className="relative w-16 h-16">
                 <StatsDonut stats={stats} />
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-lg font-bold text-slate-900 dark:text-white leading-none">{stats.totalLeads}</span>
+                  <span className="text-lg font-bold text-slate-900 leading-none">{stats.totalLeads}</span>
                   <span className="text-[8px] uppercase tracking-tight text-slate-500 font-bold mt-0.5">Total</span>
                 </div>
               </div>
@@ -362,8 +357,8 @@ export default function DashboardPage() {
                 {stats.categories.map((cat) => (
                   <div key={cat.label} className="flex items-center gap-1.5">
                     <div className={`w-1.5 h-1.5 rounded-full ${cat.color === 'red' ? 'bg-red-500' : cat.color === 'orange' ? 'bg-orange-500' : cat.color === 'yellow' ? 'bg-yellow-500' : 'bg-green-500'}`}></div>
-                    <span className="text-[10px] font-semibold text-slate-600 dark:text-slate-400 whitespace-nowrap">
-                      {cat.label} <span className="text-slate-400 dark:text-slate-500 font-medium">({cat.range})</span>: <span className="text-slate-900 dark:text-white ml-0.5">{cat.count}</span>
+                    <span className="text-[10px] font-semibold text-slate-600 whitespace-nowrap">
+                      {cat.label} <span className="text-slate-400 font-medium">({cat.range})</span>: <span className="text-slate-900 ml-0.5">{cat.count}</span>
                     </span>
                   </div>
                 ))}
@@ -372,15 +367,15 @@ export default function DashboardPage() {
           </div>
 
           {/* Table Container */}
-          <div className="flex flex-col min-h-0 max-h-full bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div className="flex flex-col min-h-0 max-h-full bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
             {/* Table Actions */}
-            <div className="p-3 border-b border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-3 shrink-0">
+            <div className="p-3 border-b border-slate-200 flex flex-col md:flex-row items-center justify-between gap-3 shrink-0">
               <div className="relative w-full md:w-80 group">
                 <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors text-lg">search</span>
                 <input 
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 pr-3 py-1.5 bg-slate-50 dark:bg-slate-800 border-none rounded-lg focus:ring-1 focus:ring-primary text-xs dark:text-white placeholder-slate-500 transition-all" 
+                  className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border-none rounded-lg focus:ring-1 focus:ring-primary text-xs placeholder-slate-500 transition-all" 
                   placeholder="Search leads..." 
                   type="text"
                 />
@@ -389,7 +384,7 @@ export default function DashboardPage() {
                 <select 
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="bg-slate-50 dark:bg-slate-800 border-none rounded-lg text-xs py-1.5 pl-3 pr-8 focus:ring-1 focus:ring-primary dark:text-white cursor-pointer appearance-none transition-all"
+                  className="bg-slate-50 border-none rounded-lg text-xs py-1.5 pl-3 pr-8 focus:ring-1 focus:ring-primary cursor-pointer appearance-none transition-all"
                 >
                   <option value="all">All Status</option>
                   <option value="Complete">Complete</option>
@@ -405,7 +400,7 @@ export default function DashboardPage() {
                 </button>
                 <button 
                   onClick={() => dispatch(fetchProfiles())}
-                  className="p-1.5 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-all active:rotate-180 duration-500"
+                  className="p-1.5 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition-all active:rotate-180 duration-500"
                 >
                   <span className="material-symbols-outlined text-lg">refresh</span>
                 </button>
@@ -413,11 +408,11 @@ export default function DashboardPage() {
             </div>
 
             {/* Table Body with internal scrolling */}
-            <div className="flex-1 overflow-auto bg-white dark:bg-slate-900 min-h-0">
-              <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800">
+            <div className="flex-1 overflow-auto bg-white min-h-0">
+              <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-slate-200">
                 <table className="w-full text-left border-collapse min-w-[900px]">
-                  <thead className="sticky top-0 z-30 bg-white dark:bg-slate-900 shadow-sm border-b border-slate-100 dark:border-slate-800">
-                  <tr className="bg-slate-50/95 dark:bg-slate-800/95 backdrop-blur-sm text-[10px] uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
+                  <thead className="sticky top-0 z-30 bg-white shadow-sm border-b border-slate-100">
+                  <tr className="bg-slate-50/95 backdrop-blur-sm text-[10px] uppercase tracking-wider font-bold text-slate-500 border-b border-slate-200">
                     <th className="px-4 py-2.5 w-32">Lead ID</th>
                     <th className="px-4 py-2.5 min-w-[180px]">
                       <button onClick={() => handleSort("name")} className="flex items-center gap-1 hover:text-primary transition-colors">
@@ -442,11 +437,11 @@ export default function DashboardPage() {
                     <th className="px-4 py-2.5 text-center w-36">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                <tbody className="divide-y divide-slate-100">
                   {paginatedRows.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="px-6 py-20 text-center">
-                        <div className="flex flex-col items-center justify-center text-slate-400 dark:text-slate-600">
+                        <div className="flex flex-col items-center justify-center text-slate-400">
                           <span className="material-symbols-outlined text-5xl opacity-20 mb-3">inbox</span>
                           <p className="text-xs font-medium">No leads found matching your criteria</p>
                         </div>
@@ -454,10 +449,10 @@ export default function DashboardPage() {
                     </tr>
                   ) : (
                     paginatedRows.map((row) => (
-                      <tr key={row.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors group">
+                      <tr key={row.id} className="hover:bg-slate-50/50 transition-colors group">
                         <td className="px-4 py-2 whitespace-nowrap">
                           <div className="flex items-center gap-1">
-                            <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400">
+                            <span className="text-[10px] font-mono font-bold text-slate-500">
                               {row.id ? `${row.id.substring(0, 8).toUpperCase()}...` : "N/A"}
                             </span>
                             <CopyButton text={row.id} />
@@ -469,8 +464,8 @@ export default function DashboardPage() {
                               {row.name?.charAt(0) || "?"}
                             </div>
                             <div className="min-w-0">
-                              <p className="font-bold text-[12px] text-slate-900 dark:text-white truncate">{row.name}</p>
-                              <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{row.company}</p>
+                              <p className="font-bold text-[12px] text-slate-900 truncate">{row.name}</p>
+                              <p className="text-[10px] text-slate-500 truncate">{row.company}</p>
                             </div>
                           </div>
                         </td>
@@ -483,7 +478,7 @@ export default function DashboardPage() {
                           <StatusPill status={row.status} />
                         </td>
                         <td className="px-4 py-2">
-                          <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">{getRelativeTime(row.date)}</span>
+                          <span className="text-[11px] font-medium text-slate-500">{getRelativeTime(row.date)}</span>
                         </td>
                         <td className="px-4 py-2">
                           <div className="flex items-center justify-center gap-0.5">
@@ -520,15 +515,15 @@ export default function DashboardPage() {
             </div>
 
             {/* Pagination */}
-            <div className="px-4 py-2 bg-slate-50/30 dark:bg-slate-800/20 flex items-center justify-between shrink-0 border-t border-slate-100 dark:border-slate-800">
-              <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
-                Showing <span className="text-slate-900 dark:text-white font-bold">{paginatedRows.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}-{Math.min(currentPage * itemsPerPage, filteredAndSortedRows.length)}</span> of <span className="text-slate-900 dark:text-white font-bold">{filteredAndSortedRows.length}</span> results
+            <div className="px-4 py-2 bg-slate-50/30 flex items-center justify-between shrink-0 border-t border-slate-100">
+              <p className="text-[11px] font-semibold text-slate-500">
+                Showing <span className="text-slate-900 font-bold">{paginatedRows.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}-{Math.min(currentPage * itemsPerPage, filteredAndSortedRows.length)}</span> of <span className="text-slate-900 font-bold">{filteredAndSortedRows.length}</span> results
               </p>
               <div className="flex items-center gap-1.5">
                 <button 
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
-                  className="flex items-center px-3 py-1 text-[10px] font-bold text-slate-500 dark:text-slate-400 disabled:text-slate-300 dark:disabled:text-slate-600 disabled:cursor-not-allowed group transition-all hover:text-primary"
+                  className="flex items-center px-3 py-1 text-[10px] font-bold text-slate-500 disabled:text-slate-300 disabled:cursor-not-allowed group transition-all hover:text-primary"
                 >
                   <span className="material-symbols-outlined text-base mr-1 group-hover:-translate-x-1 transition-transform">chevron_left</span>
                   Prev
@@ -538,7 +533,7 @@ export default function DashboardPage() {
                     <button 
                       key={i + 1}
                       onClick={() => setCurrentPage(i + 1)}
-                      className={`w-6 h-6 rounded-lg text-[10px] font-bold transition-all hover:scale-105 active:scale-95 ${currentPage === i + 1 ? 'bg-blue-700 text-white shadow-md shadow-primary/10' : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+                      className={`w-6 h-6 rounded-lg text-[10px] font-bold transition-all hover:scale-105 active:scale-95 ${currentPage === i + 1 ? 'bg-blue-700 text-white shadow-md shadow-primary/10' : 'text-slate-500 hover:bg-slate-100'}`}
                     >
                       {i + 1}
                     </button>
@@ -547,7 +542,7 @@ export default function DashboardPage() {
                 <button 
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages || totalPages === 0}
-                  className="flex items-center px-3 py-1 text-[10px] font-bold text-slate-500 dark:text-slate-400 disabled:text-slate-300 dark:disabled:text-slate-600 disabled:cursor-not-allowed group transition-all hover:text-primary"
+                  className="flex items-center px-3 py-1 text-[10px] font-bold text-slate-500 disabled:text-slate-300 disabled:cursor-not-allowed group transition-all hover:text-primary"
                 >
                   Next
                   <span className="material-symbols-outlined text-base ml-1 group-hover:translate-x-1 transition-transform">chevron_right</span>
@@ -560,10 +555,10 @@ export default function DashboardPage() {
 
       {/* Components Layer */}
       {loading && (
-        <div className="fixed inset-0 bg-white/60 dark:bg-slate-950/60 z-[100] flex items-center justify-center backdrop-blur-[2px]">
-          <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col items-center gap-5">
+        <div className="fixed inset-0 bg-white/60 z-[100] flex items-center justify-center backdrop-blur-[2px]">
+          <div className="bg-white p-8 rounded-3xl shadow-2xl border border-slate-200 flex flex-col items-center gap-5">
             <Loader2 className="w-10 h-10 text-primary animate-spin" />
-            <p className="text-slate-900 dark:text-white font-bold text-sm tracking-tight">Refreshing Dashboard...</p>
+            <p className="text-slate-900 font-bold text-sm tracking-tight">Refreshing Dashboard...</p>
           </div>
         </div>
       )}
@@ -621,7 +616,7 @@ function StatsDonut({ stats }: { stats: any }) {
 
   return (
     <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-      <circle className="text-slate-200 dark:text-slate-700" cx="18" cy="18" fill="transparent" r="15.915" stroke="currentColor" strokeWidth="4"></circle>
+      <circle className="text-slate-200" cx="18" cy="18" fill="transparent" r="15.915" stroke="currentColor" strokeWidth="4"></circle>
       
       {/* Critical - Red */}
       <circle cx="18" cy="18" fill="transparent" r="15.915" stroke="#ef4444" 
@@ -660,9 +655,9 @@ function StatsDonut({ stats }: { stats: any }) {
 
 function StatusPill({ status }: { status: string }) {
   const statusConfig: Record<string, { bg: string; text: string; dot: string; label: string; border: string }> = {
-    "Complete": { bg: "bg-green-50 dark:bg-green-900/20", text: "text-green-600 dark:text-green-400", dot: "bg-green-500", label: "Complete", border: "border-green-100 dark:border-green-900/30" },
-    "Pending": { bg: "bg-orange-50 dark:bg-orange-900/20", text: "text-orange-600 dark:text-orange-400", dot: "bg-orange-500", label: "Pending", border: "border-orange-100 dark:border-orange-900/30" },
-    "Failed": { bg: "bg-red-50 dark:bg-red-900/20", text: "text-red-600 dark:text-red-400", dot: "bg-red-500", label: "Failed", border: "border-red-100 dark:border-red-900/30" },
+    "Complete": { bg: "bg-green-50", text: "text-green-600", dot: "bg-green-500", label: "Complete", border: "border-green-100" },
+    "Pending": { bg: "bg-orange-50", text: "text-orange-600", dot: "bg-orange-500", label: "Pending", border: "border-orange-100" },
+    "Failed": { bg: "bg-red-50", text: "text-red-600", dot: "bg-red-500", label: "Failed", border: "border-red-100" },
   };
 
   const config = statusConfig[status] || statusConfig["Pending"];
@@ -688,7 +683,7 @@ function ActionButtons({ row }: { row: TableRow }) {
   const socialLinks = [
     { icon: Linkedin, color: "text-[#0A66C2]", label: "LinkedIn", url: row.linkedinUrl },
     { icon: Instagram, color: "text-pink-600", label: "Instagram", url: row.instagramUrl },
-    { icon: Twitter, color: "text-black dark:text-white", label: "X", url: row.twitterUrl },
+    { icon: Twitter, color: "text-black", label: "X", url: row.twitterUrl },
     { icon: Globe, color: "text-purple-600", label: "Website", url: row.websiteUrl },
   ];
 
@@ -705,7 +700,7 @@ function ActionButtons({ row }: { row: TableRow }) {
       {isOpen && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)}></div>
-          <div className="absolute bottom-full right-0 mb-2 p-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl flex gap-1 z-50 animate-in fade-in slide-in-from-bottom-1 duration-200">
+          <div className="absolute bottom-full right-0 mb-2 p-1 bg-white border border-slate-200 rounded-xl shadow-2xl flex gap-1 z-50 animate-in fade-in slide-in-from-bottom-1 duration-200">
             {socialLinks.map((social) => {
               const hasUrl = social.url && social.url !== "#" && social.url.trim() !== "";
               
@@ -727,7 +722,7 @@ function ActionButtons({ row }: { row: TableRow }) {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-1.5 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-all hover:scale-110 ${social.color}`}
+                  className={`p-1.5 hover:bg-slate-50 rounded-lg transition-all hover:scale-110 ${social.color}`}
                   title={social.label}
                 >
                   <social.icon className="w-4 h-4" />
@@ -755,7 +750,7 @@ function CopyButton({ text }: { text: string }) {
   return (
     <button
       onClick={handleCopy}
-      className={`p-0.5 rounded-md transition-all ${copied ? 'text-green-500 bg-green-50 dark:bg-green-500/10' : 'text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+      className={`p-0.5 rounded-md transition-all ${copied ? 'text-green-500 bg-green-50' : 'text-slate-400 hover:text-primary hover:bg-slate-100'}`}
       title="Copy ID"
     >
       <span className="material-symbols-outlined text-[13px]">

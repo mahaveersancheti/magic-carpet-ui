@@ -60,11 +60,11 @@ const TutorialComponent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background-light dark:bg-background-dark flex flex-col items-center justify-center p-4 md:p-8 font-sans overflow-hidden transition-colors duration-200">
+    <div className="min-h-screen bg-background-light flex flex-col items-center justify-center p-4 md:p-8 font-sans overflow-hidden transition-colors duration-200">
       {/* Background blobs for aesthetics */}
-      <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-50 dark:opacity-20">
+      <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-50">
         <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-700/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-100/20 dark:bg-blue-900/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-100/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
       <div className="relative z-10 max-w-6xl w-full">
@@ -73,7 +73,7 @@ const TutorialComponent: React.FC = () => {
           <h1 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tight mb-4">
             Welcome to <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Magic Carpet</span>
           </h1>
-          <p className="text-[#606e8a] dark:text-gray-400 text-md md:text-lg font-medium max-w-2xl mx-auto">
+          <p className="text-[#606e8a] text-md md:text-lg font-medium max-w-2xl mx-auto">
             Master the art of AI-driven prospecting in four simple steps.
           </p>
         </div>
@@ -86,14 +86,14 @@ const TutorialComponent: React.FC = () => {
                 className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 border-2 ${
                   idx <= currentStep 
                     ? 'bg-blue-700 border-primary text-white shadow-lg shadow-primary/30' 
-                    : 'bg-white dark:bg-white/5 border-gray-200 dark:border-white/10 text-gray-400 dark:text-gray-600'
+                    : 'bg-white border-gray-200 text-gray-400'
                 }`}
               >
                 {idx < currentStep ? <CheckCircle2 className="w-6 h-6" /> : <span className="font-bold text-sm">{idx + 1}</span>}
               </div>
               {idx < steps.length - 1 && (
                 <div className={`h-1 w-8 md:w-16 rounded-full transition-colors duration-300 ${
-                  idx < currentStep ? 'bg-blue-700' : 'bg-gray-200 dark:bg-white/10'
+                  idx < currentStep ? 'bg-blue-700' : 'bg-gray-200'
                 }`}></div>
               )}
             </React.Fragment>
@@ -101,7 +101,7 @@ const TutorialComponent: React.FC = () => {
         </div>
 
         {/* Step Card */}
-        <div className="bg-white/80 dark:bg-white/5 backdrop-blur-xl border border-white dark:border-white/10 rounded-[2.5rem] shadow-2xl shadow-gray-200/50 dark:shadow-none overflow-hidden min-h-[500px] flex flex-col md:flex-row transform transition-all duration-500">
+        <div className="bg-white/80 backdrop-blur-xl border border-white rounded-[2.5rem] shadow-2xl shadow-gray-200/50 overflow-hidden min-h-[500px] flex flex-col md:flex-row transform transition-all duration-500">
           {/* Content Side */}
           <div className="flex-1 p-4 md:p-6 flex flex-col justify-between">
             <div>
@@ -110,25 +110,25 @@ const TutorialComponent: React.FC = () => {
                 <span>Step {currentStep + 1} of 4</span>
               </div>
               
-              <h2 className="text-2xl md:text-3xl font-bold text-[#111318] dark:text-white mb-6">
+              <h2 className="text-2xl md:text-3xl font-bold text-[#111318] mb-6">
                 {steps[currentStep].title}
               </h2>
               
-              <p className="text-[#606e8a] dark:text-gray-400 text-sm lg:text-base leading-relaxed mb-8">
+              <p className="text-[#606e8a] text-sm lg:text-base leading-relaxed mb-8">
                 {steps[currentStep].description}
               </p>
 
               {/* Dynamic Step Details */}
               <div className="space-y-4">
                 {steps[currentStep].details?.map((detail, idx) => (
-                  <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10">
-                    <span className="text-[#606e8a] dark:text-gray-400 font-medium w-24 text-sm">{detail.label}</span>
-                    <span className="text-[#111318] dark:text-white font-bold font-mono text-sm">{detail.value}</span>
+                  <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+                    <span className="text-[#606e8a] font-medium w-24 text-sm">{detail.label}</span>
+                    <span className="text-[#111318] font-bold font-mono text-sm">{detail.value}</span>
                   </div>
                 ))}
 
                 {steps[currentStep].highlights?.map((highlight, idx) => (
-                  <div key={idx} className="flex items-center gap-3 text-[#111318] dark:text-white">
+                  <div key={idx} className="flex items-center gap-3 text-[#111318]">
                     <CheckCircle2 className="w-5 h-5 text-primary shrink-0" />
                     <span className="font-medium text-sm">{highlight}</span>
                   </div>
@@ -136,10 +136,10 @@ const TutorialComponent: React.FC = () => {
 
                 {steps[currentStep].steps?.map((s, idx) => (
                   <div key={idx} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center text-xs font-bold text-[#606e8a] dark:text-gray-400 shrink-0 mt-0.5">
+                    <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-[#606e8a] shrink-0 mt-0.5">
                       {idx + 1}
                     </div>
-                    <span className="text-[#111318] dark:text-white font-medium text-sm">{s}</span>
+                    <span className="text-[#111318] font-medium text-sm">{s}</span>
                   </div>
                 ))}
               </div>
@@ -152,8 +152,8 @@ const TutorialComponent: React.FC = () => {
                 disabled={currentStep === 0}
                 className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all text-sm ${
                   currentStep === 0 
-                  ? 'text-gray-300 dark:text-gray-700 cursor-not-allowed' 
-                  : 'text-[#606e8a] dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5'
+                  ? 'text-gray-300 cursor-not-allowed' 
+                  : 'text-[#606e8a] hover:bg-gray-100'
                 }`}
               >
                 <ArrowLeft className="w-4 h-4" /> Previous
@@ -182,9 +182,9 @@ const TutorialComponent: React.FC = () => {
           </div>
 
           {/* Visual Side */}
-          <div className="flex-1 bg-gray-50/50 dark:bg-white/5 p-8 md:p-12 flex items-center justify-center relative overflow-hidden group">
+          <div className="flex-1 bg-gray-50/50 p-8 md:p-12 flex items-center justify-center relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-blue-500/5"></div>
-            <div className="relative z-10 w-full aspect-video rounded-3xl shadow-3xl shadow-primary/10 overflow-hidden border-8 border-white dark:border-white/10 transform transition-all duration-700 group-hover:scale-[1.02]">
+            <div className="relative z-10 w-full aspect-video rounded-3xl shadow-3xl shadow-primary/10 overflow-hidden border-8 border-white transform transition-all duration-700 group-hover:scale-[1.02]">
               <img 
                 src={steps[currentStep].image} 
                 alt={steps[currentStep].title}
@@ -196,7 +196,7 @@ const TutorialComponent: React.FC = () => {
 
         {/* Footer info */}
         {steps[currentStep].footer && (
-          <p className="text-center mt-6 text-[#606e8a] dark:text-gray-400 text-xs font-medium italic">
+          <p className="text-center mt-6 text-[#606e8a] text-xs font-medium italic">
             {steps[currentStep].footer}
           </p>
         )}

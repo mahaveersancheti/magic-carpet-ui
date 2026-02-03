@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <script
           dangerouslySetInnerHTML={{

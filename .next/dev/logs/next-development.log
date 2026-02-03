@@ -93,3 +93,176 @@ It can also happen if the client has a browser extension installed which messes 
 [00:08:25.123] Browser ERROR   Invalid DOM property `%s`. Did you mean `%s`? http-equiv httpEquiv
 [00:08:25.672] Browser ERROR   Invalid DOM property `%s`. Did you mean `%s`? http-equiv httpEquiv
 [00:08:25.672] Browser ERROR   Invalid DOM property `%s`. Did you mean `%s`? http-equiv httpEquiv
+[00:00:15.182] Server  ERROR   Invalid DOM property `http-equiv`. Did you mean `httpEquiv`?
+[00:00:15.754] Browser ERROR   Invalid DOM property `%s`. Did you mean `%s`? http-equiv httpEquiv
+[00:00:28.425] Browser ERROR   Invalid DOM property `%s`. Did you mean `%s`? http-equiv httpEquiv
+[00:00:31.791] Browser ERROR   Invalid DOM property `%s`. Did you mean `%s`? http-equiv httpEquiv
+[00:00:32.904] Browser ERROR   Invalid DOM property `%s`. Did you mean `%s`? http-equiv httpEquiv
+[00:00:37.091] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:01:15.880] Browser ERROR   Invalid DOM property `%s`. Did you mean `%s`? http-equiv httpEquiv
+[00:01:48.554] Server  LOG      ✓ Compiled in 78ms
+[00:06:22.000] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:06:45.097] Browser ERROR   ./src/app/(protected)/add-lead/page.tsx:333:5
+Parsing ecmascript source code failed
+  331 |
+  332 |     return (
+> 333 |     return (
+      |     ^^^^^^
+  334 |         <main className="max-w-[1280px] mx-auto px-6 py-8 bg-background-light min-h-screen">
+  335 |             {/* Breadcrumb */}
+  336 |             <nav className="flex items-center gap-2 mb-3 text-[10px] lg:text-xs font-medium text-[#606e8a]">
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component Browser]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component SSR]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+[00:06:49.253] Browser ERROR   ./src/app/(protected)/add-lead/page.tsx:333:5
+Parsing ecmascript source code failed
+  331 |
+  332 |     return (
+> 333 |     return (
+      |     ^^^^^^
+  334 |         <main className="max-w-[1280px] mx-auto px-6 py-8 bg-background-light min-h-screen">
+  335 |             {/* Breadcrumb */}
+  336 |             <nav className="flex items-center gap-2 mb-3 text-[10px] lg:text-xs font-medium text-[#606e8a]">
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component Browser]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component SSR]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+[00:06:49.253] Browser ERROR   ./src/app/(protected)/add-lead/page.tsx:333:5
+Parsing ecmascript source code failed
+  331 |
+  332 |     return (
+> 333 |     return (
+      |     ^^^^^^
+  334 |         <main className="max-w-[1280px] mx-auto px-6 py-8 bg-background-light min-h-screen">
+  335 |             {/* Breadcrumb */}
+  336 |             <nav className="flex items-center gap-2 mb-3 text-[10px] lg:text-xs font-medium text-[#606e8a]">
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component Browser]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component SSR]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+[00:06:51.290] Browser ERROR   ./src/app/(protected)/add-lead/page.tsx:333:5
+Parsing ecmascript source code failed
+  331 |
+  332 |     return (
+> 333 |     return (
+      |     ^^^^^^
+  334 |         <main className="max-w-[1280px] mx-auto px-6 py-8 bg-background-light min-h-screen">
+  335 |             {/* Breadcrumb */}
+  336 |             <nav className="flex items-center gap-2 mb-3 text-[10px] lg:text-xs font-medium text-[#606e8a]">
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component Browser]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component SSR]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+[00:06:51.290] Browser ERROR   ./src/app/(protected)/add-lead/page.tsx:333:5
+Parsing ecmascript source code failed
+  331 |
+  332 |     return (
+> 333 |     return (
+      |     ^^^^^^
+  334 |         <main className="max-w-[1280px] mx-auto px-6 py-8 bg-background-light min-h-screen">
+  335 |             {/* Breadcrumb */}
+  336 |             <nav className="flex items-center gap-2 mb-3 text-[10px] lg:text-xs font-medium text-[#606e8a]">
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component Browser]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component SSR]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+[00:06:52.756] Browser ERROR   ./src/app/(protected)/add-lead/page.tsx:333:5
+Parsing ecmascript source code failed
+  331 |
+  332 |     return (
+> 333 |     return (
+      |     ^^^^^^
+  334 |         <main className="max-w-[1280px] mx-auto px-6 py-8 bg-background-light min-h-screen">
+  335 |             {/* Breadcrumb */}
+  336 |             <nav className="flex items-center gap-2 mb-3 text-[10px] lg:text-xs font-medium text-[#606e8a]">
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component Browser]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component SSR]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+[00:06:52.756] Browser ERROR   ./src/app/(protected)/add-lead/page.tsx:333:5
+Parsing ecmascript source code failed
+  331 |
+  332 |     return (
+> 333 |     return (
+      |     ^^^^^^
+  334 |         <main className="max-w-[1280px] mx-auto px-6 py-8 bg-background-light min-h-screen">
+  335 |             {/* Breadcrumb */}
+  336 |             <nav className="flex items-center gap-2 mb-3 text-[10px] lg:text-xs font-medium text-[#606e8a]">
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component Browser]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component SSR]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+[00:06:55.926] Browser ERROR   ./src/app/(protected)/add-lead/page.tsx:333:5
+Parsing ecmascript source code failed
+  331 |
+  332 |     return (
+> 333 |     return (
+      |     ^^^^^^
+  334 |         <main className="max-w-[1280px] mx-auto px-6 py-8 bg-background-light min-h-screen">
+  335 |             {/* Breadcrumb */}
+  336 |             <nav className="flex items-center gap-2 mb-3 text-[10px] lg:text-xs font-medium text-[#606e8a]">
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component Browser]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/(protected)/add-lead/page.tsx [Client Component SSR]
+    ./src/app/(protected)/add-lead/page.tsx [Server Component]
+[00:06:57.364] Server  LOG      ✓ Compiled in 38ms
+[00:07:15.918] Server  LOG      ✓ Compiled in 74ms
+[00:13:50.697] Server  LOG      ✓ Compiled in 57ms
+[00:16:38.309] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
