@@ -100,7 +100,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "/Users/apple/Desktop/Self Learing/Magic Carpet/magic-carpet-ui",
+    "outputFileTracingRoot": "/Users/apple",
     "cacheComponents": false,
     "cacheLife": {
       "default": {
@@ -290,12 +290,12 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
     "turbopack": {
-      "root": "/Users/apple/Desktop/Self Learing/Magic Carpet/magic-carpet-ui"
+      "root": "/Users/apple"
     },
     "distDirRoot": ".next"
   },
   "appDir": "/Users/apple/Desktop/Self Learing/Magic Carpet/magic-carpet-ui",
-  "relativeAppDir": "",
+  "relativeAppDir": "Desktop/Self Learing/Magic Carpet/magic-carpet-ui",
   "files": [
     ".next/routes-manifest.json",
     ".next/server/pages-manifest.json",
