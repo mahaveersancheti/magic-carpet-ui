@@ -1,73 +1,51 @@
-[00:00:00.934] Server  LOG      ✓ Ready in 705ms
-[00:00:11.016] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:00:25.151] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:00:26.738] Browser ERROR   unhandledRejection: i: Failed to connect to MetaMask
-[00:00:46.546] Browser ERROR   unhandledRejection: i: Failed to connect to MetaMask
-[00:00:51.923] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:01:04.521] Browser ERROR   unhandledRejection: i: Failed to connect to MetaMask
-[00:01:38.156] Browser ERROR   unhandledRejection: i: Failed to connect to MetaMask
-[00:03:55.996] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:04:05.839] Browser ERROR   unhandledRejection: i: Failed to connect to MetaMask
-[00:04:22.136] Browser ERROR   unhandledRejection: i: Failed to connect to MetaMask
-[00:04:46.134] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:13:09.887] Server  LOG      ✓ Compiled in 63ms
-[00:13:33.175] Server  LOG      ✓ Compiled in 43ms
-[00:15:05.852] Server  LOG      ✓ Compiled in 56ms
-[00:21:50.874] Server  LOG      ✓ Compiled in 77ms
-[00:22:02.751] Server  LOG      ✓ Compiled in 134ms
-[00:23:19.723] Server  LOG      ✓ Compiled in 49ms
-[00:23:44.453] Server  LOG      ✓ Compiled in 80ms
-[00:24:23.412] Server  LOG      ✓ Compiled in 36ms
-[00:28:25.515] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:51:18.289] Server  LOG      ✓ Compiled in 58ms
-[00:51:37.153] Server  LOG      ✓ Compiled in 41ms
-[00:53:54.102] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:56:49.251] Server  LOG      ✓ Compiled in 77ms
-[00:58:31.587] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[01:00:46.770] Server  LOG      ✓ Compiled in 66ms
-[01:25:02.046] Server  LOG      ✓ Compiled in 79ms
-[01:44:46.182] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[01:48:01.208] Server  LOG      ✓ Compiled in 61ms
-[01:50:28.061] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[01:53:11.846] Server  LOG      ✓ Compiled in 85ms
-[01:54:07.950] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:00:00.867] Server  LOG      ✓ Ready in 652ms
+[00:00:44.528] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:20:19.189] Server  LOG      ✓ Compiled in 72ms
+[00:21:03.109] Server  LOG      ✓ Compiled in 79ms
+[00:24:00.955] Server  LOG      ✓ Compiled in 52ms
+[00:24:23.699] Server  LOG      ✓ Compiled in 53ms
+[00:25:08.313] Server  LOG      ✓ Compiled in 58ms
+[00:25:23.995] Server  LOG      ✓ Compiled in 37ms
+[00:32:37.118] Server  LOG      ✓ Compiled in 69ms
+[00:45:11.433] Server  LOG      ✓ Compiled in 177ms
+[00:45:11.537] Browser ERROR   ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/add-product/page.tsx:691:21
+Parsing ecmascript source code failed
+  689 |                   </p>
+  690 |                 )}
+> 691 |               </div>
+      |                     ^
+> 692 |             </div>
+      | ^^^^^^^^^^^^^
+  693 |           </section>
+  694 |
+  695 |           {/* Section 2: Assets & Media */}
 
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
+Expected '</', got 'jsx text (
+            )'
 
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+Import traces:
+  Client Component Browser:
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/add-product/page.tsx [Client Component Browser]
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/add-product/page.tsx [Server Component]
 
-%s%s https://react.dev/link/hydration-mismatch 
-
-  ...
-    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
-      <AppDevOverlayErrorBoundary globalError={[...]}>
-        <ReplaySsrOnlyErrors>
-        <DevRootHTTPAccessFallbackBoundary>
-          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
-            <HTTPAccessFallbackErrorBoundary pathname="/add-product" notFound={<NotAllowedRootHTTPFallbackError>} ...>
-              <RedirectBoundary>
-                <RedirectErrorBoundary router={{...}}>
-                  <Head>
-                  <__next_root_layout_boundary__>
-                    <SegmentViewNode type="layout" pagePath="/Desktop/S...">
-                      <SegmentTrieNode>
-                      <link>
-                      <script>
-                      <script>
-                      <script>
-                      <RootLayout>
-                        <html lang="en" suppressHydrationWarning={true}>
-                          <head>
-                          <body
-                            className="manrope_b7d5735e-module__suUhcW__variable poppins_1287db64-module__xlnYIG__vari..."
--                           data-new-gr-c-s-check-loaded="14.1272.0"
--                           data-gr-ext-installed=""
-                          >
-                  ...
-
-[01:54:20.100] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[01:55:02.826] Server  LOG      ✓ Compiled in 79ms
+  Client Component SSR:
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/add-product/page.tsx [Client Component SSR]
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/add-product/page.tsx [Server Component]
+[00:46:22.771] Server  LOG      ✓ Compiled in 55ms
+[00:46:33.518] Server  LOG      ✓ Compiled in 49ms
+[00:46:45.109] Server  LOG      ✓ Compiled in 145ms
+[00:49:29.535] Server  LOG      ✓ Compiled in 97ms
+[00:50:15.979] Server  LOG      ✓ Compiled in 84ms
+[00:52:04.281] Server  LOG      ✓ Compiled in 72ms
+[00:54:44.763] Server  LOG      ✓ Compiled in 58ms
+[00:55:00.422] Server  LOG      ✓ Compiled in 39ms
+[01:00:50.298] Server  LOG      ✓ Compiled in 104ms
+[01:06:33.017] Server  LOG      ✓ Compiled in 149ms
+[01:10:12.170] Server  LOG      ✓ Compiled in 77ms
+[01:10:25.410] Server  LOG      ✓ Compiled in 42ms
+[01:12:00.614] Server  LOG      ✓ Compiled in 67ms
+[01:12:11.023] Server  LOG      ✓ Compiled in 51ms
+[01:12:38.897] Server  LOG      ✓ Compiled in 56ms
+[01:12:45.180] Server  LOG      ✓ Compiled in 58ms
+[01:13:01.348] Server  LOG      ✓ Compiled in 40ms
+[01:13:36.379] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior

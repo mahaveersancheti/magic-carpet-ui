@@ -24,7 +24,6 @@ import {
   ArrowLeft,
   FileText,
   Cloud,
-  Info,
   Trash2,
   Download,
   Bold,
@@ -73,13 +72,10 @@ function AddProductContent() {
     image?: string;
   }>({});
 
-  const [draftCharter, setDraftCharter] = useState("");
   const [isGeneratingDraft, setIsGeneratingDraft] = useState(false);
 
   const [isDraggingImage, setIsDraggingImage] = useState(false);
   const [isDraggingDocs, setIsDraggingDocs] = useState(false);
-
-  const [hasGeneratedCharter, setHasGeneratedCharter] = useState(false);
 
   const [isUploading, setIsUploading] = useState(false);
   const [uploadFileName, setUploadFileName] = useState("");
@@ -112,17 +108,18 @@ function AddProductContent() {
       }
     } else {
       setIsDraggingDocs(false);
-      if (e.dataTransfer.files) {
-        const newFiles = Array.from(e.dataTransfer.files);
-        const nonPdfFiles = newFiles.filter(
-          (f) => f.type !== "application/pdf",
-        );
-        if (nonPdfFiles.length > 0) {
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        // Enforce single file
+        if (e.dataTransfer.files.length > 1) {
+          toast.error("Please upload only one document");
+        }
+
+        const file = e.dataTransfer.files[0];
+        if (file.type !== "application/pdf") {
           toast.error("Only PDF documents are allowed");
-          const pdfFiles = newFiles.filter((f) => f.type === "application/pdf");
-          setProductDocs((prev) => [...prev, ...pdfFiles]);
         } else {
-          setProductDocs((prev) => [...prev, ...newFiles]);
+          // Replace existing docs with the new single file
+          setProductDocs([file]);
         }
       }
     }
@@ -360,6 +357,24 @@ function AddProductContent() {
 
   const previewImage = getPreviewImageUrl();
 
+  const handleDownloadTemplate = async () => {
+    try {
+      const blob = await api.download(endpoints.downloadProductTemplate);
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "product_template.txt");
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+      toast.success("Template downloaded successfully");
+    } catch (error: any) {
+      toast.error("Failed to download template");
+      console.error(error);
+    }
+  };
+
   const handleGenerateDraftCharter = async () => {
     // 1. Call save product logic first (skip navigation, keep loader open)
     const currentProductId = await handleHandleAction(true, undefined, true);
@@ -374,16 +389,16 @@ function AddProductContent() {
     }
 
     // Update loader state for generation phase
-    setLoaderTitle("Generating project charter...");
+    setLoaderTitle("Generating Product Charter...");
     setLoaderIsSuccess(false);
     setIsGeneratingDraft(true);
-    toast.loading("Generating draft charter...", { id: "charter-gen" });
+    toast.loading("Generating charter...", { id: "charter-gen" });
 
     try {
       const result = await dispatch(generateCharter(currentProductId)).unwrap();
-      setDraftCharter(result);
-      setHasGeneratedCharter(true);
-      toast.success("Draft charter generated!", { id: "charter-gen" });
+      // Bind directly to productForm description
+      setProductForm((prev) => ({ ...prev, description: result }));
+      toast.success("Charter generated!", { id: "charter-gen" });
 
       // Signal success to loader and close after a delay
       setLoaderIsSuccess(true);
@@ -393,7 +408,7 @@ function AddProductContent() {
         setLoaderIsSuccess(false);
       }, 1500);
     } catch (error: any) {
-      toast.error(error || "Failed to generate draft charter", {
+      toast.error(error || "Failed to generate charter", {
         id: "charter-gen",
       });
       // Close loader on error
@@ -402,18 +417,6 @@ function AddProductContent() {
     } finally {
       setIsGeneratingDraft(false);
     }
-  };
-
-  const handleCopyDraftToFinal = async () => {
-    if (!draftCharter) {
-      toast.error("No draft charter to copy.");
-      return;
-    }
-
-    // Bind draft to final description locally and clear draft preview
-    setProductForm((prev) => ({ ...prev, description: draftCharter }));
-    setDraftCharter("");
-    toast.success("Draft copied to final description!");
   };
 
   return (
@@ -435,35 +438,37 @@ function AddProductContent() {
         }}
       />
 
-      {/* Main Header */}
-      <header className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+      {/* BEGIN: MainHeader */}
+      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
         <div className="flex items-center gap-4">
           <button
             onClick={handleBack}
             aria-label="Go back"
-            className="p-2 hover:bg-slate-100 rounded-full transition-colors cursor-pointer"
+            className="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition-colors"
           >
-            <ArrowLeft className="h-6 w-6 text-slate-500" />
+            <ArrowLeft className="h-6 w-6" />
           </button>
-          <div className="h-6 w-px bg-slate-200"></div>
           <div>
-            <h1 className="text-xl font-bold text-slate-900">
+            <h1 className="text-xl font-bold text-gray-900">
               {productId ? "Edit Product" : "New Product Showcase"}
             </h1>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-gray-500">
               Drafting your strategic offering
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <button className="px-4 py-2 text-sm font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer flex items-center gap-2">
+        <div className="flex gap-3">
+          <button
+            onClick={handleDownloadTemplate}
+            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:bg-gray-50 transition cursor-pointer"
+          >
             <Download className="w-4 h-4" />
-            Download Template
+            Download Charter Template
           </button>
           <button
             onClick={() => handleHandleAction(false)}
             disabled={createLoading || updateLoading || uploadLoading}
-            className="px-6 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm cursor-pointer flex items-center gap-2 disabled:opacity-70"
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition shadow-sm cursor-pointer disabled:opacity-70 flex items-center gap-2"
           >
             {(createLoading || updateLoading || uploadLoading) && (
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -472,464 +477,479 @@ function AddProductContent() {
           </button>
         </div>
       </header>
+      {/* END: MainHeader */}
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto p-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Section 1: Product Details */}
-          <section data-purpose="product-details-container">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="flex items-center justify-center w-8 h-8 bg-blue-100 text-blue-600 rounded-full font-bold text-sm">
+      {/* BEGIN: ProgressIndicator */}
+      <nav aria-label="Progress" className="max-w-4xl mx-auto mt-8 mb-12 px-1">
+        <ol className="flex items-center justify-between w-full">
+          <li className="flex flex-col items-center flex-1">
+            <div className="flex items-center w-full">
+              <div
+                className={`w-10 h-10 flex items-center justify-center rounded-full font-bold text-sm ${productForm.name ? "bg-blue-600 text-white" : "bg-blue-600 text-white"}`}
+              >
                 1
-              </span>
-              <h2 className="text-xl font-bold text-slate-800">
-                Product Details
-              </h2>
-            </div>
-            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-[0_4px_20px_rgba(0,0,0,0.05)] space-y-8">
-              {/* Product Name Input */}
-              <div className="space-y-2">
-                <label
-                  className="block text-xs font-bold text-slate-500 uppercase tracking-wider"
-                  htmlFor="product-name"
-                >
-                  Product Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  className={`w-full px-4 py-3 rounded-lg border ${formErrors.name ? "border-red-500" : "border-slate-200"} focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder:text-slate-300 text-sm`}
-                  id="product-name"
-                  placeholder="e.g. Strategic Growth Suite"
-                  type="text"
-                  value={productForm.name}
-                  onChange={(e) => {
-                    setProductForm({ ...productForm, name: e.target.value });
-                    if (formErrors.name)
-                      setFormErrors({ ...formErrors, name: undefined });
-                  }}
-                />
-                {formErrors.name && (
-                  <p className="text-red-500 text-[10px] mt-1">
-                    {formErrors.name}
-                  </p>
-                )}
               </div>
-
-              {/* Description Editor */}
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">
-                    FINAL PRODUCT CHARTER
-                  </label>
-                  <div className="flex gap-3 items-center">
-                    <button
-                      onClick={handleGenerateDraftCharter}
-                      disabled={isGeneratingDraft || productDocs.length === 0}
-                      className="text-xs font-bold text-blue-600 hover:text-blue-700 uppercase tracking-tight cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isGeneratingDraft
-                        ? "Generating..."
-                        : "Generate Draft Product Charter"}
-                    </button>
-                    <span className="text-slate-300">|</span>
-                    <button
-                      onClick={handleCopyDraftToFinal}
-                      disabled={!draftCharter || productDocs.length === 0}
-                      className="text-xs font-bold text-blue-600 hover:text-blue-700 uppercase tracking-tight cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      Copy Draft Product Charter to Final
-                    </button>
-                  </div>
-                </div>
-
-                {draftCharter && (
-                  <div className="mb-4 p-4 bg-blue-50 border border-blue-100 rounded-lg animate-in fade-in slide-in-from-top-2 duration-300">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Info className="w-4 h-4 text-blue-500" />
-                      <span className="text-[10px] font-bold text-blue-600 uppercase">
-                        Draft Generated
-                      </span>
-                    </div>
-                    <p className="text-xs text-slate-600 line-clamp-3 italic">
-                      {draftCharter}
-                    </p>
-                  </div>
-                )}
-
-                <div className="border border-slate-200 rounded-lg overflow-hidden">
-                  {/* Rich Text Toolbar */}
-                  <div className="flex items-center gap-4 px-4 py-2 border-b border-slate-200 bg-slate-50">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const textarea = document.getElementById(
-                          "description-input",
-                        ) as HTMLTextAreaElement;
-                        if (!textarea) return;
-
-                        const start = textarea.selectionStart;
-                        const end = textarea.selectionEnd;
-                        const text = productForm.description;
-                        const before = text.substring(0, start);
-                        const selection = text.substring(start, end);
-                        const after = text.substring(end);
-
-                        const newText = `${before}**${selection}**${after}`;
-                        setProductForm({
-                          ...productForm,
-                          description: newText,
-                        });
-
-                        setTimeout(() => {
-                          textarea.focus();
-                          textarea.setSelectionRange(start + 2, end + 2);
-                        }, 0);
-                      }}
-                      className="p-1.5 hover:bg-slate-200 rounded cursor-pointer transition-colors"
-                      title="Bold"
-                    >
-                      <Bold className="w-4 h-4 text-slate-600" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const textarea = document.getElementById(
-                          "description-input",
-                        ) as HTMLTextAreaElement;
-                        if (!textarea) return;
-
-                        const start = textarea.selectionStart;
-                        const end = textarea.selectionEnd;
-                        const text = productForm.description;
-                        const before = text.substring(0, start);
-                        const selection = text.substring(start, end);
-                        const after = text.substring(end);
-
-                        const newText = `${before}*${selection}*${after}`;
-                        setProductForm({
-                          ...productForm,
-                          description: newText,
-                        });
-
-                        setTimeout(() => {
-                          textarea.focus();
-                          textarea.setSelectionRange(start + 1, end + 1);
-                        }, 0);
-                      }}
-                      className="p-1.5 hover:bg-slate-200 rounded cursor-pointer transition-colors"
-                      title="Italic"
-                    >
-                      <Italic className="w-4 h-4 text-slate-600" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const textarea = document.getElementById(
-                          "description-input",
-                        ) as HTMLTextAreaElement;
-                        if (!textarea) return;
-
-                        const start = textarea.selectionStart;
-                        const text = productForm.description;
-                        const before = text.substring(0, start);
-                        const after = text.substring(start);
-
-                        const newText = `${before}\n- ${after}`;
-                        setProductForm({
-                          ...productForm,
-                          description: newText,
-                        });
-
-                        setTimeout(() => {
-                          textarea.focus();
-                          textarea.setSelectionRange(start + 3, start + 3);
-                        }, 0);
-                      }}
-                      className="p-1.5 hover:bg-slate-200 rounded cursor-pointer transition-colors"
-                      title="List"
-                    >
-                      <ListIcon className="w-4 h-4 text-slate-600" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const textarea = document.getElementById(
-                          "description-input",
-                        ) as HTMLTextAreaElement;
-                        if (!textarea) return;
-
-                        const start = textarea.selectionStart;
-                        const end = textarea.selectionEnd;
-                        const text = productForm.description;
-                        const before = text.substring(0, start);
-                        const selection = text.substring(start, end);
-                        const after = text.substring(end);
-
-                        const newText = `${before}[${selection || "link text"}](url)${after}`;
-                        setProductForm({
-                          ...productForm,
-                          description: newText,
-                        });
-
-                        setTimeout(() => {
-                          textarea.focus();
-                          const linkStart =
-                            start + (selection ? selection.length : 9) + 3;
-                          textarea.setSelectionRange(linkStart, linkStart + 3);
-                        }, 0);
-                      }}
-                      className="p-1.5 hover:bg-slate-200 rounded cursor-pointer transition-colors"
-                      title="Link"
-                    >
-                      <LinkIcon className="w-4 h-4 text-slate-600" />
-                    </button>
-                  </div>
-                  {/* Text Area */}
-                  <textarea
-                    id="description-input"
-                    className="w-full p-4 border-none focus:ring-0 text-slate-600 placeholder:text-slate-300 resize-none outline-none text-sm"
-                    placeholder="Briefly describe what this product does..."
-                    rows={12}
-                    value={productForm.description}
-                    onChange={(e) => {
-                      setProductForm({
-                        ...productForm,
-                        description: e.target.value,
-                      });
-                      if (formErrors.description)
-                        setFormErrors({
-                          ...formErrors,
-                          description: undefined,
-                        });
-                    }}
-                  ></textarea>
-                </div>
-                {formErrors.description && (
-                  <p className="text-red-500 text-[10px] mt-1">
-                    {formErrors.description}
-                  </p>
-                )}
-              </div>
+              <div
+                className={`h-0.5 flex-grow margin-0 mx-4 ${productForm.name ? "bg-blue-600" : "bg-gray-200"}`}
+              ></div>
             </div>
-          </section>
-
-          {/* Section 2: Assets & Media */}
-          <section data-purpose="assets-media-container">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="flex items-center justify-center w-8 h-8 bg-blue-100 text-blue-600 rounded-full font-bold text-sm">
+            <span className="mt-2 text-xs font-semibold text-blue-600 uppercase tracking-wider">
+              Project Name
+            </span>
+          </li>
+          <li className="flex flex-col items-center flex-1">
+            <div className="flex items-center w-full">
+              <div
+                className={`w-10 h-10 flex items-center justify-center rounded-full font-bold text-sm ${productImage || existingImagePath ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-500"}`}
+              >
                 2
-              </span>
-              <h2 className="text-xl font-bold text-slate-800">
-                Assets & Media
-              </h2>
+              </div>
+              <div
+                className={`h-0.5 flex-grow margin-0 mx-4 ${productImage || existingImagePath ? "bg-blue-600" : "bg-gray-200"}`}
+              ></div>
             </div>
-            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-[0_4px_20px_rgba(0,0,0,0.05)] space-y-8">
-              {/* Product Image Upload */}
-              <div className="space-y-3">
-                <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">
-                  Product Image
-                </label>
-                <div
-                  onDragOver={(e) => handleDragOver(e, "image")}
-                  onDragLeave={() => handleDragLeave("image")}
-                  onDrop={(e) => handleDrop(e, "image")}
-                  className={`relative border-2 border-dashed ${formErrors.image ? "border-red-300 bg-red-50/50" : isDraggingImage ? "border-blue-500 bg-blue-50/50" : "border-slate-200 bg-slate-50/50 hover:bg-slate-50"} rounded-xl py-12 flex flex-col items-center justify-center transition-colors cursor-pointer group min-h-[200px]`}
-                >
-                  {previewImage ? (
-                    <div className="relative w-full h-full p-2 flex flex-col items-center justify-center">
-                      <div className="relative group/image">
-                        {productImage ? (
-                          <img
-                            src={previewImage}
-                            alt="Preview"
-                            className="h-32 w-auto object-contain rounded-lg shadow-sm"
-                          />
-                        ) : (
-                          <AuthenticatedImage
-                            src={previewImage}
-                            alt="Preview"
-                            className="h-32 w-auto object-contain rounded-lg shadow-sm"
-                          />
-                        )}
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setProductImage(null);
-                            setExistingImagePath(null);
-                          }}
-                          className="absolute -top-2 -right-2 p-1 bg-white rounded-full shadow-md text-slate-400 hover:text-red-500 z-10 hover:scale-110 transition-all opacity-0 group-hover/image:opacity-100 cursor-pointer"
-                          title="Remove Image"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
-                      <p className="mt-3 text-[10px] text-slate-500 font-medium truncate max-w-[80%]">
-                        {productImage
-                          ? productImage.name
-                          : existingImagePath?.split("/").pop()}
-                      </p>
-                    </div>
-                  ) : (
-                    <>
-                      <Cloud className="h-12 w-12 text-slate-300 mb-3 group-hover:scale-110 transition-transform" />
-                      <p className="text-slate-600 font-medium">
-                        Click or drag image here
-                      </p>
-                      <p className="text-xs text-slate-400 mt-1">
-                        PNG, JPG or WEBP (Max 2MB)
-                      </p>
-                    </>
-                  )}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        setProductImage(file);
-                        if (formErrors.image)
-                          setFormErrors({ ...formErrors, image: undefined });
-                      }
-                    }}
-                    className="absolute inset-0 opacity-0 cursor-pointer"
-                  />
-                </div>
-                {formErrors.image && (
-                  <p className="text-red-500 text-[10px] mt-1">
-                    {formErrors.image}
-                  </p>
-                )}
+            <span
+              className={`mt-2 text-xs font-semibold uppercase tracking-wider ${productImage || existingImagePath ? "text-blue-600" : "text-gray-400"}`}
+            >
+              Product Image
+            </span>
+          </li>
+          <li className="flex flex-col items-center flex-1">
+            <div className="flex items-center w-full">
+              <div
+                className={`w-10 h-10 flex items-center justify-center rounded-full font-bold text-sm ${productDocs.length > 0 || existingDocs.length > 0 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-500"}`}
+              >
+                3
               </div>
+              <div
+                className={`h-0.5 flex-grow margin-0 mx-4 ${productDocs.length > 0 || existingDocs.length > 0 ? "bg-blue-600" : "bg-gray-200"}`}
+              ></div>
+            </div>
+            <span
+              className={`mt-2 text-xs font-semibold uppercase tracking-wider ${productDocs.length > 0 || existingDocs.length > 0 ? "text-blue-600" : "text-gray-400"}`}
+            >
+              Documents
+            </span>
+          </li>
+          <li className="flex flex-col items-center">
+            <div
+              className={`w-10 h-10 flex items-center justify-center rounded-full font-bold text-sm border-2 border-transparent ${productForm.description ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-500"}`}
+            >
+              4
+            </div>
+            <span
+              className={`mt-2 text-xs font-semibold uppercase tracking-wider ${productForm.description ? "text-blue-600" : "text-gray-400"}`}
+            >
+              Charter
+            </span>
+          </li>
+        </ol>
+      </nav>
+      {/* END: ProgressIndicator */}
 
-              {/* Project Document Upload */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">
-                    PRODUCT DOCUMENTS
-                  </label>
-                </div>
-                <div
-                  onDragOver={(e) => handleDragOver(e, "docs")}
-                  onDragLeave={() => handleDragLeave("docs")}
-                  onDrop={(e) => handleDrop(e, "docs")}
-                  className={`relative border-2 border-dashed ${isDraggingDocs ? "border-blue-500 bg-blue-50/50" : "border-slate-200 bg-slate-50/50 hover:bg-slate-50"} rounded-xl py-12 flex flex-col items-center justify-center transition-colors cursor-pointer group min-h-[160px]`}
-                >
-                  <Upload className="h-12 w-12 text-slate-300 mb-3 group-hover:scale-110 transition-transform" />
-                  <p className="text-slate-600 font-medium">
-                    Click or drag documents here
-                  </p>
-                  <p className="text-xs text-slate-400 mt-1">PDF (Max 10MB)</p>
-                  <input
-                    type="file"
-                    multiple
-                    accept="application/pdf"
-                    onChange={(e) => {
-                      if (e.target.files) {
-                        const newFiles = Array.from(e.target.files);
-                        const nonPdfFiles = newFiles.filter(
-                          (f) => f.type !== "application/pdf",
-                        );
-                        if (nonPdfFiles.length > 0) {
-                          toast.error("Only PDF documents are allowed");
-                          const pdfFiles = newFiles.filter(
-                            (f) => f.type === "application/pdf",
-                          );
-                          setProductDocs((prev) => [...prev, ...pdfFiles]);
-                        } else {
-                          setProductDocs((prev) => [...prev, ...newFiles]);
-                        }
-                      }
-                    }}
-                    className="absolute inset-0 opacity-0 cursor-pointer"
-                  />
-                </div>
-
-                {/* Document List */}
-                <div className="space-y-2 mt-4 max-h-[300px] overflow-y-auto custom-scrollbar">
-                  {/* Existing Documents */}
-                  {existingDocs.map((path, index) => (
-                    <div
-                      key={`existing-${index}`}
-                      className="flex justify-between items-center p-3 bg-slate-50 border border-slate-100 rounded-xl group/doc"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-white rounded-lg shadow-sm">
-                          <FileText className="w-5 h-5 text-slate-400" />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-sm font-medium text-slate-700 truncate max-w-[200px]">
-                            {path.split("/").pop()}
-                          </span>
-                          <span className="text-[10px] text-slate-400 font-bold uppercase">
-                            Existing Document
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex gap-1 opacity-0 group-hover/doc:opacity-100 transition-opacity">
-                        <button
-                          onClick={() => {
-                            const url = `${getBaseUrl()}${endpoints.getProductFile(productId || "", path)}`;
-                            window.open(url, "_blank");
-                          }}
-                          className="p-2 hover:bg-white rounded-lg text-slate-400 hover:text-blue-500 transition-colors cursor-pointer"
-                          title="View"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => {
-                            setExistingDocs((prev) =>
-                              prev.filter((_, i) => i !== index),
-                            );
-                            toast.success("Document removed from list");
-                          }}
-                          className="p-2 hover:bg-white rounded-lg text-slate-400 hover:text-red-500 transition-colors cursor-pointer"
-                          title="Remove"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-
-                  {/* New Documents */}
-                  {productDocs.map((file, index) => (
-                    <div
-                      key={`new-${index}`}
-                      className="flex justify-between items-center p-3 bg-blue-50/50 border border-blue-100 rounded-xl group/doc"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-white rounded-lg shadow-sm">
-                          <FileText className="w-5 h-5 text-blue-500" />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="text-sm font-medium text-slate-700 truncate max-w-[200px]">
-                            {file.name}
-                          </span>
-                          <span className="text-[10px] text-blue-500 font-bold uppercase">
-                            New Upload
-                          </span>
-                        </div>
-                      </div>
-                      <button
-                        onClick={() =>
-                          setProductDocs((prev) =>
-                            prev.filter((_, i) => i !== index),
-                          )
-                        }
-                        className="p-2 hover:bg-white rounded-lg text-slate-400 hover:text-red-500 opacity-0 group-hover/doc:opacity-100 transition-all cursor-pointer"
-                        title="Remove"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
+      {/* BEGIN: WorkflowContent */}
+      <main className="max-w-4xl mx-auto px-1 pb-20">
+        {/* STAGE 1 & 2 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          {/* BEGIN: Stage1_ProjectName */}
+          <section
+            className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300"
+            data-purpose="stage-1-container"
+          >
+            <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">
+              Stage 1: Project Name
+            </h2>
+            <div className="space-y-4">
+              <label
+                className="block text-xs font-bold text-gray-500 uppercase"
+                htmlFor="product-name"
+              >
+                Product Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                className={`w-full bg-blue-50 border-none rounded-lg p-4 text-gray-700 focus:ring-2 focus:ring-blue-500 transition outline-none ${formErrors.name ? "ring-2 ring-red-500" : ""}`}
+                id="product-name"
+                placeholder="Enter product name"
+                type="text"
+                value={productForm.name}
+                onChange={(e) => {
+                  setProductForm({ ...productForm, name: e.target.value });
+                  if (formErrors.name)
+                    setFormErrors({ ...formErrors, name: undefined });
+                }}
+              />
+              {formErrors.name && (
+                <p className="text-red-500 text-[10px] mt-1">
+                  {formErrors.name}
+                </p>
+              )}
             </div>
           </section>
+          {/* END: Stage1_ProjectName */}
+
+          {/* BEGIN: Stage2_ProductImage */}
+          <section
+            className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300"
+            data-purpose="stage-2-container"
+          >
+            <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">
+              Stage 2: Product Image
+            </h2>
+            <div
+              onDragOver={(e) => handleDragOver(e, "image")}
+              onDragLeave={() => handleDragLeave("image")}
+              onDrop={(e) => handleDrop(e, "image")}
+              className={`border-2 border-dashed ${formErrors.image ? "border-red-300 bg-red-50/50" : isDraggingImage ? "border-blue-500 bg-blue-50/50" : "border-gray-200 hover:bg-gray-50"} rounded-xl p-8 flex flex-col items-center justify-center transition cursor-pointer group min-h-[200px] relative`}
+            >
+              {previewImage ? (
+                <div className="relative w-full h-full flex flex-col items-center justify-center">
+                  <div className="relative group/image">
+                    {productImage ? (
+                      <img
+                        src={previewImage}
+                        alt="Preview"
+                        className="h-24 w-auto object-contain rounded-lg shadow-sm"
+                      />
+                    ) : (
+                      <AuthenticatedImage
+                        src={previewImage}
+                        alt="Preview"
+                        className="h-24 w-auto object-contain rounded-lg shadow-sm"
+                      />
+                    )}
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setProductImage(null);
+                        setExistingImagePath(null);
+                      }}
+                      className="absolute -top-2 -right-2 p-1 bg-white rounded-full shadow-md text-slate-400 hover:text-red-500 z-10 hover:scale-110 transition-all opacity-0 group-hover/image:opacity-100 cursor-pointer"
+                      title="Remove Image"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <p className="mt-3 text-[10px] text-gray-500 font-medium truncate max-w-[80%]">
+                    {productImage
+                      ? productImage.name
+                      : existingImagePath?.split("/").pop()}
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition duration-300">
+                    <Cloud className="h-8 w-8 text-blue-400" />
+                  </div>
+                  <p className="text-sm font-semibold text-gray-700">
+                    Click or drag image here
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1 uppercase tracking-tight">
+                    PNG, JPG or WEBP (Max 2MB)
+                  </p>
+                </>
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    setProductImage(file);
+                    if (formErrors.image)
+                      setFormErrors({ ...formErrors, image: undefined });
+                  }
+                }}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
+            </div>
+            {formErrors.image && (
+              <p className="text-red-500 text-[10px] mt-1">
+                {formErrors.image}
+              </p>
+            )}
+          </section>
+          {/* END: Stage2_ProductImage */}
         </div>
+
+        {/* BEGIN: Stage3_UploadDocuments */}
+        <section
+          className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm mb-8 transition-all duration-300"
+          data-purpose="stage-3-container"
+        >
+          <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">
+            Stage 3: Upload Document
+          </h2>
+          <div
+            onDragOver={(e) => handleDragOver(e, "docs")}
+            onDragLeave={() => handleDragLeave("docs")}
+            onDrop={(e) => handleDrop(e, "docs")}
+            className={`border-2 border-dashed ${isDraggingDocs ? "border-blue-500 bg-blue-50/50" : "border-gray-200 hover:bg-gray-50"} rounded-xl p-10 flex flex-col items-center justify-center transition cursor-pointer mb-4 relative`}
+          >
+            <Upload className="h-10 w-10 text-gray-300 mb-2" />
+            <p className="text-sm font-semibold text-gray-700">
+              Click or drag a document here
+            </p>
+            <p className="text-xs text-gray-400 mt-1">Only PDF File Accepted</p>
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={(e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                  const file = e.target.files[0];
+                  if (file.type !== "application/pdf") {
+                    toast.error("Only PDF documents are allowed");
+                  } else {
+                    // Replace existing docs with the new single file
+                    setProductDocs([file]);
+                  }
+                }
+              }}
+              className="absolute inset-0 opacity-0 cursor-pointer"
+            />
+          </div>
+
+          {/* File List */}
+          <div className="space-y-2">
+            {/* Existing Documents */}
+            {existingDocs.map((path, index) => (
+              <div
+                key={`existing-${index}`}
+                className="flex items-center gap-4 p-4 border border-blue-100 bg-blue-50/30 rounded-lg group/doc"
+              >
+                <div className="w-10 h-12 bg-white rounded-md border border-gray-200 flex items-center justify-center">
+                  <FileText className="h-6 w-6 text-blue-500" />
+                </div>
+                <div className="flex-grow">
+                  <p className="text-sm font-medium text-gray-700 truncate max-w-[200px]">
+                    {path.split("/").pop()}
+                  </p>
+                  <span className="text-[10px] font-bold text-blue-600 uppercase">
+                    Existing Document
+                  </span>
+                </div>
+                <button
+                  onClick={() => {
+                    const newDocs = [...existingDocs];
+                    newDocs.splice(index, 1);
+                    setExistingDocs(newDocs);
+                  }}
+                  className="text-gray-400 hover:text-red-500 p-1 opacity-0 group-hover/doc:opacity-100 transition-opacity"
+                  title="Remove Document"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            ))}
+
+            {/* New Documents */}
+            {productDocs.map((file, index) => (
+              <div
+                key={`new-${index}`}
+                className="flex items-center gap-4 p-4 border border-blue-100 bg-blue-50/30 rounded-lg group/doc"
+              >
+                <div className="w-10 h-12 bg-white rounded-md border border-gray-200 flex items-center justify-center">
+                  <FileText className="h-6 w-6 text-blue-500" />
+                </div>
+                <div className="flex-grow">
+                  <p className="text-sm font-medium text-gray-700 truncate max-w-[200px]">
+                    {file.name}
+                  </p>
+                  <span className="text-[10px] font-bold text-blue-600 uppercase">
+                    New Upload
+                  </span>
+                </div>
+                <button
+                  onClick={() => {
+                    const newDocs = [...productDocs];
+                    newDocs.splice(index, 1);
+                    setProductDocs(newDocs);
+                  }}
+                  className="text-gray-400 hover:text-red-500 p-1 opacity-0 group-hover/doc:opacity-100 transition-opacity"
+                  title="Remove Document"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
+        {/* END: Stage3_UploadDocuments */}
+
+        {/* BEGIN: Stage4_GenerateCharter */}
+        <section
+          className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300"
+          data-purpose="stage-4-container"
+        >
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">
+                Stage 4: Generate Charter
+              </h2>
+              <label className="block text-xs font-bold text-gray-500 uppercase">
+                Product Charter <span className="text-red-500">*</span>
+              </label>
+            </div>
+            <button
+              onClick={handleGenerateDraftCharter}
+              disabled={isGeneratingDraft || productDocs.length === 0}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition shadow-md flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <FileText className="h-4 w-4" />
+              {isGeneratingDraft ? "Generating..." : "Generate Product Charter"}
+            </button>
+          </div>
+
+          {/* Rich Text Editor Simulated Container */}
+          <div className="border border-gray-200 rounded-xl overflow-hidden shadow-inner">
+            {/* Editor Toolbar */}
+            <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex gap-4">
+              <button
+                type="button"
+                onClick={() => {
+                  const textarea = document.getElementById(
+                    "description-input",
+                  ) as HTMLTextAreaElement;
+                  if (!textarea) return;
+
+                  const start = textarea.selectionStart;
+                  const end = textarea.selectionEnd;
+                  const text = productForm.description;
+                  const before = text.substring(0, start);
+                  const selection = text.substring(start, end);
+                  const after = text.substring(end);
+
+                  const newText = `${before}**${selection}**${after}`;
+                  setProductForm({
+                    ...productForm,
+                    description: newText,
+                  });
+
+                  setTimeout(() => {
+                    textarea.focus();
+                    textarea.setSelectionRange(start + 2, end + 2);
+                  }, 0);
+                }}
+                className="p-1 hover:bg-gray-200 rounded text-gray-600 font-bold w-8"
+              >
+                B
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const textarea = document.getElementById(
+                    "description-input",
+                  ) as HTMLTextAreaElement;
+                  if (!textarea) return;
+
+                  const start = textarea.selectionStart;
+                  const end = textarea.selectionEnd;
+                  const text = productForm.description;
+                  const before = text.substring(0, start);
+                  const selection = text.substring(start, end);
+                  const after = text.substring(end);
+
+                  const newText = `${before}*${selection}*${after}`;
+                  setProductForm({
+                    ...productForm,
+                    description: newText,
+                  });
+
+                  setTimeout(() => {
+                    textarea.focus();
+                    textarea.setSelectionRange(start + 1, end + 1);
+                  }, 0);
+                }}
+                className="p-1 hover:bg-gray-200 rounded text-gray-600 italic font-serif w-8 text-lg"
+              >
+                I
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const textarea = document.getElementById(
+                    "description-input",
+                  ) as HTMLTextAreaElement;
+                  if (!textarea) return;
+
+                  const start = textarea.selectionStart;
+                  const text = productForm.description;
+                  const before = text.substring(0, start);
+                  const after = text.substring(start);
+
+                  const newText = `${before}\n- ${after}`;
+                  setProductForm({ ...productForm, description: newText });
+
+                  setTimeout(() => {
+                    textarea.focus();
+                    textarea.setSelectionRange(start + 3, start + 3);
+                  }, 0);
+                }}
+                className="p-1 hover:bg-gray-200 rounded text-gray-600 flex items-center justify-center"
+              >
+                <ListIcon className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const textarea = document.getElementById(
+                    "description-input",
+                  ) as HTMLTextAreaElement;
+                  if (!textarea) return;
+
+                  const start = textarea.selectionStart;
+                  const end = textarea.selectionEnd;
+                  const text = productForm.description;
+                  const before = text.substring(0, start);
+                  const selection = text.substring(start, end);
+                  const after = text.substring(end);
+
+                  const newText = `${before}[${selection || "link text"}](url)${after}`;
+                  setProductForm({
+                    ...productForm,
+                    description: newText,
+                  });
+
+                  setTimeout(() => {
+                    textarea.focus();
+                    const linkStart =
+                      start + (selection ? selection.length : 9) + 3;
+                    textarea.setSelectionRange(linkStart, linkStart + 3);
+                  }, 0);
+                }}
+                className="p-1 hover:bg-gray-200 rounded text-gray-600"
+              >
+                <LinkIcon className="h-4 w-4" />
+              </button>
+            </div>
+            {/* Editor Text Area */}
+            <textarea
+              id="description-input"
+              className="w-full p-6 bg-white min-h-[350px] text-sm text-gray-700 leading-relaxed whitespace-pre-wrap outline-none resize-none border-none focus:ring-0"
+              placeholder="Charter details will appear here..."
+              value={productForm.description}
+              onChange={(e) => {
+                setProductForm({
+                  ...productForm,
+                  description: e.target.value,
+                });
+                if (formErrors.description)
+                  setFormErrors({
+                    ...formErrors,
+                    description: undefined,
+                  });
+              }}
+            ></textarea>
+          </div>
+          {formErrors.description && (
+            <p className="text-red-500 text-[10px] mt-1 px-1">
+              {formErrors.description}
+            </p>
+          )}
+        </section>
+        {/* END: Stage4_GenerateCharter */}
       </main>
+      {/* END: WorkflowContent */}
 
       {/* Product Document Upload Prompt Modal */}
       {showUploadPrompt && (
@@ -1028,7 +1048,7 @@ function AddProductContent() {
                       setShowUploadPrompt(false);
                       router.push("/products");
                     } catch (error: any) {
-                      toast.error(error || "Failed to upload documents");
+                      toast.error(error || "Failed to upload document");
                     }
                   }}
                   disabled={uploadLoading || uploadPromptDocs.length === 0}
@@ -1050,10 +1070,9 @@ function AddProductContent() {
           router.push("/products");
         }}
         title="Unsaved Changes"
-        description="You have unsaved changes. Are you sure you want to leave? Your progress will be lost."
+        description="You have unsaved changes. Are you sure you want to leave? Your changes will be lost."
         confirmLabel="Leave Page"
-        cancelLabel="Stay"
-        variant="info"
+        cancelLabel="Stay on Page"
       />
     </div>
   );
@@ -1061,13 +1080,7 @@ function AddProductContent() {
 
 export default function AddProductPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        </div>
-      }
-    >
+    <Suspense>
       <AddProductContent />
     </Suspense>
   );
