@@ -6,7 +6,11 @@ import { ReduxProvider } from "./redux/store/reduxProvider";
 import ToasterProvider from "./components/ToasterProvider";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-poppins" });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-poppins",
+});
 
 export const metadata: Metadata = {
   title: "Magic Carpet",
@@ -29,12 +33,22 @@ export const viewport = {
   maximumScale: 1,
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+          rel="stylesheet"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -47,7 +61,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className={`${manrope.variable} ${poppins.variable} font-display antialiased`}>
+      <body
+        className={`${manrope.variable} ${poppins.variable} font-display antialiased`}
+      >
         <ReduxProvider>
           <ToasterProvider />
           {children}

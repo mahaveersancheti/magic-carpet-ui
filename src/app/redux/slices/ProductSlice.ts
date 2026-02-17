@@ -68,17 +68,14 @@ export const createProduct = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      // Build query parameters for name and description
-      const params = new URLSearchParams({
-        name: payload.name,
-        description: payload.description,
-      });
+      // Use base product endpoint without query parameters
+      const endpoint = "product";
 
-      // Combine with existing userId parameter
-      const endpoint = `${endpoints.createProduct(userId)}&${params.toString()}`;
-
-      // Create FormData only for image
+      // Create FormData with image and metadata
       const formData = new FormData();
+      formData.append("userId", userId);
+      formData.append("name", payload.name);
+      formData.append("description", payload.description);
       if (payload.image) {
         formData.append("image", payload.image);
       }
@@ -105,19 +102,15 @@ export const updateProduct = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      // Build query parameters including productId
-      const params = new URLSearchParams({
-        productId: productId,
-        name: payload.name,
-        description: payload.description,
-        userId: userId,
-      });
+      // Build the final endpoint URL without query parameters
+      const endpoint = endpoints.updateProduct;
 
-      // Build the final endpoint URL
-      const endpoint = `${endpoints.updateProduct}?${params.toString()}`;
-
-      // Create FormData only for image
+      // Create FormData with image and metadata
       const formData = new FormData();
+      formData.append("productId", productId);
+      formData.append("userId", userId);
+      formData.append("name", payload.name);
+      formData.append("description", payload.description);
       if (payload.image) {
         formData.append("image", payload.image);
       }
