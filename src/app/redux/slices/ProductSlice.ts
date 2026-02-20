@@ -27,6 +27,7 @@ interface ProductState {
   updateLoading: boolean;
   deleteLoading: boolean;
   uploadLoading: boolean;
+  deleteFileLoading: boolean;
   generateCharterLoading: boolean;
   error: string | null;
 }
@@ -38,6 +39,7 @@ const initialState: ProductState = {
   updateLoading: false,
   deleteLoading: false,
   uploadLoading: false,
+  deleteFileLoading: false,
   generateCharterLoading: false,
   error: null,
 };
@@ -158,6 +160,27 @@ export const uploadProductFiles = createAsyncThunk(
   },
 );
 
+export const deleteProductFile = createAsyncThunk(
+  "products/deleteProductFile",
+  async (
+    {
+      productId,
+      fileId,
+      userId,
+    }: { productId: string; fileId: string; userId: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      await api.delete(endpoints.deleteProductFile(productId, fileId, userId), {
+        "Skip-Auth": "true",
+      });
+      return { productId, fileId };
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to delete file");
+    }
+  },
+);
+
 export const generateCharter = createAsyncThunk(
   "products/generateCharter",
   async (productId: string, { rejectWithValue }) => {
@@ -269,6 +292,26 @@ const productSlice = createSlice({
       })
       .addCase(uploadProductFiles.rejected, (state, action) => {
         state.uploadLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(deleteProductFile.pending, (state) => {
+        state.deleteFileLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteProductFile.fulfilled, (state, action) => {
+        state.deleteFileLoading = false;
+        // Remove the deleted file from the matching product's filePaths
+        const product = state.products.find(
+          (p) => p.id === action.payload.productId,
+        );
+        if (product) {
+          product.filePaths = product.filePaths.filter(
+            (fp) => fp !== action.payload.fileId,
+          );
+        }
+      })
+      .addCase(deleteProductFile.rejected, (state, action) => {
+        state.deleteFileLoading = false;
         state.error = action.payload as string;
       })
       .addCase(generateCharter.pending, (state) => {

@@ -23,6 +23,8 @@ export const endpoints = {
     `product/${productId}/files/${fileName}`,
   getProductImage: (productId: string) => `product/${productId}/image`,
   uploadProductFiles: "product/files",
+  deleteProductFile: (productId: string, fileId: string, userId: string) =>
+    `product/file?productId=${productId}&fileId=${encodeURIComponent(fileId)}&userId=${userId}`,
   downloadProductTemplate: "product/download/product-template",
   downloadProductTemplate1: "product/download/product-template1",
   generateCharter: (productId: string) =>

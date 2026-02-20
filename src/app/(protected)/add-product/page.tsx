@@ -7,6 +7,7 @@ import {
   createProduct,
   updateProduct,
   uploadProductFiles,
+  deleteProductFile,
   CreateProductPayload,
   UpdateProductPayload,
   fetchProductsByUserId,
@@ -57,7 +58,9 @@ function AddProductContent() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+  const [docToDelete, setDocToDelete] = useState<string | null>(null);
   const dummyHistoryPushed = React.useRef(false);
+  const isFormInitialized = React.useRef(false);
 
   const [productImage, setProductImage] = useState<File | null>(null);
   const [productDocs, setProductDocs] = useState<File[]>([]);
@@ -136,6 +139,7 @@ function AddProductContent() {
     createLoading,
     updateLoading,
     uploadLoading,
+    deleteFileLoading,
     loading: productsLoading,
   } = useSelector((state: RootState) => state.products);
 
@@ -143,14 +147,20 @@ function AddProductContent() {
     if (productId && user?.userId) {
       const product = products.find((p) => p.id === productId);
       if (product) {
-        const formData = {
-          name: product.name,
-          description: product.description,
-        };
-        setProductForm(formData);
-        setInitialForm(formData);
-        setExistingDocs(product.filePaths || []);
-        setExistingImagePath(product.imagePath);
+        // Only initialize the form once from server data.
+        // Subsequent Redux updates (e.g. from updateProduct) should NOT
+        // overwrite local state like existingDocs which the user may have changed.
+        if (!isFormInitialized.current) {
+          const formData = {
+            name: product.name,
+            description: product.description,
+          };
+          setProductForm(formData);
+          setInitialForm(formData);
+          setExistingDocs(product.filePaths || []);
+          setExistingImagePath(product.imagePath);
+          isFormInitialized.current = true;
+        }
       } else if (!productsLoading) {
         dispatch(fetchProductsByUserId(user.userId));
       }
@@ -278,6 +288,12 @@ function AddProductContent() {
               files: productDocs,
             }),
           ).unwrap();
+          // Move uploaded docs to existingDocs so the list remains visible
+          setExistingDocs((prev) => [
+            ...prev,
+            ...productDocs.map((f) => f.name),
+          ]);
+          setProductDocs([]);
         }
 
         toast.success("Product updated successfully!");
@@ -296,6 +312,9 @@ function AddProductContent() {
           createProduct({ userId, payload }),
         ).unwrap();
         currentProductId = newProduct.id;
+        // Mark form as initialized so the useEffect doesn't reset
+        // existingDocs when the URL updates with the new productId
+        isFormInitialized.current = true;
 
         if (productDocs.length > 0) {
           await dispatch(
@@ -305,6 +324,12 @@ function AddProductContent() {
               files: productDocs,
             }),
           ).unwrap();
+          // Move uploaded docs to existingDocs so the list remains visible
+          setExistingDocs((prev) => [
+            ...prev,
+            ...productDocs.map((f) => f.name),
+          ]);
+          setProductDocs([]);
         }
 
         toast.success("Product added successfully!");
@@ -372,6 +397,38 @@ function AddProductContent() {
     } catch (error: any) {
       toast.error("Failed to download template");
       console.error(error);
+    }
+  };
+
+  const handleDeleteExistingDoc = (filePath: string) => {
+    const currentProductId = productId;
+    if (!currentProductId) {
+      // If product not yet saved, just remove from local state without confirmation
+      setExistingDocs((prev) => prev.filter((p) => p !== filePath));
+      return;
+    }
+    // Open confirmation dialog
+    setDocToDelete(filePath);
+  };
+
+  const confirmDeleteDoc = async () => {
+    if (!docToDelete) return;
+    const currentProductId = productId;
+    const userId = user?.userId;
+    setDocToDelete(null);
+    if (!currentProductId || !userId) return;
+    try {
+      await dispatch(
+        deleteProductFile({
+          productId: currentProductId,
+          fileId: docToDelete,
+          userId,
+        }),
+      ).unwrap();
+      setExistingDocs((prev) => prev.filter((p) => p !== docToDelete));
+      toast.success("Document deleted successfully");
+    } catch (error: any) {
+      toast.error(error || "Failed to delete document");
     }
   };
 
@@ -694,6 +751,10 @@ function AddProductContent() {
             <input
               type="file"
               accept="application/pdf"
+              onClick={(e) => {
+                // Reset so selecting the same file again fires onChange
+                (e.target as HTMLInputElement).value = "";
+              }}
               onChange={(e) => {
                 if (e.target.files && e.target.files.length > 0) {
                   const file = e.target.files[0];
@@ -729,15 +790,12 @@ function AddProductContent() {
                   </span>
                 </div>
                 <button
-                  onClick={() => {
-                    const newDocs = [...existingDocs];
-                    newDocs.splice(index, 1);
-                    setExistingDocs(newDocs);
-                  }}
-                  className="text-gray-400 hover:text-red-500 p-1 opacity-0 group-hover/doc:opacity-100 transition-opacity"
-                  title="Remove Document"
+                  onClick={() => handleDeleteExistingDoc(path)}
+                  disabled={deleteFileLoading}
+                  className="text-gray-400 hover:text-red-500 p-1 opacity-0 group-hover/doc:opacity-100 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                  title="Delete Document"
                 >
-                  <X className="h-5 w-5" />
+                  <Trash2 className="h-5 w-5" />
                 </button>
               </div>
             ))}
@@ -1061,6 +1119,16 @@ function AddProductContent() {
           </div>
         </div>
       )}
+
+      <ConfirmationDialog
+        isOpen={docToDelete !== null}
+        onClose={() => setDocToDelete(null)}
+        onConfirm={confirmDeleteDoc}
+        title="Delete Document"
+        description={`Are you sure you want to delete "${docToDelete?.split("/").pop()}"? This action cannot be undone.`}
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+      />
 
       <ConfirmationDialog
         isOpen={isConfirmDialogOpen}
