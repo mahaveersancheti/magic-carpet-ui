@@ -471,7 +471,7 @@ export default function DashboardPage() {
                         </td>
                         <td className="px-4 py-2">
                           <span className={`text-sm font-bold ${getScoreColor(row.warmCallScore)}`}>
-                            {row.warmCallScore}
+                            {row.warmCallScore || '-'}
                           </span>
                         </td>
                         <td className="px-4 py-2">
