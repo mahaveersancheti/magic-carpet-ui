@@ -551,7 +551,7 @@ function AddProductContent() {
               ></div>
             </div>
             <span className="mt-2 text-xs font-semibold text-blue-600 uppercase tracking-wider">
-              Project Name
+              Product Name
             </span>
           </li>
           <li className="flex flex-col items-center flex-1">
@@ -614,7 +614,7 @@ function AddProductContent() {
             data-purpose="stage-1-container"
           >
             <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">
-              Stage 1: Project Name
+              Stage 1: Product Name
             </h2>
             <div className="space-y-4">
               <label
