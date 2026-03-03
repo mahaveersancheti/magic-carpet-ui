@@ -8,6 +8,8 @@ export const endpoints = {
   getProfileById: (id: string) => `profiles/${id}`,
   getProfileByIdPopulateDummy: (id: string) => `profiles/${id}/populate-dummy`,
   createProfile: "profiles",
+  uploadProfileExcel: "profiles/upload-excel",
+  downloadProfileTemplate: "profiles/download/profile-template",
   updateProfile: (id: string) => `profiles/request/${id}`,
   deleteProfile: (id: string) => `profiles/${id}`,
   getProfileSection: (id: string, text: string) =>

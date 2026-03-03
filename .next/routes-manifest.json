@@ -106,6 +106,12 @@
       "namedRegex": "^/tutorial(?:/)?$"
     },
     {
+      "page": "/upload-leads",
+      "regex": "^/upload\\-leads(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/upload\\-leads(?:/)?$"
+    },
+    {
       "page": "/userprofile",
       "regex": "^/userprofile(?:/)?$",
       "routeKeys": {},
