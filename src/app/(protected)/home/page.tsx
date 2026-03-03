@@ -40,6 +40,7 @@ interface TableRow {
   instagramUrl?: string;
   twitterUrl?: string;
   websiteUrl?: string;
+  productNames: string;
 }
 
 interface Notification {
@@ -171,6 +172,11 @@ export default function DashboardPage() {
         instagramUrl: (p as any).instagramUrl || "",
         twitterUrl: (p as any).twitterUrl || "",
         websiteUrl: (p as any).websiteUrl || "",
+        productNames:
+          (p as any).productFit
+            ?.map((pf: any) => pf.productName)
+            .filter(Boolean)
+            .join(", ") || "N/A",
       };
     });
 
@@ -602,6 +608,14 @@ export default function DashboardPage() {
                           Status <SortIcon column="status" />
                         </button>
                       </th>
+                      <th className="px-4 py-2.5 min-w-[150px]">
+                        <button
+                          onClick={() => handleSort("productNames")}
+                          className="flex items-center gap-1 hover:text-primary transition-colors"
+                        >
+                          Products <SortIcon column="productNames" />
+                        </button>
+                      </th>
                       <th className="px-4 py-2.5 w-32">
                         <button
                           onClick={() => handleSort("date")}
@@ -667,6 +681,14 @@ export default function DashboardPage() {
                           </td>
                           <td className="px-4 py-2">
                             <StatusPill status={row.status} />
+                          </td>
+                          <td className="px-4 py-2">
+                            <p
+                              className="text-[11px] font-medium text-slate-600 truncate max-w-[200px]"
+                              title={row.productNames}
+                            >
+                              {row.productNames}
+                            </p>
                           </td>
                           <td className="px-4 py-2">
                             <span className="text-[11px] font-medium text-slate-500">

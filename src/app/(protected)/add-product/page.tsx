@@ -118,8 +118,13 @@ function AddProductContent() {
         }
 
         const file = e.dataTransfer.files[0];
-        if (file.type !== "application/pdf") {
-          toast.error("Only PDF documents are allowed");
+        const allowedTypes = [
+          "application/pdf",
+          "application/vnd.ms-powerpoint",
+          "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        ];
+        if (!allowedTypes.includes(file.type)) {
+          toast.error("Only PDF, PPT or PPTX documents are allowed");
         } else {
           // Replace existing docs with the new single file
           setProductDocs([file]);
@@ -219,6 +224,8 @@ function AddProductContent() {
       errors.name = "Product name is required";
     } else if (productForm.name.trim().length < 3) {
       errors.name = "Product name must be at least 3 characters";
+    } else if (/[/\\]/.test(productForm.name)) {
+      errors.name = "Product name cannot contain slashes (/ or \\)";
     }
 
     const hasDescription = productForm.description.trim().length >= 10;
@@ -630,7 +637,8 @@ function AddProductContent() {
                 type="text"
                 value={productForm.name}
                 onChange={(e) => {
-                  setProductForm({ ...productForm, name: e.target.value });
+                  const sanitizedValue = e.target.value.replace(/[/\\]/g, "");
+                  setProductForm({ ...productForm, name: sanitizedValue });
                   if (formErrors.name)
                     setFormErrors({ ...formErrors, name: undefined });
                 }}
@@ -747,10 +755,12 @@ function AddProductContent() {
             <p className="text-sm font-semibold text-gray-700">
               Click or drag a document here
             </p>
-            <p className="text-xs text-gray-400 mt-1">Only PDF File Accepted</p>
+            <p className="text-xs text-gray-400 mt-1">
+              PDF, PPT or PPTX Files Accepted
+            </p>
             <input
               type="file"
-              accept="application/pdf"
+              accept=".pdf,.ppt,.pptx,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation"
               onClick={(e) => {
                 // Reset so selecting the same file again fires onChange
                 (e.target as HTMLInputElement).value = "";
@@ -758,8 +768,13 @@ function AddProductContent() {
               onChange={(e) => {
                 if (e.target.files && e.target.files.length > 0) {
                   const file = e.target.files[0];
-                  if (file.type !== "application/pdf") {
-                    toast.error("Only PDF documents are allowed");
+                  const allowedTypes = [
+                    "application/pdf",
+                    "application/vnd.ms-powerpoint",
+                    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                  ];
+                  if (!allowedTypes.includes(file.type)) {
+                    toast.error("Only PDF, PPT or PPTX documents are allowed");
                   } else {
                     // Replace existing docs with the new single file
                     setProductDocs([file]);
