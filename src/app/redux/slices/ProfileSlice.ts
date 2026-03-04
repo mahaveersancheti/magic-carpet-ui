@@ -196,6 +196,27 @@ export const updateProfile = createAsyncThunk(
   },
 );
 
+export const patchProfileStatus = createAsyncThunk(
+  "profiles/patchProfileStatus",
+  async (
+    { id, status, note }: { id: string; status: string; note: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const response = await api.patch<Profile>(
+        endpoints.patchProfile(id),
+        { status, note },
+        { accept: "*/*" },
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.message || "Failed to update profile status",
+      );
+    }
+  },
+);
+
 const profileSlice = createSlice({
   name: "profiles",
   initialState,
@@ -284,6 +305,26 @@ const profileSlice = createSlice({
         }
       })
       .addCase(updateProfile.rejected, (state, action) => {
+        state.updateLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(patchProfileStatus.pending, (state) => {
+        state.updateLoading = true;
+        state.error = null;
+      })
+      .addCase(patchProfileStatus.fulfilled, (state, action) => {
+        state.updateLoading = false;
+        const index = state.profiles.findIndex(
+          (p) => p.id === action.payload.id,
+        );
+        if (index !== -1) {
+          state.profiles[index] = action.payload;
+        }
+        if (state.selectedProfile?.id === action.payload.id) {
+          state.selectedProfile = action.payload;
+        }
+      })
+      .addCase(patchProfileStatus.rejected, (state, action) => {
         state.updateLoading = false;
         state.error = action.payload as string;
       })

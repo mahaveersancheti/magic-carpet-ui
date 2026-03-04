@@ -12,6 +12,7 @@ export const endpoints = {
   downloadProfileTemplate: "profiles/download/profile-template",
   updateProfile: (id: string) => `profiles/request/${id}`,
   deleteProfile: (id: string) => `profiles/${id}`,
+  patchProfile: (id: string) => `profiles/${id}`,
   getProfileSection: (id: string, text: string) =>
     `profiles/${id}/section?text=${encodeURIComponent(text)}`,
   getProfileSectionRaw: (id: string, text: string) =>
