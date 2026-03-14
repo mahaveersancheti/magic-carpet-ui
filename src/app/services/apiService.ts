@@ -69,8 +69,10 @@ axiosInstance.interceptors.response.use(
       message = error.message;
     }
 
+    const displayMessage = typeof message === 'string' ? message : JSON.stringify(message);
+
     if (status === 400) {
-      toast.error(message);
+      toast.error(displayMessage);
     } else if (status === 401 || status === 403) {
       // Clear auth state and navigate to login
       if (typeof window !== "undefined") {
@@ -94,10 +96,10 @@ axiosInstance.interceptors.response.use(
         }
       }
     } else {
-      toast.error(message);
+      toast.error(displayMessage);
     }
 
-    return Promise.reject(new Error(message));
+    return Promise.reject(new Error(displayMessage));
   },
 );
 

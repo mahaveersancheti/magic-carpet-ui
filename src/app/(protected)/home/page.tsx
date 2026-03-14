@@ -20,6 +20,8 @@ import {
   deleteProfile,
   patchProfileStatus,
   archiveProfile,
+  getCompanyData,
+  calculateWarmScore,
 } from "../../redux/slices/ProfileSlice";
 import { fetchProductsByUserId } from "../../redux/slices/ProductSlice";
 import { useUser } from "../../hooks/useUser";
@@ -27,7 +29,9 @@ import toast from "react-hot-toast";
 import { api } from "../../services/apiService";
 import { endpoints } from "../../lib/endpoints";
 import { ArchiveModal } from "@/app/components/ArchiveModal";
-import { Archive } from "lucide-react";
+import { Archive, Info } from "lucide-react";
+import { SidePanel } from "@/app/components/SidePanel";
+import { Timeline, TimelineStage } from "@/app/components/Timeline";
 
 type StatusType = "Complete" | "Pending" | "Failed";
 
@@ -98,6 +102,86 @@ export default function DashboardPage() {
     isLoading: false,
   });
 
+  // Side Panel State
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState(false);
+  const [selectedTimelineProfile, setSelectedTimelineProfile] = useState<
+    any | null
+  >(null);
+  const [loadingStageId, setLoadingStageId] = useState<string | null>(null);
+
+  const getTimelineStages = (profile: any): TimelineStage[] => {
+    const stages: string[] = [
+      "Profile Created",
+      "Extract Data",
+      "Get Company Data",
+      "Generate Warm Score",
+      "Completed",
+    ];
+
+    const status = (profile.status || "").toUpperCase();
+
+    // Logic to determine progress based on main status
+    let completedIndex = -1;
+    if (status === "COMPLETE" || status === "COMPLETED") completedIndex = 4;
+    else if (status === "WARM_SCORE_GENERATED") completedIndex = 3;
+    else if (status === "INFO_GATHERED") completedIndex = 2;
+    else if (status === "DATA_COLLECTED") completedIndex = 1;
+    else if (status === "PROFILE_EXTRACTED") completedIndex = 0;
+
+    return stages.map((label, index) => ({
+      id: label.toLowerCase().replace(/\s+/g, "-"),
+      label,
+      status:
+        index <= completedIndex
+          ? "completed"
+          : index === completedIndex + 1
+            ? "current"
+            : "pending",
+      completedAt:
+        index <= completedIndex
+          ? profile.updatedAt
+            ? new Date(profile.updatedAt).toLocaleString()
+            : new Date().toLocaleString()
+          : undefined,
+    }));
+  };
+
+  const handleInitiateStage = async (stageId: string) => {
+    if (!selectedTimelineProfile) return;
+
+    setLoadingStageId(stageId);
+    try {
+      if (stageId === "get-company-data") {
+        await dispatch(getCompanyData(selectedTimelineProfile.id)).unwrap();
+        toast.success("Company data extraction initiated");
+      } else if (stageId === "generate-warm-score") {
+        const productId =
+          selectedTimelineProfile.productFit?.[0]?.productId || products[0]?.id;
+        if (!productId) {
+          toast.error("No product found to calculate warm score");
+          return;
+        }
+        await dispatch(
+          calculateWarmScore({
+            profileId: selectedTimelineProfile.id,
+            productId,
+          }),
+        ).unwrap();
+        toast.success("Warm score calculation initiated");
+      } else {
+        toast.success(`Initiating: ${stageId.replace(/-/g, " ")}`);
+        // Other stages placeholders
+      }
+
+      // Refresh profiles to show updated status/data
+      dispatch(fetchProfiles());
+    } catch (err: any) {
+      toast.error(err || "Failed to initiate stage");
+    } finally {
+      setLoadingStageId(null);
+    }
+  };
+
   // User Guide State
   const [showGuide, setShowGuide] = useState(false);
 
@@ -129,7 +213,11 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (error) {
-      toast.error(typeof error === 'string' ? error : (error as any)?.message || "An error occurred");
+      toast.error(
+        typeof error === "string"
+          ? error
+          : (error as any)?.message || "An error occurred",
+      );
     }
   }, [error]);
 
@@ -700,7 +788,27 @@ export default function DashboardPage() {
                             </span>
                           </td>
                           <td className="px-4 py-2">
-                            <StatusPill status={row.status} />
+                            <div className="flex items-center gap-2">
+                              <StatusPill status={row.status} />
+                              {row.status !== "Complete" &&
+                                row.status !== "Archived" && (
+                                  <button
+                                    onClick={() => {
+                                      const originalProfile = profiles.find(
+                                        (p) => p.id === row.id,
+                                      );
+                                      setSelectedTimelineProfile(
+                                        originalProfile,
+                                      );
+                                      setIsSidePanelOpen(true);
+                                    }}
+                                    className="p-1 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all active:scale-95"
+                                    title="View Progress Timeline"
+                                  >
+                                    <Info className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+                            </div>
                           </td>
                           <td className="px-4 py-2">
                             <p
@@ -888,7 +996,11 @@ export default function DashboardPage() {
               isLoading: false,
             });
           } catch (err: any) {
-            toast.error(typeof err === 'string' ? err : err?.message || "Failed to delete lead");
+            toast.error(
+              typeof err === "string"
+                ? err
+                : err?.message || "Failed to delete lead",
+            );
             setDeleteConfirmation((prev) => ({ ...prev, isLoading: false }));
           }
         }}
@@ -919,12 +1031,64 @@ export default function DashboardPage() {
             toast.success(`Lead ${archiveModal.name} archived successfully`);
             setArchiveModal((prev) => ({ ...prev, isOpen: false }));
           } catch (err: any) {
-            toast.error(typeof err === 'string' ? err : err?.message || "Failed to update status");
+            toast.error(
+              typeof err === "string"
+                ? err
+                : err?.message || "Failed to update status",
+            );
           } finally {
             setArchiveModal((prev) => ({ ...prev, isLoading: false }));
           }
         }}
       />
+
+      <SidePanel
+        isOpen={isSidePanelOpen}
+        onClose={() => {
+          setIsSidePanelOpen(false);
+          setSelectedTimelineProfile(null);
+        }}
+        title="Processing Timeline"
+      >
+        {selectedTimelineProfile && (
+          <div className="space-y-6">
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-blue-700/10 rounded-lg flex items-center justify-center text-primary font-bold">
+                  {selectedTimelineProfile.name?.charAt(0) || "?"}
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-900">
+                    {selectedTimelineProfile.name}
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    {selectedTimelineProfile.currentCompanyName || "N/A"}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-2">
+              <Timeline
+                stages={getTimelineStages(selectedTimelineProfile)}
+                onInitiate={handleInitiateStage}
+                loadingStageId={loadingStageId}
+              />
+            </div>
+
+            <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-100 flex gap-3">
+              <div className="text-blue-600 shrink-0">
+                <Info className="w-5 h-5" />
+              </div>
+              <p className="text-xs text-blue-700 leading-relaxed">
+                The timeline shows the real-time processing status of this
+                profile. Completed stages show their completion time, while
+                pending stages can be manually initiated.
+              </p>
+            </div>
+          </div>
+        )}
+      </SidePanel>
     </div>
   );
 }

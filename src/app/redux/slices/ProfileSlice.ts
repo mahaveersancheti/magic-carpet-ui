@@ -277,6 +277,39 @@ export const unarchiveProfile = createAsyncThunk(
   },
 );
 
+export const calculateWarmScore = createAsyncThunk(
+  "profiles/calculateWarmScore",
+  async (
+    { profileId, productId }: { profileId: string; productId: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await api.post<any>(
+        endpoints.calculateWarmScore(profileId, productId),
+        {},
+        { accept: "*/*" }
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to calculate warm score");
+    }
+  }
+);
+
+export const getCompanyData = createAsyncThunk(
+  "profiles/getCompanyData",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await api.get<any>(endpoints.getCompanyData(id), {
+        accept: "*/*",
+      });
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to get company data");
+    }
+  }
+);
+
 const profileSlice = createSlice({
   name: "profiles",
   initialState,
@@ -300,7 +333,8 @@ const profileSlice = createSlice({
       })
       .addCase(fetchProfiles.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to fetch profiles";
       })
       .addCase(fetchProfileById.pending, (state) => {
         state.loading = true;
@@ -312,7 +346,8 @@ const profileSlice = createSlice({
       })
       .addCase(fetchProfileById.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to fetch profile";
       })
       .addCase(createProfile.pending, (state) => {
         state.createLoading = true;
@@ -324,7 +359,8 @@ const profileSlice = createSlice({
       })
       .addCase(createProfile.rejected, (state, action) => {
         state.createLoading = false;
-        state.error = action.payload as string;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to create profile";
       })
       .addCase(fetchArchivedProfiles.pending, (state) => {
         state.archivedLoading = true;
@@ -336,7 +372,8 @@ const profileSlice = createSlice({
       })
       .addCase(fetchArchivedProfiles.rejected, (state, action) => {
         state.archivedLoading = false;
-        state.error = action.payload as string;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to fetch archived profiles";
       })
 
       .addCase(fetchNotifications.pending, (state) => {
@@ -349,7 +386,8 @@ const profileSlice = createSlice({
       })
       .addCase(fetchNotifications.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to fetch notifications";
       })
       .addCase(deleteProfile.pending, (state) => {
         state.loading = true;
@@ -361,7 +399,8 @@ const profileSlice = createSlice({
       })
       .addCase(deleteProfile.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to delete profile";
       })
       .addCase(updateProfile.pending, (state) => {
         state.updateLoading = true;
@@ -378,7 +417,8 @@ const profileSlice = createSlice({
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.updateLoading = false;
-        state.error = action.payload as string;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to update profile";
       })
       .addCase(patchProfileStatus.pending, (state) => {
         state.updateLoading = true;
@@ -398,7 +438,8 @@ const profileSlice = createSlice({
       })
       .addCase(patchProfileStatus.rejected, (state, action) => {
         state.updateLoading = false;
-        state.error = action.payload as string;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to update status";
       })
       .addCase(archiveProfile.pending, (state) => {
         state.updateLoading = true;
@@ -418,7 +459,8 @@ const profileSlice = createSlice({
       })
       .addCase(archiveProfile.rejected, (state, action) => {
         state.updateLoading = false;
-        state.error = action.payload as string;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to archive profile";
       })
       .addCase(unarchiveProfile.pending, (state) => {
         state.updateLoading = true;
@@ -445,7 +487,8 @@ const profileSlice = createSlice({
       })
       .addCase(unarchiveProfile.rejected, (state, action) => {
         state.updateLoading = false;
-        state.error = action.payload as string;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to unarchive profile";
       })
       .addCase(uploadProfilesFromExcel.pending, (state) => {
         state.uploadLoading = true;
@@ -456,7 +499,38 @@ const profileSlice = createSlice({
       })
       .addCase(uploadProfilesFromExcel.rejected, (state, action) => {
         state.uploadLoading = false;
-        state.error = action.payload as string;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to upload excel";
+      })
+      .addCase(calculateWarmScore.pending, (state) => {
+        state.updateLoading = true;
+        state.error = null;
+      })
+      .addCase(calculateWarmScore.fulfilled, (state, action) => {
+        state.updateLoading = false;
+        // The check for action.payload behavior depends on API response,
+        // usually we might want to refresh the profile or specific field
+        if (state.selectedProfile?.id === action.payload.profileId) {
+            state.selectedProfile.warmCallScore = action.payload.warmCallScore;
+        }
+      })
+      .addCase(calculateWarmScore.rejected, (state, action) => {
+        state.updateLoading = false;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to calculate warm score";
+      })
+      .addCase(getCompanyData.pending, (state) => {
+        state.updateLoading = true;
+        state.error = null;
+      })
+      .addCase(getCompanyData.fulfilled, (state, action) => {
+        state.updateLoading = false;
+        // Optionally update the state with new company data
+      })
+      .addCase(getCompanyData.rejected, (state, action) => {
+        state.updateLoading = false;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to get company data";
       });
   },
 });

@@ -27,3 +27,65 @@
 [00:51:47.323] Server  LOG      ✓ Compiled in 37ms
 [00:52:00.526] Server  LOG      ✓ Compiled in 47ms
 [00:52:24.778] Server  LOG      ✓ Compiled in 33ms
+[01:21:45.334] Server  LOG      ✓ Compiled in 145ms
+[01:22:07.533] Server  LOG      ✓ Compiled in 137ms
+[01:24:25.172] Server  LOG      ✓ Compiled in 82ms
+[05:35:08.382] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[05:37:47.614] Server  LOG      ✓ Compiled in 124ms
+[05:42:15.562] Server  LOG      ✓ Compiled in 68ms
+[05:42:26.421] Server  LOG      ✓ Compiled in 82ms
+[05:42:32.613] Server  LOG      ✓ Compiled in 48ms
+[05:42:39.404] Server  LOG      ✓ Compiled in 55ms
+[05:42:49.587] Server  LOG      ✓ Compiled in 161ms
+[05:42:49.700] Browser ERROR   uncaughtError: ReferenceError: fetchProfiles is not defined
+[05:42:55.918] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[05:42:56.105] Server  LOG      ✓ Compiled in 46ms
+[05:45:03.776] Browser ERROR   uncaughtError: Error: Objects are not valid as a React child (found: [object Error]). If you meant to render a collection of children, use an array instead.
+[05:46:36.027] Server  LOG      ✓ Compiled in 95ms
+[05:46:36.030] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[05:48:32.372] Server  LOG      ✓ Compiled in 77ms
+[05:48:39.787] Server  LOG      ✓ Compiled in 72ms
+[05:56:00.462] Server  LOG      ✓ Compiled in 91ms
+[05:56:54.416] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/home" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/Desktop/S...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="en" suppressHydrationWarning={true}>
+                          <head>
+                          <body
+                            className="manrope_b7d5735e-module__suUhcW__variable poppins_1287db64-module__xlnYIG__vari..."
+-                           data-new-gr-c-s-check-loaded="14.1277.0"
+-                           data-gr-ext-installed=""
+                          >
+                  ...
+
+[05:59:37.822] Server  LOG      ✓ Compiled in 79ms
+[05:59:51.307] Server  LOG      ✓ Compiled in 76ms
+[06:00:14.545] Server  LOG      ✓ Compiled in 42ms
+[06:02:20.675] Server  LOG      ✓ Compiled in 104ms

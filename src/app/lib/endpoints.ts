@@ -20,6 +20,9 @@ export const endpoints = {
     `profiles/${id}/section?text=${encodeURIComponent(text)}`,
   getProfileSectionRaw: (id: string, text: string) =>
     `profiles/${id}/section?text=${text}`,
+  getCompanyData: (id: string) => `profiles/company/${id}`,
+  calculateWarmScore: (profileId: string, productId: string) =>
+    `profiles/calculateWarmScore?profileId=${profileId}&productId=${productId}`,
   getProductsByUserId: (userId: string) => `product/user/${userId}`,
   createProduct: (userId: string) => `product?userId=${userId}`,
   updateProduct: "product",
