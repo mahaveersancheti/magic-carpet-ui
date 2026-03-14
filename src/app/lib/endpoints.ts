@@ -5,6 +5,7 @@ export const endpoints = {
   register: "user/register",
   updateUser: (userId: string) => `user/${userId}`,
   profiles: "profiles",
+  archivedProfiles: "profiles/archive",
   getProfileById: (id: string) => `profiles/${id}`,
   getProfileByIdPopulateDummy: (id: string) => `profiles/${id}/populate-dummy`,
   createProfile: "profiles",
@@ -12,6 +13,8 @@ export const endpoints = {
   downloadProfileTemplate: "profiles/download/profile-template",
   updateProfile: (id: string) => `profiles/request/${id}`,
   deleteProfile: (id: string) => `profiles/${id}`,
+  archiveProfile: (id: string) => `profiles/${id}/archive`,
+  unarchiveProfile: (id: string) => `profiles/${id}/archive/restore`,
   patchProfile: (id: string) => `profiles/${id}`,
   getProfileSection: (id: string, text: string) =>
     `profiles/${id}/section?text=${encodeURIComponent(text)}`,

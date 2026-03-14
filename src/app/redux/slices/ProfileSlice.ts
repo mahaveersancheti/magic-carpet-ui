@@ -54,8 +54,10 @@ export interface CreateProfilePayload {
 
 interface ProfileState {
   profiles: Profile[];
+  archivedProfiles: any[];
   selectedProfile: Profile | any;
   loading: boolean;
+  archivedLoading: boolean;
   error: string | null;
   createLoading: boolean;
   updateLoading: boolean;
@@ -65,8 +67,10 @@ interface ProfileState {
 
 const initialState: ProfileState = {
   profiles: [],
+  archivedProfiles: [],
   selectedProfile: null,
   loading: false,
+  archivedLoading: false,
   error: null,
   createLoading: false,
   updateLoading: false,
@@ -84,6 +88,20 @@ export const fetchProfiles = createAsyncThunk(
       return response;
     } catch (error: any) {
       return rejectWithValue(error.message || "Failed to fetch profiles");
+    }
+  },
+);
+
+export const fetchArchivedProfiles = createAsyncThunk(
+  "profiles/fetchArchivedProfiles",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.get<any[]>(endpoints.archivedProfiles, {
+        "Skip-Auth": "true",
+      });
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to fetch archived profiles");
     }
   },
 );
@@ -217,6 +235,48 @@ export const patchProfileStatus = createAsyncThunk(
   },
 );
 
+export const archiveProfile = createAsyncThunk(
+  "profiles/archiveProfile",
+  async (
+    { id, reason, newStatus }: { id: string; reason: string; newStatus: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const response = await api.post<any>(
+        endpoints.archiveProfile(id),
+        { reason, newStatus },
+        { accept: "*/*" },
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.message || "Failed to archive profile",
+      );
+    }
+  },
+);
+
+export const unarchiveProfile = createAsyncThunk(
+  "profiles/unarchiveProfile",
+  async (
+    { id, reason, targetStatus }: { id: string; reason: string; targetStatus: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const response = await api.post<any>(
+        endpoints.unarchiveProfile(id),
+        { reason, targetStatus },
+        { accept: "*/*" },
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.message || "Failed to unarchive profile",
+      );
+    }
+  },
+);
+
 const profileSlice = createSlice({
   name: "profiles",
   initialState,
@@ -264,6 +324,18 @@ const profileSlice = createSlice({
       })
       .addCase(createProfile.rejected, (state, action) => {
         state.createLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchArchivedProfiles.pending, (state) => {
+        state.archivedLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchArchivedProfiles.fulfilled, (state, action) => {
+        state.archivedLoading = false;
+        state.archivedProfiles = action.payload;
+      })
+      .addCase(fetchArchivedProfiles.rejected, (state, action) => {
+        state.archivedLoading = false;
         state.error = action.payload as string;
       })
 
@@ -325,6 +397,53 @@ const profileSlice = createSlice({
         }
       })
       .addCase(patchProfileStatus.rejected, (state, action) => {
+        state.updateLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(archiveProfile.pending, (state) => {
+        state.updateLoading = true;
+        state.error = null;
+      })
+      .addCase(archiveProfile.fulfilled, (state, action) => {
+        state.updateLoading = false;
+        const index = state.profiles.findIndex(
+          (p) => p.id === action.payload.profileId,
+        );
+        if (index !== -1) {
+          state.profiles[index].status = action.payload.status;
+        }
+        if (state.selectedProfile?.id === action.payload.profileId) {
+          state.selectedProfile.status = action.payload.status;
+        }
+      })
+      .addCase(archiveProfile.rejected, (state, action) => {
+        state.updateLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(unarchiveProfile.pending, (state) => {
+        state.updateLoading = true;
+        state.error = null;
+      })
+      .addCase(unarchiveProfile.fulfilled, (state, action) => {
+        state.updateLoading = false;
+        
+        // Remove from archived profiles
+        state.archivedProfiles = (state.archivedProfiles || []).filter(
+          (p) => p.id !== action.payload.id,
+        );
+
+        // Update in profiles if present
+        const index = state.profiles.findIndex(
+          (p) => p.id === action.payload.id,
+        );
+        if (index !== -1) {
+          state.profiles[index].status = action.payload.status;
+        }
+        if (state.selectedProfile?.id === action.payload.id) {
+          state.selectedProfile.status = action.payload.status;
+        }
+      })
+      .addCase(unarchiveProfile.rejected, (state, action) => {
         state.updateLoading = false;
         state.error = action.payload as string;
       })

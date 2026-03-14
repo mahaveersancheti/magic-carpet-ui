@@ -20,6 +20,8 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             setSelectedMenu("Products");
         } else if (pathname?.includes("/linkedin-action")) {
             setSelectedMenu("LinkedIn Action");
+        } else if (pathname?.includes("/archive")) {
+            setSelectedMenu("Archive");
         } else {
             setSelectedMenu("Home");
         }
@@ -40,6 +42,9 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         if (label === "LinkedIn Action") {
             router.push("/linkedin-action");
         }
+        if (label === "Archive") {
+            router.push("/archive");
+        }
 
         if (onClose) {
             onClose();
@@ -57,6 +62,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     const menuItems = [
         // ["person", "User Profile"],
         ["inventory_2", "Products"],
+        ["archive", "Archive"],
         // ["share", "LinkedIn Action"],
     ];
 

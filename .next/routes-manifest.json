@@ -52,6 +52,12 @@
       "namedRegex": "^/add\\-product(?:/)?$"
     },
     {
+      "page": "/archive",
+      "regex": "^/archive(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/archive(?:/)?$"
+    },
+    {
       "page": "/favicon.ico",
       "regex": "^/favicon\\.ico(?:/)?$",
       "routeKeys": {},
@@ -116,6 +122,12 @@
       "regex": "^/userprofile(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/userprofile(?:/)?$"
+    },
+    {
+      "page": "/userprofile/edit",
+      "regex": "^/userprofile/edit(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/userprofile/edit(?:/)?$"
     }
   ],
   "dataRoutes": [],

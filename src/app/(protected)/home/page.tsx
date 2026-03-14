@@ -19,6 +19,7 @@ import {
   fetchProfiles,
   deleteProfile,
   patchProfileStatus,
+  archiveProfile,
 } from "../../redux/slices/ProfileSlice";
 import { fetchProductsByUserId } from "../../redux/slices/ProductSlice";
 import { useUser } from "../../hooks/useUser";
@@ -26,7 +27,7 @@ import toast from "react-hot-toast";
 import { api } from "../../services/apiService";
 import { endpoints } from "../../lib/endpoints";
 import { ArchiveModal } from "@/app/components/ArchiveModal";
-import { Archive, ArchiveRestore } from "lucide-react";
+import { Archive } from "lucide-react";
 
 type StatusType = "Complete" | "Pending" | "Failed";
 
@@ -89,13 +90,11 @@ export default function DashboardPage() {
     isOpen: boolean;
     id: string | null;
     name: string | null;
-    targetStatus: "ARCHIVED" | "NEW"; // Assuming unarchive goes back to extracted or similar
     isLoading: boolean;
   }>({
     isOpen: false,
     id: null,
     name: null,
-    targetStatus: "ARCHIVED",
     isLoading: false,
   });
 
@@ -130,7 +129,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (error) {
-      toast.error(error);
+      toast.error(typeof error === 'string' ? error : (error as any)?.message || "An error occurred");
     }
   }, [error]);
 
@@ -756,14 +755,13 @@ export default function DashboardPage() {
                                   delete
                                 </span>
                               </button>
-                              {row.status !== "Archived" ? (
+                              {row.status !== "Archived" && (
                                 <button
                                   onClick={() =>
                                     setArchiveModal({
                                       isOpen: true,
                                       id: row.id,
                                       name: row.name,
-                                      targetStatus: "ARCHIVED",
                                       isLoading: false,
                                     })
                                   }
@@ -771,22 +769,6 @@ export default function DashboardPage() {
                                   title="Archive Lead"
                                 >
                                   <Archive className="w-4.5 h-4.5" />
-                                </button>
-                              ) : (
-                                <button
-                                  onClick={() =>
-                                    setArchiveModal({
-                                      isOpen: true,
-                                      id: row.id,
-                                      name: row.name,
-                                      targetStatus: "NEW", // Changed from PROFILE_EXTRACTED
-                                      isLoading: false,
-                                    })
-                                  }
-                                  className="cursor-pointer p-1 text-slate-400 hover:text-blue-500 hover:bg-blue-500/10 rounded-lg transition-all active:scale-95"
-                                  title="UnArchive Lead"
-                                >
-                                  <ArchiveRestore className="w-4.5 h-4.5" />
                                 </button>
                               )}
                               <ActionButtons row={row} />
@@ -906,7 +888,7 @@ export default function DashboardPage() {
               isLoading: false,
             });
           } catch (err: any) {
-            toast.error(err || "Failed to delete lead");
+            toast.error(typeof err === 'string' ? err : err?.message || "Failed to delete lead");
             setDeleteConfirmation((prev) => ({ ...prev, isLoading: false }));
           }
         }}
@@ -919,41 +901,25 @@ export default function DashboardPage() {
       <ArchiveModal
         isOpen={archiveModal.isOpen}
         onClose={() => setArchiveModal((prev) => ({ ...prev, isOpen: false }))}
-        title={
-          archiveModal.targetStatus === "ARCHIVED"
-            ? "Archive Lead"
-            : "UnArchive Lead"
-        }
-        description={
-          archiveModal.targetStatus === "ARCHIVED"
-            ? `Are you sure you want to archive ${archiveModal.name}? This will move it to the archived list.`
-            : `Are you sure you want to unarchive ${archiveModal.name}? This will restore it to the active list.`
-        }
-        confirmLabel={
-          archiveModal.targetStatus === "ARCHIVED" ? "Archive" : "UnArchive"
-        }
+        title="Archive Lead"
+        description={`Are you sure you want to archive ${archiveModal.name}? This will move it to the archived list.`}
+        confirmLabel="Archive"
         isLoading={archiveModal.isLoading}
         onConfirm={async (note) => {
           if (!archiveModal.id) return;
           setArchiveModal((prev) => ({ ...prev, isLoading: true }));
           try {
             await dispatch(
-              patchProfileStatus({
+              archiveProfile({
                 id: archiveModal.id,
-                status: archiveModal.targetStatus,
-                note,
+                reason: note || "Archived",
+                newStatus: "ARCHIVED",
               }),
             ).unwrap();
-            toast.success(
-              `Lead ${archiveModal.name} ${
-                archiveModal.targetStatus === "ARCHIVED"
-                  ? "archived"
-                  : "unarchived"
-              } successfully`,
-            );
+            toast.success(`Lead ${archiveModal.name} archived successfully`);
             setArchiveModal((prev) => ({ ...prev, isOpen: false }));
           } catch (err: any) {
-            toast.error(err || "Failed to update status");
+            toast.error(typeof err === 'string' ? err : err?.message || "Failed to update status");
           } finally {
             setArchiveModal((prev) => ({ ...prev, isLoading: false }));
           }

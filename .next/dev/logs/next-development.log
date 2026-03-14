@@ -11,3 +11,173 @@
 [00:24:01.981] Browser LOG     errorMsg An unexpected error occurred. Please try again later.
 [00:25:15.444] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
 [00:27:59.235] Server  LOG      ✓ Compiled in 74ms
+[00:10:12.102] Server  LOG      ✓ Compiled in 271ms
+[00:10:12.212] Browser ERROR   ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx:17:1
+Export archiveProfile doesn't exist in target module
+  15 | import { useDispatch, useSelector } from "react-redux";
+  16 | import { AppDispatch, RootState } from "../../redux/store/store";
+> 17 | import {
+     | ^^^^^^^^
+> 18 |   fetchNotifications,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 19 |   deleteProfile,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 20 |   patchProfileStatus,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 21 |   archiveProfile,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 22 | } from "../../redux/slices/ProfileSlice";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  23 | import { fetchProductsByUserId } from "../../redux/slices/ProductSlice";
+  24 | import { useUser } from "../../hooks/useUser";
+  25 | import toast from "react-hot-toast";
+
+The export archiveProfile was not found in module [project]/Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/redux/slices/ProfileSlice.ts [app-client] (ecmascript).
+Did you mean to import createProfile?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Client Component Browser]
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Client Component SSR]
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Server Component]
+[00:10:12.212] Browser ERROR   ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx:17:1
+Export archiveProfile doesn't exist in target module
+  15 | import { useDispatch, useSelector } from "react-redux";
+  16 | import { AppDispatch, RootState } from "../../redux/store/store";
+> 17 | import {
+     | ^^^^^^^^
+> 18 |   fetchNotifications,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 19 |   deleteProfile,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 20 |   patchProfileStatus,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 21 |   archiveProfile,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 22 | } from "../../redux/slices/ProfileSlice";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  23 | import { fetchProductsByUserId } from "../../redux/slices/ProductSlice";
+  24 | import { useUser } from "../../hooks/useUser";
+  25 | import toast from "react-hot-toast";
+
+The export archiveProfile was not found in module [project]/Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/redux/slices/ProfileSlice.ts [app-ssr] (ecmascript).
+Did you mean to import createProfile?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Client Component Browser]
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Client Component SSR]
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Server Component]
+[00:10:19.779] Server  LOG      ✓ Compiled in 71ms
+[00:10:19.884] Browser ERROR   ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx:17:1
+Export archiveProfile doesn't exist in target module
+  15 | import { useDispatch, useSelector } from "react-redux";
+  16 | import { AppDispatch, RootState } from "../../redux/store/store";
+> 17 | import {
+     | ^^^^^^^^
+> 18 |   fetchNotifications,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 19 |   deleteProfile,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 20 |   patchProfileStatus,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 21 |   archiveProfile,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 22 | } from "../../redux/slices/ProfileSlice";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  23 | import { fetchProductsByUserId } from "../../redux/slices/ProductSlice";
+  24 | import { useUser } from "../../hooks/useUser";
+  25 | import toast from "react-hot-toast";
+
+The export archiveProfile was not found in module [project]/Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/redux/slices/ProfileSlice.ts [app-client] (ecmascript).
+Did you mean to import createProfile?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Client Component Browser]
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Client Component SSR]
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Server Component]
+[00:10:19.884] Browser ERROR   ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx:17:1
+Export archiveProfile doesn't exist in target module
+  15 | import { useDispatch, useSelector } from "react-redux";
+  16 | import { AppDispatch, RootState } from "../../redux/store/store";
+> 17 | import {
+     | ^^^^^^^^
+> 18 |   fetchNotifications,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 19 |   deleteProfile,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 20 |   patchProfileStatus,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 21 |   archiveProfile,
+     | ^^^^^^^^^^^^^^^^^^^^^
+> 22 | } from "../../redux/slices/ProfileSlice";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  23 | import { fetchProductsByUserId } from "../../redux/slices/ProductSlice";
+  24 | import { useUser } from "../../hooks/useUser";
+  25 | import toast from "react-hot-toast";
+
+The export archiveProfile was not found in module [project]/Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/redux/slices/ProfileSlice.ts [app-ssr] (ecmascript).
+Did you mean to import createProfile?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Client Component Browser]
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Client Component SSR]
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/home/page.tsx [Server Component]
+[00:10:36.776] Browser ERROR   uncaughtError: ReferenceError: fetchProfiles is not defined
+[00:13:58.268] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:13:58.271] Server  LOG      ✓ Compiled in 97ms
+[00:20:05.930] Server  LOG      ✓ Compiled in 111ms
+[00:20:07.898] Server  LOG      ✓ Compiled in 65ms
+[00:20:25.759] Server  LOG      ✓ Compiled in 75ms
+[00:23:02.066] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:23:26.841] Browser LOG     selectedProfile undefined
+[00:23:26.842] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:23:59.301] Browser LOG     selectedProfile undefined
+[00:23:59.301] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:24:01.122] Browser LOG     selectedProfile COMPLETED
+[00:24:02.493] Browser LOG     selectedProfile COMPLETED
+[00:25:16.006] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:26:38.624] Server  LOG      ✓ Compiled in 69ms
+[00:29:59.757] Server  LOG      ✓ Compiled in 103ms
+[00:30:17.648] Server  LOG      ✓ Compiled in 101ms
+[00:30:19.670] Server  LOG      ✓ Compiled in 110ms
+[00:30:44.728] Server  LOG      ✓ Compiled in 129ms
+[00:32:40.157] Browser ERROR   uncaughtError: Error: Objects are not valid as a React child (found: [object Error]). If you meant to render a collection of children, use an array instead.
+[00:34:39.463] Server  LOG      ✓ Compiled in 78ms
+[00:34:39.556] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:34:39.608] Browser ERROR   uncaughtError: Error: Objects are not valid as a React child (found: [object Error]). If you meant to render a collection of children, use an array instead.
+[00:35:14.388] Server  LOG      ✓ Compiled in 49ms
+[00:36:03.795] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:50:57.794] Server  LOG      ✓ Compiled in 57ms
+[00:51:23.654] Server  LOG      ✓ Compiled in 66ms
+[00:54:49.694] Server  LOG      ✓ Compiled in 114ms
+[00:54:49.836] Browser ERROR   uncaughtError: ReferenceError: statusFilter is not defined
+[00:55:52.076] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:55:52.461] Server  LOG      ✓ Compiled in 50ms
+[00:56:21.057] Server  LOG      ✓ Compiled in 47ms
+[00:58:01.181] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:58:18.942] Server  LOG      ✓ Compiled in 92ms
+[00:58:37.550] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:58:41.986] Browser LOG     selectedProfile undefined
+[00:58:41.986] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:59:08.357] Server  LOG      ✓ Compiled in 199ms
+[00:59:35.811] Server  LOG      ✓ Compiled in 68ms
+[01:01:45.314] Server  LOG      ✓ Compiled in 82ms
