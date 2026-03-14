@@ -79,7 +79,7 @@ export default function BillingPage() {
   const dashArrayValue = (percentageUsed / 100) * 126;
 
   return (
-    <div className="p-8 space-y-8 max-w-7xl mx-auto w-full text-slate-700 antialiased h-full flex flex-col min-h-0">
+    <div className="mb-2 p-4 space-y-8 max-w-7xl mx-auto w-full text-slate-700 antialiased h-full flex flex-col min-h-0">
       {/* BEGIN: Page Title & Filters */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0">
         <div>

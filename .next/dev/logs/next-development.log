@@ -22,3 +22,8 @@
 [00:47:58.686] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
 [00:48:00.134] Browser LOG     selectedProfile COMPLETED
 [00:48:01.456] Browser LOG     selectedProfile COMPLETED
+[00:50:19.567] Server  LOG      ✓ Compiled in 51ms
+[00:50:27.356] Server  LOG      ✓ Compiled in 30ms
+[00:51:47.323] Server  LOG      ✓ Compiled in 37ms
+[00:52:00.526] Server  LOG      ✓ Compiled in 47ms
+[00:52:24.778] Server  LOG      ✓ Compiled in 33ms
