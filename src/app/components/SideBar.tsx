@@ -22,6 +22,8 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             setSelectedMenu("LinkedIn Action");
         } else if (pathname?.includes("/archive")) {
             setSelectedMenu("Archive");
+        } else if (pathname?.includes("/billing")) {
+            setSelectedMenu("Billing");
         } else {
             setSelectedMenu("Home");
         }
@@ -45,6 +47,9 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         if (label === "Archive") {
             router.push("/archive");
         }
+        if (label === "Billing") {
+            router.push("/billing");
+        }
 
         if (onClose) {
             onClose();
@@ -63,6 +68,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         // ["person", "User Profile"],
         ["inventory_2", "Products"],
         ["archive", "Archive"],
+        ["credit_card", "Billing"],
         // ["share", "LinkedIn Action"],
     ];
 

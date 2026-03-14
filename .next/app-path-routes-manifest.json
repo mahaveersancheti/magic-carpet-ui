@@ -5,6 +5,7 @@
   "/(protected)/add-lead/page": "/add-lead",
   "/(protected)/add-product/page": "/add-product",
   "/(protected)/archive/page": "/archive",
+  "/(protected)/billing/page": "/billing",
   "/(protected)/home/page": "/home",
   "/(protected)/linkedin-action/page": "/linkedin-action",
   "/(protected)/products/page": "/products",
