@@ -151,8 +151,63 @@ export default function DashboardPage() {
 
     setLoadingStageId(stageId);
     try {
-      if (stageId === "get-company-data") {
+      if (stageId === "extract-data") {
+        const linkedInUrl =
+          selectedTimelineProfile.linkedinUrl ||
+          selectedTimelineProfile.linkedinProfileLink ||
+          selectedTimelineProfile.personalProfileLink ||
+          "";
+        if (linkedInUrl) {
+          window.open(linkedInUrl, "_blank");
+
+          // Trigger Chrome Extension
+          const extensionId = "beofgnihgngikbmfghdgfocllgkbnjkj";
+          if (
+            typeof window !== "undefined" &&
+            (window as any).chrome?.runtime?.sendMessage
+          ) {
+            (window as any).chrome.runtime.sendMessage(
+              extensionId,
+              {
+                action: "initiateExtraction",
+                profileId: selectedTimelineProfile.id,
+                url: linkedInUrl,
+              },
+              (response: any) => {
+                const lastError = (window as any).chrome.runtime.lastError;
+                if (lastError) {
+                  console.log("Extension message failed:", lastError);
+                } else {
+                  console.log("Extension response:", response);
+                  toast.success("Extension extraction triggered");
+                }
+              },
+            );
+          }
+
+          // Move status to next stage
+          await dispatch(
+            patchProfileStatus({
+              id: selectedTimelineProfile.id,
+              status: "DATA_COLLECTED",
+              note: "Initiated LinkedIn data extraction via extension",
+            }),
+          ).unwrap();
+
+          toast.success("Redirected to LinkedIn and triggered extension");
+        } else {
+          toast.error("LinkedIn URL not found for this profile");
+        }
+      } else if (stageId === "get-company-data") {
         await dispatch(getCompanyData(selectedTimelineProfile.id)).unwrap();
+        // Update status to move the timeline forward
+        await dispatch(
+          patchProfileStatus({
+            id: selectedTimelineProfile.id,
+            status: "INFO_GATHERED",
+            note: "Initiated company data extraction",
+          }),
+        ).unwrap();
         toast.success("Company data extraction initiated");
       } else if (stageId === "generate-warm-score") {
         const productId =
@@ -167,16 +222,32 @@ export default function DashboardPage() {
             productId,
           }),
         ).unwrap();
+        // Update status to move the timeline forward
+        await dispatch(
+          patchProfileStatus({
+            id: selectedTimelineProfile.id,
+            status: "WARM_SCORE_GENERATED",
+            note: "Initiated warm score calculation",
+          }),
+        ).unwrap();
         toast.success("Warm score calculation initiated");
       } else {
         toast.success(`Initiating: ${stageId.replace(/-/g, " ")}`);
         // Other stages placeholders
       }
 
-      // Refresh profiles to show updated status/data
-      dispatch(fetchProfiles());
+      // Refresh profiles and current profile to show updated status/data
+      const updatedProfilesResult = await dispatch(fetchProfiles()).unwrap();
+      const updatedProfile = updatedProfilesResult.find(
+        (p: any) => p.id === selectedTimelineProfile.id,
+      );
+      if (updatedProfile) {
+        setSelectedTimelineProfile(updatedProfile);
+      }
     } catch (err: any) {
-      toast.error(err || "Failed to initiate stage");
+      const errorMessage =
+        typeof err === "string" ? err : err?.message || "Failed to initiate stage";
+      toast.error(errorMessage);
     } finally {
       setLoadingStageId(null);
     }

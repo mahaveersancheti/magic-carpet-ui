@@ -89,3 +89,16 @@ It can also happen if the client has a browser extension installed which messes 
 [05:59:51.307] Server  LOG      ✓ Compiled in 76ms
 [06:00:14.545] Server  LOG      ✓ Compiled in 42ms
 [06:02:20.675] Server  LOG      ✓ Compiled in 104ms
+[06:05:53.395] Server  LOG      ✓ Compiled in 59ms
+[06:09:13.922] Server  LOG      ✓ Compiled in 64ms
+[06:10:32.091] Browser LOG     Extension message failed: {"message":"Could not establish connection. Receiving end does not exist."}
+[06:11:39.296] Server  LOG      ✓ Compiled in 59ms
+[06:12:37.091] Browser LOG     Attempting to trigger extension: {"action":"initiateExtraction","profileId":"69ad48e1a18817f9be1a18e5","source":"magic-carpet-dashboard","url":"https://www.linkedin.com/in/kaushik-solanki-full-stack-developer/"}
+[06:12:37.094] Browser LOG     Broadcasted trigger via window.postMessage
+[06:12:37.094] Browser WARN    Direct extension message failed: {"message":"Could not establish connection. Receiving end does not exist."}
+[06:12:46.722] Server  LOG      ✓ Compiled in 103ms
+[06:13:38.023] Server  LOG      ✓ Compiled in 67ms
+[06:13:52.652] Server  LOG      ✓ Compiled in 63ms
+[06:14:08.945] Server  LOG      ✓ Compiled in 54ms
+[06:16:30.277] Server  LOG      ✓ Compiled in 91ms
+[06:17:01.906] Server  LOG      ✓ Compiled in 69ms

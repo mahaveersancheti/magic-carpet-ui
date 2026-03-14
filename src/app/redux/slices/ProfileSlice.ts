@@ -34,6 +34,8 @@ export interface Profile {
   topSkills?: string[];
   instagramProfileLink?: string;
   twitterProfileLink?: string;
+  linkedinProfileLink?: string;
+  linkedinUrl?: string;
   personalProfileLink?: string;
 }
 
