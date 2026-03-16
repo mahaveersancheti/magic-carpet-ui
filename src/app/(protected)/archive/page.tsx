@@ -503,7 +503,7 @@ export default function ArchivePage() {
                           </td>
                           <td className="px-4 py-2">
                             <div className="flex items-center justify-center gap-0.5">
-                              {/* <button
+                              <button
                                 onClick={() =>
                                   viewDetails("visibility", row.id)
                                 }
@@ -513,7 +513,7 @@ export default function ArchivePage() {
                                 <span className="material-symbols-outlined text-lg">
                                   visibility
                                 </span>
-                              </button> */}
+                              </button>
                               <button
                                 onClick={() =>
                                   setArchiveModal({

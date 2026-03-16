@@ -23,6 +23,7 @@ export const endpoints = {
   getCompanyData: (id: string) => `profiles/company/${id}`,
   calculateWarmScore: (profileId: string, productId: string) =>
     `profiles/calculateWarmScore?profileId=${profileId}&productId=${productId}`,
+  productFit: (profileId: string) => `profiles/product-fit/${profileId}`,
   getProductsByUserId: (userId: string) => `product/user/${userId}`,
   createProduct: (userId: string) => `product?userId=${userId}`,
   updateProduct: "product",

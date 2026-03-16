@@ -69,12 +69,12 @@ export const Timeline: React.FC<TimelineProps> = ({
                     >
                       {stage.label}
                     </h4>
-                    {isCompleted && stage.completedAt && (
+                    {/* {isCompleted && stage.completedAt && (
                       <div className="flex items-center gap-1 mt-1 text-[10px] text-slate-400 font-medium">
                         <Clock className="w-3 h-3" />
                         {stage.completedAt}
                       </div>
-                    )}
+                    )} */}
                   </div>
 
                   {!isCompleted && !isLast && (

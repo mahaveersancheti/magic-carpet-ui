@@ -22,6 +22,7 @@ import {
   archiveProfile,
   getCompanyData,
   calculateWarmScore,
+  initiateProductFit,
 } from "../../redux/slices/ProfileSlice";
 import { fetchProductsByUserId } from "../../redux/slices/ProductSlice";
 import { useUser } from "../../hooks/useUser";
@@ -110,40 +111,64 @@ export default function DashboardPage() {
   const [loadingStageId, setLoadingStageId] = useState<string | null>(null);
 
   const getTimelineStages = (profile: any): TimelineStage[] => {
-    const stages: string[] = [
-      "Profile Created",
-      "Extract Data",
-      "Get Company Data",
-      "Generate Warm Score",
-      "Completed",
+    const flags = profile.processingFlags || {
+      scrap: false,
+      company: false,
+      warmScore: false,
+      productFit: false,
+    };
+
+    const stages = [
+      { id: "profile-created", label: "Profile Created", isComplete: true },
+      { id: "extract-data", label: "Extract Data", isComplete: !!flags.scrap },
+      {
+        id: "get-company-data",
+        label: "Get Company Data",
+        isComplete: !!flags.company,
+      },
+      {
+        id: "generate-warm-score",
+        label: "Generate Warm Score",
+        isComplete: !!flags.warmScore,
+      },
+      {
+        id: "product-fit",
+        label: "Product Fit",
+        isComplete: !!flags.productFit,
+      },
+      {
+        id: "completed",
+        label: "Completed",
+        isComplete:
+          flags.scrap && flags.company && flags.warmScore && flags.productFit,
+      },
     ];
 
-    const status = (profile.status || "").toUpperCase();
+    return stages.map((stage, index) => {
+      let status: "completed" | "current" | "pending" = "pending";
 
-    // Logic to determine progress based on main status
-    let completedIndex = -1;
-    if (status === "COMPLETE" || status === "COMPLETED") completedIndex = 4;
-    else if (status === "WARM_SCORE_GENERATED") completedIndex = 3;
-    else if (status === "INFO_GATHERED") completedIndex = 2;
-    else if (status === "DATA_COLLECTED") completedIndex = 1;
-    else if (status === "PROFILE_EXTRACTED") completedIndex = 0;
+      if (stage.isComplete) {
+        status = "completed";
+      } else {
+        // Find the first incomplete stage and mark it as current
+        const firstIncompleteIndex = stages.findIndex((s) => !s.isComplete);
+        if (index === firstIncompleteIndex) {
+          status = "current";
+        }
+      }
 
-    return stages.map((label, index) => ({
-      id: label.toLowerCase().replace(/\s+/g, "-"),
-      label,
-      status:
-        index <= completedIndex
-          ? "completed"
-          : index === completedIndex + 1
-            ? "current"
-            : "pending",
-      completedAt:
-        index <= completedIndex
-          ? profile.updatedAt
-            ? new Date(profile.updatedAt).toLocaleString()
-            : new Date().toLocaleString()
-          : undefined,
-    }));
+      return {
+        id: stage.id,
+        label: stage.label,
+        status,
+        completedAt:
+          status === "completed"
+            ? profile.updatedAt
+              ? new Date(profile.updatedAt).toLocaleString()
+              : new Date().toLocaleString()
+            : undefined,
+      };
+    });
   };
 
   const handleInitiateStage = async (stageId: string) => {
@@ -186,13 +211,13 @@ export default function DashboardPage() {
           }
 
           // Move status to next stage
-          await dispatch(
-            patchProfileStatus({
-              id: selectedTimelineProfile.id,
-              status: "DATA_COLLECTED",
-              note: "Initiated LinkedIn data extraction via extension",
-            }),
-          ).unwrap();
+          // await dispatch(
+          //   patchProfileStatus({
+          //     id: selectedTimelineProfile.id,
+          //     status: "DATA_COLLECTED",
+          //     note: "Initiated LinkedIn data extraction via extension",
+          //   }),
+          // ).unwrap();
 
           toast.success("Redirected to LinkedIn and triggered extension");
         } else {
@@ -201,13 +226,13 @@ export default function DashboardPage() {
       } else if (stageId === "get-company-data") {
         await dispatch(getCompanyData(selectedTimelineProfile.id)).unwrap();
         // Update status to move the timeline forward
-        await dispatch(
-          patchProfileStatus({
-            id: selectedTimelineProfile.id,
-            status: "INFO_GATHERED",
-            note: "Initiated company data extraction",
-          }),
-        ).unwrap();
+        // await dispatch(
+        //   patchProfileStatus({
+        //     id: selectedTimelineProfile.id,
+        //     status: "INFO_GATHERED",
+        //     note: "Initiated company data extraction",
+        //   }),
+        // ).unwrap();
         toast.success("Company data extraction initiated");
       } else if (stageId === "generate-warm-score") {
         const productId =
@@ -223,14 +248,17 @@ export default function DashboardPage() {
           }),
         ).unwrap();
         // Update status to move the timeline forward
-        await dispatch(
-          patchProfileStatus({
-            id: selectedTimelineProfile.id,
-            status: "WARM_SCORE_GENERATED",
-            note: "Initiated warm score calculation",
-          }),
-        ).unwrap();
+        // await dispatch(
+        //   patchProfileStatus({
+        //     id: selectedTimelineProfile.id,
+        //     status: "WARM_SCORE_GENERATED",
+        //     note: "Initiated warm score calculation",
+        //   }),
+        // ).unwrap();
         toast.success("Warm score calculation initiated");
+      } else if (stageId === "product-fit") {
+        await dispatch(initiateProductFit(selectedTimelineProfile.id)).unwrap();
+        toast.success("Product fit analysis initiated");
       } else {
         toast.success(`Initiating: ${stageId.replace(/-/g, " ")}`);
         // Other stages placeholders
@@ -246,7 +274,9 @@ export default function DashboardPage() {
       }
     } catch (err: any) {
       const errorMessage =
-        typeof err === "string" ? err : err?.message || "Failed to initiate stage";
+        typeof err === "string"
+          ? err
+          : err?.message || "Failed to initiate stage";
       toast.error(errorMessage);
     } finally {
       setLoadingStageId(null);

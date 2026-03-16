@@ -37,6 +37,12 @@ export interface Profile {
   linkedinProfileLink?: string;
   linkedinUrl?: string;
   personalProfileLink?: string;
+  processingFlags?: {
+    scrap: boolean;
+    company: boolean;
+    productFit: boolean;
+    warmScore: boolean;
+  };
 }
 
 export interface CreateProfilePayload {
@@ -286,9 +292,8 @@ export const calculateWarmScore = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await api.post<any>(
+      const response = await api.get<any>(
         endpoints.calculateWarmScore(profileId, productId),
-        {},
         { accept: "*/*" }
       );
       return response;
@@ -308,6 +313,20 @@ export const getCompanyData = createAsyncThunk(
       return response;
     } catch (error: any) {
       return rejectWithValue(error.message || "Failed to get company data");
+    }
+  }
+);
+
+export const initiateProductFit = createAsyncThunk(
+  "profiles/initiateProductFit",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await api.get<any>(endpoints.productFit(id), {
+        accept: "*/*",
+      });
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message || "Failed to initiate product fit");
     }
   }
 );
@@ -510,10 +529,13 @@ const profileSlice = createSlice({
       })
       .addCase(calculateWarmScore.fulfilled, (state, action) => {
         state.updateLoading = false;
-        // The check for action.payload behavior depends on API response,
-        // usually we might want to refresh the profile or specific field
-        if (state.selectedProfile?.id === action.payload.profileId) {
-            state.selectedProfile.warmCallScore = action.payload.warmCallScore;
+        const { profileId } = action.meta.arg;
+        if (state.selectedProfile?.id === profileId) {
+          state.selectedProfile = {
+            ...state.selectedProfile,
+            ...action.payload,
+            warmCallScore: action.payload.warmCallScore,
+          };
         }
       })
       .addCase(calculateWarmScore.rejected, (state, action) => {
@@ -533,6 +555,18 @@ const profileSlice = createSlice({
         state.updateLoading = false;
         const payload = action.payload as any;
         state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to get company data";
+      })
+      .addCase(initiateProductFit.pending, (state) => {
+        state.updateLoading = true;
+        state.error = null;
+      })
+      .addCase(initiateProductFit.fulfilled, (state, action) => {
+        state.updateLoading = false;
+      })
+      .addCase(initiateProductFit.rejected, (state, action) => {
+        state.updateLoading = false;
+        const payload = action.payload as any;
+        state.error = typeof payload === 'string' ? payload : payload?.message || "Failed to initiate product fit";
       });
   },
 });
