@@ -128,7 +128,7 @@ export default function ArchivePage() {
 
   const viewDetails = (action: string, id: string) => {
     if (action === "visibility") {
-      router.push(`/request?id=${id}`);
+      router.push(`/request?id=${id}&isArchived=true`);
     } else if (action === "upload") {
       setIsUploadModalOpen(true);
     }

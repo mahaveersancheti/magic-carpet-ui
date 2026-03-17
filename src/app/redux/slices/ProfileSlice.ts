@@ -116,13 +116,15 @@ export const fetchArchivedProfiles = createAsyncThunk(
 
 export const fetchProfileById = createAsyncThunk(
   "profiles/fetchProfileById",
-  async (id: string, { rejectWithValue }) => {
+  async ({ id, isArchived }: { id: string; isArchived?: boolean }, { rejectWithValue }) => {
     try {
-      // Attempt with Skip-Auth to bypass potential redirect issues if token is invalid/unwanted for this endpoint
-      const response = await api.get<Profile>(endpoints.getProfileById(id), {
+      const endpoint = isArchived 
+        ? endpoints.getArchivedProfileById(id) 
+        : endpoints.getProfileById(id);
+      
+      const response = await api.get<Profile>(endpoint, {
         "Skip-Auth": "true",
       });
-      // const response = await api.get<Profile>(endpoints.getProfileByIdPopulateDummy(id), { 'Skip-Auth': 'true' });
       return response;
     } catch (error: any) {
       return rejectWithValue(error.message || "Failed to fetch profile");

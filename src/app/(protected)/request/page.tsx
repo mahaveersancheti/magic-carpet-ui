@@ -527,7 +527,8 @@ function ReportContent() {
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchProfileById(id));
+      const isArchived = searchParams.get("isArchived") === "true";
+      dispatch(fetchProfileById({ id, isArchived }));
     }
     return () => {
       dispatch(clearSelectedProfile());
@@ -1069,7 +1070,8 @@ function ReportContent() {
             <button
               onClick={() => {
                 if (id) {
-                  dispatch(fetchProfileById(id));
+                  const isArchivedParam = searchParams.get("isArchived") === "true";
+                  dispatch(fetchProfileById({ id, isArchived: isArchivedParam }));
                 }
               }}
               className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-blue-600 hover:border-blue-200 shadow-sm transition"

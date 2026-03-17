@@ -7,6 +7,7 @@ export const endpoints = {
   profiles: "profiles",
   archivedProfiles: "profiles/archive",
   getProfileById: (id: string) => `profiles/${id}`,
+  getArchivedProfileById: (id: string) => `profiles/${id}/archive`,
   getProfileByIdPopulateDummy: (id: string) => `profiles/${id}/populate-dummy`,
   createProfile: "profiles",
   uploadProfileExcel: "profiles/upload-excel",

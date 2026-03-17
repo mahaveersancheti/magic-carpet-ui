@@ -1,78 +1,30 @@
-[00:00:00.934] Server  LOG      ✓ Ready in 708ms
-[00:00:20.838] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-%s%s https://react.dev/link/hydration-mismatch 
-
-  ...
-    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
-      <AppDevOverlayErrorBoundary globalError={[...]}>
-        <ReplaySsrOnlyErrors>
-        <DevRootHTTPAccessFallbackBoundary>
-          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
-            <HTTPAccessFallbackErrorBoundary pathname="/home" notFound={<NotAllowedRootHTTPFallbackError>} ...>
-              <RedirectBoundary>
-                <RedirectErrorBoundary router={{...}}>
-                  <Head>
-                  <__next_root_layout_boundary__>
-                    <SegmentViewNode type="layout" pagePath="/Desktop/S...">
-                      <SegmentTrieNode>
-                      <link>
-                      <script>
-                      <script>
-                      <script>
-                      <RootLayout>
-                        <html lang="en" suppressHydrationWarning={true}>
-                          <head>
-                          <body
-                            className="manrope_b7d5735e-module__suUhcW__variable poppins_1287db64-module__xlnYIG__vari..."
--                           data-new-gr-c-s-check-loaded="14.1277.0"
--                           data-gr-ext-installed=""
-                          >
-                  ...
-
-[00:05:33.615] Server  LOG      ✓ Compiled in 182ms
-[00:05:35.697] Server  LOG      ✓ Compiled in 115ms
-[00:05:35.978] Server  ERROR    ⨯ ReferenceError: initiateProductFit is not defined
-[00:05:36.177] Server  ERROR    ⨯ ReferenceError: initiateProductFit is not defined
-[00:05:36.685] Browser ERROR   uncaughtError: ReferenceError: initiateProductFit is not defined
-[00:05:41.916] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:05:41.916] Server  WARN     ⚠ Fast Refresh had to perform a full reload when ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/redux/slices/ProfileSlice.ts changed. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
-[00:05:41.917] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:05:41.985] Server  LOG      ✓ Compiled in 150ms
-[00:06:06.031] Server  LOG      ✓ Compiled in 112ms
-[00:08:45.040] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:08:50.506] Browser LOG     selectedProfile undefined
-[00:08:50.506] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
-[00:09:02.009] Browser LOG     selectedProfile undefined
-[00:09:02.009] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
-[00:09:23.255] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:10:08.424] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:10:12.999] Browser LOG     selectedProfile undefined
-[00:10:12.999] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
-[00:10:46.554] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:10:50.993] Browser LOG     selectedProfile undefined
-[00:10:50.993] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
-[00:16:14.682] Browser LOG     Extension message failed: {"message":"Could not establish connection. Receiving end does not exist."}
-[00:18:13.067] Server  LOG      ✓ Compiled in 77ms
-[01:27:37.691] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:27:39.738] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:27:49.276] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[01:27:53.118] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:27:54.955] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:29:55.902] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[01:30:23.471] Browser LOG     payload {"city":"","country":"","currentCompanyName":"Mahindra & Mahindra","email":"","facebookProfileLink":"","industryName":"Tech","instagramProfileLink":"","linkedinProfileLink":"https://www.linkedin.com/in/vijay-harde-b040801ba/","name":"Vijay Harde","personalProfileLink":"","productIds":["69a6e3aa14d9cac23b902dcb"],"twitterProfileLink":""}
-[01:31:17.688] Browser LOG     Extension message failed: {"message":"Could not establish connection. Receiving end does not exist."}
-[01:33:18.012] Server  LOG      ✓ Compiled in 111ms
-[01:33:27.334] Server  LOG      ✓ Compiled in 57ms
-[01:33:35.043] Server  LOG      ✓ Compiled in 105ms
-[01:33:40.797] Browser LOG     Extension message failed: {"message":"Could not establish connection. Receiving end does not exist."}
-[01:36:43.930] Server  LOG      ✓ Compiled in 79ms
-[01:39:23.854] Browser LOG     payload {"city":"","country":"","currentCompanyName":"e","email":"","facebookProfileLink":"","industryName":"e","instagramProfileLink":"","linkedinProfileLink":"","name":"ee","personalProfileLink":"","productIds":["69a6e3aa14d9cac23b902dcb"],"twitterProfileLink":""}
+[00:00:01.436] Server  LOG      ✓ Ready in 1069ms
+[00:00:33.798] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:00:41.966] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:00:50.828] Browser LOG     selectedProfile undefined
+[00:00:50.828] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:00:52.635] Browser LOG     selectedProfile COMPLETED
+[00:00:53.931] Browser LOG     selectedProfile COMPLETED
+[00:02:11.075] Browser LOG     payload {"city":"","country":"","currentCompanyName":"Nagarro","email":"","facebookProfileLink":"","industryName":"Tech","instagramProfileLink":"","linkedinProfileLink":"https://www.linkedin.com/in/gurdeep-singh-239362187/","name":"Gurdeep Singh","personalProfileLink":"","productIds":["69a6e3aa14d9cac23b902dcb","69a6e60e14d9cac23b902dcf"],"twitterProfileLink":""}
+[00:02:30.396] Browser LOG     Extension message failed: {"message":"Could not establish connection. Receiving end does not exist."}
+[00:04:00.460] Browser LOG     selectedProfile undefined
+[00:04:00.460] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:04:02.561] Browser LOG     selectedProfile COMPLETED
+[00:04:03.764] Browser LOG     selectedProfile COMPLETED
+[00:09:05.715] Browser LOG     selectedProfile undefined
+[00:09:05.715] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:09:07.115] Browser LOG     selectedProfile COMPLETED
+[00:09:08.467] Browser LOG     selectedProfile COMPLETED
+[00:09:31.781] Browser LOG     selectedProfile undefined
+[00:09:31.781] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:09:33.741] Browser LOG     selectedProfile COMPLETED
+[00:09:35.085] Browser LOG     selectedProfile COMPLETED
+[00:09:44.194] Browser LOG     selectedProfile undefined
+[00:09:44.194] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:09:45.734] Browser LOG     selectedProfile COMPLETED
+[00:09:47.207] Browser LOG     selectedProfile COMPLETED
+[00:09:54.001] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:10:30.984] Browser LOG     selectedProfile undefined
+[00:10:30.984] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:10:32.756] Browser LOG     selectedProfile COMPLETED
+[00:10:33.952] Browser LOG     selectedProfile COMPLETED
