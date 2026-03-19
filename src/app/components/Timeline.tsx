@@ -88,9 +88,7 @@ export const Timeline: React.FC<TimelineProps> = ({
                       ) : (
                         <PlayCircle className="w-3 h-3" />
                       )}
-                      {loadingStageId === stage.id
-                        ? "Initiating..."
-                        : "Initiate"}
+                      {loadingStageId === stage.id ? "Running..." : "Run"}
                     </button>
                   )}
                 </div>

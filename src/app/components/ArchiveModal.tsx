@@ -58,7 +58,6 @@ export function ArchiveModal({
               onChange={(e) => setNote(e.target.value)}
               className="w-full min-h-[120px] p-3 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-slate-400 resize-none"
               placeholder="Add some notes about this action..."
-              required
             />
           </div>
 
@@ -73,7 +72,7 @@ export function ArchiveModal({
             </button>
             <button
               type="submit"
-              disabled={isLoading || !note.trim()}
+              disabled={isLoading}
               className="flex items-center justify-center gap-2 px-6 py-2 text-sm font-bold text-white bg-blue-700 hover:bg-blue-800 rounded-xl transition-all active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none shadow-lg shadow-primary/20"
             >
               {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}

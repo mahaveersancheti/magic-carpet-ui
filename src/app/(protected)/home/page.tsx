@@ -17,6 +17,8 @@ import { AppDispatch, RootState } from "../../redux/store/store";
 import {
   fetchNotifications,
   fetchProfiles,
+  fetchArchivedProfiles,
+  unarchiveProfile,
   deleteProfile,
   patchProfileStatus,
   archiveProfile,
@@ -30,7 +32,7 @@ import toast from "react-hot-toast";
 import { api } from "../../services/apiService";
 import { endpoints } from "../../lib/endpoints";
 import { ArchiveModal } from "@/app/components/ArchiveModal";
-import { Archive, Info } from "lucide-react";
+import { Archive, Info, ArchiveRestore, ChevronDown } from "lucide-react";
 import { SidePanel } from "@/app/components/SidePanel";
 import { Timeline, TimelineStage } from "@/app/components/Timeline";
 
@@ -65,13 +67,21 @@ export default function DashboardPage() {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useUser();
-  const { profiles, notificationsData, loading, error } = useSelector(
-    (state: RootState) => state.profiles,
-  );
+  const {
+    profiles,
+    archivedProfiles,
+    notificationsData,
+    loading,
+    archivedLoading,
+    error,
+  } = useSelector((state: RootState) => state.profiles);
   const { products, loading: productsLoading } = useSelector(
     (state: RootState) => state.products,
   );
 
+  const [leadTypeFilter, setLeadTypeFilter] = useState<
+    "all" | "active" | "archive"
+  >("all");
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [openSocialRowId, setOpenSocialRowId] = useState<string | null>(null);
@@ -96,11 +106,13 @@ export default function DashboardPage() {
     id: string | null;
     name: string | null;
     isLoading: boolean;
+    actionType: "archive" | "unarchive";
   }>({
     isOpen: false,
     id: null,
     name: null,
     isLoading: false,
+    actionType: "archive",
   });
 
   // Side Panel State
@@ -120,21 +132,25 @@ export default function DashboardPage() {
 
     const stages = [
       { id: "profile-created", label: "Profile Created", isComplete: true },
-      { id: "extract-data", label: "Extract Data", isComplete: !!flags.scrap },
+      {
+        id: "extract-data",
+        label: "Get Personal Data",
+        isComplete: !!flags.scrap,
+      },
       {
         id: "get-company-data",
         label: "Get Company Data",
         isComplete: !!flags.company,
       },
       {
+        id: "product-fit",
+        label: "Generate Product Fit",
+        isComplete: !!flags.productFit,
+      },
+      {
         id: "generate-warm-score",
         label: "Generate Warm Score",
         isComplete: !!flags.warmScore,
-      },
-      {
-        id: "product-fit",
-        label: "Product Fit",
-        isComplete: !!flags.productFit,
       },
       {
         id: "completed",
@@ -306,6 +322,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     dispatch(fetchProfiles());
+    dispatch(fetchArchivedProfiles());
     dispatch(fetchNotifications());
     if (user?.userId) {
       dispatch(fetchProductsByUserId(user.userId));
@@ -333,7 +350,7 @@ export default function DashboardPage() {
   // Reset page when filter/search changes
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, statusFilter]);
+  }, [searchTerm, statusFilter, leadTypeFilter]);
 
   const viewDetails = (action: string, id: string) => {
     if (action === "visibility") {
@@ -354,7 +371,13 @@ export default function DashboardPage() {
   };
 
   const filteredAndSortedRows = useMemo(() => {
-    const mappedRows: TableRow[] = profiles.map((p) => {
+    let listToMap = profiles;
+    if (leadTypeFilter === "all") {
+      listToMap = [...profiles, ...(archivedProfiles || [])];
+    } else if (leadTypeFilter === "archive") {
+      listToMap = archivedProfiles || [];
+    }
+    const mappedRows: TableRow[] = listToMap.map((p) => {
       let status = "Pending";
       const originalStatus = p.status?.toUpperCase();
 
@@ -424,7 +447,15 @@ export default function DashboardPage() {
           ? -1
           : 1;
     });
-  }, [profiles, searchTerm, statusFilter, sortKey, sortOrder]);
+  }, [
+    profiles,
+    archivedProfiles,
+    leadTypeFilter,
+    searchTerm,
+    statusFilter,
+    sortKey,
+    sortOrder,
+  ]);
 
   const totalPages = Math.ceil(filteredAndSortedRows.length / itemsPerPage);
   const paginatedRows = useMemo(() => {
@@ -732,7 +763,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Table Container */}
-          <div className="flex flex-col min-h-0 max-h-full bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="flex flex-col min-h-0 max-h-full bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mt-2">
             {/* Table Actions */}
             <div className="p-3 border-b border-slate-200 flex flex-col md:flex-row items-center justify-between gap-3 shrink-0">
               <div className="relative w-full md:w-80 group">
@@ -747,18 +778,37 @@ export default function DashboardPage() {
                   type="text"
                 />
               </div>
-              <div className="flex items-center gap-2 w-full md:w-auto">
-                <select
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                  className="bg-slate-50 border-none rounded-lg text-xs py-1.5 pl-3 pr-8 focus:ring-1 focus:ring-primary cursor-pointer appearance-none transition-all"
-                >
-                  <option value="all">All Status</option>
-                  <option value="Complete">Complete</option>
-                  <option value="Pending">Pending</option>
-                  <option value="Failed">Failed</option>
-                  <option value="Archived">Archived</option>
-                </select>
+              <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                <div className="relative w-full sm:w-auto">
+                  <select
+                    value={leadTypeFilter}
+                    onChange={(e) =>
+                      setLeadTypeFilter(
+                        e.target.value as "all" | "active" | "archive",
+                      )
+                    }
+                    className="bg-white border border-slate-200 shadow-sm rounded-lg text-xs font-semibold text-slate-700 py-1.5 pl-3 pr-8 focus:ring-2 focus:ring-primary/20 focus:border-primary cursor-pointer appearance-none transition-all w-full"
+                  >
+                    <option value="all">All Leads</option>
+                    <option value="active">Active Leads</option>
+                    <option value="archive">Archived Leads</option>
+                  </select>
+                  <ChevronDown className="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
+                <div className="relative w-full sm:w-auto">
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="bg-white border border-slate-200 shadow-sm rounded-lg text-xs font-semibold text-slate-700 py-1.5 pl-3 pr-8 focus:ring-2 focus:ring-primary/20 focus:border-primary cursor-pointer appearance-none transition-all w-full"
+                  >
+                    <option value="all">All Status</option>
+                    <option value="Complete">Complete</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Failed">Failed</option>
+                    {/* <option value="Archived">Archived</option> */}
+                  </select>
+                  <ChevronDown className="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
                 {/* <button
                   onClick={() => router.push("/upload-leads")}
                   className="px-4 py-1.5 border border-[#0d59f2] text-[#0d59f2] rounded-lg text-xs font-bold hover:bg-blue-50 transition-all whitespace-nowrap flex items-center justify-center gap-2"
@@ -891,24 +941,23 @@ export default function DashboardPage() {
                           <td className="px-4 py-2">
                             <div className="flex items-center gap-2">
                               <StatusPill status={row.status} />
-                              {row.status !== "Complete" &&
-                                row.status !== "Archived" && (
-                                  <button
-                                    onClick={() => {
-                                      const originalProfile = profiles.find(
+                              {row.status !== "Complete" && (
+                                <button
+                                  onClick={() => {
+                                    const originalProfile =
+                                      profiles.find((p) => p.id === row.id) ||
+                                      archivedProfiles?.find(
                                         (p) => p.id === row.id,
                                       );
-                                      setSelectedTimelineProfile(
-                                        originalProfile,
-                                      );
-                                      setIsSidePanelOpen(true);
-                                    }}
-                                    className="p-1 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all active:scale-95"
-                                    title="View Progress Timeline"
-                                  >
-                                    <Info className="w-3.5 h-3.5" />
-                                  </button>
-                                )}
+                                    setSelectedTimelineProfile(originalProfile);
+                                    setIsSidePanelOpen(true);
+                                  }}
+                                  className="p-1 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all active:scale-95"
+                                  title="Generate Workbench"
+                                >
+                                  <Info className="w-3.5 h-3.5" />
+                                </button>
+                              )}
                             </div>
                           </td>
                           <td className="px-4 py-2">
@@ -964,7 +1013,7 @@ export default function DashboardPage() {
                                   delete
                                 </span>
                               </button>
-                              {row.status !== "Archived" && (
+                              {row.status !== "Archived" ? (
                                 <button
                                   onClick={() =>
                                     setArchiveModal({
@@ -972,12 +1021,29 @@ export default function DashboardPage() {
                                       id: row.id,
                                       name: row.name,
                                       isLoading: false,
+                                      actionType: "archive",
                                     })
                                   }
                                   className="cursor-pointer p-1 text-slate-400 hover:text-orange-500 hover:bg-orange-500/10 rounded-lg transition-all active:scale-95"
                                   title="Archive Lead"
                                 >
                                   <Archive className="w-4.5 h-4.5" />
+                                </button>
+                              ) : (
+                                <button
+                                  onClick={() =>
+                                    setArchiveModal({
+                                      isOpen: true,
+                                      id: row.id,
+                                      name: row.name,
+                                      isLoading: false,
+                                      actionType: "unarchive",
+                                    })
+                                  }
+                                  className="cursor-pointer p-1 text-slate-400 hover:text-blue-500 hover:bg-blue-500/10 rounded-lg transition-all active:scale-95"
+                                  title="UnArchive Lead"
+                                >
+                                  <ArchiveRestore className="w-4.5 h-4.5" />
                                 </button>
                               )}
                               <ActionButtons row={row} />
@@ -1054,7 +1120,7 @@ export default function DashboardPage() {
       </main>
 
       {/* Components Layer */}
-      {loading && (
+      {(loading || archivedLoading) && (
         <div className="fixed inset-0 bg-white/60 z-[100] flex items-center justify-center backdrop-blur-[2px]">
           <div className="bg-white p-8 rounded-3xl shadow-2xl border border-slate-200 flex flex-col items-center gap-5">
             <Loader2 className="w-10 h-10 text-primary animate-spin" />
@@ -1114,22 +1180,47 @@ export default function DashboardPage() {
       <ArchiveModal
         isOpen={archiveModal.isOpen}
         onClose={() => setArchiveModal((prev) => ({ ...prev, isOpen: false }))}
-        title="Archive Lead"
-        description={`Are you sure you want to archive ${archiveModal.name}? This will move it to the archived list.`}
-        confirmLabel="Archive"
+        title={
+          archiveModal.actionType === "archive"
+            ? "Archive Lead"
+            : "UnArchive Lead"
+        }
+        description={
+          archiveModal.actionType === "archive"
+            ? `Are you sure you want to archive ${archiveModal.name}? This will move it to the archived list.`
+            : `Are you sure you want to unarchive ${archiveModal.name}? This will move it back to the active list.`
+        }
+        confirmLabel={
+          archiveModal.actionType === "archive" ? "Archive" : "UnArchive"
+        }
         isLoading={archiveModal.isLoading}
         onConfirm={async (note) => {
           if (!archiveModal.id) return;
           setArchiveModal((prev) => ({ ...prev, isLoading: true }));
           try {
-            await dispatch(
-              archiveProfile({
-                id: archiveModal.id,
-                reason: note || "Archived",
-                newStatus: "ARCHIVED",
-              }),
-            ).unwrap();
-            toast.success(`Lead ${archiveModal.name} archived successfully`);
+            if (archiveModal.actionType === "archive") {
+              await dispatch(
+                archiveProfile({
+                  id: archiveModal.id,
+                  reason: note || "Archived from UI",
+                  newStatus: "ARCHIVED",
+                }),
+              ).unwrap();
+              toast.success(`Lead ${archiveModal.name} archived successfully`);
+            } else {
+              await dispatch(
+                unarchiveProfile({
+                  id: archiveModal.id,
+                  reason: note || "UnArchived from UI",
+                  targetStatus: "PROFILE_EXTRACTED",
+                }),
+              ).unwrap();
+              toast.success(
+                `Lead ${archiveModal.name} unarchived successfully`,
+              );
+            }
+            dispatch(fetchProfiles());
+            dispatch(fetchArchivedProfiles());
             setArchiveModal((prev) => ({ ...prev, isOpen: false }));
           } catch (err: any) {
             toast.error(
@@ -1149,7 +1240,7 @@ export default function DashboardPage() {
           setIsSidePanelOpen(false);
           setSelectedTimelineProfile(null);
         }}
-        title="Processing Timeline"
+        title="Generate Workbench"
       >
         {selectedTimelineProfile && (
           <div className="space-y-6">
