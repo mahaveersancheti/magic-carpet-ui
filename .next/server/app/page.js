@@ -1,5 +1,5 @@
 var R=require("../chunks/ssr/[turbopack]_runtime.js")("server/app/page.js")
-R.c("server/chunks/ssr/[root-of-the-server]__11638d62._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__37fc5edf._.js")
 R.c("server/chunks/ssr/Desktop_Self Learing_Magic Carpet_magic-carpet-ui_85a54112._.js")
 R.c("server/chunks/ssr/Desktop_Self Learing_Magic Carpet_magic-carpet-ui_9d6bb18b._.js")
 R.c("server/chunks/ssr/[root-of-the-server]__741160e0._.js")

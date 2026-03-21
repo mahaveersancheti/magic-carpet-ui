@@ -4,7 +4,6 @@
   "/(auth)/signup/page": "app/(auth)/signup/page.js",
   "/(protected)/add-lead/page": "app/(protected)/add-lead/page.js",
   "/(protected)/add-product/page": "app/(protected)/add-product/page.js",
-  "/(protected)/archive/page": "app/(protected)/archive/page.js",
   "/(protected)/billing/page": "app/(protected)/billing/page.js",
   "/(protected)/home/page": "app/(protected)/home/page.js",
   "/(protected)/linkedin-action/page": "app/(protected)/linkedin-action/page.js",

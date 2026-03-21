@@ -52,12 +52,6 @@
       "namedRegex": "^/add\\-product(?:/)?$"
     },
     {
-      "page": "/archive",
-      "regex": "^/archive(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/archive(?:/)?$"
-    },
-    {
       "page": "/billing",
       "regex": "^/billing(?:/)?$",
       "routeKeys": {},
