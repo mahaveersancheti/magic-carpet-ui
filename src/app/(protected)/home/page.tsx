@@ -17,7 +17,6 @@ import { AppDispatch, RootState } from "../../redux/store/store";
 import {
   fetchNotifications,
   fetchProfiles,
-  fetchArchivedProfiles,
   unarchiveProfile,
   deleteProfile,
   patchProfileStatus,
@@ -52,6 +51,7 @@ interface TableRow {
   twitterUrl?: string;
   websiteUrl?: string;
   productNames: string;
+  tag?: string;
 }
 
 interface Notification {
@@ -67,14 +67,9 @@ export default function DashboardPage() {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useUser();
-  const {
-    profiles,
-    archivedProfiles,
-    notificationsData,
-    loading,
-    archivedLoading,
-    error,
-  } = useSelector((state: RootState) => state.profiles);
+  const { profiles, notificationsData, loading, error } = useSelector(
+    (state: RootState) => state.profiles,
+  );
   const { products, loading: productsLoading } = useSelector(
     (state: RootState) => state.products,
   );
@@ -322,7 +317,6 @@ export default function DashboardPage() {
 
   useEffect(() => {
     dispatch(fetchProfiles());
-    dispatch(fetchArchivedProfiles());
     dispatch(fetchNotifications());
     if (user?.userId) {
       dispatch(fetchProductsByUserId(user.userId));
@@ -373,11 +367,15 @@ export default function DashboardPage() {
   const filteredAndSortedRows = useMemo(() => {
     let listToMap = profiles;
     if (leadTypeFilter === "all") {
-      listToMap = [...profiles, ...(archivedProfiles || [])];
+      listToMap = profiles;
     } else if (leadTypeFilter === "archive") {
-      listToMap = archivedProfiles || [];
+      listToMap = profiles.filter((p: any) => p.tag === "ARCHIVED");
+    } else if (leadTypeFilter === "active") {
+      listToMap = profiles.filter(
+        (p: any) => p.tag === "ACTIVE" || !p.tag || p.tag !== "ARCHIVED",
+      );
     }
-    const mappedRows: TableRow[] = listToMap.map((p) => {
+    const mappedRows: TableRow[] = listToMap.map((p: any) => {
       let status = "Pending";
       const originalStatus = p.status?.toUpperCase();
 
@@ -385,7 +383,12 @@ export default function DashboardPage() {
         status = "Complete";
       } else if (originalStatus === "FAILED") {
         status = "Failed";
-      } else if (originalStatus === "ARCHIVED") {
+      } else if (
+        originalStatus === "NEW" ||
+        originalStatus === "PROFILE_EXTRACTED"
+      ) {
+        status = "Pending";
+      } else if (p.tag === "ARCHIVED") {
         status = "Archived";
       }
 
@@ -408,6 +411,7 @@ export default function DashboardPage() {
             ?.map((pf: any) => pf.productName)
             .filter(Boolean)
             .join(", ") || "N/A",
+        tag: p.tag,
       };
     });
 
@@ -447,15 +451,7 @@ export default function DashboardPage() {
           ? -1
           : 1;
     });
-  }, [
-    profiles,
-    archivedProfiles,
-    leadTypeFilter,
-    searchTerm,
-    statusFilter,
-    sortKey,
-    sortOrder,
-  ]);
+  }, [profiles, leadTypeFilter, searchTerm, statusFilter, sortKey, sortOrder]);
 
   const totalPages = Math.ceil(filteredAndSortedRows.length / itemsPerPage);
   const paginatedRows = useMemo(() => {
@@ -941,23 +937,19 @@ export default function DashboardPage() {
                           <td className="px-4 py-2">
                             <div className="flex items-center gap-2">
                               <StatusPill status={row.status} />
-                              {row.status !== "Complete" && (
-                                <button
-                                  onClick={() => {
-                                    const originalProfile =
-                                      profiles.find((p) => p.id === row.id) ||
-                                      archivedProfiles?.find(
-                                        (p) => p.id === row.id,
-                                      );
-                                    setSelectedTimelineProfile(originalProfile);
-                                    setIsSidePanelOpen(true);
-                                  }}
-                                  className="p-1 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all active:scale-95"
-                                  title="Generate Workbench"
-                                >
-                                  <Info className="w-3.5 h-3.5" />
-                                </button>
-                              )}
+                              <button
+                                onClick={() => {
+                                  const originalProfile = profiles.find(
+                                    (p) => p.id === row.id,
+                                  );
+                                  setSelectedTimelineProfile(originalProfile);
+                                  setIsSidePanelOpen(true);
+                                }}
+                                className="p-1 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all active:scale-95"
+                                title="Generate Workbench"
+                              >
+                                <Info className="w-3.5 h-3.5" />
+                              </button>
                             </div>
                           </td>
                           <td className="px-4 py-2">
@@ -1013,7 +1005,7 @@ export default function DashboardPage() {
                                   delete
                                 </span>
                               </button>
-                              {row.status !== "Archived" ? (
+                              {row.tag !== "ARCHIVED" ? (
                                 <button
                                   onClick={() =>
                                     setArchiveModal({
@@ -1120,7 +1112,7 @@ export default function DashboardPage() {
       </main>
 
       {/* Components Layer */}
-      {(loading || archivedLoading) && (
+      {loading && (
         <div className="fixed inset-0 bg-white/60 z-[100] flex items-center justify-center backdrop-blur-[2px]">
           <div className="bg-white p-8 rounded-3xl shadow-2xl border border-slate-200 flex flex-col items-center gap-5">
             <Loader2 className="w-10 h-10 text-primary animate-spin" />
@@ -1211,8 +1203,8 @@ export default function DashboardPage() {
               await dispatch(
                 unarchiveProfile({
                   id: archiveModal.id,
-                  reason: note || "UnArchived from UI",
-                  targetStatus: "PROFILE_EXTRACTED",
+                  reason: note || "",
+                  targetStatus: "UNARCHIVE",
                 }),
               ).unwrap();
               toast.success(
@@ -1220,7 +1212,6 @@ export default function DashboardPage() {
               );
             }
             dispatch(fetchProfiles());
-            dispatch(fetchArchivedProfiles());
             setArchiveModal((prev) => ({ ...prev, isOpen: false }));
           } catch (err: any) {
             toast.error(

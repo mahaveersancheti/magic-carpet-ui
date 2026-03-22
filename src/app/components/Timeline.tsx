@@ -77,7 +77,7 @@ export const Timeline: React.FC<TimelineProps> = ({
                     )} */}
                   </div>
 
-                  {!isCompleted && !isLast && (
+                  {(
                     <button
                       onClick={() => onInitiate(stage.id)}
                       disabled={loadingStageId === stage.id}
