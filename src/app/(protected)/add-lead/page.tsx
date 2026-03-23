@@ -31,6 +31,8 @@ export default function AddLeadPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
+  const profileTypeParam = searchParams.get("type") as "lead" | "company" | null;
+  const currentType = profileTypeParam || "lead";
   const dispatch = useDispatch<AppDispatch>();
   const { profiles, selectedProfile, createLoading, updateLoading } =
     useSelector((state: RootState) => state.profiles);
@@ -57,6 +59,8 @@ export default function AddLeadPage() {
     twitterProfileLink: "",
     personalProfileLink: "",
     facebookProfileLink: "",
+    profileType: currentType,
+    initialNote: "",
   });
 
   const [errors, setErrors] = useState<
@@ -74,6 +78,13 @@ export default function AddLeadPage() {
       dispatch(fetchProductsByUserId(user.userId));
     }
   }, [dispatch, user?.userId]);
+
+  // Sync profileType with query param for new entries
+  useEffect(() => {
+    if (!id) {
+      setFormData(prev => ({ ...prev, profileType: currentType }));
+    }
+  }, [currentType, id]);
 
   useEffect(() => {
     if (id) {
@@ -102,6 +113,8 @@ export default function AddLeadPage() {
           twitterProfileLink: profile.twitterUrl || "",
           personalProfileLink: profile.personalUrl || "",
           facebookProfileLink: profile.facebookUrl || "",
+          profileType: profile.profileType || currentType,
+          initialNote: profile.initialNote || "",
         });
 
         // Bind products if they exist in the profile
@@ -147,8 +160,10 @@ export default function AddLeadPage() {
           instagramProfileLink: profile.instagramProfileLink || "",
           twitterProfileLink: profile.twitterProfileLink || "",
           personalProfileLink: profile.personalProfileLink || "",
+          profileType: profile.profileType || currentType,
+          initialNote: profile.initialNote || "",
         };
-        setInitialFormData(initialData);
+        setInitialFormData(initialData as CreateProfilePayload);
         setInitialProducts(matchedProducts);
       }
     }
@@ -179,6 +194,7 @@ export default function AddLeadPage() {
       formData.instagramProfileLink !== "" ||
       formData.twitterProfileLink !== "" ||
       formData.personalProfileLink !== "" ||
+      formData.initialNote !== "" ||
       selectedProducts.length !== 0;
 
   useEffect(() => {
@@ -263,6 +279,8 @@ export default function AddLeadPage() {
       instagramProfileLink: "",
       twitterProfileLink: "",
       personalProfileLink: "",
+      profileType: currentType,
+      initialNote: "",
     });
     setSelectedProducts([]);
     setErrors({});
@@ -276,8 +294,8 @@ export default function AddLeadPage() {
       Record<keyof CreateProfilePayload | "products", string>
     > = {};
 
-    if (!formData.name.trim()) newErrors.name = "Name is required";
-    if (!formData.currentCompanyName.trim())
+    if (!formData.name.trim()) newErrors.name = `${currentType === "lead" ? "Name" : "Company Name"} is required`;
+    if (currentType === "lead" && !formData.currentCompanyName.trim())
       newErrors.currentCompanyName = "Company Name is required";
     if (
       formData.email.trim() &&
@@ -291,11 +309,11 @@ export default function AddLeadPage() {
     if (formData.linkedinProfileLink?.trim()) {
       const linkedinUrl = formData.linkedinProfileLink.trim();
       const linkedinRegex =
-        /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|pub|profile)\/[a-zA-Z0-9_-]+\/?$/i;
+        /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|pub|profile|company|school|groups)\/[a-zA-Z0-9_-]+\/?$/i;
 
       if (!linkedinRegex.test(linkedinUrl)) {
         newErrors.linkedinProfileLink =
-          "Please enter a valid LinkedIn profile URL";
+          "Please enter a valid LinkedIn URL";
       }
     }
 
@@ -356,7 +374,9 @@ export default function AddLeadPage() {
       setIsSubmitting(true);
       const payload = {
         ...formData,
+        currentCompanyName: currentType === "company" ? formData.name : formData.currentCompanyName,
         productIds: selectedProducts.map((p) => p.id),
+        userId: user?.userId,
       };
       console.log("payload", payload);
       if (id) {
@@ -429,8 +449,8 @@ export default function AddLeadPage() {
             </h1>
             <p className="text-sm text-gray-500">
               {id
-                ? "Update your lead information"
-                : "Add a new lead to your database"}
+                ? `Update your ${currentType} information`
+                : `Add a new ${currentType} to your database`}
             </p>
           </div>
         </div>
@@ -446,9 +466,9 @@ export default function AddLeadPage() {
                 {id ? "Updating..." : "Saving..."}
               </>
             ) : id ? (
-              "Update Lead"
+              `Update ${currentType === "lead" ? "Lead" : "Company"}`
             ) : (
-              "Save Lead"
+              `Save ${currentType === "lead" ? "Lead" : "Company"}`
             )}
           </button>
         </div>
@@ -501,9 +521,11 @@ export default function AddLeadPage() {
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 lg:p-6">
               <div className="flex items-center gap-2 mb-5 border-b border-gray-50 pb-3">
                 <span className="material-symbols-outlined text-primary text-xl">
-                  contact_page
+                  {currentType === "lead" ? "contact_page" : "business"}
                 </span>
-                <h3 className="text-base font-bold">Lead Details</h3>
+                <h3 className="text-base font-bold">
+                  {currentType === "lead" ? "Lead Details" : "Company Details"}
+                </h3>
               </div>
               <form
                 onSubmit={handleSubmit}
@@ -512,7 +534,7 @@ export default function AddLeadPage() {
                 {/* Name */}
                 <label className="flex flex-col gap-1.5">
                   <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
-                    Name of Person <span className="text-red-500">*</span>
+                    {currentType === "lead" ? "Name of Person" : "Company Name"} <span className="text-red-500">*</span>
                   </span>
                   <input
                     value={formData.name}
@@ -549,27 +571,29 @@ export default function AddLeadPage() {
                   )}
                 </label>
 
-                {/* Company */}
-                <label className="flex flex-col gap-1.5">
-                  <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
-                    Company Name <span className="text-red-500">*</span>
-                  </span>
-                  <input
-                    value={formData.currentCompanyName}
-                    onChange={(e) =>
-                      handleInputChange("currentCompanyName", e.target.value)
-                    }
-                    disabled={createLoading || updateLoading}
-                    className={`w-full px-3 py-2 rounded-lg border ${errors.currentCompanyName ? "border-red-500" : "border-gray-200"} focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
-                    placeholder="Organization name"
-                    type="text"
-                  />
-                  {errors.currentCompanyName && (
-                    <span className="text-red-500 text-[10px]">
-                      {errors.currentCompanyName}
+                {/* Company Name (only for leads) */}
+                {currentType === "lead" && (
+                  <label className="flex flex-col gap-1.5">
+                    <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
+                      Company Name <span className="text-red-500">*</span>
                     </span>
-                  )}
-                </label>
+                    <input
+                      value={formData.currentCompanyName}
+                      onChange={(e) =>
+                        handleInputChange("currentCompanyName", e.target.value)
+                      }
+                      disabled={createLoading || updateLoading}
+                      className={`w-full px-3 py-2 rounded-lg border ${errors.currentCompanyName ? "border-red-500" : "border-gray-200"} focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px]`}
+                      placeholder="Organization name"
+                      type="text"
+                    />
+                    {errors.currentCompanyName && (
+                      <span className="text-red-500 text-[10px]">
+                        {errors.currentCompanyName}
+                      </span>
+                    )}
+                  </label>
+                )}
 
                 {/* Industry */}
                 <label className="flex flex-col gap-1.5">
@@ -753,6 +777,21 @@ export default function AddLeadPage() {
                   )}
                 </label>
 
+                {/* Initial Note / Notes */}
+                <label className="flex flex-col gap-1.5 md:col-span-2">
+                  <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
+                    Notes / Description
+                  </span>
+                  <textarea
+                    value={formData.initialNote || ""}
+                    onChange={(e) => handleInputChange("initialNote", e.target.value)}
+                    disabled={createLoading || updateLoading}
+                    rows={3}
+                    className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-primary focus:ring-primary/20 transition-all outline-none text-sm lg:text-[13px] resize-none"
+                    placeholder="Add some initial notes or description..."
+                  />
+                </label>
+
                 {/* Products Autocomplete */}
                 <div className="flex flex-col gap-1.5 md:col-span-2 z-20">
                   <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
@@ -865,21 +904,21 @@ export default function AddLeadPage() {
             <div className="bg-white border border-gray-100 rounded-xl p-5 relative overflow-hidden shadow-sm">
               <div className="absolute -top-4 -right-4 opacity-5">
                 <span className="material-symbols-outlined text-[100px] text-primary">
-                  account_circle
+                  {currentType === "lead" ? "account_circle" : "domain"}
                 </span>
               </div>
               <p className="text-[9px] uppercase tracking-widest font-black text-primary mb-5">
-                Real-time Lead Card
+                Real-time {currentType === "lead" ? "Lead" : "Company"} Card
               </p>
               <div className="flex items-center gap-3 mb-6">
                 <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
                   <span className="material-symbols-outlined text-primary text-3xl">
-                    person
+                    {currentType === "lead" ? "person" : "business"}
                   </span>
                 </div>
                 <div>
                   <h4 className="text-base font-bold leading-tight text-[#111318]">
-                    {formData.name || "Lead Name"}
+                    {formData.name || (currentType === "lead" ? "Lead Name" : "Company Name")}
                   </h4>
                   <p className="text-xs text-gray-500 font-medium">
                     {formData.currentCompanyName || "Organization"}
@@ -928,7 +967,9 @@ export default function AddLeadPage() {
                 <span className="material-symbols-outlined text-amber-500 text-lg">
                   auto_awesome
                 </span>
-                <h4 className="font-bold text-sm">Lead Enrichment</h4>
+                <h4 className="font-bold text-sm">
+                  {currentType === "lead" ? "Lead Enrichment" : "Company Enrichment"}
+                </h4>
               </div>
               <ul className="space-y-3">
                 <li className="flex gap-2.5">
@@ -963,7 +1004,7 @@ export default function AddLeadPage() {
                     <span className="font-bold text-[#111318]">
                       Target Products
                     </span>{" "}
-                    improves lead scoring accuracy.
+                    improves {currentType === "lead" ? "lead" : "company"} scoring accuracy.
                   </p>
                 </li>
               </ul>

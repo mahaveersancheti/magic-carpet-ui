@@ -31,7 +31,14 @@ import toast from "react-hot-toast";
 import { api } from "../../services/apiService";
 import { endpoints } from "../../lib/endpoints";
 import { ArchiveModal } from "@/app/components/ArchiveModal";
-import { Archive, Info, ArchiveRestore, ChevronDown } from "lucide-react";
+import {
+  Archive,
+  Info,
+  ArchiveRestore,
+  ChevronDown,
+  Building2,
+  Users,
+} from "lucide-react";
 import { SidePanel } from "@/app/components/SidePanel";
 import { Timeline, TimelineStage } from "@/app/components/Timeline";
 
@@ -52,6 +59,7 @@ interface TableRow {
   websiteUrl?: string;
   productNames: string;
   tag?: string;
+  profileType?: "lead" | "company";
 }
 
 interface Notification {
@@ -412,6 +420,7 @@ export default function DashboardPage() {
             .filter(Boolean)
             .join(", ") || "N/A",
         tag: p.tag,
+        profileType: p.profileType,
       };
     });
 
@@ -812,15 +821,33 @@ export default function DashboardPage() {
                   <UploadCloud className="w-4 h-4" />
                   Import Excel
                 </button> */}
-                <button
-                  onClick={() => router.push("/add-lead")}
-                  className="cursor-pointer flex items-center gap-1.5 bg-blue-700 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] shadow-md shadow-primary/10"
-                >
-                  <span className="material-symbols-outlined text-base">
-                    add
-                  </span>
-                  New Lead
-                </button>
+                <div className="relative group/add">
+                  <button className="cursor-pointer flex items-center gap-1.5 bg-blue-700 hover:bg-blue-800 text-white px-2 py-1 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] shadow-md shadow-primary/10">
+                    <span className="material-symbols-outlined text-base font-bold">
+                      add
+                    </span>
+                    Add New
+                    <ChevronDown className="w-3.5 h-3.5 ml-0.5 opacity-70" />
+                  </button>
+
+                  <div className="absolute top-full right-0 mt-1.5 w-48 bg-white border border-slate-100 rounded-xl shadow-2xl py-2 z-[60] invisible group-hover/add:visible opacity-0 group-hover/add:opacity-100 translate-y-2 group-hover/add:translate-y-0 transition-all duration-300">
+                    <button
+                      onClick={() => router.push("/add-lead?type=lead")}
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-700 transition-all"
+                    >
+                      <Users className="w-4 h-4 text-blue-600/70" />
+                      New Lead
+                    </button>
+                    <div className="mx-2 my-1.5 border-t border-slate-50" />
+                    <button
+                      onClick={() => router.push("/add-lead?type=company")}
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-blue-700 transition-all"
+                    >
+                      <Building2 className="w-4 h-4 text-orange-600/70" />
+                      New Company
+                    </button>
+                  </div>
+                </div>
                 <button
                   onClick={() => dispatch(fetchProfiles())}
                   className="cursor-pointer p-1.5 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition-all active:rotate-180 duration-500"
@@ -978,10 +1005,12 @@ export default function DashboardPage() {
                                   visibility
                                 </span>
                               </button>
-                              <button
-                                onClick={() =>
-                                  router.push(`/add-lead?id=${row.id}`)
-                                }
+                                <button
+                                  onClick={() =>
+                                    router.push(
+                                      `/add-lead?id=${row.id}&type=${row.profileType || "lead"}`,
+                                    )
+                                  }
                                 className="cursor-pointer p-1 text-slate-400 hover:text-green-500 hover:bg-green-500/10 rounded-lg transition-all active:scale-95"
                                 title="Edit Lead"
                               >

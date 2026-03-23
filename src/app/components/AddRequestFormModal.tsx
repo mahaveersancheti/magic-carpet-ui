@@ -76,7 +76,8 @@ export function AddRequestModal({
         city: "",
         country: "",
         industryName: "",
-        linkedinProfileLink: ""
+        linkedinProfileLink: "",
+        profileType: "lead"
     });
 
     const [errors, setErrors] = useState<Partial<Record<keyof CreateProfilePayload | 'products', string>>>({});
@@ -98,7 +99,8 @@ export function AddRequestModal({
             city: "",
             country: "",
             industryName: "",
-            linkedinProfileLink: ""
+            linkedinProfileLink: "",
+            profileType: "lead"
         });
         setSelectedProducts([]);
         setErrors({});
@@ -123,10 +125,10 @@ export function AddRequestModal({
         } else {
             const linkedinUrl = (formData.linkedinProfileLink || "").trim();
             // Check if it's a valid LinkedIn profile URL
-            const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|pub|profile)\/[a-zA-Z0-9_-]+\/?$/i;
+            const linkedinRegex = /^(https?:\/\/)?(www\.)?linkedin\.com\/(in|pub|profile|company|school|groups)\/[a-zA-Z0-9_-]+\/?$/i;
             
             if (!linkedinRegex.test(linkedinUrl)) {
-                newErrors.linkedinProfileLink = "Please enter a valid LinkedIn profile URL (e.g., https://linkedin.com/in/username)";
+                newErrors.linkedinProfileLink = "Please enter a valid LinkedIn URL (e.g., https://linkedin.com/in/username or https://linkedin.com/company/name)";
             }
         }
 

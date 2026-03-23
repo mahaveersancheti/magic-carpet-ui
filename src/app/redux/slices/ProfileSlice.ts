@@ -45,6 +45,8 @@ export interface Profile {
     productFit: boolean;
     warmScore: boolean;
   };
+  profileType?: "lead" | "company";
+  initialNote?: string;
 }
 
 export interface CreateProfilePayload {
@@ -60,6 +62,9 @@ export interface CreateProfilePayload {
   facebookProfileLink?: string;
   personalProfileLink?: string;
   productIds?: string[];
+  profileType: "lead" | "company";
+  initialNote?: string;
+  userId?: string;
 }
 
 interface ProfileState {
