@@ -10,3 +10,9 @@
 [00:11:23.615] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
 [00:11:25.483] Browser LOG     selectedProfile COMPLETED
 [00:11:26.161] Browser LOG     selectedProfile COMPLETED
+[00:14:24.873] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:14:41.707] Browser LOG     selectedProfile undefined
+[00:14:41.707] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:14:42.492] Browser LOG     selectedProfile COMPLETED
+[00:14:43.219] Browser LOG     selectedProfile COMPLETED
+[00:17:27.510] Server  LOG      ✓ Compiled in 132ms

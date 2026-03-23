@@ -585,6 +585,7 @@ function ReportContent() {
           title: news.title || "No Title",
           summary: news.description || "No description available",
           date: news.date || "Recent",
+          url: news.url || null,
         }),
       ),
       industryOutlook: safeList((selectedProfile as any).industryOutlook),
@@ -1919,7 +1920,8 @@ function ReportContent() {
                       REPORT_JSON.recentNews.map((n: any, i: number) => (
                         <div
                           key={i}
-                          className="p-4 rounded-3xl border border-blue-50 bg-blue-50/20 hover:border-blue-200 transition-all group/news"
+                          onClick={() => n.url && window.open(n.url, "_blank")}
+                          className={`p-4 rounded-3xl border border-blue-50 bg-blue-50/20 hover:border-blue-200 transition-all group/news ${n.url ? "cursor-pointer" : ""}`}
                         >
                           <div className="flex justify-between items-start gap-2 mb-3">
                             <div className="flex items-center gap-1.5">
