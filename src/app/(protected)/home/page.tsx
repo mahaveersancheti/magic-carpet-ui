@@ -38,6 +38,7 @@ import {
   ChevronDown,
   Building2,
   Users,
+  MessageSquareMore,
 } from "lucide-react";
 import { SidePanel } from "@/app/components/SidePanel";
 import { Timeline, TimelineStage } from "@/app/components/Timeline";
@@ -59,7 +60,8 @@ interface TableRow {
   websiteUrl?: string;
   productNames: string;
   tag?: string;
-  profileType?: "lead" | "company";
+  tagReason?: string;
+  profileType?: "lead" | "company" | null;
 }
 
 interface Notification {
@@ -422,6 +424,7 @@ export default function DashboardPage() {
             .filter(Boolean)
             .join(", ") || "N/A",
         tag: p.tag,
+        tagReason: p.tagReason,
         profileType: p.profileType,
       };
     });
@@ -947,9 +950,40 @@ export default function DashboardPage() {
                                 {row.name?.charAt(0) || "?"}
                               </div>
                               <div className="min-w-0">
-                                <p className="font-bold text-[12px] text-slate-900 truncate">
-                                  {row.name}
-                                </p>
+                                <div className="flex items-center gap-1.5">
+                                  <p className="font-bold text-[12px] text-slate-900 truncate">
+                                    {row.name}
+                                  </p>
+                                  {profiles.find((p) => p.id === row.id)
+                                    ?.tagReason && (
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        const reason = profiles.find(
+                                          (p) => p.id === row.id,
+                                        )?.tagReason;
+                                        toast(reason || "", {
+                                          icon: "📝",
+                                          duration: 5000,
+                                          position: "top-center",
+                                          style: {
+                                            borderRadius: "12px",
+                                            background: "#334155",
+                                            color: "#fff",
+                                            fontSize: "13px",
+                                            fontWeight: "500",
+                                            padding: "12px 20px",
+                                            maxWidth: "400px",
+                                          },
+                                        });
+                                      }}
+                                      className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all active:scale-95 flex items-center justify-center animate-pulse shrink-0"
+                                      title={`Remark: ${profiles.find((p) => p.id === row.id)?.tagReason}`}
+                                    >
+                                      <MessageSquareMore className="w-3.5 h-3.5" />
+                                    </button>
+                                  )}
+                                </div>
                                 <p className="text-[10px] text-slate-500 truncate">
                                   {row.company}
                                 </p>
