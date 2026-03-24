@@ -386,18 +386,20 @@ export default function DashboardPage() {
     const mappedRows: TableRow[] = listToMap.map((p: any) => {
       let status = "Pending";
       const originalStatus = p.status?.toUpperCase();
+      const flags = p.processingFlags || {};
+      const isComplete =
+        flags.scrap && flags.company && flags.warmScore && flags.productFit;
 
-      if (originalStatus === "COMPLETED" || originalStatus === "COMPLETE") {
-        status = "Complete";
-      } else if (originalStatus === "FAILED") {
+      if (originalStatus === "FAILED") {
         status = "Failed";
       } else if (
-        originalStatus === "NEW" ||
-        originalStatus === "PROFILE_EXTRACTED"
+        isComplete ||
+        originalStatus === "COMPLETED" ||
+        originalStatus === "COMPLETE"
       ) {
+        status = "Complete";
+      } else {
         status = "Pending";
-      } else if (p.tag === "ARCHIVED") {
-        status = "Archived";
       }
 
       return {
@@ -1233,7 +1235,7 @@ export default function DashboardPage() {
                 unarchiveProfile({
                   id: archiveModal.id,
                   reason: note || "",
-                  targetStatus: "UNARCHIVE",
+                  targetStatus: "ACTIVE",
                 }),
               ).unwrap();
               toast.success(

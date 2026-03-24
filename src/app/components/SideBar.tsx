@@ -68,7 +68,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     // ["person", "User Profile"],
     ["inventory_2", "Products"],
     // ["archive", "Archive"],
-    ["credit_card", "Billing"],
+    // ["credit_card", "Billing"],
     // ["share", "LinkedIn Action"],
   ];
 

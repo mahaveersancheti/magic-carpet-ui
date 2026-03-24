@@ -650,7 +650,7 @@ export default function AddLeadPage() {
                 </label>
 
                 {/* LinkedIn */}
-                <label className="flex flex-col gap-1.5 md:col-span-2">
+                <label className={`flex flex-col gap-1.5 ${currentType === "company" ? "md:col-span-1" : "md:col-span-2"}`}>
                   <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
                     LinkedIn URL
                   </span>
