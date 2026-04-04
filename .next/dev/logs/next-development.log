@@ -73,3 +73,31 @@ It can also happen if the client has a browser extension installed which messes 
 [02:52:01.506] Server  LOG      ✓ Compiled in 47ms
 [02:52:11.896] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
 [02:53:01.046] Server  LOG      ✓ Compiled in 65ms
+[03:00:22.070] Server  LOG      ✓ Compiled in 133ms
+[03:05:34.014] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[03:06:19.938] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[03:10:53.955] Server  LOG      ✓ Compiled in 82ms
+[03:13:46.581] Server  LOG      ✓ Compiled in 81ms
+[03:16:18.875] Server  LOG      ✓ Compiled in 144ms
+[03:24:47.851] Server  LOG      ✓ Compiled in 127ms
+[03:26:19.142] Server  LOG      ✓ Compiled in 86ms
+[03:26:19.247] Browser ERROR   ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/upload-leads/page.tsx:244:5
+Parsing ecmascript source code failed
+  242 |     </>
+  243 |   );div>
+> 244 |     </main>
+      |     ^
+  245 |   );
+  246 | }
+  247 |
+
+Expression expected
+
+Import traces:
+  Client Component Browser:
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/upload-leads/page.tsx [Client Component Browser]
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/upload-leads/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/upload-leads/page.tsx [Client Component SSR]
+    ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/upload-leads/page.tsx [Server Component]

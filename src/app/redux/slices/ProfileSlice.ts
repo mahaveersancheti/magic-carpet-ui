@@ -143,23 +143,12 @@ export const uploadProfilesFromExcel = createAsyncThunk(
   "profiles/uploadProfilesFromExcel",
   async (file: File, { rejectWithValue }) => {
     try {
-      const base64String = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          const result = reader.result as string;
-          // Extract base64 part if it's a data URL
-          const base64 = result.includes(",") ? result.split(",")[1] : result;
-          resolve(base64);
-        };
-        reader.onerror = (error) => reject(error);
-      });
+      const formData = new FormData();
+      formData.append("file", file);
 
-      const payload = { file: base64String };
-
-      const response = await api.post(endpoints.uploadProfileExcel, payload, {
+      const response = await api.post(endpoints.uploadProfileExcel, formData, {
         "Skip-Auth": "true",
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       });
       return response;
     } catch (error: any) {

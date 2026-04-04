@@ -822,13 +822,13 @@ export default function DashboardPage() {
                   </select>
                   <ChevronDown className="w-4 h-4 text-slate-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
-                {/* <button
+                <button
                   onClick={() => router.push("/upload-leads")}
                   className="px-4 py-1.5 border border-[#0d59f2] text-[#0d59f2] rounded-lg text-xs font-bold hover:bg-blue-50 transition-all whitespace-nowrap flex items-center justify-center gap-2"
                 >
                   <UploadCloud className="w-4 h-4" />
                   Import Excel
-                </button> */}
+                </button>
                 <div className="relative group/add">
                   <button className="cursor-pointer flex items-center gap-1.5 bg-blue-700 hover:bg-blue-800 text-white px-2 py-1 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] shadow-md shadow-primary/10">
                     <span className="material-symbols-outlined text-base font-bold">
@@ -871,248 +871,250 @@ export default function DashboardPage() {
             <div className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-slate-200 bg-white min-h-0">
               <table className="w-full text-left border-collapse min-w-[900px]">
                 <thead className="sticky top-0 z-30 bg-white shadow-sm outline outline-1 outline-slate-100">
-                    <tr className="bg-slate-50/95 backdrop-blur-sm text-[10px] uppercase tracking-wider font-bold text-slate-500 border-b border-slate-200">
-                      <th className="px-4 py-2.5 w-32">Lead ID</th>
-                      <th className="px-4 py-2.5 min-w-[180px]">
-                        <button
-                          onClick={() => handleSort("name")}
-                          className="flex items-center gap-1 hover:text-primary transition-colors"
-                        >
-                          Name & Company <SortIcon column="name" />
-                        </button>
-                      </th>
-                      <th className="px-4 py-2.5 w-24">
-                        <button
-                          onClick={() => handleSort("warmCallScore")}
-                          className="flex items-center gap-1 hover:text-primary transition-colors"
-                        >
-                          Score <SortIcon column="warmCallScore" />
-                        </button>
-                      </th>
-                      <th className="px-4 py-2.5 w-32">
-                        <button
-                          onClick={() => handleSort("status")}
-                          className="flex items-center gap-1 hover:text-primary transition-colors"
-                        >
-                          Status <SortIcon column="status" />
-                        </button>
-                      </th>
-                      <th className="px-4 py-2.5 min-w-[150px]">
-                        <button
-                          onClick={() => handleSort("productNames")}
-                          className="flex items-center gap-1 hover:text-primary transition-colors"
-                        >
-                          Products <SortIcon column="productNames" />
-                        </button>
-                      </th>
-                      <th className="px-4 py-2.5 w-32">
-                        <button
-                          onClick={() => handleSort("date")}
-                          className="flex items-center gap-1 hover:text-primary transition-colors"
-                        >
-                          Updated <SortIcon column="date" />
-                        </button>
-                      </th>
-                      <th className="px-4 py-2.5 w-24">
-                        <button className="flex items-center gap-1 hover:text-primary transition-colors">
-                          Record Type
-                        </button>
-                      </th>
-                      <th className="px-4 py-2.5 text-center w-36">Actions</th>
+                  <tr className="bg-slate-50/95 backdrop-blur-sm text-[10px] uppercase tracking-wider font-bold text-slate-500 border-b border-slate-200">
+                    <th className="px-4 py-2.5 w-32">Lead ID</th>
+                    <th className="px-4 py-2.5 min-w-[180px]">
+                      <button
+                        onClick={() => handleSort("name")}
+                        className="flex items-center gap-1 hover:text-primary transition-colors"
+                      >
+                        Name & Company <SortIcon column="name" />
+                      </button>
+                    </th>
+                    <th className="px-4 py-2.5 w-24">
+                      <button
+                        onClick={() => handleSort("warmCallScore")}
+                        className="flex items-center gap-1 hover:text-primary transition-colors"
+                      >
+                        Score <SortIcon column="warmCallScore" />
+                      </button>
+                    </th>
+                    <th className="px-4 py-2.5 w-32">
+                      <button
+                        onClick={() => handleSort("status")}
+                        className="flex items-center gap-1 hover:text-primary transition-colors"
+                      >
+                        Status <SortIcon column="status" />
+                      </button>
+                    </th>
+                    <th className="px-4 py-2.5 min-w-[150px]">
+                      <button
+                        onClick={() => handleSort("productNames")}
+                        className="flex items-center gap-1 hover:text-primary transition-colors"
+                      >
+                        Products <SortIcon column="productNames" />
+                      </button>
+                    </th>
+                    <th className="px-4 py-2.5 w-32">
+                      <button
+                        onClick={() => handleSort("date")}
+                        className="flex items-center gap-1 hover:text-primary transition-colors"
+                      >
+                        Updated <SortIcon column="date" />
+                      </button>
+                    </th>
+                    <th className="px-4 py-2.5 w-24">
+                      <button className="flex items-center gap-1 hover:text-primary transition-colors">
+                        Record Type
+                      </button>
+                    </th>
+                    <th className="px-4 py-2.5 text-center w-36">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {paginatedRows.length === 0 ? (
+                    <tr>
+                      <td colSpan={6} className="px-6 py-20 text-center">
+                        <div className="flex flex-col items-center justify-center text-slate-400">
+                          <span className="material-symbols-outlined text-5xl opacity-20 mb-3">
+                            inbox
+                          </span>
+                          <p className="text-xs font-medium">
+                            No leads found matching your criteria
+                          </p>
+                        </div>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {paginatedRows.length === 0 ? (
-                      <tr>
-                        <td colSpan={6} className="px-6 py-20 text-center">
-                          <div className="flex flex-col items-center justify-center text-slate-400">
-                            <span className="material-symbols-outlined text-5xl opacity-20 mb-3">
-                              inbox
+                  ) : (
+                    paginatedRows.map((row) => (
+                      <tr
+                        key={row.id}
+                        className="hover:bg-slate-50/50 transition-colors group"
+                      >
+                        <td className="px-4 py-2 whitespace-nowrap">
+                          <div className="flex items-center gap-1">
+                            <span className="text-[10px] font-mono font-bold text-slate-500">
+                              {row.id
+                                ? `${row.id.substring(0, 8).toUpperCase()}...`
+                                : "N/A"}
                             </span>
-                            <p className="text-xs font-medium">
-                              No leads found matching your criteria
-                            </p>
+                            <CopyButton text={row.id} />
                           </div>
                         </td>
-                      </tr>
-                    ) : (
-                      paginatedRows.map((row) => (
-                        <tr
-                          key={row.id}
-                          className="hover:bg-slate-50/50 transition-colors group"
-                        >
-                          <td className="px-4 py-2 whitespace-nowrap">
-                            <div className="flex items-center gap-1">
-                              <span className="text-[10px] font-mono font-bold text-slate-500">
-                                {row.id
-                                  ? `${row.id.substring(0, 8).toUpperCase()}...`
-                                  : "N/A"}
-                              </span>
-                              <CopyButton text={row.id} />
-                            </div>
-                          </td>
-                          <td className="px-4 py-2">
-                            <div className="flex items-center gap-2">
-                              <div className="min-w-0">
-                                <div className="flex items-center gap-1.5">
-                                  <p className="font-bold text-[12px] text-slate-900 truncate">
-                                    {row.name}
-                                  </p>
-                                  {profiles.find((p) => p.id === row.id)
-                                    ?.tagReason && (
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        const reason = profiles.find(
-                                          (p) => p.id === row.id,
-                                        )?.tagReason;
-                                        setRemarkModal({
-                                          isOpen: true,
-                                          name: row.name,
-                                          remark: reason || "No remark provided.",
-                                        });
-                                      }}
-                                      className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all active:scale-95 flex items-center justify-center animate-pulse shrink-0"
-                                      title={`Remark: ${profiles.find((p) => p.id === row.id)?.tagReason}`}
-                                    >
-                                      <MessageSquareMore className="w-3.5 h-3.5" />
-                                    </button>
-                                  )}
-                                </div>
-                                <p className="text-[10px] text-slate-500 truncate">
-                                  {row.company}
+                        <td className="px-4 py-2">
+                          <div className="flex items-center gap-2">
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-1.5">
+                                <p className="font-bold text-[12px] text-slate-900 truncate">
+                                  {row.name}
                                 </p>
+                                {profiles.find((p) => p.id === row.id)
+                                  ?.tagReason && (
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      const reason = profiles.find(
+                                        (p) => p.id === row.id,
+                                      )?.tagReason;
+                                      setRemarkModal({
+                                        isOpen: true,
+                                        name: row.name,
+                                        remark: reason || "No remark provided.",
+                                      });
+                                    }}
+                                    className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all active:scale-95 flex items-center justify-center animate-pulse shrink-0"
+                                    title={`Remark: ${profiles.find((p) => p.id === row.id)?.tagReason}`}
+                                  >
+                                    <MessageSquareMore className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
                               </div>
+                              <p className="text-[10px] text-slate-500 truncate">
+                                {row.company}
+                              </p>
                             </div>
-                          </td>
-                          <td className="px-4 py-2">
+                          </div>
+                        </td>
+                        <td className="px-4 py-2">
+                          <span
+                            className={`text-sm font-bold ${getScoreColor(row.warmCallScore)}`}
+                          >
+                            {row.warmCallScore}
+                          </span>
+                        </td>
+                        <td className="px-4 py-2">
+                          <div className="flex items-center gap-2">
+                            <StatusPill status={row.status} />
+                            <button
+                              onClick={() => {
+                                const originalProfile = profiles.find(
+                                  (p) => p.id === row.id,
+                                );
+                                setSelectedTimelineProfile(originalProfile);
+                                setIsSidePanelOpen(true);
+                              }}
+                              className="p-1 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all active:scale-95"
+                              title="Generate Workbench"
+                            >
+                              <Info className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </td>
+                        <td className="px-4 py-2">
+                          <p
+                            className="text-[11px] font-medium text-slate-600 truncate max-w-[200px]"
+                            title={row.productNames}
+                          >
+                            {row.productNames}
+                          </p>
+                        </td>
+                        <td className="px-4 py-2">
+                          <span className="text-[11px] font-medium text-slate-500">
+                            {formatDateTime(row.date)}
+                          </span>
+                        </td>
+                        <td className="px-4 py-2">
+                          <span
+                            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold ${row.tag === "ARCHIVED" ? "bg-slate-100 text-slate-600 border border-slate-200" : "bg-blue-50 text-blue-600 border border-blue-100"}`}
+                          >
                             <span
-                              className={`text-sm font-bold ${getScoreColor(row.warmCallScore)}`}
+                              className={`w-1 h-1 rounded-full ${row.tag === "ARCHIVED" ? "bg-slate-500" : "bg-blue-500"}`}
+                            ></span>
+                            {row.tag === "ARCHIVED" ? "Archived" : "Active"}
+                          </span>
+                        </td>
+                        <td className="px-4 py-2">
+                          <div className="flex items-center justify-center gap-0.5">
+                            <button
+                              onClick={() => viewDetails("visibility", row.id)}
+                              className="cursor-pointer p-1 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all active:scale-95"
+                              title="View Details"
                             >
-                              {row.warmCallScore}
-                            </span>
-                          </td>
-                          <td className="px-4 py-2">
-                            <div className="flex items-center gap-2">
-                              <StatusPill status={row.status} />
-                              <button
-                                onClick={() => {
-                                  const originalProfile = profiles.find(
-                                    (p) => p.id === row.id,
-                                  );
-                                  setSelectedTimelineProfile(originalProfile);
-                                  setIsSidePanelOpen(true);
-                                }}
-                                className="p-1 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all active:scale-95"
-                                title="Generate Workbench"
-                              >
-                                <Info className="w-3.5 h-3.5" />
-                              </button>
-                            </div>
-                          </td>
-                          <td className="px-4 py-2">
-                            <p
-                              className="text-[11px] font-medium text-slate-600 truncate max-w-[200px]"
-                              title={row.productNames}
+                              <span className="material-symbols-outlined text-lg">
+                                visibility
+                              </span>
+                            </button>
+                            <button
+                              onClick={() =>
+                                router.push(
+                                  `/add-lead?id=${row.id}&type=${row.profileType || "lead"}`,
+                                )
+                              }
+                              className="cursor-pointer p-1 text-slate-400 hover:text-green-500 hover:bg-green-500/10 rounded-lg transition-all active:scale-95"
+                              title="Edit Lead"
                             >
-                              {row.productNames}
-                            </p>
-                          </td>
-                          <td className="px-4 py-2">
-                            <span className="text-[11px] font-medium text-slate-500">
-                              {formatDateTime(row.date)}
-                            </span>
-                          </td>
-                          <td className="px-4 py-2">
-                            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold ${row.tag === 'ARCHIVED' ? 'bg-slate-100 text-slate-600 border border-slate-200' : 'bg-blue-50 text-blue-600 border border-blue-100'}`}>
-                               <span className={`w-1 h-1 rounded-full ${row.tag === 'ARCHIVED' ? 'bg-slate-500' : 'bg-blue-500'}`}></span>
-                               {row.tag === 'ARCHIVED' ? 'Archived' : 'Active'}
-                            </span>
-                          </td>
-                          <td className="px-4 py-2">
-                            <div className="flex items-center justify-center gap-0.5">
+                              <span className="material-symbols-outlined text-lg">
+                                edit
+                              </span>
+                            </button>
+                            <button
+                              onClick={() =>
+                                setDeleteConfirmation({
+                                  isOpen: true,
+                                  id: row.id,
+                                  name: row.name,
+                                  isLoading: false,
+                                })
+                              }
+                              className="cursor-pointer p-1 text-slate-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all active:scale-95"
+                              title="Delete Lead"
+                            >
+                              <span className="material-symbols-outlined text-lg">
+                                delete
+                              </span>
+                            </button>
+                            {row.tag !== "ARCHIVED" ? (
                               <button
                                 onClick={() =>
-                                  viewDetails("visibility", row.id)
-                                }
-                                className="cursor-pointer p-1 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all active:scale-95"
-                                title="View Details"
-                              >
-                                <span className="material-symbols-outlined text-lg">
-                                  visibility
-                                </span>
-                              </button>
-                              <button
-                                onClick={() =>
-                                  router.push(
-                                    `/add-lead?id=${row.id}&type=${row.profileType || "lead"}`,
-                                  )
-                                }
-                                className="cursor-pointer p-1 text-slate-400 hover:text-green-500 hover:bg-green-500/10 rounded-lg transition-all active:scale-95"
-                                title="Edit Lead"
-                              >
-                                <span className="material-symbols-outlined text-lg">
-                                  edit
-                                </span>
-                              </button>
-                              <button
-                                onClick={() =>
-                                  setDeleteConfirmation({
+                                  setArchiveModal({
                                     isOpen: true,
                                     id: row.id,
                                     name: row.name,
                                     isLoading: false,
+                                    actionType: "archive",
                                   })
                                 }
-                                className="cursor-pointer p-1 text-slate-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all active:scale-95"
-                                title="Delete Lead"
+                                className="cursor-pointer p-1 text-slate-400 hover:text-orange-500 hover:bg-orange-500/10 rounded-lg transition-all active:scale-95"
+                                title="Archive Lead"
                               >
-                                <span className="material-symbols-outlined text-lg">
-                                  delete
-                                </span>
+                                <Archive className="w-4.5 h-4.5" />
                               </button>
-                              {row.tag !== "ARCHIVED" ? (
-                                <button
-                                  onClick={() =>
-                                    setArchiveModal({
-                                      isOpen: true,
-                                      id: row.id,
-                                      name: row.name,
-                                      isLoading: false,
-                                      actionType: "archive",
-                                    })
-                                  }
-                                  className="cursor-pointer p-1 text-slate-400 hover:text-orange-500 hover:bg-orange-500/10 rounded-lg transition-all active:scale-95"
-                                  title="Archive Lead"
-                                >
-                                  <Archive className="w-4.5 h-4.5" />
-                                </button>
-                              ) : (
-                                <button
-                                  onClick={() =>
-                                    setArchiveModal({
-                                      isOpen: true,
-                                      id: row.id,
-                                      name: row.name,
-                                      isLoading: false,
-                                      actionType: "unarchive",
-                                    })
-                                  }
-                                  className="cursor-pointer p-1 text-slate-400 hover:text-blue-500 hover:bg-blue-500/10 rounded-lg transition-all active:scale-95"
-                                  title="UnArchive Lead"
-                                >
-                                  <ArchiveRestore className="w-4.5 h-4.5" />
-                                </button>
-                              )}
-                              <ActionButtons row={row} />
-                            </div>
-                          </td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-              </div>
+                            ) : (
+                              <button
+                                onClick={() =>
+                                  setArchiveModal({
+                                    isOpen: true,
+                                    id: row.id,
+                                    name: row.name,
+                                    isLoading: false,
+                                    actionType: "unarchive",
+                                  })
+                                }
+                                className="cursor-pointer p-1 text-slate-400 hover:text-blue-500 hover:bg-blue-500/10 rounded-lg transition-all active:scale-95"
+                                title="UnArchive Lead"
+                              >
+                                <ArchiveRestore className="w-4.5 h-4.5" />
+                              </button>
+                            )}
+                            <ActionButtons row={row} />
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
 
             {/* Pagination */}
             <div className="px-4 py-2 bg-slate-50/30 flex items-center justify-between shrink-0 border-t border-slate-100">
@@ -1349,7 +1351,9 @@ export default function DashboardPage() {
                 Remark Details
               </h2>
               <button
-                onClick={() => setRemarkModal({ isOpen: false, name: null, remark: null })}
+                onClick={() =>
+                  setRemarkModal({ isOpen: false, name: null, remark: null })
+                }
                 className="p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-600 rounded-lg transition-colors cursor-pointer"
                 aria-label="Close"
               >
@@ -1376,7 +1380,9 @@ export default function DashboardPage() {
             </div>
             <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-end">
               <button
-                onClick={() => setRemarkModal({ isOpen: false, name: null, remark: null })}
+                onClick={() =>
+                  setRemarkModal({ isOpen: false, name: null, remark: null })
+                }
                 className="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-xl hover:bg-slate-50 hover:text-slate-900 transition-colors shadow-sm cursor-pointer active:scale-95"
               >
                 Close
@@ -1396,23 +1402,32 @@ function StatsBarChart({ stats }: { stats: any }) {
   const maxCount = Math.max(...data.map((d: any) => d.count), 1);
 
   return (
-    <div className="flex flex-col w-full h-full text-xs pl-6" style={{ minWidth: "140px" }}>
-      <div className="flex-1 flex items-end justify-between gap-3 border-l-2 border-b-2 border-slate-200 pl-2 pb-1 relative mt-4">
-        <div className="absolute -left-12 top-1/2 -translate-y-1/2 -rotate-90 text-[10px] text-slate-500 font-bold whitespace-nowrap">
+    <div
+      className="flex flex-col w-full h-full text-xs pl-10"
+      style={{ minWidth: "140px" }}
+    >
+      <div className="flex-1 flex items-end justify-between gap-3 border-l-2 border-b-2 border-slate-200 pl-4 pb-1 relative mt-6">
+        <div className="absolute -left-14 top-1/2 -translate-y-1/2 -rotate-90 text-[10px] text-slate-400 font-bold whitespace-nowrap uppercase tracking-widest">
           Number of Leads
         </div>
         {data.map((item: any) => {
           const heightPct = (item.count / maxCount) * 100;
           const bgClass =
-            item.color === "red" ? "bg-red-500" :
-            item.color === "orange" ? "bg-orange-500" :
-            item.color === "yellow" ? "bg-yellow-500" :
-            "bg-green-500";
-            
+            item.color === "red"
+              ? "bg-red-500"
+              : item.color === "orange"
+                ? "bg-orange-500"
+                : item.color === "yellow"
+                  ? "bg-yellow-500"
+                  : "bg-green-500";
+
           return (
-            <div key={item.label} className="relative flex flex-col justify-end w-full group h-full">
-              <div 
-                className={`w-full rounded-t-sm transition-all duration-500 ${bgClass} hover:opacity-80`} 
+            <div
+              key={item.label}
+              className="relative flex flex-col justify-end w-full group h-full"
+            >
+              <div
+                className={`w-full rounded-t-sm transition-all duration-500 ${bgClass} hover:opacity-80`}
                 style={{ height: `${Math.max(heightPct, 4)}%` }}
               ></div>
               <div className="absolute -top-5 w-full text-center text-[10px] font-bold text-slate-800 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -1424,13 +1439,17 @@ function StatsBarChart({ stats }: { stats: any }) {
       </div>
       <div className="flex justify-between gap-1 mt-1.5 pl-2">
         {data.map((item: any) => (
-          <div key={item.label} className="w-full text-center text-[9px] font-medium text-slate-600 whitespace-nowrap" title={item.label}>
+          <div
+            key={item.label}
+            className="w-full text-center text-[9px] font-bold text-slate-500 overflow-hidden text-ellipsis"
+            title={item.label}
+          >
             {item.label}
           </div>
         ))}
       </div>
-      <div className="text-center text-[10px] text-slate-500 font-bold mt-1">
-        Warm Call Score Ranges
+      <div className="text-center text-[10px] text-slate-400 font-bold mt-2 uppercase tracking-widest">
+        Warm Call Score Categories
       </div>
     </div>
   );
@@ -1603,7 +1622,7 @@ function formatDateTime(dateString: string): string {
     const y = date.getFullYear();
     let hours = date.getHours();
     const minutes = pad(date.getMinutes());
-    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const ampm = hours >= 12 ? "PM" : "AM";
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
     const h = pad(hours);
