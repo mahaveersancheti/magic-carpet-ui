@@ -39,6 +39,7 @@ import {
   Building2,
   Users,
   MessageSquareMore,
+  X,
 } from "lucide-react";
 import { SidePanel } from "@/app/components/SidePanel";
 import { Timeline, TimelineStage } from "@/app/components/Timeline";
@@ -118,6 +119,16 @@ export default function DashboardPage() {
     name: null,
     isLoading: false,
     actionType: "archive",
+  });
+
+  const [remarkModal, setRemarkModal] = useState<{
+    isOpen: boolean;
+    name: string | null;
+    remark: string | null;
+  }>({
+    isOpen: false,
+    name: null,
+    remark: null,
   });
 
   // Side Panel State
@@ -411,7 +422,7 @@ export default function DashboardPage() {
         email: p.email,
         phone: p.phone || "N/A",
         status: status,
-        date: p.createdAt ? p.createdAt.substring(0, 10) : "N/A",
+        date: p.updatedAt ? p.updatedAt : "N/A",
         warmCallScore: parseInt((p as any).warmCallScore || "0", 10),
         linkedinUrl:
           (p as any).linkedinUrl || (p as any).linkedinProfileLink || "",
@@ -514,7 +525,7 @@ export default function DashboardPage() {
           : 0,
       categories: [
         {
-          label: "Critical",
+          label: "Low",
           range: "0-25",
           count: red,
           color: "red",
@@ -740,17 +751,9 @@ export default function DashboardPage() {
               </p>
             </div>
 
-            <div className="flex items-center gap-6 bg-slate-50/50 p-3 pr-6 rounded-xl border border-slate-100 shadow-inner">
-              <div className="relative w-16 h-16">
-                <StatsDonut stats={stats} />
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-lg font-bold text-slate-900 leading-none">
-                    {stats.totalLeads}
-                  </span>
-                  <span className="text-[8px] uppercase tracking-tight text-slate-500 font-bold mt-0.5">
-                    Total
-                  </span>
-                </div>
+            <div className="flex items-center gap-6 bg-slate-50/50 p-3 pr-6 rounded-xl border border-slate-100 shadow-inner overflow-x-auto">
+              <div className="relative h-24 w-56 shrink-0">
+                <StatsBarChart stats={stats} />
               </div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-1">
                 {stats.categories.map((cat) => (
@@ -865,10 +868,9 @@ export default function DashboardPage() {
             </div>
 
             {/* Table Body with internal scrolling */}
-            <div className="flex-1 overflow-auto bg-white min-h-0">
-              <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-slate-200">
-                <table className="w-full text-left border-collapse min-w-[900px]">
-                  <thead className="sticky top-0 z-30 bg-white shadow-sm border-b border-slate-100">
+            <div className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-slate-200 bg-white min-h-0">
+              <table className="w-full text-left border-collapse min-w-[900px]">
+                <thead className="sticky top-0 z-30 bg-white shadow-sm outline outline-1 outline-slate-100">
                     <tr className="bg-slate-50/95 backdrop-blur-sm text-[10px] uppercase tracking-wider font-bold text-slate-500 border-b border-slate-200">
                       <th className="px-4 py-2.5 w-32">Lead ID</th>
                       <th className="px-4 py-2.5 min-w-[180px]">
@@ -911,6 +913,11 @@ export default function DashboardPage() {
                           Updated <SortIcon column="date" />
                         </button>
                       </th>
+                      <th className="px-4 py-2.5 w-24">
+                        <button className="flex items-center gap-1 hover:text-primary transition-colors">
+                          Record Type
+                        </button>
+                      </th>
                       <th className="px-4 py-2.5 text-center w-36">Actions</th>
                     </tr>
                   </thead>
@@ -946,9 +953,6 @@ export default function DashboardPage() {
                           </td>
                           <td className="px-4 py-2">
                             <div className="flex items-center gap-2">
-                              <div className="w-8 h-8 bg-blue-700/10 hover:bg-blue-700/70 rounded-lg flex items-center justify-center text-primary font-bold text-sm shrink-0">
-                                {row.name?.charAt(0) || "?"}
-                              </div>
                               <div className="min-w-0">
                                 <div className="flex items-center gap-1.5">
                                   <p className="font-bold text-[12px] text-slate-900 truncate">
@@ -962,19 +966,10 @@ export default function DashboardPage() {
                                         const reason = profiles.find(
                                           (p) => p.id === row.id,
                                         )?.tagReason;
-                                        toast(reason || "", {
-                                          icon: "📝",
-                                          duration: 5000,
-                                          position: "top-center",
-                                          style: {
-                                            borderRadius: "12px",
-                                            background: "#334155",
-                                            color: "#fff",
-                                            fontSize: "13px",
-                                            fontWeight: "500",
-                                            padding: "12px 20px",
-                                            maxWidth: "400px",
-                                          },
+                                        setRemarkModal({
+                                          isOpen: true,
+                                          name: row.name,
+                                          remark: reason || "No remark provided.",
                                         });
                                       }}
                                       className="p-1 text-orange-500 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-all active:scale-95 flex items-center justify-center animate-pulse shrink-0"
@@ -1025,7 +1020,13 @@ export default function DashboardPage() {
                           </td>
                           <td className="px-4 py-2">
                             <span className="text-[11px] font-medium text-slate-500">
-                              {getRelativeTime(row.date)}
+                              {formatDateTime(row.date)}
+                            </span>
+                          </td>
+                          <td className="px-4 py-2">
+                            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold ${row.tag === 'ARCHIVED' ? 'bg-slate-100 text-slate-600 border border-slate-200' : 'bg-blue-50 text-blue-600 border border-blue-100'}`}>
+                               <span className={`w-1 h-1 rounded-full ${row.tag === 'ARCHIVED' ? 'bg-slate-500' : 'bg-blue-500'}`}></span>
+                               {row.tag === 'ARCHIVED' ? 'Archived' : 'Active'}
                             </span>
                           </td>
                           <td className="px-4 py-2">
@@ -1041,12 +1042,12 @@ export default function DashboardPage() {
                                   visibility
                                 </span>
                               </button>
-                                <button
-                                  onClick={() =>
-                                    router.push(
-                                      `/add-lead?id=${row.id}&type=${row.profileType || "lead"}`,
-                                    )
-                                  }
+                              <button
+                                onClick={() =>
+                                  router.push(
+                                    `/add-lead?id=${row.id}&type=${row.profileType || "lead"}`,
+                                  )
+                                }
                                 className="cursor-pointer p-1 text-slate-400 hover:text-green-500 hover:bg-green-500/10 rounded-lg transition-all active:scale-95"
                                 title="Edit Lead"
                               >
@@ -1112,7 +1113,6 @@ export default function DashboardPage() {
                   </tbody>
                 </table>
               </div>
-            </div>
 
             {/* Pagination */}
             <div className="px-4 py-2 bg-slate-50/30 flex items-center justify-between shrink-0 border-t border-slate-100">
@@ -1337,89 +1337,102 @@ export default function DashboardPage() {
           </div>
         )}
       </SidePanel>
+
+      {remarkModal.isOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden transform scale-100 transition-all">
+            <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+              <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+                <span className="material-symbols-outlined text-blue-500">
+                  speaker_notes
+                </span>
+                Remark Details
+              </h2>
+              <button
+                onClick={() => setRemarkModal({ isOpen: false, name: null, remark: null })}
+                className="p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-600 rounded-lg transition-colors cursor-pointer"
+                aria-label="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-6">
+              <div className="mb-4">
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+                  Lead Name
+                </p>
+                <p className="text-sm font-semibold text-slate-800">
+                  {remarkModal.name}
+                </p>
+              </div>
+              <div>
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">
+                  Remark Note
+                </p>
+                <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-100 text-sm text-slate-700 leading-relaxed max-h-48 overflow-y-auto whitespace-pre-wrap">
+                  {remarkModal.remark}
+                </div>
+              </div>
+            </div>
+            <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+              <button
+                onClick={() => setRemarkModal({ isOpen: false, name: null, remark: null })}
+                className="px-5 py-2.5 bg-white border border-slate-200 text-slate-700 text-sm font-semibold rounded-xl hover:bg-slate-50 hover:text-slate-900 transition-colors shadow-sm cursor-pointer active:scale-95"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 /* Internal Components */
 
-function StatsDonut({ stats }: { stats: any }) {
-  const total = stats.totalLeads || 1;
-  const critical = stats.categories[0].count;
-  const below = stats.categories[1].count;
-  const average = stats.categories[2].count;
-  const optimal = stats.categories[3].count;
-
-  // Percentages
-  const pCritical = (critical / total) * 100;
-  const pBelow = (below / total) * 100;
-  const pAverage = (average / total) * 100;
-  const pOptimal = (optimal / total) * 100;
+function StatsBarChart({ stats }: { stats: any }) {
+  const data = stats.categories;
+  const maxCount = Math.max(...data.map((d: any) => d.count), 1);
 
   return (
-    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-      <circle
-        className="text-slate-200"
-        cx="18"
-        cy="18"
-        fill="transparent"
-        r="15.915"
-        stroke="currentColor"
-        strokeWidth="4"
-      ></circle>
-
-      {/* Critical - Red */}
-      <circle
-        cx="18"
-        cy="18"
-        fill="transparent"
-        r="15.915"
-        stroke="#ef4444"
-        strokeDasharray={`${pCritical} 100`}
-        strokeDashoffset="0"
-        strokeWidth="4.5"
-        className="donut-segment transition-all duration-1000 ease-out"
-      ></circle>
-
-      {/* Below Avg - Orange */}
-      <circle
-        cx="18"
-        cy="18"
-        fill="transparent"
-        r="15.915"
-        stroke="#f97316"
-        strokeDasharray={`${pBelow} 100`}
-        strokeDashoffset={`-${pCritical}`}
-        strokeWidth="4.5"
-        className="donut-segment transition-all duration-1000 ease-out"
-      ></circle>
-
-      {/* Average - Yellow */}
-      <circle
-        cx="18"
-        cy="18"
-        fill="transparent"
-        r="15.915"
-        stroke="#eab308"
-        strokeDasharray={`${pAverage} 100`}
-        strokeDashoffset={`-${pCritical + pBelow}`}
-        strokeWidth="4.5"
-        className="donut-segment transition-all duration-1000 ease-out"
-      ></circle>
-
-      {/* Optimal - Green */}
-      <circle
-        cx="18"
-        cy="18"
-        fill="transparent"
-        r="15.915"
-        stroke="#22c55e"
-        strokeDasharray={`${pOptimal} 100`}
-        strokeDashoffset={`-${pCritical + pBelow + pAverage}`}
-        strokeWidth="4.5"
-        className="donut-segment transition-all duration-1000 ease-out"
-      ></circle>
-    </svg>
+    <div className="flex flex-col w-full h-full text-xs pl-6" style={{ minWidth: "140px" }}>
+      <div className="flex-1 flex items-end justify-between gap-3 border-l-2 border-b-2 border-slate-200 pl-2 pb-1 relative mt-4">
+        <div className="absolute -left-12 top-1/2 -translate-y-1/2 -rotate-90 text-[10px] text-slate-500 font-bold whitespace-nowrap">
+          Number of Leads
+        </div>
+        {data.map((item: any) => {
+          const heightPct = (item.count / maxCount) * 100;
+          const bgClass =
+            item.color === "red" ? "bg-red-500" :
+            item.color === "orange" ? "bg-orange-500" :
+            item.color === "yellow" ? "bg-yellow-500" :
+            "bg-green-500";
+            
+          return (
+            <div key={item.label} className="relative flex flex-col justify-end w-full group h-full">
+              <div 
+                className={`w-full rounded-t-sm transition-all duration-500 ${bgClass} hover:opacity-80`} 
+                style={{ height: `${Math.max(heightPct, 4)}%` }}
+              ></div>
+              <div className="absolute -top-5 w-full text-center text-[10px] font-bold text-slate-800 opacity-0 group-hover:opacity-100 transition-opacity">
+                {item.count}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex justify-between gap-1 mt-1.5 pl-2">
+        {data.map((item: any) => (
+          <div key={item.label} className="w-full text-center text-[9px] font-medium text-slate-600 whitespace-nowrap" title={item.label}>
+            {item.label}
+          </div>
+        ))}
+      </div>
+      <div className="text-center text-[10px] text-slate-500 font-bold mt-1">
+        Warm Call Score Ranges
+      </div>
+    </div>
   );
 }
 
@@ -1577,6 +1590,27 @@ function CopyButton({ text }: { text: string }) {
       </span>
     </button>
   );
+}
+
+function formatDateTime(dateString: string): string {
+  if (!dateString || dateString === "N/A") return "N/A";
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "N/A";
+    const pad = (n: number) => n.toString().padStart(2, "0");
+    const d = pad(date.getDate());
+    const m = pad(date.getMonth() + 1);
+    const y = date.getFullYear();
+    let hours = date.getHours();
+    const minutes = pad(date.getMinutes());
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const h = pad(hours);
+    return `${d}-${m}-${y} ${h}:${minutes} ${ampm}`;
+  } catch {
+    return "N/A";
+  }
 }
 
 function getRelativeTime(dateString: string): string {

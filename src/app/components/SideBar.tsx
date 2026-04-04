@@ -237,6 +237,36 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
               </button>
             </div>
 
+            {/* Download Extension */}
+            <div className="relative group">
+              <a
+                href="https://chromewebstore.google.com/detail/magic-carpet/mmiianfkpocgdaccbcaoiofaikdlilfo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`cursor-pointer
+                                w-full bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition-all flex items-center justify-center border border-slate-200
+                                ${isCollapsed ? "h-12" : "h-10 gap-2"}
+                            `}
+              >
+                <span className="material-symbols-outlined text-[18px]">
+                  download_for_offline
+                </span>
+                {!isCollapsed && (
+                  <div className="animate-in fade-in duration-300 mt-0.5">
+                    <p className="text-xs font-bold leading-none">Extension</p>
+                  </div>
+                )}
+              </a>
+              {isCollapsed && (
+                <div className="absolute left-full bottom-0 ml-2 px-3 py-2 bg-slate-900 text-white rounded-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 whitespace-nowrap z-[100] shadow-2xl translate-x-1 group-hover:translate-x-0 border border-slate-700 flex flex-col">
+                  <p className="text-xs font-bold flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                    Get Extension
+                  </p>
+                </div>
+              )}
+            </div>
+
             {/* Upgrade to Pro */}
             <div className="relative group">
               <button

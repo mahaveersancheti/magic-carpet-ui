@@ -112,6 +112,12 @@ function AddProductContent() {
     } else {
       setIsDraggingDocs(false);
       if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        if (existingDocs.length > 0) {
+          toast.error(
+            "Please delete the existing document first to upload a new one",
+          );
+          return;
+        }
         // Enforce single file
         if (e.dataTransfer.files.length > 1) {
           toast.error("Please upload only one document");
@@ -746,14 +752,36 @@ function AddProductContent() {
             Stage 3: Upload Document
           </h2>
           <div
-            onDragOver={(e) => handleDragOver(e, "docs")}
-            onDragLeave={() => handleDragLeave("docs")}
-            onDrop={(e) => handleDrop(e, "docs")}
-            className={`border-2 border-dashed ${isDraggingDocs ? "border-blue-500 bg-blue-50/50" : "border-gray-200 hover:bg-gray-50"} rounded-xl p-10 flex flex-col items-center justify-center transition cursor-pointer mb-4 relative`}
+            onDragOver={(e) => {
+              if (existingDocs.length > 0) {
+                e.preventDefault();
+              } else {
+                handleDragOver(e, "docs");
+              }
+            }}
+            onDragLeave={() => {
+              if (existingDocs.length > 0) return;
+              handleDragLeave("docs");
+            }}
+            onDrop={(e) => {
+              if (existingDocs.length > 0) {
+                e.preventDefault();
+                toast.error(
+                  "Please delete the existing document first to upload a new one",
+                );
+              } else {
+                handleDrop(e, "docs");
+              }
+            }}
+            className={`border-2 border-dashed ${existingDocs.length > 0 ? "border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed" : isDraggingDocs ? "border-blue-500 bg-blue-50/50" : "border-gray-200 hover:bg-gray-50"} rounded-xl p-10 flex flex-col items-center justify-center transition mb-4 relative`}
           >
-            <Upload className="h-10 w-10 text-gray-300 mb-2" />
+            <Upload
+              className={`h-10 w-10 ${existingDocs.length > 0 ? "text-gray-300" : "text-gray-300"} mb-2`}
+            />
             <p className="text-sm font-semibold text-gray-700">
-              Click or drag a document here
+              {existingDocs.length > 0
+                ? "A file already exists. Please delete it before uploading a new document."
+                : "Click or drag a document here"}
             </p>
             <p className="text-xs text-gray-400 mt-1">
               PDF, PPT or PPTX Files Accepted
@@ -762,10 +790,19 @@ function AddProductContent() {
               type="file"
               accept=".pdf,.ppt,.pptx,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation"
               onClick={(e) => {
+                if (existingDocs.length > 0) {
+                  e.preventDefault();
+                  toast.error(
+                    "Please delete the existing document first to upload a new one",
+                  );
+                  return;
+                }
                 // Reset so selecting the same file again fires onChange
                 (e.target as HTMLInputElement).value = "";
               }}
+              disabled={existingDocs.length > 0}
               onChange={(e) => {
+                if (existingDocs.length > 0) return;
                 if (e.target.files && e.target.files.length > 0) {
                   const file = e.target.files[0];
                   const allowedTypes = [
@@ -781,7 +818,7 @@ function AddProductContent() {
                   }
                 }
               }}
-              className="absolute inset-0 opacity-0 cursor-pointer"
+              className={`absolute inset-0 opacity-0 ${existingDocs.length > 0 ? "cursor-not-allowed" : "cursor-pointer"}`}
             />
           </div>
 

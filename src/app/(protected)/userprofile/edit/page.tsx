@@ -25,6 +25,12 @@ export default function EditProfile() {
     companyName: "",
     phone: "",
     email: "",
+    linkedinUrl: "",
+    twitterUrl: "",
+    facebookUrl: "",
+    instagramUrl: "",
+    personalUrl: "",
+    website: "",
   });
   const [fullUserData, setFullUserData] = useState<any>(null);
   const [formErrors, setFormErrors] = useState<{
@@ -49,6 +55,12 @@ export default function EditProfile() {
             companyName: userData.companyName || "",
             phone: userData.phone || "",
             email: userData.email || "",
+            linkedinUrl: userData.linkedinUrl || "",
+            twitterUrl: userData.twitterUrl || "",
+            facebookUrl: userData.facebookUrl || "",
+            instagramUrl: userData.instagramUrl || "",
+            personalUrl: userData.personalUrl || "",
+            website: userData.website || "",
           });
         }
       } catch (error) {
@@ -60,6 +72,12 @@ export default function EditProfile() {
           companyName: user.companyName || "",
           phone: user.phone || "",
           email: user.email || "",
+          linkedinUrl: "",
+          twitterUrl: "",
+          facebookUrl: "",
+          instagramUrl: "",
+          personalUrl: "",
+          website: "",
         });
       } finally {
         setIsDataLoading(false);
@@ -106,6 +124,12 @@ export default function EditProfile() {
         companyName: editForm.companyName,
         phone: editForm.phone,
         email: editForm.email,
+        linkedinUrl: editForm.linkedinUrl,
+        twitterUrl: editForm.twitterUrl,
+        facebookUrl: editForm.facebookUrl,
+        instagramUrl: editForm.instagramUrl,
+        personalUrl: editForm.personalUrl,
+        website: editForm.website,
         active: true, // Explicitly set active to true as requested
       });
 
@@ -272,6 +296,97 @@ export default function EditProfile() {
                     * Email cannot be changed here.
                   </p>
                 </label>
+              </div>
+
+              <div className="pt-6 border-t border-gray-100 mt-6">
+                <h3 className="text-[10px] font-bold text-[#606e8a] uppercase tracking-wider mb-4">
+                  Social & Web Links
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* LinkedIn */}
+                  <label className="flex flex-col gap-1.5">
+                    <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
+                      LinkedIn URL
+                    </span>
+                    <input
+                      type="url"
+                      value={editForm.linkedinUrl}
+                      onChange={(e) => setEditForm({ ...editForm, linkedinUrl: e.target.value })}
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
+                      placeholder="https://linkedin.com/in/username"
+                    />
+                  </label>
+
+                  {/* Twitter */}
+                  <label className="flex flex-col gap-1.5">
+                    <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
+                      Twitter URL
+                    </span>
+                    <input
+                      type="url"
+                      value={editForm.twitterUrl}
+                      onChange={(e) => setEditForm({ ...editForm, twitterUrl: e.target.value })}
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
+                      placeholder="https://twitter.com/username"
+                    />
+                  </label>
+
+                  {/* WhatsApp */}
+                  <label className="flex flex-col gap-1.5">
+                    <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
+                      WhatsApp URL
+                    </span>
+                    <input
+                      type="url"
+                      value={editForm.personalUrl}
+                      onChange={(e) => setEditForm({ ...editForm, personalUrl: e.target.value })}
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
+                      placeholder="https://wa.me/phonenumber"
+                    />
+                  </label>
+
+                  {/* Slack */}
+                  <label className="flex flex-col gap-1.5">
+                    <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
+                      Slack URL
+                    </span>
+                    <input
+                      type="url"
+                      value={editForm.website}
+                      onChange={(e) => setEditForm({ ...editForm, website: e.target.value })}
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
+                      placeholder="https://your-workspace.slack.com"
+                    />
+                  </label>
+
+                  {/* Facebook */}
+                  <label className="flex flex-col gap-1.5">
+                    <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
+                      Facebook URL
+                    </span>
+                    <input
+                      type="url"
+                      value={editForm.facebookUrl}
+                      onChange={(e) => setEditForm({ ...editForm, facebookUrl: e.target.value })}
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
+                      placeholder="https://facebook.com/username"
+                    />
+                  </label>
+
+                  {/* Instagram */}
+                  <label className="flex flex-col gap-1.5">
+                    <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
+                      Instagram URL
+                    </span>
+                    <input
+                      type="url"
+                      value={editForm.instagramUrl}
+                      onChange={(e) => setEditForm({ ...editForm, instagramUrl: e.target.value })}
+                      className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
+                      placeholder="https://instagram.com/username"
+                    />
+                  </label>
+                </div>
               </div>
             </div>
 
