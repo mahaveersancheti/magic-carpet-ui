@@ -101,3 +101,15 @@ Import traces:
   Client Component SSR:
     ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/upload-leads/page.tsx [Client Component SSR]
     ./Desktop/Self Learing/Magic Carpet/magic-carpet-ui/src/app/(protected)/upload-leads/page.tsx [Server Component]
+[03:28:55.810] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[03:31:05.928] Server  LOG      ✓ Compiled in 125ms
+[03:33:29.168] Server  LOG      ✓ Compiled in 119ms
+[03:35:20.977] Server  LOG      ✓ Compiled in 91ms
+[03:36:11.143] Server  LOG      ✓ Compiled in 88ms
+[03:37:39.125] Server  LOG      ✓ Compiled in 113ms
+[03:39:02.403] Server  LOG      ✓ Compiled in 169ms
+[03:40:08.767] Server  LOG      ✓ Compiled in 55ms
+[03:42:28.141] Server  LOG      ✓ Compiled in 115ms
+[03:42:52.885] Server  LOG      ✓ Compiled in 226ms
+[03:44:41.757] Server  LOG      ✓ Compiled in 51ms
+[03:45:57.520] Server  LOG      ✓ Compiled in 60ms

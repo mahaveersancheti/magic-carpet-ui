@@ -36,6 +36,7 @@ import {
   Info,
   ArchiveRestore,
   ChevronDown,
+  ChevronUp,
   Building2,
   Users,
   MessageSquareMore,
@@ -317,6 +318,7 @@ export default function DashboardPage() {
 
   // User Guide State
   const [showGuide, setShowGuide] = useState(false);
+  const [isStatsExpanded, setIsStatsExpanded] = useState(false);
 
   useEffect(() => {
     setNotifications(notificationsData);
@@ -739,40 +741,96 @@ export default function DashboardPage() {
               </div>
             )}
           </div>
-          {/* Stats Summary Card */}
-          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 shrink-0">
-            <div className="flex-1 min-w-0">
-              <h2 className="text-xl font-bold text-slate-900">
-                Lead Management
-              </h2>
-              <p className="text-slate-500 text-xs mt-0.5 truncate">
-                Global performance metrics and lead distribution across
-                categories.
-              </p>
+          {/* Stats Summary Card (Collapsible) */}
+          <div className={`bg-white rounded-xl border border-slate-200 shadow-sm transition-all duration-300 shrink-0 ${isStatsExpanded ? "" : "overflow-hidden"}`}>
+            {/* Header / Collapsed View */}
+            <div
+              className={`px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition-colors ${isStatsExpanded ? "border-b border-slate-100 bg-slate-50/30" : ""}`}
+              onClick={() => setIsStatsExpanded(!isStatsExpanded)}
+            >
+              <div className="flex items-center gap-3">
+                <div className="bg-blue-50 p-1.5 rounded-lg text-blue-600">
+                  <span className="material-symbols-outlined text-xl font-bold">
+                    analytics
+                  </span>
+                </div>
+                <div>
+                  <h2 className="text-sm font-bold text-slate-900 tracking-tight flex items-center gap-2">
+                    Lead Management Analytics
+                    {!isStatsExpanded && (
+                      <span className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-black uppercase tracking-wider">
+                        {profiles.length} total leads
+                      </span>
+                    )}
+                  </h2>
+                  {!isStatsExpanded && (
+                    <p className="text-slate-400 text-[10px] font-medium">
+                      Click to expand detailed distribution and performance
+                      metrics
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold text-blue-600 hover:bg-blue-100/50 transition-all border border-blue-100/50 shadow-sm">
+                {isStatsExpanded ? (
+                  <>
+                    Hide Analytics
+                    <ChevronUp className="w-3.5 h-3.5" />
+                  </>
+                ) : (
+                  <>
+                    View Analytics
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </>
+                )}
+              </button>
             </div>
 
-            <div className="flex items-center gap-6 bg-slate-50/50 p-3 pr-6 rounded-xl border border-slate-100 shadow-inner overflow-x-auto">
-              <div className="relative h-24 w-56 shrink-0">
-                <StatsBarChart stats={stats} />
-              </div>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-                {stats.categories.map((cat) => (
-                  <div key={cat.label} className="flex items-center gap-1.5">
-                    <div
-                      className={`w-1.5 h-1.5 rounded-full ${cat.color === "red" ? "bg-red-500" : cat.color === "orange" ? "bg-orange-500" : cat.color === "yellow" ? "bg-yellow-500" : "bg-green-500"}`}
-                    ></div>
-                    <span className="text-[10px] font-semibold text-slate-600 whitespace-nowrap">
-                      {cat.label}{" "}
-                      <span className="text-slate-400 font-medium">
-                        ({cat.range})
-                      </span>
-                      :{" "}
-                      <span className="text-slate-900 ml-0.5">{cat.count}</span>
-                    </span>
+            {/* Expanded Content */}
+            {isStatsExpanded && (
+              <div className="p-4 flex flex-col lg:flex-row items-start justify-between gap-6 shrink-0 transition-all animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="flex-1 flex flex-col min-w-0">
+                  <p className="text-slate-500 text-[11px] leading-tight max-w-[320px] mb-3 font-medium">
+                    Monitor real-time lead distribution across quality
+                    categories to optimize your pipeline.
+                  </p>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mr-0 lg:mr-4">
+                    {stats.categories.map((cat) => (
+                      <div
+                        key={cat.label}
+                        className="flex flex-col p-2 rounded-lg bg-slate-50 border border-slate-100 hover:bg-white hover:shadow-sm transition-all group"
+                      >
+                        <div className="flex items-center gap-1.5 mb-0.5">
+                          <div
+                            className={`w-1.5 h-1.5 rounded-full ${cat.color === "red" ? "bg-red-500" : cat.color === "orange" ? "bg-orange-500" : cat.color === "yellow" ? "bg-yellow-500" : "bg-green-500"}`}
+                          ></div>
+                          <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider group-hover:text-slate-600 transition-colors">
+                            {cat.label}{" "}
+                            <span className="font-semibold text-slate-500 lowercase opacity-80">
+                              ({cat.range})
+                            </span>
+                          </span>
+                        </div>
+                        <div className="flex items-baseline gap-1">
+                          <span className="text-base font-black text-slate-900 leading-none">
+                            {cat.count}
+                          </span>
+                          <span className="text-[9px] text-slate-400 font-bold">
+                            leads
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+
+                <div className="flex-1 w-full lg:w-auto h-[120px] bg-slate-50/30 px-4 py-2 rounded-xl border border-slate-100/50 relative overflow-hidden group/graph">
+                  <StatsBarChart stats={stats} />
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Table Container */}
@@ -780,14 +838,14 @@ export default function DashboardPage() {
             {/* Table Actions */}
             <div className="p-3 border-b border-slate-200 flex flex-col md:flex-row items-center justify-between gap-3 shrink-0">
               <div className="relative w-full md:w-80 group">
-                <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors text-lg">
+                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors text-lg">
                   search
                 </span>
                 <input
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border-none rounded-lg focus:ring-1 focus:ring-primary text-xs placeholder-slate-500 transition-all"
-                  placeholder="Search leads..."
+                  className="w-full h-9 pl-10 pr-3 py-2 bg-white border border-slate-200 rounded-xl focus:ring-4 focus:ring-blue-600/5 focus:border-blue-600 text-xs font-medium placeholder-slate-400 transition-all shadow-sm group-hover:border-slate-300"
+                  placeholder="Search by name, email or company..."
                   type="text"
                 />
               </div>
@@ -800,7 +858,7 @@ export default function DashboardPage() {
                         e.target.value as "all" | "active" | "archive",
                       )
                     }
-                    className="bg-white border border-slate-200 shadow-sm rounded-lg text-xs font-semibold text-slate-700 py-1.5 pl-3 pr-8 focus:ring-2 focus:ring-primary/20 focus:border-primary cursor-pointer appearance-none transition-all w-full"
+                    className="h-9 bg-white border border-slate-200 shadow-sm rounded-lg text-xs font-semibold text-slate-700 py-1.5 pl-3 pr-8 focus:ring-2 focus:ring-primary/20 focus:border-primary cursor-pointer appearance-none transition-all w-full"
                   >
                     <option value="all">All Leads</option>
                     <option value="active">Active Leads</option>
@@ -812,7 +870,7 @@ export default function DashboardPage() {
                   <select
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="bg-white border border-slate-200 shadow-sm rounded-lg text-xs font-semibold text-slate-700 py-1.5 pl-3 pr-8 focus:ring-2 focus:ring-primary/20 focus:border-primary cursor-pointer appearance-none transition-all w-full"
+                    className="h-9 bg-white border border-slate-200 shadow-sm rounded-lg text-xs font-semibold text-slate-700 py-1.5 pl-3 pr-8 focus:ring-2 focus:ring-primary/20 focus:border-primary cursor-pointer appearance-none transition-all w-full"
                   >
                     <option value="all">All Status</option>
                     <option value="Complete">Complete</option>
@@ -824,13 +882,13 @@ export default function DashboardPage() {
                 </div>
                 <button
                   onClick={() => router.push("/upload-leads")}
-                  className="px-4 py-1.5 border border-[#0d59f2] text-[#0d59f2] rounded-lg text-xs font-bold hover:bg-blue-50 transition-all whitespace-nowrap flex items-center justify-center gap-2"
+                  className="h-9 px-4 py-1.5 border border-[#0d59f2] text-[#0d59f2] rounded-lg text-xs font-bold hover:bg-blue-50 transition-all whitespace-nowrap flex items-center justify-center gap-2"
                 >
                   <UploadCloud className="w-4 h-4" />
                   Import Excel
                 </button>
                 <div className="relative group/add">
-                  <button className="cursor-pointer flex items-center gap-1.5 bg-blue-700 hover:bg-blue-800 text-white px-2 py-1 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] shadow-md shadow-primary/10">
+                  <button className="h-9 cursor-pointer flex items-center gap-1.5 bg-blue-700 hover:bg-blue-800 text-white px-3 py-1 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] shadow-md shadow-primary/10">
                     <span className="material-symbols-outlined text-base font-bold">
                       add
                     </span>
@@ -858,9 +916,10 @@ export default function DashboardPage() {
                 </div>
                 <button
                   onClick={() => dispatch(fetchProfiles())}
-                  className="cursor-pointer p-1.5 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 transition-all active:rotate-180 duration-500"
+                  aria-label="Refresh data"
+                  className="h-9 cursor-pointer p-2 bg-white text-slate-500 border border-slate-200 rounded-xl hover:bg-slate-50 hover:text-blue-600 hover:border-blue-200 transition-all active:scale-90 shadow-sm flex items-center justify-center group/refresh shrink-0"
                 >
-                  <span className="material-symbols-outlined text-lg">
+                  <span className="material-symbols-outlined text-lg group-hover/refresh:rotate-180 transition-transform duration-500">
                     refresh
                   </span>
                 </button>
@@ -1402,54 +1461,63 @@ function StatsBarChart({ stats }: { stats: any }) {
   const maxCount = Math.max(...data.map((d: any) => d.count), 1);
 
   return (
-    <div
-      className="flex flex-col w-full h-full text-xs pl-10"
-      style={{ minWidth: "140px" }}
-    >
-      <div className="flex-1 flex items-end justify-between gap-3 border-l-2 border-b-2 border-slate-200 pl-4 pb-1 relative mt-6">
-        <div className="absolute -left-14 top-1/2 -translate-y-1/2 -rotate-90 text-[10px] text-slate-400 font-bold whitespace-nowrap uppercase tracking-widest">
-          Number of Leads
-        </div>
-        {data.map((item: any) => {
-          const heightPct = (item.count / maxCount) * 100;
-          const bgClass =
-            item.color === "red"
-              ? "bg-red-500"
-              : item.color === "orange"
-                ? "bg-orange-500"
-                : item.color === "yellow"
-                  ? "bg-yellow-500"
-                  : "bg-green-500";
+    <div className="flex flex-col w-full h-full text-xs">
+      <div className="flex-1 flex flex-col min-h-0">
+        <div className="flex-1 flex border-l border-b border-slate-200 relative ml-10">
+          {/* Y-Axis Label */}
+          <div className="absolute -left-10 top-1/2 -translate-y-1/2 -rotate-90 text-[8px] text-slate-400 font-black whitespace-nowrap uppercase tracking-[0.2em] pointer-events-none">
+            Lead Count
+          </div>
 
-          return (
+          {/* Horizontal Helper Lines */}
+          <div className="absolute inset-0 flex flex-col justify-between pointer-events-none pb-0.5">
+            <div className="w-full border-t border-slate-100/50"></div>
+            <div className="w-full border-t border-slate-100/50"></div>
+          </div>
+
+          {/* Bars Container */}
+          <div className="flex-1 flex items-end px-2">
+            {data.map((item: any) => {
+              const heightPct = (item.count / maxCount) * 100;
+              const bgGradient =
+                item.color === "red"
+                  ? "from-red-500 to-red-400 shadow-red-200/40"
+                  : item.color === "orange"
+                    ? "from-orange-500 to-orange-400 shadow-orange-200/40"
+                    : item.color === "yellow"
+                      ? "from-yellow-500 to-yellow-400 shadow-yellow-200/40"
+                      : "from-green-500 to-green-400 shadow-green-200/40";
+
+              return (
+                <div
+                  key={item.label}
+                  className="flex-1 flex flex-col justify-end items-center group h-full relative"
+                >
+                  <div
+                    className={`w-full max-w-[28px] rounded-t-lg bg-gradient-to-t ${bgGradient} hover:brightness-110 transition-all shadow-md relative`}
+                    style={{ height: `${Math.max(heightPct, 8)}%` }}
+                  >
+                    <div className="absolute -top-5 w-full text-center text-[9px] font-black text-slate-700 opacity-0 group-hover:opacity-100 transition-all">
+                      {item.count}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* X-Axis Labels */}
+        <div className="flex ml-10 px-2 mt-1">
+          {data.map((item: any) => (
             <div
               key={item.label}
-              className="relative flex flex-col justify-end w-full group h-full"
+              className="flex-1 text-center text-[9px] font-bold text-slate-500 uppercase tracking-tighter"
             >
-              <div
-                className={`w-full rounded-t-sm transition-all duration-500 ${bgClass} hover:opacity-80`}
-                style={{ height: `${Math.max(heightPct, 4)}%` }}
-              ></div>
-              <div className="absolute -top-5 w-full text-center text-[10px] font-bold text-slate-800 opacity-0 group-hover:opacity-100 transition-opacity">
-                {item.count}
-              </div>
+              {item.label}
             </div>
-          );
-        })}
-      </div>
-      <div className="flex justify-between gap-1 mt-1.5 pl-2">
-        {data.map((item: any) => (
-          <div
-            key={item.label}
-            className="w-full text-center text-[9px] font-bold text-slate-500 overflow-hidden text-ellipsis"
-            title={item.label}
-          >
-            {item.label}
-          </div>
-        ))}
-      </div>
-      <div className="text-center text-[10px] text-slate-400 font-bold mt-2 uppercase tracking-widest">
-        Warm Call Score Categories
+          ))}
+        </div>
       </div>
     </div>
   );
