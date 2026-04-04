@@ -70,3 +70,6 @@ It can also happen if the client has a browser extension installed which messes 
 [02:44:53.952] Server  LOG      ✓ Compiled in 240ms
 [02:48:49.389] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
 [02:50:14.827] Server  LOG      ✓ Compiled in 55ms
+[02:52:01.506] Server  LOG      ✓ Compiled in 47ms
+[02:52:11.896] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[02:53:01.046] Server  LOG      ✓ Compiled in 65ms

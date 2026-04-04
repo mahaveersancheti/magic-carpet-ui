@@ -114,7 +114,7 @@ export default function UserProfile() {
       <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-11 pt-20 lg:pt-4">
         <div className="flex items-center gap-4">
           <button
-            onClick={() => router.back()}
+            onClick={() => router.push("/home")}
             aria-label="Go back"
             className="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition-colors"
           >

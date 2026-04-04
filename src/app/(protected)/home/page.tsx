@@ -1340,7 +1340,7 @@ export default function DashboardPage() {
 
       {remarkModal.isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden transform scale-100 transition-all">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden transform scale-100 transition-all">
             <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
               <h2 className="text-lg font-bold text-slate-800 flex items-center gap-2">
                 <span className="material-symbols-outlined text-blue-500">
