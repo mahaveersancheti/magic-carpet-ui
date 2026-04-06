@@ -60,6 +60,8 @@ axiosInstance.interceptors.response.use(
         message = data;
       } else if (data.message) {
         message = data.message;
+      } else if (data.errors && Array.isArray(data.errors)) {
+        message = data.errors.join("\n");
       } else if (data.error) {
         message = data.error;
       } else if (data.detail) {

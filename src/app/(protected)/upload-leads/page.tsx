@@ -72,9 +72,30 @@ export default function UploadLeadsPage() {
     if (!excelFile) return;
     try {
       setIsSubmitting(true);
-      await dispatch(uploadProfilesFromExcel(excelFile)).unwrap();
+      const response: any = await dispatch(uploadProfilesFromExcel(excelFile)).unwrap();
+
+      if (response?.errors && response.errors.length > 0) {
+        // Show errors and stay on the page
+        const errorMessage = response.errors.join("\n");
+        toast.error(errorMessage, {
+          duration: 6000,
+          style: {
+            maxWidth: "500px",
+            whiteSpace: "pre-line",
+          },
+        });
+        
+        // If some records were successful, we might want to refresh the profiles
+        if (response.successCount > 0) {
+          dispatch(fetchProfiles());
+        }
+        return;
+      }
+
       toast.success("Leads imported successfully!");
-      dispatch(fetchProfiles());
+      if (typeof dispatch !== "undefined") {
+        dispatch(fetchProfiles());
+      }
       router.push("/home");
     } catch (error: any) {
       toast.error(error.message || "Failed to import leads");

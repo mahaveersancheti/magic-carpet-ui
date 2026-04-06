@@ -604,7 +604,7 @@ export default function DashboardPage() {
             >
               <span className="material-symbols-outlined text-xl">help</span>
             </button>
-            <div className="relative group/notify">
+            {/* <div className="relative group/notify">
               <button className="cursor-pointer p-1.5 hover:bg-slate-100 rounded-full text-slate-500 relative">
                 <span className="material-symbols-outlined text-xl">
                   notifications
@@ -615,7 +615,6 @@ export default function DashboardPage() {
                   </span>
                 )}
               </button>
-              {/* Notification Dropdown */}
               <div className="absolute right-0 top-full pt-1 opacity-0 invisible group-hover/notify:opacity-100 group-hover/notify:visible transition-all duration-300 z-50 w-72">
                 <div className="bg-white border border-slate-200 rounded-xl shadow-xl overflow-hidden flex flex-col">
                   <div className="px-3 py-2 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
@@ -670,7 +669,7 @@ export default function DashboardPage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="h-6 w-px bg-slate-200"></div>
             <div
               className="flex items-center gap-2 ml-1 cursor-pointer"
@@ -742,7 +741,9 @@ export default function DashboardPage() {
             )}
           </div>
           {/* Stats Summary Card (Collapsible) */}
-          <div className={`bg-white rounded-xl border border-slate-200 shadow-sm transition-all duration-300 shrink-0 ${isStatsExpanded ? "" : "overflow-hidden"}`}>
+          <div
+            className={`bg-white rounded-xl border border-slate-200 shadow-sm transition-all duration-300 shrink-0 ${isStatsExpanded ? "" : "overflow-hidden"}`}
+          >
             {/* Header / Collapsed View */}
             <div
               className={`px-4 py-3 flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition-colors ${isStatsExpanded ? "border-b border-slate-100 bg-slate-50/30" : ""}`}
@@ -1097,7 +1098,7 @@ export default function DashboardPage() {
                             <button
                               onClick={() => viewDetails("visibility", row.id)}
                               className="cursor-pointer p-1 text-slate-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-all active:scale-95"
-                              title="View Details"
+                              title="Lead Dashboard"
                             >
                               <span className="material-symbols-outlined text-lg">
                                 visibility
