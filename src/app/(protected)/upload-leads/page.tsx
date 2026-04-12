@@ -127,7 +127,7 @@ export default function UploadLeadsPage() {
           <button
             onClick={handleBack}
             aria-label="Go back"
-            className="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition-colors cursor-pointer"
           >
             <ArrowLeft className="h-6 w-6" />
           </button>
@@ -144,7 +144,7 @@ export default function UploadLeadsPage() {
           <button
             onClick={handleUpload}
             disabled={!excelFile || uploadLoading || isSubmitting}
-            className="flex-1 sm:flex-initial bg-[#0d59f2] text-white px-3 lg:px-4 py-1.5 rounded-lg text-xs font-bold shadow-lg shadow-[#0d59f2]/20 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap flex items-center justify-center gap-2"
+            className="flex-1 sm:flex-initial bg-[#0d59f2] text-white px-3 lg:px-4 py-1.5 rounded-lg text-xs font-bold shadow-lg shadow-[#0d59f2]/20 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
           >
             {uploadLoading || isSubmitting ? (
               <>
@@ -157,105 +157,109 @@ export default function UploadLeadsPage() {
           </button>
         </div>
       </header>
-      <main className="max-w-[1280px] mx-auto px-6 py-8 bg-background-light min-h-screen">
-        <div className="max-w-2xl mx-auto flex flex-col w-full space-y-6">
+      <main className="w-full px-6 py-8 bg-background-light min-h-screen">
+        <div className="max-w-[1920px] mx-auto grid lg:grid-cols-12 gap-6 w-full">
           {/* Step 1: Download Template */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 lg:p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
-                1
+          <div className="lg:col-span-4 flex flex-col">
+            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 lg:p-6 h-full">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                  1
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#111318]">
+                    Download Template
+                  </h3>
+                  <p className="text-xs text-gray-500">
+                    Ensure your data is structured correctly before uploading.
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-base font-bold text-[#111318]">
-                  Download Template
-                </h3>
-                <p className="text-xs text-gray-500">
-                  Ensure your data is structured correctly before uploading.
-                </p>
-              </div>
+              <button
+                onClick={handleDownloadTemplate}
+                className="px-6 py-2.5 border border-gray-200 text-gray-700 hover:bg-gray-50 rounded-lg text-sm font-bold transition-all flex items-center gap-2 w-full cursor-pointer"
+              >
+                <Download className="w-4 h-4" />
+                Download Format (.xlsx)
+              </button>
             </div>
-            <button
-              onClick={handleDownloadTemplate}
-              className="px-6 py-2.5 border border-gray-200 text-gray-700 hover:bg-gray-50 rounded-lg text-sm font-bold transition-all flex items-center gap-2 w-full sm:w-auto"
-            >
-              <Download className="w-4 h-4" />
-              Download Format (.xlsx)
-            </button>
           </div>
 
           {/* Step 2: Upload File */}
-          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 lg:p-6">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
-                2
+          <div className="lg:col-span-8 flex flex-col">
+            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 lg:p-6 h-full">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                  2
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#111318]">
+                    Upload Completed Template
+                  </h3>
+                  <p className="text-xs text-gray-500">
+                    Strictly only .xlsx files are supported.
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-base font-bold text-[#111318]">
-                  Upload Completed Template
-                </h3>
-                <p className="text-xs text-gray-500">
-                  Strictly only .xlsx files are supported.
-                </p>
-              </div>
-            </div>
 
-            <div
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-              onClick={() =>
-                !excelFile &&
-                document.getElementById("excel-upload-page-input")?.click()
-              }
-              className={`border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-all min-h-[220px] ${
-                !excelFile ? "cursor-pointer" : ""
-              } ${
-                isDraggingExcel
-                  ? "border-[#0d59f2] bg-blue-50/50 scale-[1.02]"
-                  : "border-gray-200 hover:bg-gray-50"
-              }`}
-            >
-              {excelFile ? (
-                <div className="flex flex-col items-center animate-in fade-in zoom-in-95 duration-200">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4 shadow-sm border border-green-200 text-green-600">
-                    <FileSpreadsheet className="w-8 h-8" />
+              <div
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                onClick={() =>
+                  !excelFile &&
+                  document.getElementById("excel-upload-page-input")?.click()
+                }
+                className={`border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-all min-h-[300px] ${
+                  !excelFile ? "cursor-pointer" : ""
+                } ${
+                  isDraggingExcel
+                    ? "border-[#0d59f2] bg-blue-50/50 scale-[1.02]"
+                    : "border-gray-200 hover:bg-gray-50 text-gray-400"
+                }`}
+              >
+                {excelFile ? (
+                  <div className="flex flex-col items-center animate-in fade-in zoom-in-95 duration-200 w-full">
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4 shadow-sm border border-green-200 text-green-600">
+                      <FileSpreadsheet className="w-8 h-8" />
+                    </div>
+                    <p className="text-base font-bold text-[#111318] mb-1 truncate max-w-md">
+                      {excelFile.name}
+                    </p>
+                    <p className="text-sm text-gray-500 mb-6">
+                      {(excelFile.size / 1024).toFixed(1)} KB
+                    </p>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setExcelFile(null);
+                      }}
+                      className="px-4 py-1.5 rounded-full text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 transition-colors flex items-center gap-1 cursor-pointer"
+                    >
+                      <X className="w-3 h-3" /> Remove File
+                    </button>
                   </div>
-                  <p className="text-base font-bold text-[#111318] mb-1">
-                    {excelFile.name}
-                  </p>
-                  <p className="text-sm text-gray-500 mb-6">
-                    {(excelFile.size / 1024).toFixed(1)} KB
-                  </p>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setExcelFile(null);
-                    }}
-                    className="px-4 py-1.5 rounded-full text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 transition-colors flex items-center gap-1"
-                  >
-                    <X className="w-3 h-3" /> Remove File
-                  </button>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center">
-                  <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
-                    <UploadCloud className="w-8 h-8 text-[#0d59f2]" />
+                ) : (
+                  <div className="flex flex-col items-center group">
+                    <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4 transition-transform group-hover:scale-110">
+                      <UploadCloud className="w-8 h-8 text-[#0d59f2]" />
+                    </div>
+                    <p className="text-base font-bold text-[#111318] mb-2">
+                      Click to browse or drag file here
+                    </p>
+                    <p className="text-xs text-gray-500 font-medium">
+                      Strictly .xlsx files only
+                    </p>
                   </div>
-                  <p className="text-base font-bold text-[#111318] mb-2">
-                    Click to browse or drag file here
-                  </p>
-                  <p className="text-xs text-gray-500 font-medium">
-                    Strictly .xlsx files only
-                  </p>
-                </div>
-              )}
-              <input
-                type="file"
-                className="hidden"
-                accept=".xlsx"
-                onChange={handleFileSelect}
-                id="excel-upload-page-input"
-              />
+                )}
+                <input
+                  type="file"
+                  className="hidden"
+                  accept=".xlsx"
+                  onChange={handleFileSelect}
+                  id="excel-upload-page-input"
+                />
+              </div>
             </div>
           </div>
         </div>

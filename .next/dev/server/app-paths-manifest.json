@@ -1,6 +1,13 @@
 {
   "/(auth)/signin/page": "app/(auth)/signin/page.js",
+  "/(protected)/add-lead/page": "app/(protected)/add-lead/page.js",
+  "/(protected)/add-product/page": "app/(protected)/add-product/page.js",
   "/(protected)/home/page": "app/(protected)/home/page.js",
   "/(protected)/products/page": "app/(protected)/products/page.js",
+  "/(protected)/request/page": "app/(protected)/request/page.js",
+  "/(protected)/send-email/page": "app/(protected)/send-email/page.js",
+  "/(protected)/upload-leads/page": "app/(protected)/upload-leads/page.js",
+  "/(protected)/userprofile/edit/page": "app/(protected)/userprofile/edit/page.js",
+  "/(protected)/userprofile/page": "app/(protected)/userprofile/page.js",
   "/page": "app/page.js"
 }

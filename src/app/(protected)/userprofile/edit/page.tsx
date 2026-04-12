@@ -161,7 +161,7 @@ export default function EditProfile() {
         <div className="flex items-center gap-4">
           <button
             onClick={handleBack}
-            className="p-2 rounded-lg border border-gray-100 text-[#606e8a] hover:text-blue-600 hover:bg-gray-50 transition-all cursor-pointer"
+            className="p-2 rounded-full hover:bg-gray-100 text-gray-500 transition-all cursor-pointer"
           >
             <ArrowLeft className="h-6 w-6" />
           </button>
@@ -177,7 +177,7 @@ export default function EditProfile() {
         <button
           onClick={handleUpdateProfile}
           disabled={isUpdating}
-          className="bg-[#0d59f2] text-white px-3 lg:px-4 py-1.5 rounded-lg text-xs font-bold shadow-lg shadow-[#0d59f2]/20 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
+          className="bg-[#0d59f2] text-white px-3 lg:px-6 py-2 rounded-xl text-xs font-bold shadow-lg shadow-[#0d59f2]/20 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
         >
           {isUpdating ? (
             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -188,225 +188,213 @@ export default function EditProfile() {
         </button>
       </header>
 
-      <main className="max-w-3xl mx-auto px-4 mt-8">
+      <main className="max-w-[1920px] mx-auto px-6 mt-8 w-full">
         {isDataLoading ? (
-          <div className="flex flex-col items-center justify-center py-20 bg-white rounded-xl border border-gray-100 shadow-sm">
+          <div className="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm">
             <div className="w-10 h-10 border-4 border-blue-600/30 border-t-blue-600 rounded-full animate-spin mb-4" />
             <p className="text-gray-500 font-medium">Loading your profile...</p>
           </div>
         ) : (
-          <div className="bg-white p-5 lg:p-6 rounded-xl border border-gray-100 shadow-sm transition-all duration-300">
-            <div className="space-y-6">
-              <h2 className="text-base font-bold mb-5 border-b border-gray-50 pb-3">
-                Personal Information
-              </h2>
+          <div className="bg-white p-6 lg:p-8 rounded-2xl border border-gray-100 shadow-sm transition-all duration-300 w-full mb-10">
+            <div className="space-y-10">
+              {/* Section 1: Basic Info */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div className="lg:col-span-4">
+                  <h2 className="text-lg font-black text-slate-900 mb-2">Personal Information</h2>
+                  <p className="text-sm text-slate-500 font-medium">Your basic account details and identity on the platform.</p>
+                </div>
+                <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Name */}
+                  <label className="flex flex-col gap-2 md:col-span-2">
+                    <span className="text-[10px] lg:text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                      Full Name <span className="text-red-500">*</span>
+                    </span>
+                    <div className="relative group">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                        <User className="w-4 h-4" />
+                      </div>
+                      <input
+                        type="text"
+                        value={editForm.name}
+                        onChange={(e) => {
+                          setEditForm({ ...editForm, name: e.target.value });
+                          if (formErrors.name)
+                            setFormErrors({ ...formErrors, name: undefined });
+                        }}
+                        className={`w-full pl-10 pr-4 py-3 rounded-xl border ${formErrors.name ? "border-red-500 bg-red-50/30" : "border-slate-200 bg-slate-50/30"} focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50 transition-all outline-none text-sm font-bold text-slate-700`}
+                        placeholder="Vijay Harde"
+                      />
+                    </div>
+                    {formErrors.name && (
+                      <span className="text-red-500 text-[10px] font-bold">
+                        {formErrors.name}
+                      </span>
+                    )}
+                  </label>
 
-              {/* Name */}
-              <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
-                  Full Name <span className="text-red-500">*</span>
-                </span>
-                <input
-                  type="text"
-                  value={editForm.name}
-                  onChange={(e) => {
-                    setEditForm({ ...editForm, name: e.target.value });
-                    if (formErrors.name)
-                      setFormErrors({ ...formErrors, name: undefined });
-                  }}
-                  className={`w-full px-3 py-2 rounded-lg border ${formErrors.name ? "border-red-500" : "border-gray-200"} focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white`}
-                  placeholder="Enter your name"
-                />
-                {formErrors.name && (
-                  <span className="text-red-500 text-[10px] font-bold">
-                    {formErrors.name}
-                  </span>
-                )}
-              </label>
+                  {/* Designation */}
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[10px] lg:text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                      Designation
+                    </span>
+                    <div className="relative group">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                        <Briefcase className="w-4 h-4" />
+                      </div>
+                      <input
+                        type="text"
+                        value={editForm.designation}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, designation: e.target.value })
+                        }
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50/30 focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50 transition-all outline-none text-sm font-bold text-slate-700"
+                        placeholder="e.g. SDE"
+                      />
+                    </div>
+                  </label>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Designation */}
-                <label className="flex flex-col gap-1.5">
-                  <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
-                    Designation
-                  </span>
-                  <input
-                    type="text"
-                    value={editForm.designation}
-                    onChange={(e) =>
-                      setEditForm({ ...editForm, designation: e.target.value })
-                    }
-                    className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
-                    placeholder="e.g. Senior Manager"
-                  />
-                </label>
-
-                {/* Company Name */}
-                <label className="flex flex-col gap-1.5">
-                  <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
-                    Company Name
-                  </span>
-                  <input
-                    type="text"
-                    value={editForm.companyName}
-                    onChange={(e) =>
-                      setEditForm({ ...editForm, companyName: e.target.value })
-                    }
-                    className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
-                    placeholder="e.g. Acme Corp"
-                  />
-                </label>
+                  {/* Company Name */}
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[10px] lg:text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                      Company Name
+                    </span>
+                    <div className="relative group">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                        <Building2 className="w-4 h-4" />
+                      </div>
+                      <input
+                        type="text"
+                        value={editForm.companyName}
+                        onChange={(e) =>
+                          setEditForm({ ...editForm, companyName: e.target.value })
+                        }
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50/30 focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50 transition-all outline-none text-sm font-bold text-slate-700"
+                        placeholder="e.g. M&M"
+                      />
+                    </div>
+                  </label>
+                </div>
               </div>
 
-              {/* Phone */}
-              <label className="flex flex-col gap-1.5">
-                <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
-                  Phone Number
-                </span>
-                <input
-                  type="tel"
-                  value={editForm.phone}
-                  onChange={(e) => {
-                    setEditForm({ ...editForm, phone: e.target.value });
-                    if (formErrors.phone)
-                      setFormErrors({ ...formErrors, phone: undefined });
-                  }}
-                  className={`w-full px-3 py-2 rounded-lg border ${formErrors.phone ? "border-red-500" : "border-gray-200"} focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white`}
-                  placeholder="Enter your phone number"
-                />
-                {formErrors.phone && (
-                  <span className="text-red-500 text-[10px] font-bold">
-                    {formErrors.phone}
-                  </span>
-                )}
-              </label>
+              {/* Section 2: Contact Details */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 border-t border-slate-100">
+                <div className="lg:col-span-4">
+                  <h2 className="text-lg font-black text-slate-900 mb-2">Communication</h2>
+                  <p className="text-sm text-slate-500 font-medium">How other members and the system can reach you.</p>
+                </div>
+                <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Phone */}
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[10px] lg:text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                      Phone Number
+                    </span>
+                    <div className="relative group">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                        <Phone className="w-4 h-4" />
+                      </div>
+                      <input
+                        type="tel"
+                        value={editForm.phone}
+                        onChange={(e) => {
+                          setEditForm({ ...editForm, phone: e.target.value });
+                          if (formErrors.phone)
+                            setFormErrors({ ...formErrors, phone: undefined });
+                        }}
+                        className={`w-full pl-10 pr-4 py-3 rounded-xl border ${formErrors.phone ? "border-red-500 bg-red-50/30" : "border-slate-200 bg-slate-50/30"} focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50 transition-all outline-none text-sm font-bold text-slate-700`}
+                        placeholder="9659361010"
+                      />
+                    </div>
+                    {formErrors.phone && (
+                      <span className="text-red-500 text-[10px] font-bold">
+                        {formErrors.phone}
+                      </span>
+                    )}
+                  </label>
 
-              <div className="pt-6 border-t border-gray-100 mt-6">
-                <h3 className="text-[10px] font-bold text-[#606e8a] uppercase tracking-wider mb-4">
-                  Account Details
-                </h3>
-                <label className="flex flex-col gap-1.5">
-                  <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
-                    Email Address
-                  </span>
-                  <div className="w-full px-3 py-2 rounded-lg border border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed text-sm lg:text-[13px]">
-                    {user?.email || "N/A"}
-                  </div>
-                  <p className="text-[10px] text-gray-400 mt-1 italic font-medium">
-                    * Email cannot be changed here.
-                  </p>
-                </label>
+                  {/* Email */}
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[10px] lg:text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                      Email Address
+                    </span>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <Mail className="w-4 h-4" />
+                      </div>
+                      <div className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-100 bg-slate-50 text-slate-400 cursor-not-allowed text-sm font-bold">
+                        {user?.email || "N/A"}
+                      </div>
+                    </div>
+                    <p className="text-[10px] text-slate-300 italic font-bold uppercase tracking-tight">
+                      * Email cannot be changed
+                    </p>
+                  </label>
+                </div>
               </div>
 
-              <div className="pt-6 border-t border-gray-100 mt-6">
-                <h3 className="text-[10px] font-bold text-[#606e8a] uppercase tracking-wider mb-4">
-                  Social & Web Links
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Section 3: Social Links */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 border-t border-slate-100">
+                <div className="lg:col-span-4">
+                  <h2 className="text-lg font-black text-slate-900 mb-2">Social Presence</h2>
+                  <p className="text-sm text-slate-500 font-medium">Link your professional profiles to increase visibility.</p>
+                </div>
+                <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* LinkedIn */}
-                  <label className="flex flex-col gap-1.5">
-                    <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
-                      LinkedIn URL
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[10px] lg:text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                      LinkedIn Profile
                     </span>
                     <input
                       type="url"
                       value={editForm.linkedinUrl}
                       onChange={(e) => setEditForm({ ...editForm, linkedinUrl: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
-                      placeholder="https://linkedin.com/in/username"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/30 focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50 transition-all outline-none text-sm font-bold text-slate-700"
+                      placeholder="https://linkedin.com/in/..."
                     />
                   </label>
 
                   {/* Twitter */}
-                  <label className="flex flex-col gap-1.5">
-                    <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
-                      Twitter URL
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[10px] lg:text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                      Twitter Profile
                     </span>
                     <input
                       type="url"
                       value={editForm.twitterUrl}
                       onChange={(e) => setEditForm({ ...editForm, twitterUrl: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
-                      placeholder="https://twitter.com/username"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/30 focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50 transition-all outline-none text-sm font-bold text-slate-700"
+                      placeholder="https://twitter.com/..."
                     />
                   </label>
 
                   {/* WhatsApp */}
-                  <label className="flex flex-col gap-1.5">
-                    <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
-                      WhatsApp URL
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[10px] lg:text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                      WhatsApp Link
                     </span>
                     <input
                       type="url"
                       value={editForm.personalUrl}
                       onChange={(e) => setEditForm({ ...editForm, personalUrl: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
-                      placeholder="https://wa.me/phonenumber"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/30 focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50 transition-all outline-none text-sm font-bold text-slate-700"
+                      placeholder="https://wa.me/..."
                     />
                   </label>
 
                   {/* Slack */}
-                  <label className="flex flex-col gap-1.5">
-                    <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
-                      Slack URL
+                  <label className="flex flex-col gap-2">
+                    <span className="text-[10px] lg:text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                      Slack Workspace
                     </span>
                     <input
                       type="url"
                       value={editForm.website}
                       onChange={(e) => setEditForm({ ...editForm, website: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
-                      placeholder="https://your-workspace.slack.com"
-                    />
-                  </label>
-
-                  {/* Facebook */}
-                  <label className="flex flex-col gap-1.5">
-                    <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
-                      Facebook URL
-                    </span>
-                    <input
-                      type="url"
-                      value={editForm.facebookUrl}
-                      onChange={(e) => setEditForm({ ...editForm, facebookUrl: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
-                      placeholder="https://facebook.com/username"
-                    />
-                  </label>
-
-                  {/* Instagram */}
-                  <label className="flex flex-col gap-1.5">
-                    <span className="text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider">
-                      Instagram URL
-                    </span>
-                    <input
-                      type="url"
-                      value={editForm.instagramUrl}
-                      onChange={(e) => setEditForm({ ...editForm, instagramUrl: e.target.value })}
-                      className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-blue-600 focus:ring-blue-600/20 transition-all outline-none text-sm lg:text-[13px] bg-white"
-                      placeholder="https://instagram.com/username"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/30 focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50 transition-all outline-none text-sm font-bold text-slate-700"
+                      placeholder="https://slack.com/..."
                     />
                   </label>
                 </div>
               </div>
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-gray-200 flex justify-end gap-3">
-              <button
-                onClick={handleBack}
-                className="px-4 py-1.5 rounded-lg border border-gray-300 font-bold text-xs hover:bg-gray-50 transition-all cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleUpdateProfile}
-                disabled={isUpdating}
-                className="bg-[#0d59f2] text-white px-3 lg:px-4 py-1.5 rounded-lg text-xs font-bold shadow-lg shadow-[#0d59f2]/20 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-              >
-                {isUpdating && (
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                )}
-                Save Changes
-              </button>
             </div>
           </div>
         )}

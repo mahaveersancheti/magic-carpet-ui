@@ -16,9 +16,10 @@ import {
   HelpCircle,
   Mic,
   MicOff,
+  Mail,
 } from "lucide-react";
 // import { UserGuide, GuideStep } from "@/app/components/UserGuide";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import {
@@ -211,6 +212,7 @@ const ScoreGauge = ({
 };
 
 function ReportContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   const dispatch = useDispatch<AppDispatch>();
@@ -1209,6 +1211,15 @@ function ReportContent() {
               </span>
               <span className="hidden sm:inline">Export PDF</span>
               <span className="sm:hidden">PDF</span>
+            </button>
+
+            <button
+              onClick={() => router.push(`/send-email?id=${id}`)}
+              className="h-9 sm:h-10 flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 bg-blue-600 border border-blue-700 rounded-xl text-xs sm:text-sm font-bold text-white hover:bg-blue-700 shadow-sm transition active:scale-95"
+            >
+              <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+              <span className="hidden sm:inline">Send Email</span>
+              <span className="sm:hidden">Email</span>
             </button>
           </div>
         </div>

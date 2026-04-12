@@ -10,6 +10,7 @@ import {
   Globe,
   Loader2,
   UploadCloud,
+  Mail,
 } from "lucide-react";
 // import { UserGuide, GuideStep } from "@/app/components/UserGuide";
 import { useDispatch, useSelector } from "react-redux";
@@ -1103,6 +1104,13 @@ export default function DashboardPage() {
                               <span className="material-symbols-outlined text-lg">
                                 visibility
                               </span>
+                            </button>
+                            <button
+                              onClick={() => router.push(`/send-email?id=${row.id}`)}
+                              className="cursor-pointer p-1 text-slate-400 hover:text-blue-500 hover:bg-blue-500/10 rounded-lg transition-all active:scale-95"
+                              title="Send Email"
+                            >
+                              <Mail className="w-4.5 h-4.5" />
                             </button>
                             <button
                               onClick={() =>
