@@ -113,6 +113,7 @@ export default function ProductsPage() {
     const term = searchTerm.toLowerCase();
     return products.filter(
       (p) =>
+        p.id.toLowerCase().includes(term) ||
         p.name.toLowerCase().includes(term) ||
         p.description.toLowerCase().includes(term),
     );
@@ -180,6 +181,12 @@ export default function ProductsPage() {
               <thead className="sticky top-0 z-30 bg-slate-50 backdrop-blur-sm">
                 <tr>
                   <th
+                    className="px-6 py-4 text-left text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider border-b border-slate-200 w-36"
+                    scope="col"
+                  >
+                    Product ID
+                  </th>
+                  <th
                     className="px-6 py-4 text-left text-[10px] lg:text-[11px] font-bold text-[#606e8a] uppercase tracking-wider border-b border-slate-200"
                     scope="col"
                   >
@@ -210,6 +217,9 @@ export default function ProductsPage() {
                   [1, 2, 3].map((i) => (
                     <tr key={i} className="animate-pulse">
                       <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="h-4 bg-slate-100 w-28 rounded"></div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-4">
                           <div className="h-10 w-10 bg-slate-100 rounded"></div>
                           <div className="space-y-2">
@@ -231,7 +241,7 @@ export default function ProductsPage() {
                   ))
                 ) : paginatedProducts.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-6 py-20 text-center">
+                    <td colSpan={5} className="px-6 py-20 text-center">
                       <div className="flex flex-col items-center justify-center text-slate-400">
                         <span className="material-symbols-outlined text-5xl opacity-20 mb-3">
                           inventory_2
@@ -250,6 +260,16 @@ export default function ProductsPage() {
                       key={product.id}
                       className="hover:bg-slate-50 transition-colors group"
                     >
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-1">
+                          <span className="text-[10px] font-mono font-bold text-slate-500">
+                            {product.id
+                              ? `${product.id.substring(0, 8).toUpperCase()}...`
+                              : "N/A"}
+                          </span>
+                          <CopyButton text={product.id} />
+                        </div>
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="h-10 w-10 flex-shrink-0 rounded overflow-hidden">
@@ -422,5 +442,29 @@ export default function ProductsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast.success("ID Copied!");
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <button
+      onClick={handleCopy}
+      className={`p-0.5 rounded-md transition-all ${copied ? "text-green-500 bg-green-50" : "text-slate-400 hover:text-primary hover:bg-slate-100"}`}
+      title="Copy ID"
+    >
+      <span className="material-symbols-outlined text-[13px]">
+        {copied ? "check_circle" : "content_copy"}
+      </span>
+    </button>
   );
 }
