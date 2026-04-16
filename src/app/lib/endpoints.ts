@@ -38,6 +38,8 @@ export const endpoints = {
   downloadProductTemplate1: "product/download/product-template1",
   generateCharter: (productId: string) =>
     `product/generate-charter?productId=${productId}`,
+  generateCharterFromUrl: (productId: string, websiteURL: string) =>
+    `product/generate-charter-from-url?productId=${productId}&websiteURL=${encodeURIComponent(websiteURL)}`,
   googleLogin: `${getBaseUrl().replace("/api/", "")}/oauth2/authorization/google`,
   notifications: "/notification",
   verifyOtp: "user/verify-otp",

@@ -31,11 +31,19 @@ import {
   Italic,
   List as ListIcon,
   Link as LinkIcon,
+  Globe,
+  Plus,
+  CheckCircle,
+  Save,
+  Briefcase,
 } from "lucide-react";
 import { AuthenticatedImage } from "../../components/AuthenticatedImage";
 import { ConfirmationDialog } from "../../components/ConfirmationDialog";
 import { FileUploadLoader } from "../../components/FileUploadLoader";
-import { generateCharter } from "../../redux/slices/ProductSlice";
+import { 
+  generateCharter, 
+  generateCharterFromUrl 
+} from "../../redux/slices/ProductSlice";
 
 function AddProductContent() {
   const dispatch = useDispatch<AppDispatch>();
@@ -85,6 +93,9 @@ function AddProductContent() {
   const [uploadTotalSize, setUploadTotalSize] = useState(1);
   const [loaderTitle, setLoaderTitle] = useState("Processing Product...");
   const [loaderIsSuccess, setLoaderIsSuccess] = useState(false);
+  const [websiteURL, setWebsiteURL] = useState("");
+  const [urlError, setUrlError] = useState<string | null>(null);
+  const [isUrlSuccess, setIsUrlSuccess] = useState(false);
 
   const handleDragOver = (e: React.DragEvent, type: "image" | "docs") => {
     e.preventDefault();
@@ -112,29 +123,21 @@ function AddProductContent() {
     } else {
       setIsDraggingDocs(false);
       if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-        if (existingDocs.length > 0) {
-          toast.error(
-            "Please delete the existing document first to upload a new one",
-          );
-          return;
-        }
-        // Enforce single file
-        if (e.dataTransfer.files.length > 1) {
-          toast.error("Please upload only one document");
-        }
-
-        const file = e.dataTransfer.files[0];
-        const allowedTypes = [
-          "application/pdf",
-          "application/vnd.ms-powerpoint",
-          "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-        ];
-        if (!allowedTypes.includes(file.type)) {
-          toast.error("Only PDF, PPT or PPTX documents are allowed");
-        } else {
-          // Replace existing docs with the new single file
-          setProductDocs([file]);
-        }
+        const newFiles = Array.from(e.dataTransfer.files).filter((file) => {
+          const allowedTypes = [
+            "application/pdf",
+            "application/vnd.ms-powerpoint",
+            "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+          ];
+          if (!allowedTypes.includes(file.type)) {
+            toast.error(`${file.name} is not a valid format (PDF/PPT only)`);
+            return false;
+          }
+          return true;
+        });
+        setProductDocs((prev) => [...prev, ...newFiles]);
+        if (formErrors.description)
+          setFormErrors({ ...formErrors, description: undefined });
       }
     }
   };
@@ -151,6 +154,8 @@ function AddProductContent() {
     updateLoading,
     uploadLoading,
     deleteFileLoading,
+    generateCharterLoading,
+    generateCharterFromUrlLoading,
     loading: productsLoading,
   } = useSelector((state: RootState) => state.products);
 
@@ -445,7 +450,36 @@ function AddProductContent() {
     }
   };
 
+  const handleGenerateFromUrl = async (id: string, url: string) => {
+    setLoaderTitle("Extracting site data...");
+    setLoaderIsSuccess(false);
+    try {
+      await dispatch(generateCharterFromUrl({ productId: id, websiteURL: url })).unwrap();
+      setIsUrlSuccess(true);
+      return true;
+    } catch (error: any) {
+      toast.error(error || "Failed to scan website");
+      return false;
+    }
+  };
+
   const handleGenerateDraftCharter = async () => {
+    // Validation: URL OR Document must be present
+    if (!websiteURL.trim() && productDocs.length === 0 && existingDocs.length === 0) {
+      toast.error("Please provide either a Website URL or a document to generate a charter.");
+      return;
+    }
+
+    // URL format validation if present
+    if (websiteURL.trim()) {
+      try {
+        new URL(websiteURL.startsWith("http") ? websiteURL : `https://${websiteURL}`);
+      } catch (e) {
+        toast.error("Please provide a valid URL");
+        return;
+      }
+    }
+
     // 1. Call save product logic first (skip navigation, keep loader open)
     const currentProductId = await handleHandleAction(true, undefined, true);
 
@@ -453,24 +487,52 @@ function AddProductContent() {
       return;
     }
 
-    // If we just created a new product, update the URL so a refresh doesn't lose the state
+    // If we just created a new product, update the URL
     if (!productId) {
       window.history.replaceState(null, "", `?id=${currentProductId}`);
     }
 
-    // Update loader state for generation phase
-    setLoaderTitle("Generating Product Charter...");
-    setLoaderIsSuccess(false);
     setIsGeneratingDraft(true);
-    toast.loading("Generating charter...", { id: "charter-gen" });
+    setLoaderIsSuccess(false);
 
     try {
-      const result = await dispatch(generateCharter(currentProductId)).unwrap();
-      // Bind directly to productForm description
-      setProductForm((prev) => ({ ...prev, description: result }));
-      toast.success("Charter generated!", { id: "charter-gen" });
+      // 2. Sequential Execution
+      
+      // Step A: URL Scan
+      if (websiteURL.trim()) {
+        toast.loading("Scanning website...", { id: "seq-gen" });
+        await handleGenerateFromUrl(currentProductId, websiteURL);
+      }
 
-      // Signal success to loader and close after a delay
+      // Step B: Multi-file Upload
+      if (productDocs.length > 0) {
+        const userId = user?.userId;
+        if (userId) {
+          setLoaderTitle("Uploading documents...");
+          toast.loading("Uploading documents...", { id: "seq-gen" });
+          await dispatch(
+            uploadProductFiles({
+              productId: currentProductId,
+              userId,
+              files: productDocs,
+            }),
+          ).unwrap();
+          // Reset local docs as they are now server-side
+          setProductDocs([]);
+          // Optionally fetch updated product or manually update existingDocs
+          dispatch(fetchProductsByUserId(userId));
+        }
+      }
+
+      // Step C: Final Charter Generation
+      setLoaderTitle("Generating Final Charter...");
+      toast.loading("Generating your charter...", { id: "seq-gen" });
+      const result = await dispatch(generateCharter(currentProductId)).unwrap();
+      
+      setProductForm((prev) => ({ ...prev, description: result }));
+      toast.success("Charter generated successfully!", { id: "seq-gen" });
+
+      // Signal success to loader
       setLoaderIsSuccess(true);
       setTimeout(() => {
         setIsUploading(false);
@@ -478,10 +540,7 @@ function AddProductContent() {
         setLoaderIsSuccess(false);
       }, 1500);
     } catch (error: any) {
-      toast.error(error || "Failed to generate charter", {
-        id: "charter-gen",
-      });
-      // Close loader on error
+      toast.error(error || "Process failed at some step", { id: "seq-gen" });
       setIsUploading(false);
       setIsSubmitting(false);
     } finally {
@@ -503,561 +562,295 @@ function AddProductContent() {
           setIsSubmitting(false);
           setLoaderIsSuccess(false);
         }}
-        onComplete={() => {
-          // Loader handles its own success state and timeout
-        }}
+        onComplete={() => {}}
       />
 
-      {/* BEGIN: MainHeader */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+      {/* Header - Sticky Matching Profile Style */}
+      <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between sticky top-0 z-10 pt-20 lg:pt-4">
         <div className="flex items-center gap-4">
           <button
             onClick={handleBack}
-            aria-label="Go back"
-            className="p-2 hover:bg-gray-100 rounded-full text-gray-500 transition-colors"
+            className="p-2 rounded-full hover:bg-gray-100 text-gray-500 transition-all cursor-pointer"
           >
             <ArrowLeft className="h-6 w-6" />
           </button>
           <div>
-            <h1 className="text-xl font-bold text-gray-900">
-              {productId ? "Edit Product" : "New Product Showcase"}
+            <h1 className="text-lg lg:text-xl font-bold tracking-tight text-[#111318]">
+              {productId ? "Edit Product" : "Add Product"}
             </h1>
-            <p className="text-sm text-gray-500">
-              Drafting your strategic offering
+            <p className="text-[#606e8a] text-xs lg:text-sm">
+              Define your strategic offering and details.
             </p>
           </div>
         </div>
-        <div className="flex gap-3">
+        <div className="flex items-center gap-3">
           <button
             onClick={handleDownloadTemplate}
-            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:bg-gray-50 transition cursor-pointer"
+            className="hidden md:flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 transition-all cursor-pointer"
           >
             <Download className="w-4 h-4" />
-            Download Charter Template
+            Template
           </button>
           <button
             onClick={() => handleHandleAction(false)}
             disabled={createLoading || updateLoading || uploadLoading}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition shadow-sm cursor-pointer disabled:opacity-70 flex items-center gap-2"
+            className="bg-[#0d59f2] text-white px-4 lg:px-6 py-2 rounded-xl text-xs font-bold shadow-lg shadow-[#0d59f2]/20 hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
           >
-            {(createLoading || updateLoading || uploadLoading) && (
+            {createLoading || updateLoading || uploadLoading ? (
               <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+              <Save className="w-4 h-4" />
             )}
-            {productId ? "Update Product" : "Save Product"}
+            {productId ? "Save Changes" : "Save Product"}
           </button>
         </div>
       </header>
-      {/* END: MainHeader */}
 
-      {/* BEGIN: ProgressIndicator */}
-      <nav aria-label="Progress" className="max-w-4xl mx-auto mt-8 mb-12 px-1">
-        <ol className="flex items-center justify-between w-full">
-          <li className="flex flex-col items-center flex-1">
-            <div className="flex items-center w-full">
-              <div
-                className={`w-10 h-10 flex items-center justify-center rounded-full font-bold text-sm ${productForm.name ? "bg-blue-600 text-white" : "bg-blue-600 text-white"}`}
-              >
-                1
+      {/* Main Content Area - Profile Edit Inspired */}
+      <main className="max-w-[1920px] mx-auto px-6 mt-8 w-full pb-20">
+        <div className="bg-white p-6 lg:p-8 rounded-2xl border border-gray-100 shadow-sm transition-all duration-300 w-full mb-10">
+          <div className="space-y-12">
+            
+            {/* SECTION 1: Strategic Information */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <div className="lg:col-span-4">
+                <h2 className="text-lg font-black text-slate-900 mb-2">Strategic Information</h2>
+                <p className="text-sm text-slate-500 font-medium">Basic details that identify your product in the portfolio.</p>
               </div>
-              <div
-                className={`h-0.5 flex-grow margin-0 mx-4 ${productForm.name ? "bg-blue-600" : "bg-gray-200"}`}
-              ></div>
-            </div>
-            <span className="mt-2 text-xs font-semibold text-blue-600 uppercase tracking-wider">
-              Product Name
-            </span>
-          </li>
-          <li className="flex flex-col items-center flex-1">
-            <div className="flex items-center w-full">
-              <div
-                className={`w-10 h-10 flex items-center justify-center rounded-full font-bold text-sm ${productImage || existingImagePath ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-500"}`}
-              >
-                2
-              </div>
-              <div
-                className={`h-0.5 flex-grow margin-0 mx-4 ${productImage || existingImagePath ? "bg-blue-600" : "bg-gray-200"}`}
-              ></div>
-            </div>
-            <span
-              className={`mt-2 text-xs font-semibold uppercase tracking-wider ${productImage || existingImagePath ? "text-blue-600" : "text-gray-400"}`}
-            >
-              Product Image
-            </span>
-          </li>
-          <li className="flex flex-col items-center flex-1">
-            <div className="flex items-center w-full">
-              <div
-                className={`w-10 h-10 flex items-center justify-center rounded-full font-bold text-sm ${productDocs.length > 0 || existingDocs.length > 0 ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-500"}`}
-              >
-                3
-              </div>
-              <div
-                className={`h-0.5 flex-grow margin-0 mx-4 ${productDocs.length > 0 || existingDocs.length > 0 ? "bg-blue-600" : "bg-gray-200"}`}
-              ></div>
-            </div>
-            <span
-              className={`mt-2 text-xs font-semibold uppercase tracking-wider ${productDocs.length > 0 || existingDocs.length > 0 ? "text-blue-600" : "text-gray-400"}`}
-            >
-              Documents
-            </span>
-          </li>
-          <li className="flex flex-col items-center">
-            <div
-              className={`w-10 h-10 flex items-center justify-center rounded-full font-bold text-sm border-2 border-transparent ${productForm.description ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-500"}`}
-            >
-              4
-            </div>
-            <span
-              className={`mt-2 text-xs font-semibold uppercase tracking-wider ${productForm.description ? "text-blue-600" : "text-gray-400"}`}
-            >
-              Charter
-            </span>
-          </li>
-        </ol>
-      </nav>
-      {/* END: ProgressIndicator */}
-
-      {/* BEGIN: WorkflowContent */}
-      <main className="max-w-4xl mx-auto px-1 pb-20">
-        {/* STAGE 1 & 2 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          {/* BEGIN: Stage1_ProjectName */}
-          <section
-            className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300"
-            data-purpose="stage-1-container"
-          >
-            <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">
-              Stage 1: Product Name
-            </h2>
-            <div className="space-y-4">
-              <label
-                className="block text-xs font-bold text-gray-500 uppercase"
-                htmlFor="product-name"
-              >
-                Product Name <span className="text-red-500">*</span>
-              </label>
-              <input
-                className={`w-full bg-blue-50 border-none rounded-lg p-4 text-gray-700 focus:ring-2 focus:ring-blue-500 transition outline-none ${formErrors.name ? "ring-2 ring-red-500" : ""}`}
-                id="product-name"
-                placeholder="Enter product name"
-                type="text"
-                value={productForm.name}
-                onChange={(e) => {
-                  const sanitizedValue = e.target.value.replace(/[/\\]/g, "");
-                  setProductForm({ ...productForm, name: sanitizedValue });
-                  if (formErrors.name)
-                    setFormErrors({ ...formErrors, name: undefined });
-                }}
-              />
-              {formErrors.name && (
-                <p className="text-red-500 text-[10px] mt-1">
-                  {formErrors.name}
-                </p>
-              )}
-            </div>
-          </section>
-          {/* END: Stage1_ProjectName */}
-
-          {/* BEGIN: Stage2_ProductImage */}
-          <section
-            className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300"
-            data-purpose="stage-2-container"
-          >
-            <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">
-              Stage 2: Product Image
-            </h2>
-            <div
-              onDragOver={(e) => handleDragOver(e, "image")}
-              onDragLeave={() => handleDragLeave("image")}
-              onDrop={(e) => handleDrop(e, "image")}
-              className={`border-2 border-dashed ${formErrors.image ? "border-red-300 bg-red-50/50" : isDraggingImage ? "border-blue-500 bg-blue-50/50" : "border-gray-200 hover:bg-gray-50"} rounded-xl p-8 flex flex-col items-center justify-center transition cursor-pointer group min-h-[200px] relative`}
-            >
-              {previewImage ? (
-                <div className="relative w-full h-full flex flex-col items-center justify-center">
-                  <div className="relative group/image">
-                    {productImage ? (
-                      <img
-                        src={previewImage}
-                        alt="Preview"
-                        className="h-24 w-auto object-contain rounded-lg shadow-sm"
-                      />
-                    ) : (
-                      <AuthenticatedImage
-                        src={previewImage}
-                        alt="Preview"
-                        className="h-24 w-auto object-contain rounded-lg shadow-sm"
-                      />
-                    )}
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setProductImage(null);
-                        setExistingImagePath(null);
+              <div className="lg:col-span-8 space-y-8">
+                {/* Product Name */}
+                <label className="flex flex-col gap-2">
+                  <span className="text-[10px] lg:text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                    Product Name <span className="text-red-500">*</span>
+                  </span>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                      <Briefcase className="w-4 h-4" />
+                    </div>
+                    <input
+                      type="text"
+                      className={`w-full pl-10 pr-4 py-3 rounded-xl border ${formErrors.name ? "border-red-500 bg-red-50/30" : "border-slate-200 bg-slate-50/30"} focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50 transition-all outline-none text-sm font-bold text-slate-700`}
+                      placeholder="Enter product name"
+                      value={productForm.name}
+                      onChange={(e) => {
+                        const sanitizedValue = e.target.value.replace(/[/\\]/g, "");
+                        setProductForm({ ...productForm, name: sanitizedValue });
+                        if (formErrors.name) setFormErrors({ ...formErrors, name: undefined });
                       }}
-                      className="absolute -top-2 -right-2 p-1 bg-white rounded-full shadow-md text-slate-400 hover:text-red-500 z-10 hover:scale-110 transition-all opacity-0 group-hover/image:opacity-100 cursor-pointer"
-                      title="Remove Image"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
+                    />
                   </div>
-                  <p className="mt-3 text-[10px] text-gray-500 font-medium truncate max-w-[80%]">
-                    {productImage
-                      ? productImage.name
-                      : existingImagePath?.split("/").pop()}
-                  </p>
+                  {formErrors.name && <span className="text-red-500 text-[10px] font-bold">{formErrors.name}</span>}
+                </label>
+
+                {/* Product Image */}
+                <div className="flex flex-col gap-2">
+                  <span className="text-[10px] lg:text-[11px] font-black text-slate-400 uppercase tracking-widest">Product Reference Image</span>
+                  <div
+                    onDragOver={(e) => handleDragOver(e, "image")}
+                    onDragLeave={() => handleDragLeave("image")}
+                    onDrop={(e) => handleDrop(e, "image")}
+                    className={`relative border-2 border-dashed ${formErrors.image ? "border-red-300 bg-red-50/50" : isDraggingImage ? "border-blue-500 bg-blue-50/50" : "border-slate-200 bg-slate-50/30 hover:border-slate-300"} rounded-2xl p-6 lg:p-10 flex flex-col items-center justify-center transition-all cursor-pointer group min-h-[160px] overflow-hidden`}
+                  >
+                    {previewImage ? (
+                      <div className="flex flex-col items-center justify-center w-full">
+                        <div className="relative group/img-preview">
+                          {productImage ? (
+                            <img src={previewImage} alt="Preview" className="h-20 w-auto object-contain rounded-lg shadow-md" />
+                          ) : (
+                            <AuthenticatedImage src={previewImage} alt="Preview" className="h-20 w-auto object-contain rounded-lg shadow-md" />
+                          )}
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault(); e.stopPropagation();
+                              setProductImage(null); setExistingImagePath(null);
+                            }}
+                            className="absolute -top-2 -right-2 p-1.5 bg-white rounded-full shadow-lg text-slate-400 hover:text-red-500 z-10 opacity-0 group-hover/img-preview:opacity-100 transition-all hover:scale-110"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center pointer-events-none">
+                        <div className="p-3 bg-white rounded-xl shadow-sm mb-3 group-hover:scale-110 transition-transform duration-300">
+                          <Cloud className="w-5 h-5 text-blue-500" />
+                        </div>
+                        <p className="text-xs font-bold text-slate-600">Drop image here or click</p>
+                        <p className="text-[9px] text-slate-400 uppercase tracking-tighter mt-1 font-black">JPG, PNG, WEBP (Max 2MB)</p>
+                      </div>
+                    )}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="absolute inset-0 opacity-0 cursor-pointer"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          setProductImage(file);
+                          if (formErrors.image) setFormErrors({ ...formErrors, image: undefined });
+                        }
+                      }}
+                    />
+                  </div>
+                  {formErrors.image && <span className="text-red-500 text-[10px] font-bold font-mono">{formErrors.image}</span>}
                 </div>
-              ) : (
-                <>
-                  <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition duration-300">
-                    <Cloud className="h-8 w-8 text-blue-400" />
-                  </div>
-                  <p className="text-sm font-semibold text-gray-700">
-                    Click or drag image here
-                  </p>
-                  <p className="text-xs text-gray-400 mt-1 uppercase tracking-tight">
-                    PNG, JPG or WEBP (Max 2MB)
-                  </p>
-                </>
-              )}
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    setProductImage(file);
-                    if (formErrors.image)
-                      setFormErrors({ ...formErrors, image: undefined });
-                  }
-                }}
-                className="absolute inset-0 opacity-0 cursor-pointer"
-              />
+              </div>
             </div>
-            {formErrors.image && (
-              <p className="text-red-500 text-[10px] mt-1">
-                {formErrors.image}
-              </p>
-            )}
-          </section>
-          {/* END: Stage2_ProductImage */}
+
+            {/* SECTION 2: Digital Footprint */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 border-t border-slate-100">
+              <div className="lg:col-span-4">
+                <h2 className="text-lg font-black text-slate-900 mb-2">Digital Footprint</h2>
+                <p className="text-sm text-slate-500 font-medium">A link to your product's live website for AI-assisted context.</p>
+              </div>
+              <div className="lg:col-span-8">
+                <label className="flex flex-col gap-2">
+                  <span className="text-[10px] lg:text-[11px] font-black text-slate-400 uppercase tracking-widest">Product Website URL</span>
+                  <div className="relative group">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-blue-600 transition-colors">
+                      <Globe className="w-4 h-4" />
+                    </div>
+                    <input
+                      type="url"
+                      className={`w-full pl-10 pr-4 py-3 rounded-xl border ${urlError ? "border-red-500 bg-red-50/30" : "border-slate-200 bg-slate-50/30 focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-blue-50"} transition-all outline-none text-sm font-bold text-slate-700`}
+                      placeholder="https://example.com"
+                      value={websiteURL}
+                      onChange={(e) => {
+                        setWebsiteURL(e.target.value);
+                        if (urlError) setUrlError(null);
+                      }}
+                    />
+                  </div>
+                  {urlError && <span className="text-red-500 text-[10px] font-bold">{urlError}</span>}
+                </label>
+              </div>
+            </div>
+
+            {/* SECTION 3: Knowledge Base */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 border-t border-slate-100">
+              <div className="lg:col-span-4">
+                <h2 className="text-lg font-black text-slate-900 mb-2">Knowledge Base</h2>
+                <p className="text-sm text-slate-500 font-medium">Upload technical documents, manuals, or presentations.</p>
+              </div>
+              <div className="lg:col-span-8 space-y-6">
+                <div
+                  onDragOver={(e) => handleDragOver(e, "docs")}
+                  onDragLeave={() => handleDragLeave("docs")}
+                  onDrop={(e) => handleDrop(e, "docs")}
+                  className={`relative border-2 border-dashed ${isDraggingDocs ? "border-blue-500 bg-blue-50/70 shadow-inner" : "border-slate-200 bg-slate-50/30 hover:border-slate-300"} rounded-2xl p-10 flex flex-col items-center justify-center transition-all cursor-pointer group min-h-[140px]`}
+                >
+                  <div className="p-3 bg-white rounded-xl shadow-sm mb-3 group-hover:scale-110 transition-all">
+                    <Plus className="w-5 h-5 text-blue-500" />
+                  </div>
+                  <p className="text-xs font-bold text-slate-600">Click or drag documents to upload</p>
+                  <p className="text-[9px] text-slate-400 uppercase tracking-widest mt-1 font-black">supports multi-file uploads (PDF, PPT, PPTX)</p>
+                  <input
+                    type="file"
+                    multiple
+                    accept=".pdf,.ppt,.pptx"
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files.length > 0) {
+                        const newFiles = Array.from(e.target.files).filter((file) => {
+                          const allowedTypes = ["application/pdf", "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation"];
+                          if (!allowedTypes.includes(file.type)) { toast.error(`${file.name} is not a valid format`); return false; }
+                          return true;
+                        });
+                        setProductDocs((prev) => [...prev, ...newFiles]);
+                      }
+                    }}
+                  />
+                </div>
+
+                {/* File List Grid */}
+                {(existingDocs.length > 0 || productDocs.length > 0) && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-60 overflow-y-auto pr-2 custom-scrollbar pt-2">
+                    {/* Existing */}
+                    {existingDocs.map((path, index) => (
+                      <div key={`ex-${index}`} className="flex items-center gap-3 p-3 border border-slate-100 bg-slate-50/50 rounded-xl group/doc animate-in fade-in duration-300">
+                        <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                          <FileText className="w-4 h-4" />
+                        </div>
+                        <div className="flex-grow min-w-0">
+                          <p className="text-[10px] font-black text-slate-700 truncate">{path.split("/").pop()}</p>
+                          <span className="text-[9px] font-bold text-slate-400 uppercase">Existing File</span>
+                        </div>
+                        <button
+                          onClick={() => handleDeleteExistingDoc(path)}
+                          className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-all opacity-0 group-hover/doc:opacity-100"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    ))}
+                    {/* New */}
+                    {productDocs.map((file, index) => (
+                      <div key={`new-${index}`} className="flex items-center gap-3 p-3 border border-blue-50 bg-blue-50/50 rounded-xl group/doc animate-in slide-in-from-right-2 duration-300">
+                        <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white shrink-0">
+                          <FileText className="w-4 h-4" />
+                        </div>
+                        <div className="flex-grow min-w-0">
+                          <p className="text-[10px] font-black text-slate-700 truncate">{file.name}</p>
+                          <span className="text-[9px] font-bold text-blue-600 uppercase tracking-tight">New Upload</span>
+                        </div>
+                        <button
+                          onClick={() => setProductDocs((prev) => prev.filter((_, i) => i !== index))}
+                          className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-all opacity-0 group-hover/doc:opacity-100"
+                        >
+                           <X className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* SECTION 4: Product Charter */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-12 border-t border-slate-100">
+              <div className="lg:col-span-4">
+                <h2 className="text-lg font-black text-slate-900 mb-2">Product Charter</h2>
+                <p className="text-sm text-slate-500 font-medium">The core strategic document for your product. You can generate this using AI from your knowledge base or write it manually.</p>
+                
+                <button
+                  onClick={handleGenerateDraftCharter}
+                  disabled={isGeneratingDraft || (!websiteURL.trim() && productDocs.length === 0 && existingDocs.length === 0)}
+                  className="mt-6 w-full md:w-auto bg-slate-900 text-white px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest shadow-xl shadow-slate-900/10 hover:bg-slate-800 transition-all flex items-center justify-center gap-3 disabled:opacity-30 disabled:cursor-not-allowed group"
+                >
+                  {isGeneratingDraft ? (
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <div className="p-1 bg-white/10 rounded group-hover:bg-blue-600 transition-colors">
+                      <Plus className="w-3 h-3 text-white" />
+                    </div>
+                  )}
+                  {isGeneratingDraft ? "Generating charter..." : "Generate Product charter"}
+                </button>
+              </div>
+              <div className="lg:col-span-8">
+                <div className="border border-slate-200 rounded-2xl overflow-hidden shadow-sm flex flex-col bg-slate-50">
+                  <div className="bg-white px-4 py-2 border-b border-slate-200 flex gap-2 overflow-x-auto no-scrollbar">
+                    <button type="button" onClick={() => {}} className="p-2 hover:bg-slate-50 rounded-lg text-slate-600 transition-all"><Bold className="w-3.5 h-3.5" /></button>
+                    <button type="button" onClick={() => {}} className="p-2 hover:bg-slate-50 rounded-lg text-slate-600 transition-all"><Italic className="w-3.5 h-3.5" /></button>
+                    <button type="button" onClick={() => {}} className="p-2 hover:bg-slate-50 rounded-lg text-slate-600 transition-all"><ListIcon className="w-3.5 h-3.5" /></button>
+                    <button type="button" onClick={() => {}} className="p-2 hover:bg-slate-50 rounded-lg text-slate-600 transition-all"><LinkIcon className="w-3.5 h-3.5" /></button>
+                  </div>
+                  <textarea
+                    id="description-input"
+                    className="w-full p-6 bg-white min-h-[400px] text-sm font-medium text-slate-700 leading-relaxed outline-none resize-none border-none focus:ring-4 focus:ring-blue-50/50 transition-all"
+                    placeholder="Describe your product strategy here..."
+                    value={productForm.description}
+                    onChange={(e) => {
+                      setProductForm({ ...productForm, description: e.target.value });
+                      if (formErrors.description) setFormErrors({ ...formErrors, description: undefined });
+                    }}
+                  ></textarea>
+                </div>
+                {formErrors.description && <p className="text-red-500 text-[10px] font-bold mt-2 px-1 font-mono">{formErrors.description}</p>}
+              </div>
+            </div>
+          </div>
         </div>
-
-        {/* BEGIN: Stage3_UploadDocuments */}
-        <section
-          className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm mb-8 transition-all duration-300"
-          data-purpose="stage-3-container"
-        >
-          <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">
-            Stage 3: Upload Document
-          </h2>
-          <div
-            onDragOver={(e) => {
-              if (existingDocs.length > 0) {
-                e.preventDefault();
-              } else {
-                handleDragOver(e, "docs");
-              }
-            }}
-            onDragLeave={() => {
-              if (existingDocs.length > 0) return;
-              handleDragLeave("docs");
-            }}
-            onDrop={(e) => {
-              if (existingDocs.length > 0) {
-                e.preventDefault();
-                toast.error(
-                  "Please delete the existing document first to upload a new one",
-                );
-              } else {
-                handleDrop(e, "docs");
-              }
-            }}
-            className={`border-2 border-dashed ${existingDocs.length > 0 ? "border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed" : isDraggingDocs ? "border-blue-500 bg-blue-50/50" : "border-gray-200 hover:bg-gray-50"} rounded-xl p-10 flex flex-col items-center justify-center transition mb-4 relative`}
-          >
-            <Upload
-              className={`h-10 w-10 ${existingDocs.length > 0 ? "text-gray-300" : "text-gray-300"} mb-2`}
-            />
-            <p className="text-sm font-semibold text-gray-700">
-              {existingDocs.length > 0
-                ? "A file already exists. Please delete it before uploading a new document."
-                : "Click or drag a document here"}
-            </p>
-            <p className="text-xs text-gray-400 mt-1">
-              PDF, PPT or PPTX Files Accepted
-            </p>
-            <input
-              type="file"
-              accept=".pdf,.ppt,.pptx,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation"
-              onClick={(e) => {
-                if (existingDocs.length > 0) {
-                  e.preventDefault();
-                  toast.error(
-                    "Please delete the existing document first to upload a new one",
-                  );
-                  return;
-                }
-                // Reset so selecting the same file again fires onChange
-                (e.target as HTMLInputElement).value = "";
-              }}
-              disabled={existingDocs.length > 0}
-              onChange={(e) => {
-                if (existingDocs.length > 0) return;
-                if (e.target.files && e.target.files.length > 0) {
-                  const file = e.target.files[0];
-                  const allowedTypes = [
-                    "application/pdf",
-                    "application/vnd.ms-powerpoint",
-                    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                  ];
-                  if (!allowedTypes.includes(file.type)) {
-                    toast.error("Only PDF, PPT or PPTX documents are allowed");
-                  } else {
-                    // Replace existing docs with the new single file
-                    setProductDocs([file]);
-                  }
-                }
-              }}
-              className={`absolute inset-0 opacity-0 ${existingDocs.length > 0 ? "cursor-not-allowed" : "cursor-pointer"}`}
-            />
-          </div>
-
-          {/* File List */}
-          <div className="space-y-2">
-            {/* Existing Documents */}
-            {existingDocs.map((path, index) => (
-              <div
-                key={`existing-${index}`}
-                className="flex items-center gap-4 p-4 border border-blue-100 bg-blue-50/30 rounded-lg group/doc"
-              >
-                <div className="w-10 h-12 bg-white rounded-md border border-gray-200 flex items-center justify-center">
-                  <FileText className="h-6 w-6 text-blue-500" />
-                </div>
-                <div className="flex-grow">
-                  <p className="text-sm font-medium text-gray-700 truncate max-w-[200px]">
-                    {path.split("/").pop()}
-                  </p>
-                  <span className="text-[10px] font-bold text-blue-600 uppercase">
-                    Existing Document
-                  </span>
-                </div>
-                <button
-                  onClick={() => handleDeleteExistingDoc(path)}
-                  disabled={deleteFileLoading}
-                  className="text-gray-400 hover:text-red-500 p-1 opacity-0 group-hover/doc:opacity-100 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
-                  title="Delete Document"
-                >
-                  <Trash2 className="h-5 w-5" />
-                </button>
-              </div>
-            ))}
-
-            {/* New Documents */}
-            {productDocs.map((file, index) => (
-              <div
-                key={`new-${index}`}
-                className="flex items-center gap-4 p-4 border border-blue-100 bg-blue-50/30 rounded-lg group/doc"
-              >
-                <div className="w-10 h-12 bg-white rounded-md border border-gray-200 flex items-center justify-center">
-                  <FileText className="h-6 w-6 text-blue-500" />
-                </div>
-                <div className="flex-grow">
-                  <p className="text-sm font-medium text-gray-700 truncate max-w-[200px]">
-                    {file.name}
-                  </p>
-                  <span className="text-[10px] font-bold text-blue-600 uppercase">
-                    New Upload
-                  </span>
-                </div>
-                <button
-                  onClick={() => {
-                    const newDocs = [...productDocs];
-                    newDocs.splice(index, 1);
-                    setProductDocs(newDocs);
-                  }}
-                  className="text-gray-400 hover:text-red-500 p-1 opacity-0 group-hover/doc:opacity-100 transition-opacity"
-                  title="Remove Document"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-            ))}
-          </div>
-        </section>
-        {/* END: Stage3_UploadDocuments */}
-
-        {/* BEGIN: Stage4_GenerateCharter */}
-        <section
-          className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm transition-all duration-300"
-          data-purpose="stage-4-container"
-        >
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-            <div>
-              <h2 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">
-                Stage 4: Generate Charter
-              </h2>
-              <label className="block text-xs font-bold text-gray-500 uppercase">
-                Product Charter <span className="text-red-500">*</span>
-              </label>
-            </div>
-            <button
-              onClick={handleGenerateDraftCharter}
-              disabled={isGeneratingDraft || productDocs.length === 0}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition shadow-md flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <FileText className="h-4 w-4" />
-              {isGeneratingDraft ? "Generating..." : "Generate Product Charter"}
-            </button>
-          </div>
-
-          {/* Rich Text Editor Simulated Container */}
-          <div className="border border-gray-200 rounded-xl overflow-hidden shadow-inner">
-            {/* Editor Toolbar */}
-            <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex gap-4">
-              <button
-                type="button"
-                onClick={() => {
-                  const textarea = document.getElementById(
-                    "description-input",
-                  ) as HTMLTextAreaElement;
-                  if (!textarea) return;
-
-                  const start = textarea.selectionStart;
-                  const end = textarea.selectionEnd;
-                  const text = productForm.description;
-                  const before = text.substring(0, start);
-                  const selection = text.substring(start, end);
-                  const after = text.substring(end);
-
-                  const newText = `${before}**${selection}**${after}`;
-                  setProductForm({
-                    ...productForm,
-                    description: newText,
-                  });
-
-                  setTimeout(() => {
-                    textarea.focus();
-                    textarea.setSelectionRange(start + 2, end + 2);
-                  }, 0);
-                }}
-                className="p-1 hover:bg-gray-200 rounded text-gray-600 font-bold w-8"
-              >
-                B
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  const textarea = document.getElementById(
-                    "description-input",
-                  ) as HTMLTextAreaElement;
-                  if (!textarea) return;
-
-                  const start = textarea.selectionStart;
-                  const end = textarea.selectionEnd;
-                  const text = productForm.description;
-                  const before = text.substring(0, start);
-                  const selection = text.substring(start, end);
-                  const after = text.substring(end);
-
-                  const newText = `${before}*${selection}*${after}`;
-                  setProductForm({
-                    ...productForm,
-                    description: newText,
-                  });
-
-                  setTimeout(() => {
-                    textarea.focus();
-                    textarea.setSelectionRange(start + 1, end + 1);
-                  }, 0);
-                }}
-                className="p-1 hover:bg-gray-200 rounded text-gray-600 italic font-serif w-8 text-lg"
-              >
-                I
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  const textarea = document.getElementById(
-                    "description-input",
-                  ) as HTMLTextAreaElement;
-                  if (!textarea) return;
-
-                  const start = textarea.selectionStart;
-                  const text = productForm.description;
-                  const before = text.substring(0, start);
-                  const after = text.substring(start);
-
-                  const newText = `${before}\n- ${after}`;
-                  setProductForm({ ...productForm, description: newText });
-
-                  setTimeout(() => {
-                    textarea.focus();
-                    textarea.setSelectionRange(start + 3, start + 3);
-                  }, 0);
-                }}
-                className="p-1 hover:bg-gray-200 rounded text-gray-600 flex items-center justify-center"
-              >
-                <ListIcon className="h-4 w-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  const textarea = document.getElementById(
-                    "description-input",
-                  ) as HTMLTextAreaElement;
-                  if (!textarea) return;
-
-                  const start = textarea.selectionStart;
-                  const end = textarea.selectionEnd;
-                  const text = productForm.description;
-                  const before = text.substring(0, start);
-                  const selection = text.substring(start, end);
-                  const after = text.substring(end);
-
-                  const newText = `${before}[${selection || "link text"}](url)${after}`;
-                  setProductForm({
-                    ...productForm,
-                    description: newText,
-                  });
-
-                  setTimeout(() => {
-                    textarea.focus();
-                    const linkStart =
-                      start + (selection ? selection.length : 9) + 3;
-                    textarea.setSelectionRange(linkStart, linkStart + 3);
-                  }, 0);
-                }}
-                className="p-1 hover:bg-gray-200 rounded text-gray-600"
-              >
-                <LinkIcon className="h-4 w-4" />
-              </button>
-            </div>
-            {/* Editor Text Area */}
-            <textarea
-              id="description-input"
-              className="w-full p-6 bg-white min-h-[350px] text-sm text-gray-700 leading-relaxed whitespace-pre-wrap outline-none resize-none border-none focus:ring-0"
-              placeholder="Charter details will appear here..."
-              value={productForm.description}
-              onChange={(e) => {
-                setProductForm({
-                  ...productForm,
-                  description: e.target.value,
-                });
-                if (formErrors.description)
-                  setFormErrors({
-                    ...formErrors,
-                    description: undefined,
-                  });
-              }}
-            ></textarea>
-          </div>
-          {formErrors.description && (
-            <p className="text-red-500 text-[10px] mt-1 px-1">
-              {formErrors.description}
-            </p>
-          )}
-        </section>
-        {/* END: Stage4_GenerateCharter */}
       </main>
       {/* END: WorkflowContent */}
 

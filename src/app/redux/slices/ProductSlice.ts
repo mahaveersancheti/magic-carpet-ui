@@ -29,6 +29,7 @@ interface ProductState {
   uploadLoading: boolean;
   deleteFileLoading: boolean;
   generateCharterLoading: boolean;
+  generateCharterFromUrlLoading: boolean;
   error: string | null;
 }
 
@@ -41,6 +42,7 @@ const initialState: ProductState = {
   uploadLoading: false,
   deleteFileLoading: false,
   generateCharterLoading: false,
+  generateCharterFromUrlLoading: false,
   error: null,
 };
 
@@ -177,6 +179,29 @@ export const deleteProductFile = createAsyncThunk(
       return { productId, fileId };
     } catch (error: any) {
       return rejectWithValue(error.message || "Failed to delete file");
+    }
+  },
+);
+
+export const generateCharterFromUrl = createAsyncThunk(
+  "products/generateCharterFromUrl",
+  async (
+    { productId, websiteURL }: { productId: string; websiteURL: string },
+    { rejectWithValue },
+  ) => {
+    try {
+      const response = await api.post<string>(
+        endpoints.generateCharterFromUrl(productId, websiteURL),
+        {},
+        {
+          accept: "text/plain;charset=UTF-8",
+        },
+      );
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(
+        error.message || "Failed to generate charter from URL",
+      );
     }
   },
 );
@@ -323,6 +348,17 @@ const productSlice = createSlice({
       })
       .addCase(generateCharter.rejected, (state, action) => {
         state.generateCharterLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(generateCharterFromUrl.pending, (state) => {
+        state.generateCharterFromUrlLoading = true;
+        state.error = null;
+      })
+      .addCase(generateCharterFromUrl.fulfilled, (state) => {
+        state.generateCharterFromUrlLoading = false;
+      })
+      .addCase(generateCharterFromUrl.rejected, (state, action) => {
+        state.generateCharterFromUrlLoading = false;
         state.error = action.payload as string;
       });
   },
