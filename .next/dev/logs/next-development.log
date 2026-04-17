@@ -1,32 +1,5 @@
-[00:00:09.244] Server  LOG      ✓ Ready in 6.3s
-[00:00:12.367] Server  LOG      ○ Compiling /add-product ...
-[00:00:29.045] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:21:15.072] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:25:45.780] Server  LOG      ✓ Compiled in 645ms
-[00:25:59.403] Server  LOG      ✓ Compiled in 434ms
-[00:26:22.160] Server  LOG      ✓ Compiled in 361ms
-[00:26:22.945] Browser ERROR   uncaughtError: ReferenceError: uploadLoading is not defined
-[00:26:39.699] Server  LOG      ✓ Compiled in 206ms
-[00:26:39.734] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:26:41.084] Browser ERROR   uncaughtError: ReferenceError: uploadLoading is not defined
-[00:26:42.971] Browser ERROR   uncaughtError: ReferenceError: uploadLoading is not defined
-[00:27:41.347] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:27:41.359] Server  LOG      ✓ Compiled in 484ms
-[00:27:44.935] Browser ERROR   uncaughtError: ReferenceError: uploadLoading is not defined
-[00:28:37.190] Server  LOG      ✓ Compiled in 710ms
-[00:28:37.236] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:28:39.932] Browser ERROR   uncaughtError: ReferenceError: uploadLoading is not defined
-[00:29:51.872] Browser ERROR   uncaughtError: ReferenceError: uploadLoading is not defined
-[00:30:20.417] Server  LOG      ✓ Compiled in 369ms
-[00:30:20.451] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:30:21.263] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:32:54.632] Server  LOG      ✓ Compiled in 425ms
-[00:34:30.004] Server  LOG      ✓ Compiled in 287ms
-[00:35:44.374] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:39:20.183] Server  LOG      ✓ Compiled in 1721ms
-[00:39:21.937] Browser ERROR   uncaughtError: ReferenceError: Save is not defined
-[00:40:14.834] Server  LOG      ✓ Compiled in 700ms
-[00:40:15.255] Server  WARN     ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:42:08.313] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:44:28.866] Server  LOG      ✓ Compiled in 280ms
-[00:50:47.629] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:00:35.478] Server  LOG      ✓ Ready in 23.9s
+[00:00:38.634] Server  LOG      ○ Compiling / ...
+[00:01:26.660] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:01:29.581] Server  LOG      ○ Compiling /home ...
+[00:01:57.821] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior

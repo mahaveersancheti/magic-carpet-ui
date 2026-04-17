@@ -3,7 +3,5 @@
   "/(protected)/add-product/page": "app/(protected)/add-product/page.js",
   "/(protected)/home/page": "app/(protected)/home/page.js",
   "/(protected)/products/page": "app/(protected)/products/page.js",
-  "/(protected)/userprofile/edit/page": "app/(protected)/userprofile/edit/page.js",
-  "/(protected)/userprofile/page": "app/(protected)/userprofile/page.js",
   "/page": "app/page.js"
 }
