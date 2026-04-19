@@ -9,11 +9,17 @@ import {
   ArrowLeft, 
   Loader2,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  Sparkles,
+  ChevronDown
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store/store";
 import { fetchProfileById } from "../../redux/slices/ProfileSlice";
+import { fetchProductsByUserId } from "../../redux/slices/ProductSlice";
+import { useUser } from "../../hooks/useUser";
+import { endpoints } from "../../lib/endpoints";
+import { api } from "../../services/apiService";
 import toast from "react-hot-toast";
 
 const EMAIL_TEMPLATES = [
@@ -61,26 +67,61 @@ function SendEmailContent() {
   const profileId = searchParams.get("id");
   const dispatch = useDispatch<AppDispatch>();
   
+  const { user } = useUser();
   const { selectedProfile, loading } = useSelector(
     (state: RootState) => state.profiles,
   );
+  const { products } = useSelector((state: RootState) => state.products);
 
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [selectedProductId, setSelectedProductId] = useState<string>("");
   const [isSending, setIsSending] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
     if (profileId) {
       dispatch(fetchProfileById({ id: profileId }));
     }
-  }, [dispatch, profileId]);
+    if (user?.userId) {
+      dispatch(fetchProductsByUserId(user.userId));
+    }
+  }, [dispatch, profileId, user?.userId]);
+
+  const handleGenerateEmail = async () => {
+    if (!profileId || !selectedProductId || !selectedTag) {
+      toast.error("Please select a template and product first");
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      const response = await api.get<any>(
+        endpoints.getEmailText(profileId, selectedProductId),
+        { accept: "*/*" }
+      );
+      
+      if (response && response.subject && response.body_plain) {
+        setSubject(response.subject);
+        setMessage(response.body_plain);
+        toast.success("AI Email generated!");
+      } else if (typeof response === 'string') {
+        setMessage(response);
+        toast.success("AI Email generated!");
+      } else {
+        toast.error("Received unexpected response format from AI");
+      }
+    } catch (error: any) {
+      console.error("Error generating email:", error);
+      toast.error(error?.message || "Failed to generate AI email");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   const handleTagClick = (template: typeof EMAIL_TEMPLATES[0]) => {
-    const name = selectedProfile?.name || "there";
     setSelectedTag(template.id);
-    setSubject(template.subject);
-    setMessage(template.body(name));
   };
 
   const handleSend = () => {
@@ -132,10 +173,10 @@ function SendEmailContent() {
         </div>
       </header>
 
-      <main className="flex-1 p-6 overflow-y-auto w-full">
-        <div className="grid lg:grid-cols-12 gap-6 w-full h-full max-w-[1920px] mx-auto">
-          {/* Left Column: Context and Templates */}
-          <div className="lg:col-span-4 space-y-6">
+      <main className="flex-1 p-4 lg:p-6 overflow-hidden w-full">
+        <div className="flex flex-col gap-4 w-full h-full max-w-[1920px] mx-auto">
+          {/* Row 1: Recipient and AI Generator */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Recipient Card */}
             <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex items-center gap-4">
               <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 font-bold text-lg">
@@ -157,57 +198,97 @@ function SendEmailContent() {
               </div>
             </div>
 
-            {/* Templates Section */}
-            <div className="space-y-3">
-              <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">Quick Templates</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
-                {EMAIL_TEMPLATES.map((template) => (
-                  <button
-                    key={template.id}
-                    onClick={() => handleTagClick(template)}
-                    className={`px-4 py-3 rounded-xl text-left text-xs font-bold border transition-all ${
-                      selectedTag === template.id 
-                      ? "bg-blue-600 border-blue-600 text-white shadow-md" 
-                      : "bg-white border-slate-200 text-slate-600 hover:border-blue-400 hover:text-blue-600"
-                    }`}
+            {/* AI Generator Section */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex flex-col sm:flex-row items-end gap-4 overflow-hidden">
+              <div className="flex-1 w-full space-y-2">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-1">Select Product</label>
+                <div className="relative">
+                  <select
+                    value={selectedProductId}
+                    onChange={(e) => setSelectedProductId(e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-bold text-slate-700 appearance-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all cursor-pointer h-[48px]"
                   >
-                    {template.label}
-                  </button>
-                ))}
+                    <option value="" disabled>Choose a product...</option>
+                    {products.map((product) => (
+                      <option key={product.id} value={product.id}>
+                        {product.name}
+                      </option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                </div>
               </div>
+
+              <button
+                onClick={handleGenerateEmail}
+                disabled={isGenerating || !selectedProductId || !selectedTag}
+                className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-slate-100 disabled:to-slate-100 disabled:text-slate-400 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-md shadow-blue-100 cursor-pointer h-[48px] min-w-[180px]"
+              >
+                {isGenerating ? (
+                  <Loader2 className="w-4 h-4 animate-spin text-blue-400" />
+                ) : (
+                  <Sparkles className="w-4 h-4" />
+                )}
+                {isGenerating ? "Generating..." : "Generate AI Email"}
+              </button>
             </div>
           </div>
 
-          {/* Right Column: Email Editor */}
-          <div className="lg:col-span-8 flex flex-col min-h-[500px]">
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden flex flex-col h-full">
-              <div className="p-4 border-b border-slate-100 space-y-4">
-                <div className="flex items-center gap-3">
-                  <label className="text-xs font-bold text-slate-400 w-16">Subject</label>
-                  <input 
-                    type="text"
-                    value={subject}
-                    onChange={(e) => setSubject(e.target.value)}
-                    placeholder="Enter email subject"
-                    className="flex-1 bg-transparent border-none focus:ring-0 text-sm font-semibold text-slate-900 placeholder:text-slate-300 outline-none"
+          {/* Row 2: Templates and Editor */}
+          <div className="grid lg:grid-cols-2 gap-6 flex-1 min-h-0">
+            {/* Quick Templates */}
+            <div className="flex flex-col space-y-3 min-h-0">
+              <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 shrink-0">Quick Templates</h2>
+              <div className="flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
+                  {EMAIL_TEMPLATES.map((template) => (
+                    <button
+                      key={template.id}
+                      onClick={() => handleTagClick(template)}
+                      className={`px-4 py-3 rounded-xl text-left text-xs font-bold border transition-all ${
+                        selectedTag === template.id 
+                        ? "bg-blue-600 border-blue-600 text-white shadow-md" 
+                        : "bg-white border-slate-200 text-slate-600 hover:border-blue-400 hover:text-blue-600"
+                      }`}
+                    >
+                      {template.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Email Editor */}
+            <div className="flex flex-col min-h-0">
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden flex flex-col h-full">
+                <div className="p-4 border-b border-slate-100 space-y-4 shrink-0">
+                  <div className="flex items-center gap-3">
+                    <label className="text-xs font-bold text-slate-400 w-16">Subject</label>
+                    <input 
+                      type="text"
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
+                      placeholder="Enter email subject"
+                      className="flex-1 bg-transparent border-none focus:ring-0 text-sm font-semibold text-slate-900 placeholder:text-slate-300 outline-none"
+                    />
+                  </div>
+                </div>
+                <div className="flex-1 p-4 flex flex-col min-h-0">
+                  <label className="text-xs font-bold text-slate-400 mb-2 shrink-0">Message</label>
+                  <textarea 
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Start typing your message here..."
+                    className="flex-1 w-full bg-slate-50/50 rounded-xl p-4 text-sm font-medium text-slate-700 leading-relaxed border border-transparent focus:border-blue-100 focus:bg-white focus:ring-4 focus:ring-blue-50 transition-all resize-none outline-none"
                   />
                 </div>
-              </div>
-              <div className="flex-1 p-4 flex flex-col">
-                <label className="text-xs font-bold text-slate-400 mb-2">Message</label>
-                <textarea 
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Start typing your message here..."
-                  className="flex-1 w-full bg-slate-50/50 rounded-xl p-4 text-sm font-medium text-slate-700 leading-relaxed border border-transparent focus:border-blue-100 focus:bg-white focus:ring-4 focus:ring-blue-50 transition-all resize-none outline-none"
-                />
-              </div>
-              <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
-                <div className="flex items-center gap-2 text-slate-400">
-                  <AlertCircle className="w-4 h-4" />
-                  <span className="text-[10px] font-bold uppercase tracking-tight">AI can help you polish this content</span>
+                <div className="p-4 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-slate-400">
+                    <AlertCircle className="w-4 h-4" />
+                    <span className="text-[10px] font-bold uppercase tracking-tight">AI can help you polish this content</span>
+                  </div>
+                  <p className="text-[10px] font-medium text-slate-400">Characters: {message.length}</p>
                 </div>
-                <p className="text-[10px] font-medium text-slate-400">Characters: {message.length}</p>
               </div>
             </div>
           </div>

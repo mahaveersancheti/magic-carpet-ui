@@ -44,4 +44,6 @@ export const endpoints = {
   notifications: "/notification",
   verifyOtp: "user/verify-otp",
   resendOtp: "user/resend-otp",
+  getEmailText: (profileId: string, productId: string) => `profiles/email-text/${profileId}/${productId}`,
+  generateProductFitProposal: "profiles/generate",
 };
