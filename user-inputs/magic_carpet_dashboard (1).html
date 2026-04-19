@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Magic Carpet · Lead Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --red:#C1272D; --red-dk:#8B1A1E; --orange:#F7941D; --amber:#C07000;
+    --bg:#E8E9ED; --bg-dark:#1A1A2E; --white:#FFFFFF; --text:#1A1A1A;
+    --muted:#777; --green:#1A6B1A;
+    --sd:rgba(174,175,179,0.9); --sl:rgba(255,255,255,0.98);
+    --neo-out:7px 7px 18px var(--sd),-7px -7px 18px var(--sl);
+    --neo-in:inset 4px 4px 10px var(--sd),inset -4px -4px 10px var(--sl);
+    --neo-sm:3px 3px 9px var(--sd),-3px -3px 9px var(--sl);
+    --neo-xs:2px 2px 6px var(--sd),-2px -2px 6px var(--sl);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;}
+  svg{display:block;}
+
+  /* NAV */
+  .navbar{position:sticky;top:0;z-index:100;background:var(--bg);box-shadow:0 4px 20px rgba(174,175,179,0.5);padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:60px;}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .nav-logo-mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--red),var(--orange));display:flex;align-items:center;justify-content:center;box-shadow:var(--neo-xs);}
+  .nav-brand{font-family:'Sora',sans-serif;font-size:16px;font-weight:800;color:var(--text);}
+  .nav-brand span{color:var(--red);}
+  .nav-links{display:flex;align-items:center;gap:6px;list-style:none;}
+  .nav-links a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;padding:6px 14px;border-radius:40px;transition:color .2s,box-shadow .2s;}
+  .nav-links a:hover{color:var(--text);box-shadow:var(--neo-xs);}
+  .nav-links a.active{color:var(--red);box-shadow:var(--neo-sm);}
+  .nav-cta{background:linear-gradient(135deg,var(--red),var(--orange))!important;color:#fff!important;border-radius:40px!important;box-shadow:3px 3px 10px rgba(193,39,45,.35)!important;padding:7px 18px!important;}
+
+  /* HERO */
+  .hero{background:var(--bg-dark);padding:64px 32px 72px;display:flex;align-items:center;justify-content:center;gap:64px;flex-wrap:wrap;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(193,39,45,.13) 0%,transparent 70%);top:-150px;right:-100px;pointer-events:none;}
+  .hero::after{content:'';position:absolute;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(247,148,29,.09) 0%,transparent 70%);bottom:-100px;left:-50px;pointer-events:none;}
+  .hero-text{max-width:480px;position:relative;z-index:1;}
+  .hero-eyebrow{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
+  .hero-title{font-family:'Sora',sans-serif;font-size:46px;font-weight:900;color:#fff;line-height:1.08;margin-bottom:18px;}
+  .hero-title em{color:var(--orange);font-style:normal;}
+  .hero-subtitle{font-size:16px;color:#AAAACC;line-height:1.65;margin-bottom:28px;}
+  .hero-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;}
+  .hero-pill{font-size:12px;font-weight:700;padding:6px 16px;border-radius:40px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#ccc;}
+  .hero-pill.accent{background:rgba(193,39,45,.3);border-color:rgba(193,39,45,.5);color:#fff;}
+  .hero-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--red),var(--orange));color:#fff;font-family:'Sora',sans-serif;font-size:14px;font-weight:700;padding:14px 28px;border-radius:40px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 6px 24px rgba(193,39,45,.42);transition:transform .18s,box-shadow .18s;}
+  .hero-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(193,39,45,.5);}
+  .hero-stats{display:flex;gap:28px;margin-top:36px;flex-wrap:wrap;}
+  .hero-stat-val{font-family:'Sora',sans-serif;font-size:28px;font-weight:900;color:#fff;line-height:1;}
+  .hero-stat-val span{color:var(--orange);}
+  .hero-stat-lbl{font-size:11px;color:#777;margin-top:3px;}
+  .hero-badges{display:flex;flex-direction:column;gap:12px;position:relative;z-index:1;}
+  .hero-badge{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:14px;width:280px;transition:background .2s;}
+  .hero-badge:hover{background:rgba(255,255,255,.1);}
+  .hb-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .hb-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px;}
+  .hb-sub{font-size:11px;color:#888;}
+
+  /* SECTION */
+  .section{padding:60px 32px;max-width:1000px;margin:0 auto;}
+  .section-label{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:8px;}
+  .section-title{font-family:'Sora',sans-serif;font-size:30px;font-weight:800;color:var(--text);margin-bottom:6px;}
+  .section-title span{color:var(--red);}
+  .section-sub{font-size:15px;color:var(--muted);margin-bottom:36px;line-height:1.6;}
+
+  /* DASHBOARD */
+  .dashboard-wrap{background:var(--bg);border-radius:22px;box-shadow:var(--neo-out);padding:28px 28px 24px;}
+  .dash-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;}
+  .dash-eyebrow{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:4px;}
+  .dash-title{font-family:'Sora',sans-serif;font-size:30px;font-weight:800;color:var(--text);line-height:1.05;}
+  .dash-title span{color:var(--red);}
+  .dash-dots{display:flex;gap:8px;margin-top:12px;align-items:center;}
+  .dot{width:12px;height:12px;border-radius:50%;box-shadow:var(--neo-xs);}
+  .speaker-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .speaker-btn{width:68px;height:68px;border-radius:50%;background:var(--bg);box-shadow:var(--neo-out);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;outline:none;position:relative;transition:box-shadow .18s;}
+  .speaker-btn:hover{box-shadow:5px 5px 12px var(--sd),-5px -5px 12px var(--sl);}
+  .speaker-btn:active{box-shadow:var(--neo-in);}
+  .pulse-ring{position:absolute;border-radius:50%;border:2px solid var(--orange);opacity:0;animation:pulse 2.2s ease-out infinite;}
+  .pulse-ring:nth-child(1){width:82px;height:82px;animation-delay:0s;}
+  .pulse-ring:nth-child(2){width:98px;height:98px;animation-delay:.6s;border-color:var(--red);}
+  @keyframes pulse{0%{transform:scale(.82);opacity:.55;}70%{transform:scale(1.1);opacity:0;}100%{opacity:0;}}
+  .audible-label{font-family:'Sora',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);}
+  .prospect-pill{background:var(--bg);border-radius:40px;padding:8px 18px 8px 8px;display:inline-flex;align-items:center;gap:12px;box-shadow:var(--neo-sm);width:fit-content;margin-bottom:20px;}
+  .prospect-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--orange));display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-weight:800;font-size:14px;color:#fff;flex-shrink:0;}
+  .prospect-name{font-size:14px;font-weight:700;color:var(--text);}
+  .prospect-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+  .cards-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+  .cards-grid-bottom{display:grid;grid-template-columns:1fr 2fr;gap:16px;margin-top:16px;}
+  .neo-card{background:var(--bg);border-radius:20px;box-shadow:var(--neo-out);padding:20px 18px 18px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;transition:box-shadow .22s,transform .18s;}
+  .neo-card:hover{box-shadow:4px 4px 14px var(--sd),-4px -4px 14px var(--sl);transform:translateY(-2px);}
+  .neo-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:20px 20px 0 0;}
+  .neo-card.accent-red::before{background:linear-gradient(90deg,var(--red),#e85050);}
+  .neo-card.accent-orange::before{background:linear-gradient(90deg,var(--orange),#fbb84d);}
+  .neo-card.accent-dark::before{background:linear-gradient(90deg,#333,#666);}
+  .card-icon{width:44px;height:44px;border-radius:50%;background:var(--bg);box-shadow:var(--neo-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .card-title{font-family:'Sora',sans-serif;font-size:16px;font-weight:700;color:var(--text);}
+  .card-body{font-size:13px;color:var(--muted);line-height:1.55;}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px;}
+  .tag{font-size:11px;font-weight:600;padding:4px 12px;border-radius:40px;background:var(--bg);box-shadow:var(--neo-xs);}
+  .tag.red{color:var(--red);}.tag.orange{color:var(--amber);}.tag.dark{color:#444;}
+  .mini-bar-track{height:5px;border-radius:5px;background:var(--bg);box-shadow:var(--neo-in);overflow:hidden;margin-top:4px;}
+  .mini-bar-fill{height:100%;border-radius:5px;}
+  .bullet-list{display:flex;flex-direction:column;gap:9px;}
+  .bullet-item{display:flex;align-items:flex-start;gap:9px;}
+  .bullet-dot{width:9px;height:9px;border-radius:50%;margin-top:4px;flex-shrink:0;}
+  .bullet-dot.red{background:var(--red);}.bullet-dot.orange{background:var(--orange);}
+  .bullet-text{font-size:13px;color:var(--text);line-height:1.4;}
+  .dos-list{display:flex;flex-direction:column;gap:9px;}
+  .dos-item{display:flex;align-items:center;gap:9px;font-size:13px;}
+  .dos-mark{font-weight:800;font-size:16px;}
+  .dos-mark.yes{color:var(--green);}.dos-mark.no{color:var(--red);}
+  .dos-text.yes{color:#1a1a1a;}.dos-text.no{color:var(--red);}
+  .obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px 18px;}
+  .obj-item{display:flex;align-items:flex-start;gap:8px;}
+  .obj-dot{width:8px;height:8px;border-radius:50%;background:var(--red);margin-top:5px;flex-shrink:0;}
+  .obj-text{font-size:12.5px;color:var(--text);line-height:1.4;}
+  .nav-controls{display:flex;gap:8px;}
+  .nav-btn{width:34px;height:34px;border-radius:50%;background:var(--bg);box-shadow:var(--neo-xs);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:box-shadow .15s;}
+  .nav-btn.primary{background:linear-gradient(135deg,var(--red),var(--orange));box-shadow:3px 3px 8px rgba(193,39,45,.38);}
+  .nav-btn:active{box-shadow:var(--neo-in);}
+  .action-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px;}
+  .action-btn{background:var(--bg);border-radius:14px;padding:18px 12px 16px;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:var(--neo-out);cursor:pointer;border:none;transition:box-shadow .18s,transform .14s;text-decoration:none;}
+  .action-btn:hover{box-shadow:5px 5px 12px var(--sd),-5px -5px 12px var(--sl);transform:translateY(-2px);}
+  .action-btn:active{box-shadow:var(--neo-in);transform:translateY(0);}
+  .action-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:3px 3px 10px rgba(0,0,0,.2);}
+  .action-label{font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:var(--text);text-align:center;line-height:1.25;}
+
+  /* CHAT */
+  .chat-wrap{background:var(--bg);border-radius:22px;box-shadow:var(--neo-out);padding:24px;}
+  .chat-messages{min-height:200px;max-height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding-bottom:4px;margin-bottom:16px;}
+  .chat-messages::-webkit-scrollbar{width:4px;}
+  .chat-messages::-webkit-scrollbar-thumb{background:#ccc;border-radius:4px;}
+  .msg{max-width:80%;padding:11px 15px;border-radius:14px;font-size:13.5px;line-height:1.55;}
+  .msg.user{align-self:flex-end;background:linear-gradient(135deg,var(--red),var(--orange));color:#fff;border-bottom-right-radius:4px;box-shadow:3px 3px 10px rgba(193,39,45,.28);}
+  .msg.ai{align-self:flex-start;background:var(--bg);color:var(--text);box-shadow:var(--neo-sm);border-bottom-left-radius:4px;}
+  .msg.ai.thinking{color:var(--muted);font-style:italic;}
+  .chat-form{display:flex;gap:10px;align-items:center;}
+  .chat-input{flex:1;background:var(--bg);border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);padding:12px 16px;border-radius:40px;box-shadow:var(--neo-in);}
+  .chat-input::placeholder{color:#aaa;}
+  .chat-send{width:46px;height:46px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,var(--red),var(--orange));box-shadow:3px 3px 10px rgba(193,39,45,.35);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .14s;}
+  .chat-send:hover{transform:scale(1.06);}
+  .chat-send:active{transform:scale(.96);}
+  .chat-suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+  .chat-suggestion{font-size:12px;font-weight:600;color:var(--red);padding:5px 14px;border-radius:40px;border:none;background:var(--bg);box-shadow:var(--neo-xs);cursor:pointer;transition:box-shadow .15s;}
+  .chat-suggestion:hover{box-shadow:var(--neo-sm);}
+
+  /* FEATURES */
+  .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .feature-card{background:var(--bg);border-radius:22px;box-shadow:var(--neo-out);padding:22px 20px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;transition:box-shadow .2s,transform .18s;}
+  .feature-card:hover{box-shadow:5px 5px 14px var(--sd),-5px -5px 14px var(--sl);transform:translateY(-2px);}
+  .feat-num{font-family:'Sora',sans-serif;font-size:42px;font-weight:900;line-height:1;color:var(--red);opacity:.12;position:absolute;top:10px;right:14px;}
+  .feat-icon-wrap{width:48px;height:48px;border-radius:14px;box-shadow:var(--neo-sm);display:flex;align-items:center;justify-content:center;}
+  .feat-title{font-family:'Sora',sans-serif;font-size:15px;font-weight:700;color:var(--text);}
+  .feat-desc{font-size:13px;color:var(--muted);line-height:1.55;}
+
+  /* FOOTER */
+  .footer{background:var(--bg-dark);padding:48px 32px 32px;text-align:center;}
+  .footer-logo{font-family:'Sora',sans-serif;font-size:22px;font-weight:900;color:#fff;margin-bottom:10px;}
+  .footer-logo span{color:var(--orange);}
+  .footer-sub{font-size:13px;color:#666;margin-bottom:28px;}
+  .footer-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;}
+  .footer-links a{font-size:13px;color:#888;text-decoration:none;transition:color .2s;}
+  .footer-links a:hover{color:var(--orange);}
+  .footer-bottom{font-size:11px;color:#555;}
+  .footer-strip{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:22px;}
+  .footer-pill{font-size:11px;font-weight:700;padding:5px 14px;border-radius:40px;border:1px solid rgba(255,255,255,.12);color:#999;}
+
+  /* ANIMATIONS */
+  .dashboard-wrap > *{opacity:0;transform:translateY(16px);animation:fadeUp .55s ease forwards;}
+  .dash-header{animation-delay:.05s;}.prospect-pill{animation-delay:.12s;}
+  .cards-grid{animation-delay:.20s;}.cards-grid-bottom{animation-delay:.28s;}.action-row{animation-delay:.36s;}
+  @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+
+  /* RESPONSIVE */
+  @media(max-width:720px){
+    .hero{padding:44px 20px 52px;flex-direction:column;gap:32px;}
+    .hero-title{font-size:32px;}
+    .hero-badges,.hero-badge{width:100%;}
+    .cards-grid,.cards-grid-bottom,.features-grid{grid-template-columns:1fr;}
+    .action-row{grid-template-columns:repeat(2,1fr);}
+    .obj-grid{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+    .section{padding:40px 16px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M4 18 Q10 6 20 8" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M4 22 Q10 10 20 12" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+        <circle cx="19" cy="7" r="2" fill="#fff"/>
+        <line x1="19" y1="7" x2="23" y2="3" stroke="#fff" stroke-width="1.5" stroke-dasharray="2,2"/>
+      </svg>
+    </div>
+    <div class="nav-brand">Magic<span>Carpet</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#dashboard" class="active">Dashboard</a></li>
+    <li><a href="#ai-copilot">AI Copilot</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#" class="nav-cta">Try Free →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Magic Carpet · AI Copilot for Sales</div>
+    <h1 class="hero-title">Sell smarter.<br><em>Hands-free.</em></h1>
+    <p class="hero-subtitle">Your cognitive AI copilot that synthesizes prospect intelligence, surfaces conversation starters, and drafts proposals — all read aloud while you drive.</p>
+    <div class="hero-pills">
+      <div class="hero-pill accent">Voice-Enabled</div>
+      <div class="hero-pill">Generative AI</div>
+      <div class="hero-pill">Agentic</div>
+      <div class="hero-pill">Patent Pending</div>
+    </div>
+    <a href="#dashboard" class="hero-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><polygon points="5 3 19 12 5 21" fill="#fff"/></svg>
+      See the Dashboard
+    </a>
+    <div class="hero-stats">
+      <div><div class="hero-stat-val"><span>$150</span>B</div><div class="hero-stat-lbl">Global TAM</div></div>
+      <div><div class="hero-stat-val"><span>45</span>%</div><div class="hero-stat-lbl">Market CAGR 2025–30</div></div>
+      <div><div class="hero-stat-val"><span>500</span>M</div><div class="hero-stat-lbl">Sales Professionals</div></div>
+    </div>
+  </div>
+  <div class="hero-badges">
+    <div class="hero-badge">
+      <div class="hb-icon" style="background:rgba(193,39,45,.22);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="#C1272D"/><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z" fill="#F7941D"/></svg>
+      </div>
+      <div><div class="hb-title">Voice Dashboards</div><div class="hb-sub">Full brief read aloud, hands-free</div></div>
+    </div>
+    <div class="hero-badge">
+      <div class="hb-icon" style="background:rgba(247,148,29,.18);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#F7941D" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="#F7941D" stroke-width="2" stroke-linecap="round"/><path d="M8 11h6M11 8v6" stroke="#F7941D" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div><div class="hb-title">360° Intelligence</div><div class="hb-sub">Prospect, company & objections in one brief</div></div>
+    </div>
+    <div class="hero-badge">
+      <div class="hb-icon" style="background:rgba(193,39,45,.18);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#C1272D" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+      </div>
+      <div><div class="hb-title">Agentic Automation</div><div class="hb-sub">Auto-drafts emails, proposals & CRM</div></div>
+    </div>
+    <div class="hero-badge">
+      <div class="hb-icon" style="background:rgba(247,148,29,.18);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#F7941D" stroke-width="2" fill="none"/><path d="M9 12l2 2 4-4" stroke="#F7941D" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div><div class="hb-title">Secure &amp; Compliant</div><div class="hb-sub">GDPR · SPIN · BANT · MEDDIC aligned</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="section" style="max-width:960px;">
+  <div class="section-label">Live Demo</div>
+  <h2 class="section-title">Lead / Prospect <span>Intelligence</span></h2>
+  <p class="section-sub">Your AI copilot synthesizes everything you need before walking into a meeting — personal background, company news, conversation starters, and ready objection responses.</p>
+
+  <div class="dashboard-wrap">
+    <div class="dash-header">
+      <div>
+        <div class="dash-eyebrow">Magic Carpet · AI Copilot</div>
+        <div class="dash-title">Lead / Prospect<br><span>Intelligence</span></div>
+        <div class="dash-dots">
+          <div class="dot" style="background:var(--red);"></div>
+          <div class="dot" style="background:var(--orange);"></div>
+          <div class="dot" style="background:#e8a0a0;"></div>
+          <div class="dot" style="background:#1A1A2E;"></div>
+          <div class="dot" style="background:#999;"></div>
+        </div>
+      </div>
+      <div class="speaker-wrap">
+        <button class="speaker-btn" id="speakerBtn" title="Listen aloud" onclick="toggleAudio()">
+          <div class="pulse-ring"></div>
+          <div class="pulse-ring"></div>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+            <path d="M3 9v6h4l5 5V4L7 9H3z" fill="#C1272D"/>
+            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z" fill="#F7941D" opacity=".8"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="#F7941D" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+          </svg>
+        </button>
+        <div class="audible-label">Audible</div>
+      </div>
+    </div>
+
+    <div class="prospect-pill">
+      <div class="prospect-avatar">JD</div>
+      <div>
+        <div class="prospect-name">Jane Doe · VP Sales, Acme Corp</div>
+        <div class="prospect-sub">Prospect · Enterprise · High priority</div>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="neo-card accent-red">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#C1272D" stroke-width="2"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7" stroke="#C1272D" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="card-title">Personal info</div>
+        <div class="card-body">15 yrs exp · Stanford MBA · Active on LinkedIn</div>
+        <div class="tags"><span class="tag red">Sales leader</span><span class="tag dark">Chicago</span></div>
+        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:78%;background:linear-gradient(90deg,var(--red),#e85050);"></div></div>
+        <div class="mini-bar-track" style="margin-top:4px;"><div class="mini-bar-fill" style="width:55%;background:linear-gradient(90deg,var(--orange),#fbb84d);"></div></div>
+      </div>
+      <div class="neo-card accent-orange">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="#F7941D" stroke-width="2"/><path d="M7 9h10M7 13h6" stroke="#F7941D" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="card-title">Company info / News</div>
+        <div class="card-body">Series B · $40M raised · Expanding to EU · New CRO hired Q1</div>
+        <div class="tags"><span class="tag orange">SaaS</span><span class="tag orange">500 emp</span><span class="tag orange">Growing</span></div>
+        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:65%;background:linear-gradient(90deg,var(--orange),#fbb84d);"></div></div>
+      </div>
+      <div class="neo-card accent-red">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#C1272D" stroke-width="2" fill="none"/></svg>
+        </div>
+        <div class="card-title">Conversation starters</div>
+        <div class="bullet-list" style="margin-top:4px;">
+          <div class="bullet-item"><div class="bullet-dot orange"></div><span class="bullet-text">EU expansion challenges</span></div>
+          <div class="bullet-item"><div class="bullet-dot orange"></div><span class="bullet-text">New CRO onboarding friction</span></div>
+          <div class="bullet-item"><div class="bullet-dot orange"></div><span class="bullet-text">Hitting Q2 pipeline goals</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards-grid-bottom">
+      <div class="neo-card accent-dark">
+        <div class="card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#444" stroke-width="2"/><path d="M12 7v5l3 3" stroke="#444" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="card-title">Do's &amp; don'ts</div>
+        <div class="dos-list" style="margin-top:4px;">
+          <div class="dos-item"><span class="dos-mark yes">✓</span><span class="dos-text yes">Lead with ROI data</span></div>
+          <div class="dos-item"><span class="dos-mark yes">✓</span><span class="dos-text yes">Reference EU expansion</span></div>
+          <div class="dos-item"><span class="dos-mark no">✗</span><span class="dos-text no">Mention competitor X</span></div>
+          <div class="dos-item"><span class="dos-mark no">✗</span><span class="dos-text no">Lead with pricing</span></div>
+        </div>
+      </div>
+      <div class="neo-card accent-orange" style="gap:14px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#F7941D" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#F7941D" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="card-title">Objections handling</div>
+          </div>
+          <div class="nav-controls">
+            <button class="nav-btn primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="5 3 19 12 5 21 5 3" fill="#fff"/></svg></button>
+            <button class="nav-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="19 20 5 12 19 3 19 20" fill="#666"/></svg></button>
+          </div>
+        </div>
+        <div class="obj-grid">
+          <div class="obj-item"><div class="obj-dot"></div><span class="obj-text">"Too expensive" → Show 3-mo ROI</span></div>
+          <div class="obj-item"><div class="obj-dot"></div><span class="obj-text">"No budget" → PLG free trial</span></div>
+          <div class="obj-item"><div class="obj-dot"></div><span class="obj-text">"Happy with Salesforce" → Gap analysis</span></div>
+          <div class="obj-item"><div class="obj-dot"></div><span class="obj-text">"Need to think" → Set 48h follow-up</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="action-btn">
+        <div class="action-icon" style="background:linear-gradient(135deg,var(--red),#e85050);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/><polyline points="14 2 14 8 20 8" stroke="#fff" stroke-width="2" fill="none"/><line x1="12" y1="13" x2="12" y2="17" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="10" y1="15" x2="14" y2="15" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <span class="action-label">Create<br>Proposal</span>
+      </button>
+      <button class="action-btn">
+        <div class="action-icon" style="background:linear-gradient(135deg,var(--orange),#fbb84d);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#fff" stroke-width="2" fill="none"/><polyline points="22,6 12,13 2,6" stroke="#fff" stroke-width="2" fill="none"/></svg>
+        </div>
+        <span class="action-label">Send<br>Email</span>
+      </button>
+      <button class="action-btn">
+        <div class="action-icon" style="background:linear-gradient(135deg,var(--red),var(--orange));">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#fff" stroke-width="2" fill="none"/><line x1="16" y1="2" x2="16" y2="6" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="2" x2="8" y2="6" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="13" r="2" fill="#fff"/></svg>
+        </div>
+        <span class="action-label">Set up<br>Meeting</span>
+      </button>
+      <button class="action-btn">
+        <div class="action-icon" style="background:linear-gradient(135deg,#333,#555);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/><line x1="8" y1="10" x2="16" y2="10" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="14" x2="13" y2="14" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <span class="action-label">Send<br>Text</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- AI COPILOT -->
+<section id="ai-copilot" style="background:var(--bg-dark);padding:60px 32px;">
+  <div style="max-width:860px;margin:0 auto;">
+    <div style="font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);margin-bottom:8px;">AI Copilot</div>
+    <h2 style="font-family:'Sora',sans-serif;font-size:28px;font-weight:800;color:#fff;margin-bottom:6px;">Ask your <span style="color:var(--orange);">Magic Carpet</span> copilot</h2>
+    <p style="font-size:14px;color:#777;margin-bottom:28px;">Get instant intelligence about any prospect, company or deal — powered by Claude AI.</p>
+    <div class="chat-wrap">
+      <div class="chat-messages" id="chatMessages">
+        <div class="msg ai">Hi! I'm your Magic Carpet AI copilot. Ask me anything about Jane Doe, Acme Corp, or how to handle any objection you're facing today.</div>
+      </div>
+      <div class="chat-suggestions">
+        <button class="chat-suggestion" onclick="sendSuggestion(this)">What's Jane's LinkedIn activity?</button>
+        <button class="chat-suggestion" onclick="sendSuggestion(this)">Handle a pricing objection</button>
+        <button class="chat-suggestion" onclick="sendSuggestion(this)">Draft a follow-up email</button>
+        <button class="chat-suggestion" onclick="sendSuggestion(this)">Acme's biggest pain point?</button>
+      </div>
+      <div class="chat-form">
+        <input class="chat-input" id="chatInput" type="text" placeholder="Ask about the prospect, company, objections…" onkeydown="if(event.key==='Enter')sendMessage()"/>
+        <button class="chat-send" onclick="sendMessage()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><line x1="22" y1="2" x2="11" y2="13" stroke="#fff" stroke-width="2" stroke-linecap="round"/><polygon points="22 2 15 22 11 13 2 9 22 2" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="section">
+  <div class="section-label">Capabilities</div>
+  <h2 class="section-title">Everything you need to <span>close</span></h2>
+  <p class="section-sub">One AI copilot that replaces hours of prep with seconds of intelligence.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feat-num">01</div>
+      <div class="feat-icon-wrap" style="background:linear-gradient(135deg,rgba(193,39,45,.12),rgba(193,39,45,.06));">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="#C1272D" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="#C1272D" stroke-width="2" stroke-linecap="round"/><path d="M8 11h6M11 8v6" stroke="#C1272D" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div class="feat-title">360° Prospect Intelligence</div>
+      <div class="feat-desc">Full profile synthesis — education, career, LinkedIn activity, psychological triggers, and pain points in one brief.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-num">02</div>
+      <div class="feat-icon-wrap" style="background:linear-gradient(135deg,rgba(247,148,29,.12),rgba(247,148,29,.06));">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="#F7941D"/><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z" fill="#F7941D" opacity=".6"/></svg>
+      </div>
+      <div class="feat-title">Voice Dashboards</div>
+      <div class="feat-desc">Full brief read aloud while you drive. Zero prep. Zero laptop. Intelligence-on-the-go, always ready.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-num">03</div>
+      <div class="feat-icon-wrap" style="background:linear-gradient(135deg,rgba(193,39,45,.12),rgba(247,148,29,.06));">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke="#C1272D" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="feat-title">Agentic Automation</div>
+      <div class="feat-desc">Auto-drafts emails, proposals and follow-ups. Updates CRM and ERP automatically. Predicts win chances.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-num">04</div>
+      <div class="feat-icon-wrap" style="background:linear-gradient(135deg,rgba(247,148,29,.12),rgba(247,148,29,.06));">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="#F7941D" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div class="feat-title">Predictive Deal Scoring</div>
+      <div class="feat-desc">Scores deals in real time, surfaces psychological buying triggers, and recommends next best actions.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-num">05</div>
+      <div class="feat-icon-wrap" style="background:linear-gradient(135deg,rgba(193,39,45,.1),rgba(193,39,45,.05));">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#C1272D" stroke-width="2" fill="none"/></svg>
+      </div>
+      <div class="feat-title">Objections Ready</div>
+      <div class="feat-desc">Instant rebuttal playbooks tailored to this specific prospect — pricing, timing, competition, and more.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feat-num">06</div>
+      <div class="feat-icon-wrap" style="background:linear-gradient(135deg,rgba(26,107,26,.1),rgba(26,107,26,.05));">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#1A6B1A" stroke-width="2" fill="none"/><path d="M9 12l2 2 4-4" stroke="#1A6B1A" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="feat-title">Secure &amp; Compliant</div>
+      <div class="feat-desc">GDPR-compliant, enterprise-integrated. SPIN, BANT, MEDDIC, Challenger — all supported. Patent pending.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">Magic<span>Carpet</span></div>
+  <div class="footer-sub">Your Cognitive AI Copilot for Sales · NA · EU · India</div>
+  <div class="footer-strip">
+    <div class="footer-pill">Voice-Enabled</div><div class="footer-pill">Generative AI</div>
+    <div class="footer-pill">Agentic AI</div><div class="footer-pill">Patent Pending</div>
+    <div class="footer-pill">GDPR Compliant</div><div class="footer-pill">Salesforce Native</div>
+  </div>
+  <div class="footer-links">
+    <a href="#">MagicCarpet.Digital</a>
+    <a href="#">magic-carpet-demo.tiiny.site</a>
+    <a href="mailto:Mavuduri@gmail.com">Mavuduri@gmail.com</a>
+  </div>
+  <div class="footer-bottom">© 2026 Magic Carpet · Data Magnum · All rights reserved · Raising $2M–$5M Post-Seed · Pre-money $20M</div>
+</footer>
+
+<script>
+function toggleAudio() {
+  const btn = document.getElementById('speakerBtn');
+  btn.classList.toggle('playing');
+  if (btn.classList.contains('playing') && window.speechSynthesis) {
+    const text = "Good morning! Here is your prospect brief for Jane Doe, VP of Sales at Acme Corp. Jane has 15 years of experience and holds a Stanford MBA. She is highly active on LinkedIn. Acme recently raised 40 million in Series B and is expanding to Europe with a new CRO hired Q1. Suggested conversation openers: EU expansion challenges, new CRO onboarding, and Q2 pipeline goals. Lead with ROI data. Do not mention competitor X or lead with pricing.";
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.rate = 0.95;
+    utt.onend = () => btn.classList.remove('playing');
+    speechSynthesis.speak(utt);
+  } else {
+    window.speechSynthesis && speechSynthesis.cancel();
+  }
+}
+
+const chatHistory = [];
+const SYS = "You are the Magic Carpet AI Copilot — a sharp sales intelligence assistant. Current prospect: Jane Doe, VP Sales, Acme Corp (Series B SaaS, $40M raised, 500 employees, expanding EU, new CRO Q1). Jane: 15 yrs exp, Stanford MBA, LinkedIn active, Chicago. Do: lead with ROI, reference EU. Don't: mention competitor X, lead with pricing. Objections: expensive→3-mo ROI, no budget→PLG trial, Salesforce→gap analysis, think→48h followup. Be concise (under 100 words), sales-focused.";
+
+async function sendMessage() {
+  const inp = document.getElementById('chatInput');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  appendMsg(text, 'user');
+  const thinking = appendMsg('Thinking…', 'ai thinking');
+  chatHistory.push({ role:'user', content:text });
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, system:SYS, messages:chatHistory })
+    });
+    const data = await res.json();
+    const reply = data.content?.find(b=>b.type==='text')?.text || 'Sorry, no response.';
+    thinking.remove();
+    appendMsg(reply, 'ai');
+    chatHistory.push({ role:'assistant', content:reply });
+  } catch(e) {
+    thinking.textContent = 'Connection error. Please try again.';
+    thinking.classList.remove('thinking');
+  }
+}
+
+function sendSuggestion(btn) {
+  document.getElementById('chatInput').value = btn.textContent;
+  sendMessage();
+}
+
+function appendMsg(text, cls) {
+  const box = document.getElementById('chatMessages');
+  const el = document.createElement('div');
+  el.className = 'msg ' + cls;
+  el.textContent = text;
+  box.appendChild(el);
+  box.scrollTop = box.scrollHeight;
+  return el;
+}
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+  navLinks.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + cur) a.classList.add('active');
+  });
+}, { passive: true });
+</script>
+</body>
+</html>

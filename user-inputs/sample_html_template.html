@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Magic Carpet · Lead Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --red:     #C1272D;
+    --red-dk:  #8B1A1E;
+    --orange:  #F7941D;
+    --amber:   #C07000;
+    --bg:      #E8E9ED;
+    --bg-dark: #1A1A2E;
+    --white:   #FFFFFF;
+    --text:    #1A1A1A;
+    --muted:   #777;
+    --green:   #1A6B1A;
+    --shadow-dark: rgba(180,181,185,0.85);
+    --shadow-light: rgba(255,255,255,0.95);
+    --neo-out: 6px 6px 16px var(--shadow-dark), -6px -6px 16px var(--shadow-light);
+    --neo-in:  inset 4px 4px 10px var(--shadow-dark), inset -4px -4px 10px var(--shadow-light);
+    --neo-sm:  3px 3px 9px var(--shadow-dark), -3px -3px 9px var(--shadow-light);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 32px 24px 48px;
+  }
+
+  .dashboard {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .header-left {}
+  .eyebrow {
+    font-family: 'Sora', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 4px;
+  }
+  .main-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.05;
+  }
+  .main-title span { color: var(--red); }
+  .header-dots {
+    display: flex; gap: 8px; margin-top: 14px; align-items: center;
+  }
+  .dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    box-shadow: var(--neo-sm);
+  }
+
+  /* Speaker button */
+  .speaker-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .speaker-btn {
+    width: 70px; height: 70px; border-radius: 50%;
+    background: var(--bg);
+    box-shadow: var(--neo-out);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: box-shadow 0.18s;
+    position: relative;
+    border: none;
+    outline: none;
+  }
+  .speaker-btn:hover { box-shadow: 4px 4px 10px var(--shadow-dark), -4px -4px 10px var(--shadow-light); }
+  .speaker-btn:active { box-shadow: var(--neo-in); }
+  .pulse-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid var(--orange);
+    opacity: 0;
+    animation: pulse 2.2s ease-out infinite;
+  }
+  .pulse-ring:nth-child(1) { width: 82px; height: 82px; animation-delay: 0s; }
+  .pulse-ring:nth-child(2) { width: 96px; height: 96px; animation-delay: 0.55s; border-color: var(--red); }
+  @keyframes pulse {
+    0%   { transform: scale(0.85); opacity: 0.5; }
+    70%  { transform: scale(1.08); opacity: 0; }
+    100% { opacity: 0; }
+  }
+  .audible-label {
+    font-family: 'Sora', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--orange);
+  }
+
+  /* ── PROSPECT PILL ── */
+  .prospect-pill {
+    background: var(--bg);
+    border-radius: 40px;
+    padding: 8px 18px 8px 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--neo-sm);
+    width: fit-content;
+  }
+  .prospect-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sora', sans-serif;
+    font-weight: 800; font-size: 14px; color: #fff;
+    flex-shrink: 0;
+  }
+  .prospect-name { font-size: 14px; font-weight: 700; color: var(--text); }
+  .prospect-sub  { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  /* ── CARDS GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .cards-grid-bottom {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 16px;
+  }
+
+  /* NEO CARD */
+  .neo-card {
+    background: var(--bg);
+    border-radius: 20px;
+    box-shadow: var(--neo-out);
+    padding: 20px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .neo-card:hover { box-shadow: 4px 4px 12px var(--shadow-dark), -4px -4px 12px var(--shadow-light); }
+
+  /* top accent bar */
+  .neo-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 20px 20px 0 0;
+  }
+  .neo-card.accent-red::before    { background: linear-gradient(90deg, var(--red), #e85050); }
+  .neo-card.accent-orange::before { background: linear-gradient(90deg, var(--orange), #fbb84d); }
+  .neo-card.accent-dark::before   { background: linear-gradient(90deg, #333, #666); }
+
+  /* card icon */
+  .card-icon {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--bg);
+    box-shadow: var(--neo-sm);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .card-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 16px; font-weight: 700; color: var(--text);
+  }
+  .card-body { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* tags */
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 2px; }
+  .tag {
+    font-size: 11px; font-weight: 600;
+    padding: 4px 12px; border-radius: 20px;
+    background: var(--bg);
+    box-shadow: var(--neo-sm);
+  }
+  .tag.red    { color: var(--red); }
+  .tag.orange { color: var(--amber); }
+  .tag.dark   { color: #444; }
+
+  /* mini bar */
+  .mini-bar-track {
+    height: 5px; border-radius: 5px;
+    background: var(--bg);
+    box-shadow: var(--neo-in);
+    overflow: hidden;
+    margin-top: 4px;
+  }
+  .mini-bar-fill { height: 100%; border-radius: 5px; }
+
+  /* bullet dots */
+  .bullet-list { display: flex; flex-direction: column; gap: 8px; }
+  .bullet-item { display: flex; align-items: flex-start; gap: 9px; }
+  .bullet-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    margin-top: 4px; flex-shrink: 0;
+  }
+  .bullet-dot.red    { background: var(--red); }
+  .bullet-dot.orange { background: var(--orange); }
+  .bullet-text { font-size: 13px; color: var(--text); line-height: 1.4; }
+
+  /* dos donts */
+  .dos-list { display: flex; flex-direction: column; gap: 8px; }
+  .dos-item { display: flex; align-items: center; gap: 9px; font-size: 13px; }
+  .dos-mark { font-weight: 800; font-size: 15px; }
+  .dos-mark.yes  { color: var(--green); }
+  .dos-mark.no   { color: var(--red); }
+  .dos-text.yes  { color: #1a1a1a; }
+  .dos-text.no   { color: var(--red); }
+
+  /* objections 2-col */
+  .obj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; }
+  .obj-item { display: flex; align-items: flex-start; gap: 8px; }
+  .obj-dot  { width: 8px; height: 8px; border-radius: 50%; background: var(--red); margin-top: 5px; flex-shrink: 0; }
+  .obj-text { font-size: 12.5px; color: var(--text); line-height: 1.4; }
+
+  /* nav controls */
+  .nav-controls { display: flex; gap: 8px; }
+  .nav-btn {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--bg);
+    box-shadow: var(--neo-sm);
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: box-shadow 0.15s;
+  }
+  .nav-btn.primary { background: linear-gradient(135deg, var(--red), var(--orange)); box-shadow: 3px 3px 8px rgba(193,39,45,0.35); }
+  .nav-btn:active { box-shadow: var(--neo-in); }
+
+  /* ── ACTION BUTTONS ── */
+  .action-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .action-btn {
+    background: var(--bg);
+    border-radius: 18px;
+    padding: 18px 12px 16px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    box-shadow: var(--neo-out);
+    cursor: pointer;
+    border: none;
+    transition: box-shadow 0.15s, transform 0.12s;
+    text-decoration: none;
+  }
+  .action-btn:hover { box-shadow: 4px 4px 10px var(--shadow-dark), -4px -4px 10px var(--shadow-light); transform: translateY(-1px); }
+  .action-btn:active { box-shadow: var(--neo-in); transform: translateY(0); }
+  .action-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.18);
+  }
+  .action-label { font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700; color: var(--text); text-align: center; line-height: 1.25; }
+
+  /* SVG icons */
+  svg { display: block; }
+
+  /* Animations */
+  .dashboard > * {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: fadeUp 0.55s ease forwards;
+  }
+  .dashboard > *:nth-child(1) { animation-delay: 0.05s; }
+  .dashboard > *:nth-child(2) { animation-delay: 0.12s; }
+  .dashboard > *:nth-child(3) { animation-delay: 0.20s; }
+  .dashboard > *:nth-child(4) { animation-delay: 0.28s; }
+  .dashboard > *:nth-child(5) { animation-delay: 0.36s; }
+  .dashboard > *:nth-child(6) { animation-delay: 0.44s; }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive */
+  @media (max-width: 680px) {
+    .cards-grid       { grid-template-columns: 1fr; }
+    .cards-grid-bottom{ grid-template-columns: 1fr; }
+    .action-row       { grid-template-columns: repeat(2, 1fr); }
+    .main-title       { font-size: 26px; }
+    .obj-grid         { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="dashboard">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="eyebrow">Magic Carpet · AI Copilot</div>
+      <div class="main-title">Lead / Prospect<br><span>Intelligence</span></div>
+      <div class="header-dots">
+        <div class="dot" style="background:var(--red);"></div>
+        <div class="dot" style="background:var(--orange);"></div>
+        <div class="dot" style="background:#e8a0a0;"></div>
+        <div class="dot" style="background:#1A1A2E;"></div>
+        <div class="dot" style="background:#999;"></div>
+      </div>
+    </div>
+    <div class="speaker-wrap">
+      <button class="speaker-btn" title="Listen aloud" onclick="this.classList.toggle('active')">
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring"></div>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <path d="M3 9v6h4l5 5V4L7 9H3z" fill="#C1272D"/>
+          <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z" fill="#F7941D" opacity="0.8"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="#F7941D" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+        </svg>
+      </button>
+      <div class="audible-label">Audible</div>
+    </div>
+  </div>
+
+  <!-- PROSPECT PILL -->
+  <div>
+    <div class="prospect-pill">
+      <div class="prospect-avatar">JD</div>
+      <div>
+        <div class="prospect-name">Jane Doe · VP Sales, Acme Corp</div>
+        <div class="prospect-sub">Prospect · Enterprise · High priority</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP 3 CARDS -->
+  <div class="cards-grid">
+
+    <!-- Personal Info -->
+    <div class="neo-card accent-red">
+      <div class="card-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="8" r="4" stroke="#C1272D" stroke-width="2"/>
+          <path d="M4 20c0-4 3.58-7 8-7s8 3 8 7" stroke="#C1272D" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="card-title">Personal info</div>
+      <div class="card-body">15 yrs exp · Stanford MBA · Active on LinkedIn</div>
+      <div class="tags">
+        <span class="tag red">Sales leader</span>
+        <span class="tag dark">Chicago</span>
+      </div>
+      <div class="mini-bar-track">
+        <div class="mini-bar-fill" style="width:78%;background:linear-gradient(90deg,var(--red),#e85050);"></div>
+      </div>
+      <div class="mini-bar-track" style="margin-top:4px;">
+        <div class="mini-bar-fill" style="width:55%;background:linear-gradient(90deg,var(--orange),#fbb84d);"></div>
+      </div>
+    </div>
+
+    <!-- Company Info -->
+    <div class="neo-card accent-orange">
+      <div class="card-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="14" rx="2" stroke="#F7941D" stroke-width="2"/>
+          <path d="M7 9h10M7 13h6" stroke="#F7941D" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="card-title">Company info / News</div>
+      <div class="card-body">Series B · $40M raised · Expanding to EU · New CRO hired Q1</div>
+      <div class="tags">
+        <span class="tag orange">SaaS</span>
+        <span class="tag orange">500 emp</span>
+        <span class="tag orange">Growing</span>
+      </div>
+      <div class="mini-bar-track">
+        <div class="mini-bar-fill" style="width:65%;background:linear-gradient(90deg,var(--orange),#fbb84d);"></div>
+      </div>
+    </div>
+
+    <!-- Conversation Starters -->
+    <div class="neo-card accent-red">
+      <div class="card-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#C1272D" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+      <div class="card-title">Conversation starters</div>
+      <div class="bullet-list" style="margin-top:4px;">
+        <div class="bullet-item">
+          <div class="bullet-dot orange"></div>
+          <span class="bullet-text">EU expansion challenges</span>
+        </div>
+        <div class="bullet-item">
+          <div class="bullet-dot orange"></div>
+          <span class="bullet-text">New CRO onboarding</span>
+        </div>
+        <div class="bullet-item">
+          <div class="bullet-dot orange"></div>
+          <span class="bullet-text">Hitting Q2 pipeline goals</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM 2-COL -->
+  <div class="cards-grid-bottom">
+
+    <!-- Do's & Don'ts -->
+    <div class="neo-card accent-dark">
+      <div class="card-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="#444" stroke-width="2"/>
+          <path d="M12 7v5l3 3" stroke="#444" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="card-title">Do's &amp; don'ts</div>
+      <div class="dos-list" style="margin-top:4px;">
+        <div class="dos-item">
+          <span class="dos-mark yes">✓</span>
+          <span class="dos-text yes">Lead with ROI data</span>
+        </div>
+        <div class="dos-item">
+          <span class="dos-mark yes">✓</span>
+          <span class="dos-text yes">Reference EU expansion</span>
+        </div>
+        <div class="dos-item">
+          <span class="dos-mark no">✗</span>
+          <span class="dos-text no">Mention competitor X</span>
+        </div>
+        <div class="dos-item">
+          <span class="dos-mark no">✗</span>
+          <span class="dos-text no">Lead with pricing</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Objections Handling -->
+    <div class="neo-card accent-orange" style="gap:14px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="#F7941D" stroke-width="2" fill="none" stroke-linejoin="round"/>
+              <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#F7941D" stroke-width="2" fill="none" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="card-title">Objections handling</div>
+        </div>
+        <div class="nav-controls">
+          <button class="nav-btn primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="5 3 19 12 5 21 5 3" fill="#fff"/></svg>
+          </button>
+          <button class="nav-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="19 20 5 12 19 3 19 20" fill="#666"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="obj-grid">
+        <div class="obj-item">
+          <div class="obj-dot"></div>
+          <span class="obj-text">"Too expensive" → Show 3-mo ROI</span>
+        </div>
+        <div class="obj-item">
+          <div class="obj-dot"></div>
+          <span class="obj-text">"No budget" → PLG free trial</span>
+        </div>
+        <div class="obj-item">
+          <div class="obj-dot"></div>
+          <span class="obj-text">"Happy with Salesforce" → Gap analysis</span>
+        </div>
+        <div class="obj-item">
+          <div class="obj-dot"></div>
+          <span class="obj-text">"Need to think" → Set 48h follow-up</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="action-row">
+
+    <button class="action-btn">
+      <div class="action-icon" style="background:linear-gradient(135deg,var(--red),#e85050);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/>
+          <polyline points="14 2 14 8 20 8" stroke="#fff" stroke-width="2" fill="none"/>
+          <line x1="12" y1="13" x2="12" y2="17" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="10" y1="15" x2="14" y2="15" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="action-label">Create<br>Proposal</span>
+    </button>
+
+    <button class="action-btn">
+      <div class="action-icon" style="background:linear-gradient(135deg,var(--orange),#fbb84d);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#fff" stroke-width="2" fill="none"/>
+          <polyline points="22,6 12,13 2,6" stroke="#fff" stroke-width="2" fill="none"/>
+        </svg>
+      </div>
+      <span class="action-label">Send<br>Email</span>
+    </button>
+
+    <button class="action-btn">
+      <div class="action-icon" style="background:linear-gradient(135deg,var(--red),var(--orange));">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="18" rx="2" stroke="#fff" stroke-width="2" fill="none"/>
+          <line x1="16" y1="2" x2="16" y2="6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="8" y1="2" x2="8" y2="6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="12" cy="13" r="2" fill="#fff"/>
+        </svg>
+      </div>
+      <span class="action-label">Set up<br>Meeting</span>
+    </button>
+
+    <button class="action-btn">
+      <div class="action-icon" style="background:linear-gradient(135deg,#333,#555);">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/>
+          <line x1="8" y1="10" x2="16" y2="10" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="8" y1="14" x2="13" y2="14" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="action-label">Send<br>Text</span>
+    </button>
+
+  </div>
+
+</div>
+</body>
+</html>
