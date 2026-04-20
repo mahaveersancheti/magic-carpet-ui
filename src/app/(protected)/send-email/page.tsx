@@ -129,14 +129,18 @@ function SendEmailContent() {
       toast.error("Please enter a message");
       return;
     }
-    
+
+    const recipientEmail = selectedProfile?.email ?? "";
+
     setIsSending(true);
-    // Mock send delay
+
+    const mailtoLink = `mailto:${encodeURIComponent(recipientEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+    window.location.href = mailtoLink;
+
     setTimeout(() => {
       setIsSending(false);
-      toast.success("Email sent successfully!");
-      router.back();
-    }, 1500);
+      toast.success("Opening your default mail application...");
+    }, 500);
   };
 
   return (
