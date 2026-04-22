@@ -1,9 +1,30 @@
-[00:00:35.478] Server  LOG      ✓ Ready in 23.9s
-[00:00:38.634] Server  LOG      ○ Compiling / ...
-[00:01:26.660] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:01:29.581] Server  LOG      ○ Compiling /home ...
-[00:01:57.821] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:02:42.563] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:03:13.897] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
-[00:07:06.789] Server  LOG      ✓ Compiled in 446ms
-[00:10:08.774] Server  LOG      ✓ Compiled in 608ms
+[00:00:27.748] Server  LOG      ✓ Ready in 16.3s
+[00:00:30.890] Server  LOG      ○ Compiling / ...
+[00:02:44.693] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:03:08.072] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:03:39.114] Browser LOG     selectedProfile undefined
+[00:03:39.116] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:03:40.450] Browser LOG     selectedProfile COMPLETED
+[00:03:41.167] Browser LOG     selectedProfile COMPLETED
+[00:13:06.164] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:13:11.254] Browser LOG     selectedProfile undefined
+[00:13:11.254] Browser LOG     [2;38;2;124;124;124m%s[0m selectedProfile undefined
+[00:13:12.110] Browser LOG     selectedProfile COMPLETED
+[00:13:12.907] Browser LOG     selectedProfile COMPLETED
+[01:12:17.007] Server  LOG      ✓ Compiled in 12.7s
+[01:12:18.073] Browser LOG     selectedProfile COMPLETED
+[01:12:18.073] Browser LOG     selectedProfile undefined
+[01:12:20.078] Browser LOG     selectedProfile COMPLETED
+[01:17:29.108] Browser DEBUG   #1 0ms Starting document clone with size 1280x585 scrolled to 0,0
+[01:17:29.331] Browser DEBUG   #1 315ms Document cloned, element located at 280.9375,0 with size 718.1146240234375x98 using computed rendering
+[01:17:29.331] Browser DEBUG   #1 315ms Starting DOM parsing
+[01:17:29.331] Browser DEBUG   #1 336ms Starting renderer for element at 280.9375,0 with size 719x98
+[01:17:29.331] Browser DEBUG   #1 339ms Canvas renderer initialized (719x98) with scale 2
+[01:17:29.331] Browser DEBUG   #1 356ms Finished rendering
+[01:19:19.478] Server  LOG      ✓ Compiled in 1962ms
+[01:20:58.891] Browser DEBUG   #2 0ms Starting document clone with size 1280x585 scrolled to 0,0
+[01:20:59.085] Browser DEBUG   #2 340ms Document cloned, element located at 280.9375,0 with size 718.1146240234375x98 using computed rendering
+[01:20:59.085] Browser DEBUG   #2 341ms Starting DOM parsing
+[01:20:59.085] Browser DEBUG   #2 352ms Starting renderer for element at 280.9375,0 with size 719x98
+[01:20:59.085] Browser DEBUG   #2 352ms Canvas renderer initialized (719x98) with scale 2
+[01:20:59.085] Browser DEBUG   #2 359ms Finished rendering

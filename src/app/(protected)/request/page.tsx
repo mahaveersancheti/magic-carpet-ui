@@ -251,6 +251,7 @@ function ReportContent() {
 
   // Product Selection State
   const [selectedProductIndex, setSelectedProductIndex] = useState(0);
+  const [isGeneratingProposal, setIsGeneratingProposal] = useState(false);
 
   useEffect(() => {
     console.log("selectedProfile", selectedProfile?.status);
@@ -966,6 +967,77 @@ function ReportContent() {
     window.print();
   };
 
+  const handleGenerateProposal = async () => {
+    if (!id || !selectedProfile) {
+      toast.error("Profile or ID missing");
+      return;
+    }
+
+    const productFitArray = safeList((selectedProfile as any).productFit);
+    const currentProduct =
+      productFitArray && productFitArray.length > 0
+        ? productFitArray[selectedProductIndex]
+        : (selectedProfile as any).productFitAnalysis;
+
+    const productId = currentProduct?.id || currentProduct?._id || currentProduct?.productId;
+
+    if (!productId) {
+      toast.error("Product ID missing for the selected fit");
+      return;
+    }
+
+    try {
+      setIsGeneratingProposal(true);
+      const loadingToast = toast.loading("Generating proposal...");
+
+      const response = await api.post<string>(
+        endpoints.generateProductFitProposal,
+        {
+          profileId: id,
+          productId: productId,
+          input: "",
+        },
+        {
+          accept: "text/html",
+        }
+      );
+
+      toast.dismiss(loadingToast);
+
+      if (!response) {
+        throw new Error("Empty response from proposal API");
+      }
+
+      // Dynamic import of html2pdf.js
+      const html2pdf = (await import("html2pdf.js")).default;
+
+      // Create temporary element to hold HTML
+      const element = document.createElement("div");
+      element.id = "proposal-temp-container";
+      element.innerHTML = response;
+      document.body.appendChild(element);
+
+      const opt = {
+        margin: 10,
+        filename: "Sales_Proposal.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      } as const;
+
+      await html2pdf().set(opt).from(element).save();
+
+      // Clean up
+      document.body.removeChild(element);
+      toast.success("Proposal generated successfully!");
+    } catch (error: any) {
+      console.error("Proposal generation error:", error);
+      toast.error(error?.message || "Failed to generate proposal");
+    } finally {
+      setIsGeneratingProposal(false);
+    }
+  };
+
   const handlePauseToggle = () => {
     if (isPaused) {
       window.speechSynthesis.resume();
@@ -1523,49 +1595,74 @@ function ReportContent() {
                     </span>
                     Strategic Product Fit
                   </h4>
-                  <button
-                    onClick={() => {
-                      const productFitArray =
-                        REPORT_JSON.profileSummary.productFit;
-                      const analysis =
-                        productFitArray && productFitArray.length > 0
-                          ? productFitArray[selectedProductIndex]
-                          : REPORT_JSON.profileSummary.productFitAnalysis;
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handleGenerateProposal}
+                      disabled={isGeneratingProposal}
+                      className={`h-8 px-3 rounded-xl flex items-center gap-1.5 transition-all active:scale-95 shadow-sm text-[10px] font-black uppercase tracking-tight ${
+                        isGeneratingProposal
+                          ? "bg-gray-100 text-gray-400 border border-gray-200"
+                          : "bg-emerald-600 border border-emerald-700 text-white hover:bg-emerald-700 hover:shadow-md"
+                      }`}
+                      title="Generate Proposal PDF"
+                    >
+                      {isGeneratingProposal ? (
+                        <Loader2 className="w-3 h-3 animate-spin" />
+                      ) : (
+                        <span className="material-symbols-outlined text-sm leading-none">
+                          description
+                        </span>
+                      )}
+                      <span>
+                        {isGeneratingProposal
+                          ? "Generating..."
+                          : "Generate Proposal"}
+                      </span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        const productFitArray =
+                          REPORT_JSON.profileSummary.productFit;
+                        const analysis =
+                          productFitArray && productFitArray.length > 0
+                            ? productFitArray[selectedProductIndex]
+                            : REPORT_JSON.profileSummary.productFitAnalysis;
 
-                      if (!analysis) {
+                        if (!analysis) {
+                          handleSpeak(
+                            "No evaluation data available.",
+                            "productFit",
+                            "Strategic Product Fit",
+                          );
+                          return;
+                        }
+
+                        const productName = analysis?.productName || "";
+                        const rating = analysis?.rating || "Strong Fit";
+                        const score = analysis?.score || 0;
+                        const features = safeList(analysis?.features).join(", ");
+                        const valueProp =
+                          analysis?.valueProps?.time || "Strategic efficiency";
+                        const differentiators = safeList(
+                          analysis?.differentiators,
+                        ).join(", ");
+
+                        const textToSpeak = `${productName ? `Product: ${productName}. ` : ""}Fit Rating: ${rating} with a score of ${score}%. Features: ${features}. Key Value Prop: ${valueProp}. Differentiators: ${differentiators}`;
                         handleSpeak(
-                          "No evaluation data available.",
+                          textToSpeak,
                           "productFit",
                           "Strategic Product Fit",
                         );
-                        return;
-                      }
-
-                      const productName = analysis?.productName || "";
-                      const rating = analysis?.rating || "Strong Fit";
-                      const score = analysis?.score || 0;
-                      const features = safeList(analysis?.features).join(", ");
-                      const valueProp =
-                        analysis?.valueProps?.time || "Strategic efficiency";
-                      const differentiators = safeList(
-                        analysis?.differentiators,
-                      ).join(", ");
-
-                      const textToSpeak = `${productName ? `Product: ${productName}. ` : ""}Fit Rating: ${rating} with a score of ${score}%. Features: ${features}. Key Value Prop: ${valueProp}. Differentiators: ${differentiators}`;
-                      handleSpeak(
-                        textToSpeak,
-                        "productFit",
-                        "Strategic Product Fit",
-                      );
-                    }}
-                    className={`p-1.5 rounded-lg transition-all active:scale-95 ${speakingSection === "productFit" ? "bg-red-500 text-white shadow-lg" : "bg-white text-gray-400 border border-gray-100 hover:text-blue-600 hover:bg-blue-50"}`}
-                  >
-                    {speakingSection === "productFit" ? (
-                      <Square className="w-3 h-3" />
-                    ) : (
-                      <Volume2 className="w-3 h-3" />
-                    )}
-                  </button>
+                      }}
+                      className={`p-1.5 rounded-lg transition-all active:scale-95 ${speakingSection === "productFit" ? "bg-red-500 text-white shadow-lg" : "bg-white text-gray-400 border border-gray-100 hover:text-blue-600 hover:bg-blue-50"}`}
+                    >
+                      {speakingSection === "productFit" ? (
+                        <Square className="w-3 h-3" />
+                      ) : (
+                        <Volume2 className="w-3 h-3" />
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Product Tabs - Only show if productFit array exists and has multiple products */}
